@@ -12,6 +12,10 @@ npm install @mui/material @emotion/react @emotion/styled
 // with yarn
 yarn add @mui/material @emotion/react @emotion/styled
 
+### Full Guide
+
+A full guide to installation and usage is available here: https://mui.com/getting-started/installation/
+
 ## Roboto font
 
 MUI was designed with the Roboto font in mind. Be sure to include the Roboto font in your project, for example, using Google Fonts:
