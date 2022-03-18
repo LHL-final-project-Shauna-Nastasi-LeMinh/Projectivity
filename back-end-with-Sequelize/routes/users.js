@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (sequelizeModels) => {
+module.exports = (sequelizeModels, pusher) => {
 
   User = sequelizeModels.User;
 
@@ -9,6 +9,11 @@ module.exports = (sequelizeModels) => {
     const {firstname, lastname} = req.body;
     try {
       const user = await User.create({firstname, lastname})
+
+      // WebSocket broadcast if neccessary
+      pusher.trigger("USER_MESSAGE_CHANNEL_ANY_NAME", "USER_EVENT_ANY_NAME", {user});
+      // End WebSocket
+
       return res.json(user);
     } catch(err) {
       console.log(err);
