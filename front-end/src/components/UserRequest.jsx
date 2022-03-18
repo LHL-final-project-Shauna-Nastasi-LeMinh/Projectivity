@@ -7,7 +7,7 @@ const UserRequest = () => {
   const {data, loading} = useRequest(url);
   return (
     <div>
-      <h2>Below data is from table USERS in DATABASE "FINALPROJECT"</h2>
+      <h2>"GET" REQUEST TO RETRIEVE DATA FROM DATABASE "FINALPROJECT"</h2>
 
       { loading && <p>Loading...</p> }
       { data && <p>Data retrieved from DB USERS table: {JSON.stringify(data)}</p> }

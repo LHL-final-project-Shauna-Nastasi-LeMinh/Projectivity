@@ -4,11 +4,13 @@ const express = require('express');
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieSession = require('cookie-session');
+require('dotenv').config();
+const {realtime} = require('./realtime/realtime')
 
 const PORT = process.env.PORT || 8080;
 const app = express();
 app.use(express.json());
-app.use(cors({credentials: true}));
+app.use(cors())
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,47 +20,16 @@ app.use(cookieSession({
   keys: ["da097fa0-b5ef-4506-b8c3-28166cb4c4e8", "f0553cf8-a720-45d0-abba-e25dbc47eee6"]
 }));
 
-// WebSocket
+// WebSocket initilization
 const socketio = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
-const io = socketio(server);
-
-
-
-
-app.use(cors())
-app.options('*', cors());
-
-
-
-
-const ikea = require('ikea-name-generator');
-
-let users = [];
-io.on('connection', (socket) => {
-  console.log("Someone has connected!");
-  const name = ikea.getName();
-  users.push(name);
-  socket.emit('INITIAL', {name, users});
-  socket.broadcast.emit("NEW_USER", {name});
-  socket.name = name;
-
-  socket.on('disconnect', () => {
-    console.log('Someone has disconnected!', socket.name);
-    socket.broadcast.emit("DISCONNECT_USER", {name: socket.name});
-    users = users.filter(name => name !== socket.name);
-  })
-
-  socket.on('message', (data) => {
-    console.log("message came back from client!");
-    console.log(data);
-    socket.broadcast.emit("MESSAGE", data);
-  })
-})
-
-
-const sequelize = sequelizeModels.sequelize;
+const io = socketio(server,  { cors: {
+  origin: process.env.REACT_APP_URL,
+  methods: ["GET", "POST"]
+}
+});
+realtime(io);
 
 // All routes (controller) goes here
 const usersRoutes = require("./routes/users");
@@ -71,8 +42,8 @@ app.get("/", (req, res) => {
 });
 
 
-app.listen(PORT, async () => {
-  await sequelize.authenticate();
+server.listen(PORT, async () => {
+  await sequelizeModels.sequelize.authenticate();
   console.log(`Back-end app listening on port ${PORT}`);
 })
 

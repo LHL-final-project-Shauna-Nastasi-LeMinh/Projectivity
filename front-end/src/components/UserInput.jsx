@@ -18,7 +18,7 @@ const UserInput = () => {
 
   return (
     <div>
-      <h2>PUT REQUEST SAMPLE</h2>
+      <h2>PUT/POST AXIOS REQUEST TO SEQUELIZE DB</h2>
 
       <form onSubmit={handleSubmit}>
         <label>First Name:</label>
