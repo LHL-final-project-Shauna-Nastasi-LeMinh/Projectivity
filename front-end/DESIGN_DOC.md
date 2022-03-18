@@ -2,6 +2,10 @@
 
 ## MUI through NPM
 
+### Specific Components
+
+For full documentation on specific components, find them on the left-side menu starting here: https://mui.com/components/autocomplete/
+
 ### Installation 
 
 If it's not installed already, run:
