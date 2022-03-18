@@ -2,12 +2,13 @@
 
 1. Install dependencies: `npm i`
 2. Install dev dependencies: `npm i nodemon --save-dev`
-3. If `finalproject` database has not been created yet, create one with this: `sequelize db:create`
-4. Create table: `sequelize db:migrate`
+3. Install sequelize-cli globally: `npm install -g sequelize-cli`
+4. If `finalproject` database has not been created yet, create one with this: `sequelize db:create`
+5. Create table: `sequelize db:migrate`
   - Check the db folder to see what gets created and seeded in the SDB
-5. Seed the data: `sequelize db:seed:all`
-6. Run the server: `npm run local`
-7. Run React front-end or Insomnia app to test this back-end
+6. Seed the data: `sequelize db:seed:all`
+7. Run the server: `npm run local`
+8. Run React front-end or Insomnia app to test this back-end
 
 ## Note: 
 1. To reset database, run 
