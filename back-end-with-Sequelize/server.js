@@ -5,9 +5,8 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cookieSession = require('cookie-session');
 require('dotenv').config();
-// const {realtime} = require('./realtime/realtime')
-const Pusher = require("pusher");
 
+const Pusher = require("pusher");
 const PORT = process.env.PORT || 8080;
 const app = express();
 app.use(express.json());
@@ -21,7 +20,7 @@ app.use(cookieSession({
   keys: ["da097fa0-b5ef-4506-b8c3-28166cb4c4e8", "f0553cf8-a720-45d0-abba-e25dbc47eee6"]
 }));
 
-// Pusher server
+// Pusher WebSocket server
 const pusher = new Pusher({
   appId: process.env.PUSHER_APP_ID,
   key: process.env.PUSHER_KEY,
