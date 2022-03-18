@@ -1,14 +1,17 @@
 import './App.css';
 import UserInput from './components/UserInput';
-import Request from './components/UserRequest';
+import UserRequest from './components/UserRequest';
+import SampleWebSocket from './components/SampleWebSocket'
 
 const App = () => {
   return (
     <div className="App">
       <h2>Skeleton Code</h2>
-      <Request />
+      <UserRequest />
       <br/><br/><br/><br/><br/>
       <UserInput />
+      <br/><br/><br/><br/><br/>
+      <SampleWebSocket />
     </div>
   );
 };
