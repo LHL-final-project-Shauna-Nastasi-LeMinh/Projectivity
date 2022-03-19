@@ -3,8 +3,6 @@ import axios from "axios";
 import {useEffect, useState} from 'react';
 import Pusher from 'pusher-js';
 
-
-
 const UserInput = () => {
   const firstnameInput = useInput('');
   const lastnameInput = useInput('');
@@ -24,8 +22,8 @@ const UserInput = () => {
   //WebSocket code start - subscribe to Pusher channel 
   useEffect(() => {
     const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {cluster: process.env.REACT_APP_PUSHER_CLUSTER});
-    const channel = pusher.subscribe("USER_MESSAGE_CHANNEL_ANY_NAME");
-    channel.bind("USER_EVENT_ANY_NAME", function (data) {
+    const channel = pusher.subscribe("USER_CHANNEL");
+    channel.bind("USER_SAVED_EVENT", function (data) {
       setMessages(prev => [...prev, JSON.stringify(data.user)]);
     })
   }, [])
