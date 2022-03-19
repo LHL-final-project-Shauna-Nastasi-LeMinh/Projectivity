@@ -4,7 +4,7 @@
 2. Install dev dependencies: `npm i nodemon --save-dev`
 3. Install sequelize-cli globally: `npm install -g sequelize-cli`
 4. If `finalproject` database has not been created yet, create one with this: `sequelize db:create`
-5. Create table: run `node migrate.js`. Please DO NOT RUN `sequelize db:migrate`
+5. Create table: `sequelize db:migrate`
   - Check the db folder to see what gets created and seeded in the SDB
 6. Seed the data: `sequelize db:seed:all`
 7. Run the server: `npm run local`
@@ -14,7 +14,7 @@
 1. To reset database, run 
   `sequelize db:drop`
   `sequelize db:create`
-  Create table: run `node migrate.js`. Please DO NOT RUN `sequelize db:migrate`
+  `sequelize db:migrate`
   `sequelize db:seed:all`
 
 2. To generate new model .js file (no space between column name):

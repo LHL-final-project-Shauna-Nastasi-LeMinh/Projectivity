@@ -16,8 +16,16 @@ export default function RegistrationForm(props) {
   useEffect(() => {
     axios.get(process.env.REACT_APP_BACKEND_URL + "/roles")
       .then(result => {
-        console.log(result.data);
-        const roleOptions = result.data.map(role => <option value={role.id} key={role.id}>{role.name}</option>)
+        const roleOptions = [];
+        for (let i = 0; i < result.data.length; i++) {
+          const role = result.data[i];
+          if (i === 0) {
+            roleOptions.push(<option defaultValue={role.id} key={role.id} >{role.name}</option>);
+          } else {
+            roleOptions.push(<option value={role.id} key={role.id}>{role.name}</option>);
+          }
+        } 
+
         setRoles(roleOptions);
       })
       .catch(err => {
@@ -78,7 +86,7 @@ export default function RegistrationForm(props) {
       />
       <br/>
       <label>Role:</label>
-      <select name="role_id" id="rold_id" onChange={e => setRole(e.target.value)}>
+      <select name="role" id="rold-id" onChange={e => setRole(e.target.value)}>
         {roles}
       </select>
       <br/>  
