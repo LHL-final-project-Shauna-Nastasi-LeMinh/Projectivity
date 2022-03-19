@@ -95,7 +95,7 @@ export default function RegistrationForm(props) {
       />
       <br/> 
       <label>Password:</label>
-      <input 
+      <input type="password" 
         { ...passwordInput }
       />
       <br/>

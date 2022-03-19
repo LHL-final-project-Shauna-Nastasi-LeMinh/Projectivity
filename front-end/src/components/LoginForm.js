@@ -41,13 +41,13 @@ export default function LoginForm(props) {
       <br/>
       <label>Email:</label>
       <br/>
-      <input 
+      <input
         { ...emailInput }
       />
       <br/>
       <label>Password:</label>
       <br/>
-      <input 
+      <input type="password" 
         { ...passwordInput }
       />
       <br/>
