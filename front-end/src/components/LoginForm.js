@@ -26,18 +26,22 @@ export default function LoginForm(props) {
   return (
     <div>
       <h2>Login</h2>
+      <br/>
       {message}
-      <form onSubmit={login}>
-        <label>Email:</label>
-        <input 
-          { ...emailInput }
-        />
-        <label>Password:</label>
-        <input 
-          { ...passwordInput }
-        />
-        <Button onClick={login}>Login</Button>
-      </form>
+      <br/>
+      <label>Email:</label>
+      <br/>
+      <input 
+        { ...emailInput }
+      />
+      <br/>
+      <label>Password:</label>
+      <br/>
+      <input 
+        { ...passwordInput }
+      />
+      <br/>
+      <Button onClick={login}>Login</Button>
       <br/> 
     </div>
   );
