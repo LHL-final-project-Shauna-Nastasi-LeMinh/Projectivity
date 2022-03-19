@@ -7,7 +7,7 @@ module.exports = (sequelizeModels) => {
 
   router.get('/', async(req, res) => {
     try {
-      const roles = await Role.findAll()
+      const roles = await Role.findAll();
       return res.json( roles );
     } catch(err) {
       console.log(err);

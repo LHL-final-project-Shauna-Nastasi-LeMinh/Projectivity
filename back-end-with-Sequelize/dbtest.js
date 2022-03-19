@@ -23,9 +23,7 @@ async function testEmployeesVsAssignmentsVsProjects() {
   // await sequelize.sync({ force: true})
   const rawData = await  model.Employee.findAll(
   { where: {first_name: "John"},
-    include: [{
-      model: model.ProjectAssignment
-    }, {
+    include: [ {
       model: model.Project
     }]
   })
@@ -86,7 +84,7 @@ async function testColumnsAndTickets() {
   console.log(firstTicket);
 }
 
-testRolesAndEmployees();
+// testRolesAndEmployees();
 testEmployeesVsAssignmentsVsProjects();
-testProjectsAndColumns();
-testColumnsAndTickets();
+// testProjectsAndColumns();
+// testColumnsAndTickets();

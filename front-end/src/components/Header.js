@@ -14,7 +14,7 @@ export default function Header(props) {
         {!loggedIn && <Button onClick={e => setMode("Login")}>Login</Button>}
         |
         {!loggedIn && <Button onClick={e => setMode("Register")}>Signup</Button>}
-        {loggedIn && <Button>Logout</Button>}
+        {loggedIn && <Button onClick={e => setLoggedIn(false)}>Logout</Button>}
       </div>
     </header>
   )

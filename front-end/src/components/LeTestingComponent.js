@@ -6,7 +6,7 @@ export default function LeTestingComponent(props) {
    const {loggedIn, setLoggedIn, mode} = props;
    return (
       <div>
-         {mode==="Login" && <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}
+         {mode==="Login" && loggedIn===false && <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}
          <br/>
          <br/>
          <br/>
