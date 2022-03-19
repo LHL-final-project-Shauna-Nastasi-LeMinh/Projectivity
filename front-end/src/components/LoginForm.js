@@ -1,4 +1,5 @@
 import useInput from '../hooks/useInput';
+import Button from './Button'
 import axios from "axios";
 import {useState} from 'react';
 
@@ -35,7 +36,7 @@ export default function LoginForm(props) {
         <input 
           { ...passwordInput }
         />
-        <button type="submit">Login!</button>
+        <Button onClick={login}>Login</Button>
       </form>
       <br/> 
     </div>
