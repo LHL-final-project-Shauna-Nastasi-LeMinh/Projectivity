@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasMany(models.ProjectAssignment, { foreignKey: "project_id", targetKey: "id"})
       this.belongsToMany(models.Employee, { through: 'ProjectAssignment', foreignKey: "project_id", otherKey: "employee_id" });
+      this.hasMany(models.Column, { foreignKey: "project_id", targetKey: "id"})
     }
   }
   Project.init({

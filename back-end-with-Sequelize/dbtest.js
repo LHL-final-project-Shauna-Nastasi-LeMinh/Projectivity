@@ -48,5 +48,45 @@ async function testEmployeesVsAssignmentsVsProjects() {
    //const firstAssignment = assignments[0];
 }
 
+async function testProjectsAndColumns() {
+  const rawData = await  model.Project.findAll({
+    where: {id: 1},
+    include: [{
+      model: model.Column,
+    }]
+  })
+
+  // get all projects, then first project from array
+  const prrojects = JSON.parse(JSON.stringify(rawData))
+  const firstProject = projects[0];
+  console.log(firstProject);
+
+  // from the first project, get all Columns
+  const columns = firstProject.Columns;
+  const firstColumn = columns[0];
+  console.log(firstColumn);
+}
+
+async function testColumnsAndTickets() {
+  const rawData = await  model.Column.findAll({
+    where: {id: 1},
+    include: [{
+      model: model.Ticket
+    }]
+  })
+
+  // get all projects, then first project from array
+  const columns = JSON.parse(JSON.stringify(rawData))
+  const firstColumn = columns[0];
+  console.log(firstColumn);
+
+  // from the first project, get all Columns
+  const tickets = firstColumn.Tickets;
+  const firstTicket = tickets[0];
+  console.log(firstTicket);
+}
+
 testRolesAndEmployees();
 testEmployeesVsAssignmentsVsProjects();
+testProjectsAndColumns();
+testColumnsAndTickets();
