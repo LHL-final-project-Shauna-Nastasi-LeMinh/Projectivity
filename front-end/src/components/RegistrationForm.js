@@ -60,7 +60,7 @@ export default function RegistrationForm(props) {
       })
       .then(res => {
         props.setLoggedIn(true);
-        alert("Registered");
+        alert(res.data.email + " registered");
       })
       .catch(function (error) {
         console.log(error.message)

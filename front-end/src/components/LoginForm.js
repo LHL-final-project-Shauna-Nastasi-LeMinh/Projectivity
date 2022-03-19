@@ -25,7 +25,7 @@ export default function LoginForm(props) {
       })
       .then(res => {
         props.setLoggedIn(true);
-        alert("Logged in");
+        alert(res.data.email + " logged in");
       })
       .catch(function (error) {
         console.log(error.message)
