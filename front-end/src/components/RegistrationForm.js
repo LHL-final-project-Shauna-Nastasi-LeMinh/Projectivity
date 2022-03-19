@@ -1,7 +1,7 @@
 import useInput from '../hooks/useInput';
 import Button from './Button'
 import axios from "axios";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 export default function RegistrationForm(props) {
   const fistnameInput = useInput('');
@@ -12,15 +12,26 @@ export default function RegistrationForm(props) {
   const roleInput = useInput('');
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    axios.get(process.env.REACT_APP_BACKEND_URL + "/roles")
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
+
   const register = (event) => {
     event.preventDefault();
     axios.post(process.env.REACT_APP_BACKEND_URL + "/accessControl/register", { 
-        fistname: fistnameInput.value, 
-        lastname: lastnameInput.value,
+        first_name: fistnameInput.value, 
+        last_name: lastnameInput.value,
         email: emailInput.value, 
         password: passwordInput.value,
         phone: phoneInput.value, 
-        role: roleInput.value 
+        role_id: roleInput.value 
       })
       .then(res => {
         props.setLoggedIn(true);
@@ -63,9 +74,10 @@ export default function RegistrationForm(props) {
       />
       <br/>
       <label>Role:</label>
-      <input 
-        { ...roleInput }
-      />
+      <select name="role_id" id="rold_id">
+        <option value="1">Manager</option>
+        <option value="2">Developer</option>
+      </select>
       <br/>  
       <br/> 
       <Button onClick={register}>Register</Button>

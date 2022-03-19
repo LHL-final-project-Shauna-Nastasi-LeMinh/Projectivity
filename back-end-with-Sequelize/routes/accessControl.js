@@ -1,21 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-module.exports = (sequelizeModels, pusher) => {
+module.exports = (sequelizeModels) => {
 
   Employee = sequelizeModels.Employee;
-
-  // router.put('/', async(req, res) =>  {
-  //   const {firstname, lastname} = req.body;
-  //   try {
-  //     const user = await User.create({firstname, lastname})
-
-  //     return res.json(user);
-  //   } catch(err) {
-  //     console.log(err);
-  //     return res.status(500).json(err);
-  //   }
-  // })
 
   router.post('/login', async(req, res) => {
     try {
@@ -27,7 +15,6 @@ module.exports = (sequelizeModels, pusher) => {
         }
       })
       const users = JSON.parse(JSON.stringify(rawData))
-      console.log(users);
       return users.length > 0 ? res.json( users[0] ) : res.status(403).json(new Error("Access forbidden"))
     } catch(err) {
       console.log(err);
@@ -35,18 +22,19 @@ module.exports = (sequelizeModels, pusher) => {
     }
   })
 
-  router.post('/login', async(req, res) => {
+  router.post('/register', async(req, res) => {
     try {
-      const {email, password} = req.body;
+      const {first_name, last_name, phone, email, password, role_id} = req.body;
       const rawData = await Employee.findAll({
         where: {
           email: email,
           password: password
         }
       })
-      const users = JSON.parse(JSON.stringify(rawData))
-      console.log(users);
-      return users.length > 0 ? res.json( users[0] ) : res.status(403).json(new Error("Access forbidden"))
+      console.log(first_name, last_name, phone, email, password, role_id);
+      // const employee = await Employee.create({first_name, last_name, phone, email, password, role_id})
+
+      return res.json("");
     } catch(err) {
       console.log(err);
       return res.status(500).json(err);

@@ -4,16 +4,16 @@ import LoginForm from "./LoginForm";
 import RegistrationForm from "./RegistrationForm";
 
 export default function LeTestingComponent(props) {
-   const [loggedIn, setLoggedIn] = useState(false);
+   const {loggedIn, setLoggedIn} = {props};
    return (
       <div>
-         {!loggedIn&&<LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}
+         {!{loggedIn}&&<LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}
          <br/>
          <br/>
          <br/>
          <br/>
          <br/>
-         {!loggedIn&&<RegistrationForm loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}
+         {!{loggedIn}&&<RegistrationForm loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}
       </div>
    );
 }
