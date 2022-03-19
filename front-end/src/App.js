@@ -1,15 +1,15 @@
 import './App.css';
-import UserInput from './components/UserInput';
-import UserRequest from './components/UserRequest';
+// import UserInput from './components/UserInput';
+// import UserRequest from './components/UserRequest';
+import {useState} from 'react';
+import LoginForm from './components/LoginForm';
+
 
 const App = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <div className="App">
-      <h2>Skeleton Code</h2>
-      <UserRequest />
-      <br/><br/><br/><br/><br/>
-      <UserInput />
-      <br/><br/><br/><br/><br/>
+      {!loggedIn&&<LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}
     </div>
   );
 };

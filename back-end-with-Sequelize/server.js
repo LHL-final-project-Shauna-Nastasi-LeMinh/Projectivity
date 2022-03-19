@@ -31,10 +31,12 @@ const pusher = new Pusher({
 
 // All routes (controller) goes here
 const usersRoutes = require("./routes/users");
+const accessControl = require("./routes/accessControl")
 
 // pass the whole models, as well pusher server, to routes.
 //Consider refactor to pass individual model object only, e.g. sequelizeModels.USER if only access 1 table
 app.use("/users", usersRoutes(sequelizeModels, pusher));
+app.use("/accessControl", accessControl(sequelizeModels, pusher));
 
 app.get("/", (req, res) => {
   res.render("index");
