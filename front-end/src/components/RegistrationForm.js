@@ -4,7 +4,7 @@ import axios from "axios";
 import {useState, useEffect} from 'react';
 
 export default function RegistrationForm(props) {
-  const fistnameInput = useInput('');
+  const firstnameInput = useInput('');
   const lastnameInput = useInput('');
   const emailInput = useInput('');
   const passwordInput = useInput('');
@@ -25,11 +25,33 @@ export default function RegistrationForm(props) {
       });
   }, []);
 
-
   const register = (event) => {
     event.preventDefault();
+    
+    if (firstnameInput.value === "") {
+      setMessage("Please enter first name");
+      return;
+    }
+    if (lastnameInput.value === "") {
+      setMessage("Please enter last name");
+      return;
+    }
+    if (phoneInput.value === "") {
+      setMessage("Please enter phone number");
+      return;
+    }
+    const emailReg = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+    if (emailInput.value === "" || !emailReg.test(emailInput.value)) {
+      setMessage("Please enter correct email address");
+      return;
+    }
+    if (passwordInput.value === "") {
+      setMessage("Please enter password");
+      return;
+    }
+    
     axios.post(process.env.REACT_APP_BACKEND_URL + "/accessControl/register", { 
-        first_name: fistnameInput.value, 
+        first_name: firstnameInput.value, 
         last_name: lastnameInput.value,
         email: emailInput.value, 
         password: passwordInput.value,
@@ -54,7 +76,7 @@ export default function RegistrationForm(props) {
       <br/>
       <label>First Name:</label>
       <input 
-        { ...fistnameInput }
+        { ...firstnameInput }
       />
       <br/> 
       <label>Last Name:</label>
