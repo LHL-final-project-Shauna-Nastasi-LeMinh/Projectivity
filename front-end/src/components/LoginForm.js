@@ -19,6 +19,7 @@ export default function LoginForm(props) {
         alert("Logged in");
       })
       .catch(function (error) {
+        console.log(error.message)
         setMessage("Login invalid");
       });
   };

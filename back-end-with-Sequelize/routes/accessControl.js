@@ -32,9 +32,8 @@ module.exports = (sequelizeModels) => {
         }
       })
       console.log(first_name, last_name, phone, email, password, role_id);
-      // const employee = await Employee.create({first_name, last_name, phone, email, password, role_id})
-
-      return res.json("");
+      const employee = await Employee.create({first_name, last_name, phone, email, password, role_id})
+      return res.json(employee);
     } catch(err) {
       console.log(err);
       return res.status(500).json(err);

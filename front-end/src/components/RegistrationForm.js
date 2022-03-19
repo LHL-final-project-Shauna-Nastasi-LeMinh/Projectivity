@@ -9,13 +9,16 @@ export default function RegistrationForm(props) {
   const emailInput = useInput('');
   const passwordInput = useInput('');
   const phoneInput = useInput('');
-  const roleInput = useInput('');
   const [message, setMessage] = useState("");
+  const [roles, setRoles] = useState([]);
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     axios.get(process.env.REACT_APP_BACKEND_URL + "/roles")
       .then(result => {
-        console.log(result);
+        console.log(result.data);
+        const roleOptions = result.data.map(role => <option value={role.id} key={role.id}>{role.name}</option>)
+        setRoles(roleOptions);
       })
       .catch(err => {
         console.log(err);
@@ -31,13 +34,14 @@ export default function RegistrationForm(props) {
         email: emailInput.value, 
         password: passwordInput.value,
         phone: phoneInput.value, 
-        role_id: roleInput.value 
+        role_id: role 
       })
       .then(res => {
         props.setLoggedIn(true);
         alert("Registered");
       })
       .catch(function (error) {
+        console.log(error.message)
         setMessage("Registration invalid");
       });
   };
@@ -45,9 +49,9 @@ export default function RegistrationForm(props) {
   return (
     <div>
       <h2>Registration</h2>
-      <br/> 
-      {message}
-      <br/> 
+      <br/>
+      {message} 
+      <br/>
       <label>First Name:</label>
       <input 
         { ...fistnameInput }
@@ -74,9 +78,8 @@ export default function RegistrationForm(props) {
       />
       <br/>
       <label>Role:</label>
-      <select name="role_id" id="rold_id">
-        <option value="1">Manager</option>
-        <option value="2">Developer</option>
+      <select name="role_id" id="rold_id" onChange={e => setRole(e.target.value)}>
+        {roles}
       </select>
       <br/>  
       <br/> 
