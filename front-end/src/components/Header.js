@@ -3,7 +3,7 @@ import Button from "./Button";
 
 export default function Header(props) {
 
-  const {loggedIn, setLoggedIn} = props;
+  const {loggedIn, setLoggedIn, mode, setMode} = props;
 
   return (
     <header>
@@ -11,9 +11,9 @@ export default function Header(props) {
         <img alt=""/>
       </div>
       <div>
-        {!loggedIn && <Button>Login</Button>}
+        {!loggedIn && <Button onClick={e => setMode("Login")}>Login</Button>}
         |
-        {!loggedIn && <Button>Signup</Button>}
+        {!loggedIn && <Button onClick={e => setMode("Register")}>Signup</Button>}
         {loggedIn && <Button>Logout</Button>}
       </div>
     </header>
