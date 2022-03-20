@@ -33,8 +33,8 @@ export default function NavbarMenu (props) {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
 			.catch(err => {
-  console.log(err)
-})
+        console.log(err)
+      })
   }
 
   return (

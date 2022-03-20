@@ -24,14 +24,8 @@ module.exports = sequelizeModels => {
 
       if (employees.length > 0) {
         const employee = employees[0]
-<<<<<<< HEAD
 
         return res.json( {
-=======
-        req.session['employee_id'] = employee.id
-        req.session['role_id'] = employee.Role.id
-        return res.json({
->>>>>>> master
           id: employee.id,
           email: employee.email,
           role_id: employee.Role.id
@@ -47,31 +41,9 @@ module.exports = sequelizeModels => {
 
   router.post('/register', async (req, res) => {
     try {
-<<<<<<< HEAD
       const {first_name, last_name, phone, email, password, role_id} = req.body;
       const employee = await Employee.create({first_name, last_name, phone, email, password, role_id})
       return res.json( {
-=======
-      const {
-				first_name,
-				last_name,
-				phone,
-				email,
-				password,
-				role_id
-			} = req.body
-      const employee = await Employee.create({
-        first_name,
-        last_name,
-        phone,
-        email,
-        password,
-        role_id
-      })
-      req.session['employee_id'] = employee.id
-      req.session['role_id'] = role_id
-      return res.json({
->>>>>>> master
         id: employee.id,
         email: employee.email,
         role_id: role_id
@@ -84,16 +56,9 @@ module.exports = sequelizeModels => {
 
   router.get('/logout', async (req, res) => {
     try {
-<<<<<<< HEAD
       return res.json({ message: "Logged out" });
     } catch(err) {
     }
-=======
-      req.session['employee_id'] = null
-      req.session['role_id'] = null
-      return res.json({ message: 'Logged out' })
-    } catch (err) {}
->>>>>>> master
   })
 
   return router

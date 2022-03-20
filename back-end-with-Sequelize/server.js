@@ -1,60 +1,19 @@
-<<<<<<< HEAD
 const sequelizeModels = require('./models');
 const cors = require("cors");
 const express = require('express');
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 require('dotenv').config();
-=======
-const sequelizeModels = require('./models')
-const cors = require('cors')
-const express = require('express')
-const morgan = require('morgan')
-const bodyParser = require('body-parser')
-const cookieSession = require('cookie-session')
-require('dotenv').config()
->>>>>>> master
 
 const Pusher = require('pusher')
 const PORT = process.env.PORT || 8080
 const app = express()
 app.use(express.json())
 app.use(cors())
-<<<<<<< HEAD
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
-=======
-app.use(morgan('dev'))
-app.use(express.urlencoded({ extended: true }))
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static('public'))
-app.use(
-	cookieSession({
-  name: 'session',
-  keys: [
-    'da097fa0-b5ef-4506-b8c3-28166cb4c4e8',
-    'f0553cf8-a720-45d0-abba-e25dbc47eee6'
-  ]
-})
-)
-
-const currentUser = (req, res, next) => {
-  if (req.session['employee_id']) {
-    req.currentUser = req.session['employee_id']
-  }
-  next()
-}
-app.use(currentUser)
-const currentRole = (req, res, next) => {
-  if (req.session['role_id']) {
-    req.currentRole = req.session['role_id']
-  }
-  next()
-}
-app.use(currentRole)
->>>>>>> master
 
 // Pusher WebSocket server
 const pusher = new Pusher({
