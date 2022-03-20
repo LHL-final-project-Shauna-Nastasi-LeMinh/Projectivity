@@ -34,6 +34,7 @@ export default function Dashboard (props) {
         setUserProjects(res.data.map(project_assignment => project_assignment.Project));
         if (res.data.length > 0) {
           setCurrentProject(res.data[0].Project)
+          selectProject(0);
         }
 
         setProjects(res.data.map(project_assignment =>
