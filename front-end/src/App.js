@@ -4,11 +4,12 @@ import Header from './components/Header'
 import Main from './components/Main'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import {LANDING} from './components/constants/Modes'
+import { LANDING } from './components/constants/Modes'
 
 const App = () => {
   const [mode, setMode] = useState(LANDING)
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState()
+  const [userProjects, setUserProjects] = useState()
 
   return (
     <Container className='App'>
@@ -21,12 +22,7 @@ const App = () => {
           height: '4rem'
         }}
 			>
-        <Header
-          mode={mode}
-          setMode={setMode}
-          user={user}
-          setUser={setUser}
-				/>
+        <Header mode={mode} setMode={setMode} user={user} setUser={setUser} />
       </Box>
       <Box
         sx={{
@@ -42,6 +38,8 @@ const App = () => {
           setMode={setMode}
           user={user}
           setUser={setUser}
+          userProjects={userProjects}
+          setUserProjects={setUserProjects}
 				/>
       </Box>
     </Container>

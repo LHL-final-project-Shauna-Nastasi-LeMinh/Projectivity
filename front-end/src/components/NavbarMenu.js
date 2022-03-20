@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import axios from 'axios'
-import {LANDING, LOGIN, REGISTER} from './constants/Modes'
+import { LANDING, LOGIN, REGISTER, ABOUT } from './constants/Modes'
 
 function LinkTab (props) {
   return (
@@ -32,22 +32,17 @@ export default function NavbarMenu (props) {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
 			.catch(err => {
-        console.log(err)
-      })
+  console.log(err)
+})
   }
 
   return (
     <Box sx={{ width: '100%' }}>
       <Tabs value={value} onChange={handleChange} aria-label='nav tabs example'>
-        {!user &&
-        <LinkTab label='Login' onClick={() => setMode(LOGIN)} />}
-        {!user &&
-        <LinkTab label='Sign Up' onClick={() => setMode(REGISTER)} />}
-        {user &&
-        <LinkTab
-          label='Logout'
-          onClick={logOut}
-					/>}
+        {!user && <LinkTab label='About' onClick={() => setMode(ABOUT)} />}
+        {!user && <LinkTab label='Login' onClick={() => setMode(LOGIN)} />}
+        {!user && <LinkTab label='Sign Up' onClick={() => setMode(REGISTER)} />}
+        {user && <LinkTab label='Logout' onClick={logOut} />}
       </Tabs>
     </Box>
   )
