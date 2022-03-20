@@ -12,14 +12,11 @@ export default function Dashboard (props) {
   let index = 0
 
   function selectProject(index) {
-    setCurrentProject(prev => userProjects[index]);
-    console.log(currentProject);
-    console.log(process.env.REACT_APP_BACKEND_URL + "/projects/" + currentProject.id + "/columns");
     axios
-			.get(process.env.REACT_APP_BACKEND_URL + "/projects/" + currentProject.id + "/columns")
+			.get(process.env.REACT_APP_BACKEND_URL + "/projects/" + userProjects[index].id + "/columns")
 			.then(res => {
         setCurrentProject(prev => {
-          return {...prev, Columns: res.data}
+          return {...userProjects[index], Columns: res.data}
         });
       })
     
@@ -31,11 +28,7 @@ export default function Dashboard (props) {
 			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
 			.then(res => {
         
-        setUserProjects(res.data.map(project_assignment => project_assignment.Project));
-        if (res.data.length > 0) {
-          setCurrentProject(res.data[0].Project)
-          selectProject(0);
-        }
+        setUserProjects(res.data.map(project_assignment => project_assignment.Project))
 
         setProjects(res.data.map(project_assignment =>
           <DashboardItem
@@ -47,6 +40,12 @@ export default function Dashboard (props) {
         )
       })
   }, [])
+
+  useEffect(() => {
+    if (userProjects) {
+      selectProject(0);
+    }
+  }, [userProjects])
 
   return (
     <Box

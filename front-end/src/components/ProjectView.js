@@ -12,6 +12,13 @@ export default function ProjectView (props) {
 		{ title: 'In Progress' },
 		{ title: 'Completed' }
   ]
+  // const columnObjects = currentProject.Columns;
+  // let column_data = [];
+  // if (columnObjects) {
+  //   column_data = currentProject.Columns.map(column => { 
+  //     return {title: column.name}
+  //   })
+  // }
 
   const generatedColumns = column_data.map(column =>
     <ProjectColumn
