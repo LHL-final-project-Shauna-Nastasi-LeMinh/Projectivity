@@ -8,7 +8,7 @@ import NewProjectForm from './NewProjectForm'
 import { ADDPROJECT } from './constants/Modes'
 
 export default function ProjectView (props) {
-  const { user, currentProject } = props
+  const { user, currentProject, mode} = props
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
