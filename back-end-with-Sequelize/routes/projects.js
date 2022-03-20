@@ -14,7 +14,10 @@ module.exports = sequelizeModels => {
           {
             model: sequelizeModels.Project
           }
-        ]
+        ],
+        order: [
+          ['id', 'ASC'],
+        ],
       })
       return res.json(project_assignments)
     } catch (err) {
@@ -31,7 +34,10 @@ module.exports = sequelizeModels => {
           {
             model: sequelizeModels.Ticket
           }
-        ]
+        ],
+        order: [
+          ['id', 'ASC'],
+        ],
       })
       return res.json(columns)
     } catch (err) {
