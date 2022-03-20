@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
 import ProjectColumn from './ProjectColumn'
@@ -7,19 +8,20 @@ import NewProjectForm from './NewProjectForm'
 import { ADDPROJECT } from './constants/Modes'
 
 export default function ProjectView (props) {
-  const { user, userProjects, mode } = props
+  const { user, currentProject } = props
+  const [columns, setColumns] = useState([]);
 
-  const column_data = [
-		{ title: 'To Do' },
-		{ title: 'In Progress' },
-		{ title: 'Completed' }
-  ]
+  useEffect(() => {
+    if (currentProject) { 
+      setColumns(currentProject.Columns);
+    }
+  }, [currentProject])
 
-  const generatedColumns = column_data.map(column =>
+  const generatedColumns = columns.map(column =>
     <ProjectColumn
       user={user}
-      userProjects={userProjects}
-      title={column.title}
+      title={column.name}
+      column={column}
 		/>
 	)
     if (mode === ADDPROJECT) {

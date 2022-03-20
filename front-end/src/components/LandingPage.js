@@ -4,7 +4,7 @@ import ProjectView from './ProjectView'
 import Container from '@mui/material/Container'
 
 export default function DashboardProject (props) {
-  const { mode, setMode, user, setUser, userProjects, setUserProjects } = props
+  const { mode, setMode, user, setUser, userProjects, setUserProjects, currentProject, setCurrentProject } = props
 
   return (
     <Container>
@@ -15,9 +15,11 @@ export default function DashboardProject (props) {
         setUser={setUser}
         userProjects={userProjects}
         setUserProjects={setUserProjects}
+        currentProject={currentProject}
+        setCurrentProject={setCurrentProject}
 			/>
       <Container>
-        <ProjectView user={user} userProjects={userProjects} mode={mode}/>
+        <ProjectView user={user} userProjects={userProjects} currentProject={currentProject}/>
       </Container>
     </Container>
   )

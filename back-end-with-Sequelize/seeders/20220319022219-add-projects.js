@@ -19,6 +19,12 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        name: 'Jungle Rail',
+        description: 'Ruby on Rails proof of concept',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
         name: 'SprintWin',
         description: 'Application to manage scrum process for RBC',
         createdAt: new Date(),
