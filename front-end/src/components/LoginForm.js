@@ -7,7 +7,7 @@ export default function LoginForm(props) {
   const emailInput = useInput('');
   const passwordInput = useInput('');
   const [message, setMessage] = useState("");
-  const {setLoggedIn, setUser} = props;
+  const {setUser} = props;
 
   const login = (event) => {
     event.preventDefault();
@@ -26,7 +26,6 @@ export default function LoginForm(props) {
         password: passwordInput.value 
       })
       .then(res => {
-        setLoggedIn(true);
         setUser(res.data);
       })
       .catch(function (error) {

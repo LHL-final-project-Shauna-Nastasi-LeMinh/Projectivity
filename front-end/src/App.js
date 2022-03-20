@@ -6,9 +6,8 @@ import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(true)
   const [mode, setMode] = useState('')
-  const [user, setUser] = useState()
+  const [user, setUser] = useState(null)
 
   return (
     <Container className='App'>
@@ -22,8 +21,6 @@ const App = () => {
         }}
 			>
         <Header
-          loggedIn={loggedIn}
-          setLoggedIn={setLoggedIn}
           mode={mode}
           setMode={setMode}
           user={user}
@@ -40,10 +37,9 @@ const App = () => {
         }}
 			>
         <Main
-          loggedIn={loggedIn}
-          setLoggedIn={setLoggedIn}
           mode={mode}
           setMode={setMode}
+          user={user}
           setUser={setUser}
 				/>
       </Box>

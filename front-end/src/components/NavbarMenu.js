@@ -18,7 +18,7 @@ function LinkTab (props) {
 }
 
 export default function NavbarMenu (props) {
-  const { loggedIn, setLoggedIn, mode, setMode, user, setUser } = props
+  const { mode, setMode, user, setUser } = props
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
@@ -26,7 +26,6 @@ export default function NavbarMenu (props) {
   }
 
   const logOut = () => {
-    setLoggedIn(false)
     setUser(null)
     setMode(LANDING)
 		// a axios call to clear cookie session in server side too
@@ -40,11 +39,11 @@ export default function NavbarMenu (props) {
   return (
     <Box sx={{ width: '100%' }}>
       <Tabs value={value} onChange={handleChange} aria-label='nav tabs example'>
-        {!loggedIn &&
+        {!user &&
         <LinkTab label='Login' onClick={() => setMode(LOGIN)} />}
-        {!loggedIn &&
+        {!user &&
         <LinkTab label='Sign Up' onClick={() => setMode(REGISTER)} />}
-        {loggedIn &&
+        {user &&
         <LinkTab
           label='Logout'
           onClick={logOut}

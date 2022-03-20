@@ -12,7 +12,7 @@ export default function RegistrationForm (props) {
   const [message, setMessage] = useState('');
   const [roles, setRoles] = useState([]);
   const [role, setRole] = useState('');
-  const {setLoggedIn, setUser} = props;
+  const { setUser} = props;
 
   useEffect(() => {
     axios
@@ -67,7 +67,6 @@ axios
     role_id: role
   })
 	.then(res => {
-    setLoggedIn(true);
     setUser(res.data);
   })
 	.catch(function (error) {

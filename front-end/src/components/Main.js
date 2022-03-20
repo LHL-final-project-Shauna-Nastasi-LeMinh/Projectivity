@@ -6,17 +6,17 @@ import Box from '@mui/material/Box'
 import {LOGIN, REGISTER} from './constants/Modes'
 
 export default function Main (props) {
-  const { loggedIn, setLoggedIn, mode, setMode, setUser } = props
+  const { mode, setMode, user, setUser } = props
 
   return (
     <Box>
       {mode === LOGIN &&
-				loggedIn === false &&
-				<LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser}/>}
+				!user &&
+				<LoginForm setUser={setUser}/>}
       {mode === REGISTER &&
-				loggedIn === false &&
-				<RegistrationForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} setUser={setUser}/>}
-      {loggedIn === true && <LandingPage />}
+				!user &&
+				<RegistrationForm setUser={setUser}/>}
+      {user && <LandingPage />}
     </Box>
   )
 }

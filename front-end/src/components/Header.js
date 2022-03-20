@@ -4,8 +4,6 @@ import Box from '@mui/material/Box'
 
 export default function Header (props) {
   const {
-		loggedIn,
-		setLoggedIn,
 		mode,
 		setMode,
 		user,
@@ -26,8 +24,6 @@ export default function Header (props) {
         </div>
         <div>
           <NavbarMenu
-            loggedIn={loggedIn}
-            setLoggedIn={setLoggedIn}
             mode={mode}
             setMode={setMode}
             user={user}
