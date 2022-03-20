@@ -10,7 +10,7 @@ import { LANDING } from './components/constants/Modes'
 const App = () => {
   const [mode, setMode] = useState(LANDING)
   const [user, setUser] = useState(null)
-  const [cookies, setCookie] = useCookies(["user"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [userProjects, setUserProjects] = useState()
   const [currentProject, setCurrentProject] = useState()
 	// const [currentColumns, setCurrentColumns] = useState()
@@ -33,7 +33,7 @@ const App = () => {
           user={user}
           setUser={setUser}
           cookies={cookies}
-          setCookie={setCookie}
+          removeCookie={removeCookie}
 				/>
       </Box>
       <Box
@@ -50,7 +50,6 @@ const App = () => {
           setMode={setMode}
           user={user}
           setUser={setUser}
-          cookies={cookies}
           setCookie={setCookie}
           userProjects={userProjects}
           setUserProjects={setUserProjects}

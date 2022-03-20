@@ -18,7 +18,7 @@ function LinkTab (props) {
 }
 
 export default function NavbarMenu (props) {
-  const { mode, setMode, user, setUser, cookies, setCookie } = props
+  const { mode, setMode, user, setUser, cookies, removeCookie } = props
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
@@ -28,7 +28,7 @@ export default function NavbarMenu (props) {
   const logOut = () => {
     setUser(null)
     setMode(LANDING)
-    setCookie("user", null, { path: "/" });
+    removeCookie('user');
 		// a axios call to clear cookie session in server side too
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
@@ -41,9 +41,9 @@ export default function NavbarMenu (props) {
     <Box sx={{ width: '100%' }}>
       <Tabs value={value} onChange={handleChange} aria-label='nav tabs example'>
         {!user && <LinkTab label='About' onClick={() => setMode(ABOUT)} />}
-        {!user && <LinkTab label='Login' onClick={() => setMode(LOGIN)} />}
-        {!user && <LinkTab label='Sign Up' onClick={() => setMode(REGISTER)} />}
-        {user && <LinkTab label='Logout' onClick={logOut} />}
+        {!cookies["user"] && <LinkTab label='Login' onClick={() => setMode(LOGIN)} />}
+        {!cookies["user"] && <LinkTab label='Sign Up' onClick={() => setMode(REGISTER)} />}
+        {cookies["user"] && <LinkTab label='Logout' onClick={logOut} />}
       </Tabs>
     </Box>
   )
