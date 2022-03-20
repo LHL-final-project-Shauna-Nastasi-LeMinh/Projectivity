@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "./Button";
-import {useState} from 'react';
+import axios from "axios";
 
 export default function Header(props) {
 
@@ -9,7 +9,12 @@ export default function Header(props) {
   const logOut = () => {
     setLoggedIn(false);
     setLoggedEmail(null);
-    // need a axios call to clear cookie session in server side too
+    alert("Logged out");
+    // a axios call to clear cookie session in server side too
+    axios.get(process.env.REACT_APP_BACKEND_URL + "/accessControl/logout")
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   return (

@@ -47,5 +47,14 @@ module.exports = (sequelizeModels) => {
     }
   })
 
+  router.get('/logout', async(req, res) => {
+    try {
+      req.session["employee_id"] = null;
+      req.session["role_id"] = null;
+      return res.send("Logged out");
+    } catch(err) {
+    }
+  })
+
   return router;
 };
