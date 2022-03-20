@@ -11,7 +11,6 @@ const App = () => {
   const [mode, setMode] = useState(LANDING)
   const [user, setUser] = useState(null)
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-  const [userProjects, setUserProjects] = useState()
   const [currentProject, setCurrentProject] = useState()
 	// const [currentColumns, setCurrentColumns] = useState()
 	// const [currentTickets, setCurrentTickets] = useState()
@@ -51,8 +50,6 @@ const App = () => {
           user={user}
           setUser={setUser}
           setCookie={setCookie}
-          userProjects={userProjects}
-          setUserProjects={setUserProjects}
           currentProject={currentProject}
           setCurrentProject={setCurrentProject}
 				/>
