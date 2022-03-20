@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
 import ProjectColumn from './ProjectColumn'
@@ -7,27 +7,20 @@ import Box from '@mui/material/Box'
 
 export default function ProjectView (props) {
   const { user, currentProject } = props
+  const [columnData, setColumnData] = useState([]);
 
-  const column_data = [
-		{ title: 'To Do' },
-		{ title: 'In Progress' },
-		{ title: 'Completed' }
-  ]
+  useEffect(() => {
+    if (currentProject) { 
+      setColumnData(currentProject.Columns);
+    }
+    console.log(columnData);
+  }, [currentProject])
 
-  // let column_data = [];
-  // useEffect(() => {
-  //   if (currentProject) { 
-  //     let columnObjects = currentProject.Columns;
-  //     if (columnObjects) {
-  //       column_data = columnObjects.map(column => column.name);
-  //     }
-  //   }
-  // }, [currentProject])
-
-  const generatedColumns = column_data.map(column =>
+  const generatedColumns = columnData.map(column =>
     <ProjectColumn
       user={user}
-      title={column.title}
+      title={column.name}
+      tickets={column.Tickets}
 		/>
 	)
 
