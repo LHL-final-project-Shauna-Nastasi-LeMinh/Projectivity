@@ -4,9 +4,10 @@ import Header from './components/Header'
 import Main from './components/Main'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
+import {LANDING} from './components/constants/Modes'
 
 const App = () => {
-  const [mode, setMode] = useState('')
+  const [mode, setMode] = useState(LANDING)
   const [user, setUser] = useState(null)
 
   return (
