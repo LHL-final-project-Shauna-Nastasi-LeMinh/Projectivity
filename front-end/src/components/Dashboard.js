@@ -12,6 +12,7 @@ export default function Dashboard (props) {
   let index = 0
 
   function selectProject(index) {
+    console.log("SELECTING " + index);
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + "/projects/" + userProjects[index].id + "/columns")
 			.then(res => {
