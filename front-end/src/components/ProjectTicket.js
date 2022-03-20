@@ -6,6 +6,10 @@ import ListItemText from '@mui/material/ListItemText'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import Checkbox from '@mui/material/Checkbox'
 import Avatar from '@mui/material/Avatar'
+import TableHead from '@mui/material/TableHead'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import TableBody from '@mui/material/TableBody'
 
 export default function ProjectTicket (props) {
   const [checked, setChecked] = React.useState([1])
@@ -24,37 +28,43 @@ export default function ProjectTicket (props) {
   }
 
   return (
-    <List
-      dense
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-		>
-      {[0, 1, 2, 3].map(value => {
-        const labelId = `checkbox-list-secondary-label-${value}`
-        return (
-          <ListItem
-            key={value}
-            secondaryAction={
-              <Checkbox
-                edge='end'
-                onChange={handleToggle(value)}
-                checked={checked.indexOf(value) !== -1}
-                inputProps={{ 'aria-labelledby': labelId }}
-							/>
-						}
-            disablePadding
-					>
+    <TableRow>
+      <TableCell>
+        <List
+          dense
+          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+				>
+          {[0, 1, 2, 3].map(value => {
+            const labelId = `checkbox-list-secondary-label-${value}`
+            return (
+              <ListItem
+                key={value}
+                secondaryAction={
+                  <Checkbox
+                    edge='end'
+                    onChange={handleToggle(value)}
+                    checked={checked.indexOf(value) !== -1}
+                    inputProps={{ 'aria-labelledby': labelId }}
+									/>
+								}
+                disablePadding
+							>
+                <ListItemButton>
+                  <ListItemText
+                    id={labelId}
+                    primary={`Line item ${value + 1}`}
+									/>
+                </ListItemButton>
+              </ListItem>
+            )
+          })}
+          <ListItem>
             <ListItemButton>
-              <ListItemAvatar>
-                <Avatar
-                  alt={`Avatar n°${value + 1}`}
-                  src={`/static/images/avatar/${value + 1}.jpg`}
-								/>
-              </ListItemAvatar>
-              <ListItemText id={labelId} primary={`Line item ${value + 1}`} />
+              <ListItemText primary='Create New Ticket' />
             </ListItemButton>
           </ListItem>
-        )
-      })}
-    </List>
+        </List>
+      </TableCell>
+    </TableRow>
   )
 }

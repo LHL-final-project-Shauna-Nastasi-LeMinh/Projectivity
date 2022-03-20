@@ -5,12 +5,16 @@ import Header from './components/Header'
 import Main from './components/Main'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import {LANDING} from './components/constants/Modes'
+import { LANDING } from './components/constants/Modes'
 
 const App = () => {
   const [mode, setMode] = useState(LANDING)
   const [user, setUser] = useState(null)
   const [cookies, setCookie] = useCookies(["user"]);
+  const [userProjects, setUserProjects] = useState()
+  const [currentProject, setCurrentProject] = useState()
+	// const [currentColumns, setCurrentColumns] = useState()
+	// const [currentTickets, setCurrentTickets] = useState()
 
   return (
     <Container className='App'>
@@ -48,6 +52,8 @@ const App = () => {
           setUser={setUser}
           cookies={cookies}
           setCookie={setCookie}
+          userProjects={userProjects}
+          setUserProjects={setUserProjects}
 				/>
       </Box>
     </Container>
