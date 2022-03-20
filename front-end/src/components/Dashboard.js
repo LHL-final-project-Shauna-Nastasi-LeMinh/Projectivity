@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
@@ -7,22 +7,26 @@ import DashboardItem from './DashboardItem'
 export default function Dashboard (props) {
   const { mode, setMode, user, setUser, userProjects, setUserProjects } = props
 
+  const [projects, setProjects] = useState()
+
+  let index = 0
+
 	// /projects?id=1
   useEffect(() => {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
 			.then(res => {
-  console.log(res.data)
-  setUserProjects(
+  setUserProjects(res.data)
+  setProjects(
 					res.data.map(project_assignment =>
-  <DashboardItem value={project_assignment.Project.name} />
+  <DashboardItem
+    value={project_assignment.Project.name}
+    listIndex={index++}
+						/>
 					)
 				)
-  console.log(userProjects)
 })
   }, [])
-
-  console.log(userProjects)
 
   return (
     <Box
@@ -36,8 +40,8 @@ export default function Dashboard (props) {
       }}
 		>
       <List component='nav' aria-label='main mailbox folders'>
-        {userProjects}
-        <DashboardItem value='CreateNewProject' />
+        {projects}
+        <DashboardItem value='CreateNewProject' listIndex={-1} />
       </List>
     </Box>
   )

@@ -10,6 +10,9 @@ const App = () => {
   const [mode, setMode] = useState(LANDING)
   const [user, setUser] = useState()
   const [userProjects, setUserProjects] = useState()
+  const [currentProject, setCurrentProject] = useState()
+	// const [currentColumns, setCurrentColumns] = useState()
+	// const [currentTickets, setCurrentTickets] = useState()
 
   return (
     <Container className='App'>
