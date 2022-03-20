@@ -7,7 +7,9 @@ export default function Header (props) {
 		mode,
 		setMode,
 		user,
-		setUser
+		setUser,
+    cookies,
+    setCookie
 	} = props
 
   return (
@@ -28,6 +30,8 @@ export default function Header (props) {
             setMode={setMode}
             user={user}
             setUser={setUser}
+            cookies={cookies}
+            setCookie={setCookie}
 					/>
         </div>
       </Box>

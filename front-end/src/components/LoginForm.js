@@ -7,7 +7,7 @@ export default function LoginForm(props) {
   const emailInput = useInput('');
   const passwordInput = useInput('');
   const [message, setMessage] = useState("");
-  const {setUser} = props;
+  const {setUser, setCookie} = props;
 
   const login = (event) => {
     event.preventDefault();
@@ -27,6 +27,9 @@ export default function LoginForm(props) {
       })
       .then(res => {
         setUser(res.data);
+        setCookie("user", res.data, {
+          path: "/"
+        });
       })
       .catch(function (error) {
         console.log(error.message)

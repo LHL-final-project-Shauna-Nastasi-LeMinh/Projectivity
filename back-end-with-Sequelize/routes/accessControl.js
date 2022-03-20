@@ -22,8 +22,7 @@ module.exports = (sequelizeModels) => {
 
       if (employees.length > 0) {
         const employee = employees[0]
-        req.session["employee_id"] = employee.id;
-        req.session["role_id"] = employee.Role.id;
+
         return res.json( {
           id: employee.id,
           email:employee.email,
@@ -42,9 +41,6 @@ module.exports = (sequelizeModels) => {
     try {
       const {first_name, last_name, phone, email, password, role_id} = req.body;
       const employee = await Employee.create({first_name, last_name, phone, email, password, role_id})
-      console.log(employee);
-      req.session["employee_id"] = employee.id;
-      req.session["role_id"] = role_id;
       return res.json( {
         id: employee.id,
         email:employee.email,
@@ -58,8 +54,6 @@ module.exports = (sequelizeModels) => {
 
   router.get('/logout', async(req, res) => {
     try {
-      req.session["employee_id"] = null;
-      req.session["role_id"] = null;
       return res.json({ message: "Logged out" });
     } catch(err) {
     }

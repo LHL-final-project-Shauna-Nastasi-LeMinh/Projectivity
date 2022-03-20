@@ -1,5 +1,6 @@
 import './App.css'
 import { useState } from 'react'
+import { useCookies } from "react-cookie";
 import Header from './components/Header'
 import Main from './components/Main'
 import Container from '@mui/material/Container'
@@ -9,6 +10,7 @@ import {LANDING} from './components/constants/Modes'
 const App = () => {
   const [mode, setMode] = useState(LANDING)
   const [user, setUser] = useState(null)
+  const [cookies, setCookie] = useCookies(["user"]);
 
   return (
     <Container className='App'>
@@ -26,6 +28,8 @@ const App = () => {
           setMode={setMode}
           user={user}
           setUser={setUser}
+          cookies={cookies}
+          setCookie={setCookie}
 				/>
       </Box>
       <Box
@@ -42,6 +46,8 @@ const App = () => {
           setMode={setMode}
           user={user}
           setUser={setUser}
+          cookies={cookies}
+          setCookie={setCookie}
 				/>
       </Box>
     </Container>

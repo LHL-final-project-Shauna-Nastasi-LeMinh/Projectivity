@@ -12,20 +12,20 @@ export default function RegistrationForm (props) {
   const [message, setMessage] = useState('');
   const [roles, setRoles] = useState([]);
   const [role, setRole] = useState('');
-  const { setUser} = props;
+  const { setUser, setCookie} = props;
 
   useEffect(() => {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + '/roles')
 			.then(result => {
-  const roleOptions = result.data.map(role =>
-    <option value={role.id} key={role.id}>
-      {role.name}
-    </option>
-				)
-  setRole(result.data[0].id)
-  setRoles(roleOptions)
-})
+        const roleOptions = result.data.map(role =>
+          <option value={role.id} key={role.id}>
+            {role.name}
+          </option>
+              )
+        setRole(result.data[0].id)
+        setRoles(roleOptions)
+      })
 			.catch(err => {
   console.log(err)
 })
@@ -68,6 +68,9 @@ axios
   })
 	.then(res => {
     setUser(res.data);
+    setCookie("user", res.data, {
+      path: "/"
+    });
   })
 	.catch(function (error) {
     console.log(error.message)
