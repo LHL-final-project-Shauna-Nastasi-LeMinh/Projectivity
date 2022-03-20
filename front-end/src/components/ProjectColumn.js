@@ -9,7 +9,7 @@ import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
 
 export default function ProjectColumn (props) {
-  const { user, userProjects, title } = props
+  const { user, title } = props
 
   useEffect(() => {
     axios

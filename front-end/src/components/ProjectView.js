@@ -6,7 +6,7 @@ import ProjectColumn from './ProjectColumn'
 import Box from '@mui/material/Box'
 
 export default function ProjectView (props) {
-  const { user, userProjects, currentProject } = props
+  const { user, currentProject } = props
 
   const column_data = [
 		{ title: 'To Do' },
@@ -27,7 +27,6 @@ export default function ProjectView (props) {
   const generatedColumns = column_data.map(column =>
     <ProjectColumn
       user={user}
-      userProjects={userProjects}
       title={column.title}
 		/>
 	)
