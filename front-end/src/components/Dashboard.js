@@ -15,8 +15,6 @@ export default function Dashboard (props) {
   let index = 0
 
   function selectProject(index) {
-    console.log("stateRef.current");
-    console.log(stateRef.current);
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + "/projects/" + stateRef.current[index].id + "/columns")
 			.then(res => {
@@ -36,6 +34,7 @@ export default function Dashboard (props) {
 
         setProjects(res.data.map(project_assignment =>
           <DashboardItem
+            key={project_assignment.Project.id}
             value={project_assignment.Project.name}
             listIndex={index++}
             currentProject={currentProject}

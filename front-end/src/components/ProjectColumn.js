@@ -18,7 +18,7 @@ export default function ProjectColumn (props) {
 
   let index = 0
   const generatedTickets = tickets.map(ticket =>
-    <ProjectTicket title={ticket.description} />
+    <ProjectTicket title={ticket.description} key={ticket.id}/>
 	)
 
   return (
