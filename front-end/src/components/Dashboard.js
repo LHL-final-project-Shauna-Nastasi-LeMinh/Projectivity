@@ -5,27 +5,46 @@ import List from '@mui/material/List'
 import DashboardItem from './DashboardItem'
 
 export default function Dashboard (props) {
-  const { mode, setMode, user, setUser, userProjects, setUserProjects } = props
+  const { mode, setMode, user, setUser, userProjects, setUserProjects, currentProject, setCurrentProject } = props
 
   const [projects, setProjects] = useState()
 
   let index = 0
+
+  function selectProject(index) {
+    setCurrentProject(prev => userProjects[index]);
+    console.log(currentProject);
+    console.log(process.env.REACT_APP_BACKEND_URL + "/projects/" + currentProject.id + "/columns");
+    axios
+			.get(process.env.REACT_APP_BACKEND_URL + "/projects/" + currentProject.id + "/columns")
+			.then(res => {
+        setCurrentProject(prev => {
+          return {...prev, Columns: res.data}
+        });
+      })
+    
+  }
 
 	// /projects?id=1
   useEffect(() => {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
 			.then(res => {
-  setUserProjects(res.data)
-  setProjects(
-					res.data.map(project_assignment =>
-  <DashboardItem
-    value={project_assignment.Project.name}
-    listIndex={index++}
-						/>
-					)
-				)
-})
+        
+        setUserProjects(res.data.map(project_assignment => project_assignment.Project));
+        if (res.data.length > 0) {
+          setCurrentProject(res.data[0].Project)
+        }
+
+        setProjects(res.data.map(project_assignment =>
+          <DashboardItem
+            value={project_assignment.Project.name}
+            listIndex={index++}
+            currentProject={currentProject}
+            selectProject={selectProject}
+          />)
+        )
+      })
   }, [])
 
   return (

@@ -53,6 +53,8 @@ const App = () => {
           setCookie={setCookie}
           userProjects={userProjects}
           setUserProjects={setUserProjects}
+          currentProject={currentProject}
+          setCurrentProject={setCurrentProject}
 				/>
       </Box>
     </Container>

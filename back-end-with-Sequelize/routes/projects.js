@@ -4,6 +4,7 @@ const router = express.Router()
 
 module.exports = sequelizeModels => {
   Project_Assignments = sequelizeModels.ProjectAssignment
+  Columns = sequelizeModels.Column
 
   router.get('/:employee_id', async (req, res) => {
     try {
@@ -16,6 +17,23 @@ module.exports = sequelizeModels => {
         ]
       })
       return res.json(project_assignments)
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
+  })
+
+  router.get('/:project_id/columns/', async (req, res) => {
+    try {
+      const columns = await Columns.findAll({
+        where: { project_id: req.params.project_id },
+        include: [
+          {
+            model: sequelizeModels.Ticket
+          }
+        ]
+      })
+      return res.json(columns)
     } catch (err) {
       console.log(err)
       return res.status(500).json(err)
