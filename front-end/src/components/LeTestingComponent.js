@@ -3,16 +3,16 @@ import LoginForm from "./LoginForm";
 import RegistrationForm from "./RegistrationForm";
 
 export default function LeTestingComponent(props) {
-   const {loggedIn, setLoggedIn, mode} = props;
+   const {loggedIn, setLoggedIn, mode, setLoggedEmail} = props;
    return (
       <div>
-         {mode==="Login" && loggedIn===false && <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}
+         {mode==="Login" && loggedIn===false && <LoginForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} setLoggedEmail={setLoggedEmail}/>}
          <br/>
          <br/>
          <br/>
          <br/>
          <br/>
-         {mode==="Register" && <RegistrationForm loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}
+         {mode==="Register" && <RegistrationForm loggedIn={loggedIn} setLoggedIn={setLoggedIn} setLoggedEmail={setLoggedEmail}/>}
       </div>
    );
 }
