@@ -1,11 +1,11 @@
-const model = require('./models')
+const sequelizeModels = require('./models')
 
 async function testRolesAndEmployees () {
-  const rawData = await model.Role.findAll({
-    where: { name: 'Manager' },
+  const rawData = await sequelizeModels.Role.findAll({
+		// where: {name: "Manager"},
     include: [
       {
-        model: model.Employee
+        model: sequelizeModels.Employee
       }
     ]
   })
@@ -23,14 +23,11 @@ async function testRolesAndEmployees () {
 
 async function testEmployeesVsAssignmentsVsProjects () {
 	// await sequelize.sync({ force: true})
-  const rawData = await model.Employee.findAll({
+  const rawData = await sequelizeModels.Employee.findAll({
     where: { first_name: 'John' },
     include: [
       {
-        model: model.ProjectAssignment
-      },
-      {
-        model: model.Project
+        model: sequelizeModels.Project
       }
     ]
   })
@@ -54,11 +51,11 @@ async function testEmployeesVsAssignmentsVsProjects () {
 }
 
 async function testProjectsAndColumns () {
-  const rawData = await model.Project.findAll({
+  const rawData = await sequelizeModels.Project.findAll({
     where: { id: 1 },
     include: [
       {
-        model: model.Column
+        model: sequelizeModels.Column
       }
     ]
   })
@@ -75,11 +72,11 @@ async function testProjectsAndColumns () {
 }
 
 async function testColumnsAndTickets () {
-  const rawData = await model.Column.findAll({
+  const rawData = await sequelizeModels.Column.findAll({
     where: { id: 1 },
     include: [
       {
-        model: model.Ticket
+        model: sequelizeModels.Ticket
       }
     ]
   })
@@ -95,7 +92,7 @@ async function testColumnsAndTickets () {
   console.log(firstTicket)
 }
 
-testRolesAndEmployees()
+// testRolesAndEmployees();
 testEmployeesVsAssignmentsVsProjects()
-testProjectsAndColumns()
-testColumnsAndTickets()
+// testProjectsAndColumns();
+// testColumnsAndTickets();

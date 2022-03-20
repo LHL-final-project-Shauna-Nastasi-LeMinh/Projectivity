@@ -3,7 +3,26 @@ import NavbarMenu from './NavbarMenu'
 import Box from '@mui/material/Box'
 
 export default function Header (props) {
-  const { loggedIn, setLoggedIn, mode, setMode } = props
+  const {
+		loggedIn,
+		setLoggedIn,
+		mode,
+		setMode,
+		loggedEmail,
+		setLoggedEmail
+	} = props
+
+  const logOut = () => {
+    setLoggedIn(false)
+    setLoggedEmail(null)
+    alert('Logged out')
+		// a axios call to clear cookie session in server side too
+    axios
+			.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
+			.catch(err => {
+  console.log(err)
+})
+  }
 
   return (
     <header>

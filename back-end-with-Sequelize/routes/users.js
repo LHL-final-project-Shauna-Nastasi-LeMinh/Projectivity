@@ -11,7 +11,8 @@ module.exports = (sequelizeModels, pusher) => {
       const user = await User.create({firstname, lastname})
 
       // WebSocket broadcast if neccessary
-      pusher.trigger("USER_CHANNEL", "USER_SAVED_EVENT", {user});
+
+      pusher.trigger("MESSAGE_CHANNEL_NAME", "EVENT_NAME", { user });
       // End WebSocket
 
       return res.json(user);

@@ -10,13 +10,23 @@ export default function LoginForm(props) {
 
   const login = (event) => {
     event.preventDefault();
+    const emailReg = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+    if (emailInput.value === "" || !emailReg.test(emailInput.value)) {
+      setMessage("Please enter correct email address");
+      return;
+    }
+    if (passwordInput.value === "") {
+      setMessage("Please enter password");
+      return;
+    }
     axios.post(process.env.REACT_APP_BACKEND_URL + "/accessControl/login", { 
         email: emailInput.value, 
         password: passwordInput.value 
       })
       .then(res => {
         props.setLoggedIn(true);
-        alert("Logged in");
+        props.setLoggedEmail(res.data.email);
+        alert(res.data.email + " logged in");
       })
       .catch(function (error) {
         console.log(error.message)
@@ -32,13 +42,13 @@ export default function LoginForm(props) {
       <br/>
       <label>Email:</label>
       <br/>
-      <input 
+      <input
         { ...emailInput }
       />
       <br/>
       <label>Password:</label>
       <br/>
-      <input 
+      <input type="password" 
         { ...passwordInput }
       />
       <br/>
