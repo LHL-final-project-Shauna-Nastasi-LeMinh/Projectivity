@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import ProjectTicket from './ProjectTicket'
 import Box from '@mui/material/Box'
@@ -9,25 +9,15 @@ import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
 
 export default function ProjectColumn (props) {
-  const { user, title } = props
+  const { user, column } = props
+  const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    axios
-			.get(process.env.REACT_APP_BACKEND_URL + `/tickets/${user.id}`)
-			.then(res => {
-  console.log('data:', res.data)
-})
-  }, [])
-
-  const data = [
-		{ description: "I can't login" },
-		{ description: "I can't login" },
-		{ description: "I can't login" },
-		{ description: "I can't login" }
-  ]
+    setTickets(column.Tickets);
+  }, [column])
 
   let index = 0
-  const generatedTickets = data.map(ticket =>
+  const generatedTickets = tickets.map(ticket =>
     <ProjectTicket title={ticket.description} />
 	)
 
@@ -36,7 +26,7 @@ export default function ProjectColumn (props) {
       <List>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemText primary={title} />
+            <ListItemText primary={column.name} />
           </ListItemButton>
         </ListItem>
         <Divider />
