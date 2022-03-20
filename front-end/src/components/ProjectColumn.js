@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
-import Table from '@mui/material/Table'
-import TableHead from '@mui/material/TableHead'
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
-import TableBody from '@mui/material/TableBody'
 import ProjectTicket from './ProjectTicket'
+import Box from '@mui/material/Box'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import Divider from '@mui/material/Divider'
 
 export default function ProjectColumn (props) {
-  const { user, userProjects } = props
-
-  console.log('projects', userProjects)
+  const { user, userProjects, title } = props
 
   useEffect(() => {
     axios
@@ -20,18 +19,29 @@ export default function ProjectColumn (props) {
 })
   }, [])
 
+  const data = [
+		{ description: "I can't login" },
+		{ description: "I can't login" },
+		{ description: "I can't login" },
+		{ description: "I can't login" }
+  ]
+
+  let index = 0
+  const generatedTickets = data.map(ticket =>
+    <ProjectTicket title={ticket.description} />
+	)
+
   return (
-    <Table sx={{ width: '100%' }} aria-label='simple table'>
-      <TableHead>
-        <TableRow>
-          <TableCell>To Do</TableCell>
-          <TableCell>In Progress</TableCell>
-          <TableCell>Completed</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        <ProjectTicket />
-      </TableBody>
-    </Table>
+    <Box>
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemText primary={title} />
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+        {generatedTickets}
+      </List>
+    </Box>
   )
 }
