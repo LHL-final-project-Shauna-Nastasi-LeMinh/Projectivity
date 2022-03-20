@@ -36,13 +36,14 @@ export default function NavbarMenu (props) {
         console.log(err)
       })
   }
-
+  
   return (
     <Box sx={{ width: '100%' }}>
       <Tabs value={value} onChange={handleChange} aria-label='nav tabs example'>
         {!user && <LinkTab label='About' onClick={() => setMode(ABOUT)} />}
         {!cookies["user"] && <LinkTab label='Login' onClick={() => setMode(LOGIN)} />}
         {!cookies["user"] && <LinkTab label='Sign Up' onClick={() => setMode(REGISTER)} />}
+        {user && <span>Logged in as: {user.email}</span>}
         {cookies["user"] && <LinkTab label='Logout' onClick={logOut} />}
       </Tabs>
     </Box>
