@@ -17,7 +17,7 @@ export default function DashboardProject (props) {
         setUserProjects={setUserProjects}
 			/>
       <Container>
-        <ProjectView user={user} userProjects={userProjects} />
+        <ProjectView user={user} userProjects={userProjects} mode={mode}/>
       </Container>
     </Container>
   )

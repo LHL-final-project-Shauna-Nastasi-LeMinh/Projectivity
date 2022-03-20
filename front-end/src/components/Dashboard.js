@@ -41,7 +41,7 @@ export default function Dashboard (props) {
 		>
       <List component='nav' aria-label='main mailbox folders'>
         {projects}
-        <DashboardItem value='CreateNewProject' listIndex={-1} />
+        <DashboardItem value='CreateNewProject' listIndex={-1} mode={mode} setMode={setMode} />
       </List>
     </Box>
   )
