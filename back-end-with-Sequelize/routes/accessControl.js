@@ -51,7 +51,7 @@ module.exports = (sequelizeModels) => {
     try {
       req.session["employee_id"] = null;
       req.session["role_id"] = null;
-      return res.send("Logged out");
+      return res.json({ message: "Logged out" });
     } catch(err) {
     }
   })
