@@ -7,19 +7,6 @@ import { LANDING, LOGIN, REGISTER, ABOUT } from './constants/Modes'
 import AboutPage from './AboutPage'
 
 export default function Main (props) {
-<<<<<<< HEAD
-  const { mode, setMode, user, setUser, cookies, setCookie} = props
-
-  return (
-    <Box>
-      {mode === LOGIN &&
-				!user &&
-				<LoginForm setUser={setUser} setCookie={setCookie}/>}
-      {mode === REGISTER &&
-				!user &&
-				<RegistrationForm setUser={setUser} setCookie={setCookie}/>}
-      {user && <LandingPage />}
-=======
   const { mode, setMode, user, setUser, userProjects, setUserProjects } = props
 
   return (
@@ -36,7 +23,6 @@ export default function Main (props) {
         userProjects={userProjects}
         setUserProjects={setUserProjects}
 				/>}
->>>>>>> master
     </Box>
   )
 }
