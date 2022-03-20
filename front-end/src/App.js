@@ -1,17 +1,51 @@
-import './App.css';
-import LeTestingComponent from './components/LeTestingComponent';
-import Header from './components/Header';
-import {useState} from 'react';
+import './App.css'
+import { useState } from 'react'
+import Header from './components/Header'
+import Main from './components/Main'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [mode, setMode] = useState("");
-  return (
-    <div className="App">
-      <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} mode={mode} setMode={setMode}></Header>
-      <LeTestingComponent loggedIn={loggedIn} setLoggedIn={setLoggedIn} mode={mode}/>
-    </div>
-  );
-};
+  const [loggedIn, setLoggedIn] = useState(true)
+  const [mode, setMode] = useState('')
+  const [user, setUser] = useState()
 
-export default App;
+  return (
+    <Container className='App'>
+      <Box
+        sx={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '4rem'
+        }}
+			>
+        <Header
+          loggedIn={loggedIn}
+          setLoggedIn={setLoggedIn}
+          mode={mode}
+          setMode={setMode}
+				/>
+      </Box>
+      <Box
+        sx={{
+          position: 'fixed',
+          top: '4rem',
+          left: 0,
+          width: '100%',
+          height: '100%'
+        }}
+			>
+        <Main
+          loggedIn={loggedIn}
+          setLoggedIn={setLoggedIn}
+          mode={mode}
+          setMode={setMode}
+				/>
+      </Box>
+    </Container>
+  )
+}
+
+export default App
