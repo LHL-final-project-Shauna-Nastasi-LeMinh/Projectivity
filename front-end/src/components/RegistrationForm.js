@@ -4,14 +4,15 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 
 export default function RegistrationForm (props) {
-  const firstnameInput = useInput('')
-  const lastnameInput = useInput('')
-  const emailInput = useInput('')
-  const passwordInput = useInput('')
-  const phoneInput = useInput('')
-  const [message, setMessage] = useState('')
-  const [roles, setRoles] = useState([])
-  const [role, setRole] = useState('')
+  const firstnameInput = useInput('');
+  const lastnameInput = useInput('');
+  const emailInput = useInput('');
+  const passwordInput = useInput('');
+  const phoneInput = useInput('');
+  const [message, setMessage] = useState('');
+  const [roles, setRoles] = useState([]);
+  const [role, setRole] = useState('');
+  const {setLoggedIn, setUser} = props;
 
   useEffect(() => {
     axios
@@ -45,6 +46,7 @@ export default function RegistrationForm (props) {
       setMessage('Please enter phone number')
       return
     }
+    // eslint-disable-next-line
     const emailReg = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g
     if (emailInput.value === '' || !emailReg.test(emailInput.value)) {
       setMessage('Please enter correct email address')
@@ -55,23 +57,22 @@ export default function RegistrationForm (props) {
       return
     }
 
-    axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/register', {
-  first_name: firstnameInput.value,
-  last_name: lastnameInput.value,
-  email: emailInput.value,
-  password: passwordInput.value,
-  phone: phoneInput.value,
-  role_id: role
-})
-			.then(res => {
-  props.setLoggedIn(true)
-  props.setLoggedEmail(res.data.email)
-  alert(res.data.email + ' registered')
-})
-			.catch(function (error) {
-  console.log(error.message)
-  setMessage('Registration invalid')
+axios
+  .post(process.env.REACT_APP_BACKEND_URL + '/accessControl/register', {
+    first_name: firstnameInput.value,
+    last_name: lastnameInput.value,
+    email: emailInput.value,
+    password: passwordInput.value,
+    phone: phoneInput.value,
+    role_id: role
+  })
+	.then(res => {
+    setLoggedIn(true);
+    setUser(res.data);
+  })
+	.catch(function (error) {
+    console.log(error.message)
+    setMessage('Registration invalid')
 })
   }
 

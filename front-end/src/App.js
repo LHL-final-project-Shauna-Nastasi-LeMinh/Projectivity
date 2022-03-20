@@ -26,6 +26,8 @@ const App = () => {
           setLoggedIn={setLoggedIn}
           mode={mode}
           setMode={setMode}
+          user={user}
+          setUser={setUser}
 				/>
       </Box>
       <Box
@@ -42,6 +44,7 @@ const App = () => {
           setLoggedIn={setLoggedIn}
           mode={mode}
           setMode={setMode}
+          setUser={setUser}
 				/>
       </Box>
     </Container>

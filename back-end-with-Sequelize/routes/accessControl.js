@@ -21,9 +21,14 @@ module.exports = (sequelizeModels) => {
       const employees = JSON.parse(JSON.stringify(rawData))
 
       if (employees.length > 0) {
-        req.session["employee_id"] = employees[0].id;
-        req.session["role_id"] = employees[0].Role.id;
-        return res.json( employees[0] );
+        const employee = employees[0]
+        req.session["employee_id"] = employee.id;
+        req.session["role_id"] = employee.Role.id;
+        return res.json( {
+          id: employee.id,
+          email:employee.email,
+          role_id: employee.Role.id
+        });
       } else {
         return res.status(403).json(new Error("Access forbidden"));
       }
@@ -40,7 +45,11 @@ module.exports = (sequelizeModels) => {
       console.log(employee);
       req.session["employee_id"] = employee.id;
       req.session["role_id"] = role_id;
-      return res.json(employee);
+      return res.json( {
+        id: employee.id,
+        email:employee.email,
+        role_id: role_id
+      });
     } catch(err) {
       console.log(err);
       return res.status(500).json(err);

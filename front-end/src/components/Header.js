@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import NavbarMenu from './NavbarMenu'
 import Box from '@mui/material/Box'
-import axios from 'axios'
 
 export default function Header (props) {
   const {
@@ -9,21 +8,9 @@ export default function Header (props) {
 		setLoggedIn,
 		mode,
 		setMode,
-		loggedEmail,
-		setLoggedEmail
+		user,
+		setUser
 	} = props
-
-  const logOut = () => {
-    setLoggedIn(false)
-    setLoggedEmail(null)
-    alert('Logged out')
-		// a axios call to clear cookie session in server side too
-    axios
-			.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
-			.catch(err => {
-  console.log(err)
-})
-  }
 
   return (
     <header>
@@ -43,6 +30,8 @@ export default function Header (props) {
             setLoggedIn={setLoggedIn}
             mode={mode}
             setMode={setMode}
+            user={user}
+            setUser={setUser}
 					/>
         </div>
       </Box>

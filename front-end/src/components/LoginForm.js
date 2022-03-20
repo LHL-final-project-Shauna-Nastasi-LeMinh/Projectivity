@@ -7,9 +7,11 @@ export default function LoginForm(props) {
   const emailInput = useInput('');
   const passwordInput = useInput('');
   const [message, setMessage] = useState("");
+  const {setLoggedIn, setUser} = props;
 
   const login = (event) => {
     event.preventDefault();
+    // eslint-disable-next-line
     const emailReg = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
     if (emailInput.value === "" || !emailReg.test(emailInput.value)) {
       setMessage("Please enter correct email address");
@@ -24,9 +26,8 @@ export default function LoginForm(props) {
         password: passwordInput.value 
       })
       .then(res => {
-        props.setLoggedIn(true);
-        props.setLoggedEmail(res.data.email);
-        alert(res.data.email + " logged in");
+        setLoggedIn(true);
+        setUser(res.data);
       })
       .catch(function (error) {
         console.log(error.message)
