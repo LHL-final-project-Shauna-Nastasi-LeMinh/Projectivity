@@ -2,14 +2,20 @@ import React from 'react'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import { ADDPROJECT } from './constants/Modes'
 
 export default function DashboardItem (props) {
-  const { value, listIndex } = props
+  const { value, listIndex, setMode } = props
 
   const [selectedIndex, setSelectedIndex] = React.useState()
 
   const handleListItemClick = (event, index) => {
-    setSelectedIndex(index)
+    if (index === -1) {
+      setMode(ADDPROJECT)
+    } else {
+      setSelectedIndex(index)
+    }
+  
   }
 
   return (
@@ -18,7 +24,8 @@ export default function DashboardItem (props) {
       onClick={event => handleListItemClick(event, listIndex)}
 		>
       <ListItemIcon />
-      <ListItemText primary={value} />
+      <ListItemText primary={value}/>
     </ListItemButton>
+    
   )
 }
