@@ -23,6 +23,12 @@ export default function DashboardProject (props) {
 	} = props
 
   const [viewMode, setViewMode] = useState()
+  const [data, setData] = useState()
+
+  async function loadForm (newData, mode) {
+    await setData(newData)
+    setViewMode(mode)
+  }
 
   return (
     <Container>
@@ -37,6 +43,8 @@ export default function DashboardProject (props) {
         setUserProjects={setUserProjects}
         currentProject={currentProject}
         setCurrentProject={setCurrentProject}
+        data={data}
+        loadForm={loadForm}
 			/>
 
       <Container>
@@ -44,7 +52,8 @@ export default function DashboardProject (props) {
         <NewProjectForm user={user} setViewMode={setViewMode} />}
         {viewMode === CONFIRM_DELETE_PROJECT &&
         <ConfirmDeleteForm
-          project={currentProject}
+          data={data}
+          currentProject={currentProject}
           setViewMode={setViewMode}
 					/>}
         {/* {viewMode === NEW_TICKET_FORM && <NewTicketForm />} */}
