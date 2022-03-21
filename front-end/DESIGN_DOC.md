@@ -1,5 +1,15 @@
 # Design Guidelines
 
+# Styling
+
+## Colors
+
+Primary: #FDFFFC
+Secondary: #011627
+Action: #2EC4B6
+Warning: #FF9F1C
+Danger: #E71D36
+
 ## MUI through NPM
 
 ### Specific Components

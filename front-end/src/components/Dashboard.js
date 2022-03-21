@@ -89,6 +89,9 @@ export default function Dashboard (props) {
 				)
   selectProject(0)
 })
+			.catch(err => {
+  console.log(err)
+})
   }, [])
 
   return (
@@ -106,7 +109,10 @@ export default function Dashboard (props) {
         {projects}
         <ListItemButton value='Create New Project'>
           <ListItemIcon />
-          <ListItemText primary='Create New Project' />
+          <ListItemText
+            primary='Create New Project'
+            onClick={() => loadForm([], NEW_PROJECT_FORM)}
+					/>
         </ListItemButton>
       </List>
     </Box>
