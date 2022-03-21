@@ -19,7 +19,7 @@ export default function DashboardProject (props) {
         setCurrentProject={setCurrentProject}
 			/>
       <Container>
-        <ProjectView user={user} userProjects={userProjects} currentProject={currentProject}/>
+        <ProjectView user={user} userProjects={userProjects} currentProject={currentProject} mode={mode}/>
       </Container>
     </Container>
   )

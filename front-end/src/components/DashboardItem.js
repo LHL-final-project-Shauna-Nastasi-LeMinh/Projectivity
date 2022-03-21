@@ -6,7 +6,7 @@ import { ADDPROJECT } from './constants/Modes'
 import axios from 'axios'
 
 export default function DashboardItem (props) {
-  const { value, listIndex, selectProject, setMode } = props
+  const { value, listIndex, selectProject, setMode, mode } = props
 
   const [selectedIndex, setSelectedIndex] = React.useState()
 
