@@ -19,7 +19,7 @@ function LinkTab (props) {
 }
 
 export default function NavbarMenu (props) {
-  const { mode, setMode, user, setUser, cookies, removeCookie } = props
+  const { setMode, user, setUser, cookies, removeCookie } = props
   const [tabIndex, setTabIndex] = useState(0)
 
   const handleChange = (event, newValue) => {
@@ -28,7 +28,7 @@ export default function NavbarMenu (props) {
 
   useEffect(() => {
     if (user) {
-      setTabIndex(0);
+      setTabIndex(1);
     }
   }, [user]);
 
@@ -47,10 +47,10 @@ export default function NavbarMenu (props) {
   return (
     <Box sx={{ width: '100%' }}>
       <Tabs value={tabIndex} onChange={handleChange} aria-label='nav tabs example'>
-        {!user && <LinkTab label='About' onClick={() => setMode(ABOUT)} />}
+        {!cookies["user"] && <LinkTab label='About' onClick={() => setMode(ABOUT)} />}
         {!cookies["user"] && <LinkTab label='Login' onClick={() => setMode(LOGIN)} />}
         {!cookies["user"] && <LinkTab label='Sign Up' onClick={() => setMode(REGISTER)} />}
-        {user && <span>Logged in as: {user.email}</span>}
+        {cookies["user"] && <span>Logged in as: {user.email}</span>}
         {cookies["user"] && <LinkTab label='Logout' onClick={logOut} />}
       </Tabs>
     </Box>

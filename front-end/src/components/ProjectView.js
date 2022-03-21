@@ -19,6 +19,7 @@ export default function ProjectView (props) {
 
   const generatedColumns = columns.map(column =>
     <ProjectColumn
+      key={column.id}
       user={user}
       title={column.name}
       column={column}

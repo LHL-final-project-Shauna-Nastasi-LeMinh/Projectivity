@@ -48,6 +48,7 @@ export default function Dashboard (props) {
     if (dashboardProjects) {
       selectProject(0);
     }
+    // eslint-disable-next-line
   }, [dashboardProjects])
 
   return (
