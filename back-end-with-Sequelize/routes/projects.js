@@ -44,7 +44,7 @@ module.exports = sequelizeModels => {
     }
   })
 
-  router.post('/', async (req, res) => {
+  router.post('/new', async (req, res) => {
     try {
       const { name, description, employee_id } = req.body
       const project = await Projects.create({
@@ -74,7 +74,6 @@ module.exports = sequelizeModels => {
         project_id
       })
 
-      console.log('project assignment', project_assignment)
       return res.json('success!')
     } catch (err) {
       console.log(err)
@@ -84,7 +83,6 @@ module.exports = sequelizeModels => {
 
   router.delete('/:project_id/delete', async (req, res) => {
     try {
-      console.log('body', req.params)
       const project_id = req.params.project_id
       Projects.destroy({
         where: {
