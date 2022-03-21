@@ -6,6 +6,7 @@ module.exports = sequelizeModels => {
   Project_Assignments = sequelizeModels.ProjectAssignment
   Columns = sequelizeModels.Column
   Projects = sequelizeModels.Project
+  Tickets = sequelizeModels.Ticket
 
   router.get('/:employee_id', async (req, res) => {
     try {
@@ -74,6 +75,55 @@ module.exports = sequelizeModels => {
       })
 
       console.log('project assignment', project_assignment)
+      return res.json('success!')
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
+  })
+
+  router.delete('/:project_id/delete', async (req, res) => {
+    try {
+      console.log('body', req.params)
+      const project_id = req.params.project_id
+      Projects.destroy({
+        where: {
+          id: project_id
+        }
+      })
+
+      Project_Assignments.destroy({
+        where: {
+          project_id: project_id
+        }
+      })
+
+      const columns_data = await Columns.findAll({
+        where: {
+          project_id: project_id
+        }
+      })
+
+      const column_ids = columns_data.map(column => column.dataValues.id)
+
+      console.log(column_ids)
+
+      for (const column of column_ids) {
+        console.log(column)
+        Tickets.destroy({
+          where: {
+            column_id: column
+          }
+        })
+      }
+
+      Columns.destroy({
+        where: {
+          project_id: project_id
+        }
+      })
+
+      return res.json('success!')
     } catch (err) {
       console.log(err)
       return res.status(500).json(err)
