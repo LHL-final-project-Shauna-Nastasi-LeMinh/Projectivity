@@ -24,7 +24,7 @@ export default function NewTicketForm (props) {
 
     // add new ticket to db /tickets route
     // axios
-		// 	.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
+		// 	.post(process.env.REACT_APP_BACKEND_URL + '/tickets', {
     //     description: ticketDescriptionInput.value,
     //     created_by: user.id,
     //     column_id: currentColumn

@@ -5,6 +5,7 @@ const router = express.Router()
 
 module.exports = sequelizeModels => {
   projectTickets = sequelizeModels.ProjectAssignment
+  Tickets = sequelizeModels.Ticket
 
   router.get('/:employee_id', async (req, res) => {
     try {
@@ -27,6 +28,24 @@ module.exports = sequelizeModels => {
       })
 
       return res.json(columns)
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
+  })
+
+  router.post('/new', async (req, res) => {
+    try {
+      const {description, created_by, column_id} = req.body
+
+      await Tickets.create({
+        description,
+        created_by,
+        column_id,
+        created_at: Date.now()
+      })
+
+      return res.json('success!')
     } catch (err) {
       console.log(err)
       return res.status(500).json(err)
