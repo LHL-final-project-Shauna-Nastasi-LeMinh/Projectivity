@@ -23,18 +23,18 @@ export default function NewTicketForm (props) {
     setViewMode(PROJECT_VIEW);
 
     // add new ticket to db /tickets route
-    axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
-        description: ticketDescriptionInput.value,
-        created_by: user.id,
-        column_id: currentColumn
+    // axios
+		// 	.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
+    //     description: ticketDescriptionInput.value,
+    //     created_by: user.id,
+    //     column_id: currentColumn
         
-    })
-			.then(res => {})
-			.catch(function (error) {
-        console.log(error.message)
-        setMessage('Failed to create new ticket')
-    })
+    // })
+		// 	.then(res => {})
+		// 	.catch(function (error) {
+    //     console.log(error.message)
+    //     setMessage('Failed to create new ticket')
+    // })
   }
 
   return (

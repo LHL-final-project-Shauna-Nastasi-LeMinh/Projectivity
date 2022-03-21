@@ -12,7 +12,8 @@ import NewTicketForm from './NewTicketForm'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 export default function ProjectColumn (props) {
-  const { user, column, setViewMode, setCurrentColumn} = props
+  const { user, column, setViewMode, setCurrentColumn, colIndex} = props
+
   const [tickets, setTickets] = useState([])
 
   useEffect(
@@ -25,9 +26,8 @@ export default function ProjectColumn (props) {
   let index = 0
  
   const generatedTickets = tickets.map((ticket, index) => {
-    const id = ""+ticket.id
     return (
-      <Draggable key={id} draggableId={id} index={index}>
+      <Draggable key={""+ticket.id} draggableId={"ticket_"+ticket.id} index={index}>
         {(provided, snapshot) => (
           <div 
             {...provided.draggableProps} 
@@ -43,40 +43,49 @@ export default function ProjectColumn (props) {
   })
 
     const handleClick = () => {
+      console.log("click")
       setCurrentColumn(column.id)
       setViewMode(NEW_TICKET_FORM)
       
     }
   
   return (
-    <Box sx={{ width: '20rem', mx: '1rem' }}>
-      <List>
-
-      <ListItem disablePadding >
-        <ListItemButton>
-          <ListItemText primary={column.name} />
-        </ListItemButton>
-      </ListItem>
-      <Divider />
-  
-      <Droppable droppableId={column.name}>
-        {(provided, snapshot) => (
-          <List {...provided.droppableProps} 
-            ref={provided.innerRef} 
-            isDraggingOver={snapshot.isDraggingOver} 
-            sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'white', transition: 'background-color 1s ease'}}
-          >
-            {generatedTickets}
-            {provided.placeholder}
-          </List>
-        )}
-      </Droppable>
-      <ListItem disablePadding >
-          <ListItemButton onClick={() => handleClick()}>
-            <ListItemText primary="Create New Ticket" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Box>
+    <Draggable draggableId={"column_"+column.id} index={colIndex}>
+      {(provided) => (
+        <Box 
+          sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <ListItem> 
+            <ListItemButton>
+              <ListItemText primary={column.name} />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+      
+          <Droppable droppableId={column.name} type="ticket">
+            {(provided, snapshot) => (
+              <List {...provided.droppableProps} 
+                ref={provided.innerRef} 
+                isDraggingOver={snapshot.isDraggingOver} 
+                sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'inherit', transition: 'background-color 1s ease'}}
+              >
+                {generatedTickets}
+                <ListItem disablePadding >
+                  <ListItemButton onClick={() => handleClick()}>
+                    <ListItemText primary="Create New Ticket" />
+                  </ListItemButton>
+                </ListItem>
+                {provided.placeholder}
+              </List>
+            )}
+          </Droppable>
+          
+      
+        </Box>
+      )}
+    </Draggable>
   )
 }
