@@ -21,7 +21,9 @@ export default function DashboardProject (props) {
 		userProjects,
 		setUserProjects,
 		currentProject,
-		setCurrentProject
+		setCurrentProject,
+    currentColumn,
+    setCurrentColumn
 	} = props
 
   const [viewMode, setViewMode] = useState()
@@ -49,13 +51,14 @@ export default function DashboardProject (props) {
           project={currentProject}
           setViewMode={setViewMode}
 					/>}
-        {viewMode === NEW_TICKET_FORM && <NewTicketForm />}
+        {viewMode === NEW_TICKET_FORM && <NewTicketForm  user={user} currentColumn={currentColumn} setViewMode={setViewMode}/>}
         {viewMode === PROJECT_VIEW &&
         <ProjectView
           user={user}
           userProjects={userProjects}
           currentProject={currentProject}
           setViewMode={setViewMode}
+          setCurrentColumn={setCurrentColumn}
 					/>}
       </Container>
     </Container>
