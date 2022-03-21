@@ -23,24 +23,18 @@ export default function ProjectView (props) {
 
   function onDragEnd(result) {
     const {source, destination, draggableId, type} = result;
-    console.log("draggableId"+ draggableId);
-    console.log("destination.droppableId:"+ destination.droppableId);
-    console.log("source.droppableId:"+ source.droppableId);
-    console.log("destination.index:"+ destination.index);
-    console.log("source.index:"+ source.index);
     if (!destination) return;
-    if (destination.droppableId === source.droppableId && destination.index === source.index) return;
     if(!destination.droppableId) return;
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return;
+    
     if (type === "column") {
-      console.log("Dragging COLUMN")
+      
       const newColumns = JSON.parse(JSON.stringify(columns)); // deep clone
       const [movingColumn] = newColumns.splice(source.index, 1);
       newColumns.splice(destination.index, 0, movingColumn);
       setColumns(newColumns);
     }
     else if (type === "ticket") {
-
-      console.log("Dragging TICKET")
 
       if (destination.droppableId === source.droppableId) {
         let column;
