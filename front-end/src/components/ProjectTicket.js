@@ -20,7 +20,7 @@ export default function ProjectTicket (props) {
     setChecked(newChecked)
   }
   return (
-    <ListItem >
+    <ListItem disablePadding >
       <ListItemButton sx={{ backgroundColor: props.isDragging ? 'lightgreen' : 'white'}}>
         <ListItemText primary={title} />
       </ListItemButton>

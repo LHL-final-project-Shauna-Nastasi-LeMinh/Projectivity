@@ -10,7 +10,7 @@ import Divider from '@mui/material/Divider'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 export default function ProjectColumn (props) {
-  const { user, column } = props
+  const { user, column, colIndex } = props
   const [tickets, setTickets] = useState([])
 
   useEffect(
@@ -22,9 +22,8 @@ export default function ProjectColumn (props) {
 
   let index = 0
   const generatedTickets = tickets.map((ticket, index) => {
-    const id = ""+ticket.id
     return (
-      <Draggable key={id} draggableId={id} index={index}>
+      <Draggable key={""+ticket.id} draggableId={"ticket_"+ticket.id} index={index}>
         {(provided, snapshot) => (
           <div 
             {...provided.draggableProps} 
@@ -40,27 +39,36 @@ export default function ProjectColumn (props) {
   })
 
   return (
-    <Box sx={{ width: '20rem', mx: '1rem' }}>
-      <ListItem disablePadding >
-        <ListItemButton>
-          <ListItemText primary={column.name} />
-        </ListItemButton>
-      </ListItem>
-      <Divider />
-  
-      <Droppable droppableId={column.name}>
-        {(provided, snapshot) => (
-          <List {...provided.droppableProps} 
-            ref={provided.innerRef} 
-            isDraggingOver={snapshot.isDraggingOver} 
-            sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'white', transition: 'background-color 1s ease'}}
-          >
-            {generatedTickets}
-            {provided.placeholder}
-          </List>
-        )}
-      </Droppable>
-      <ProjectTicket title='Create a new ticket' key={-1} />
-    </Box>
+    <Draggable draggableId={"column_"+column.id} index={colIndex}>
+      {(provided) => (
+        <Box 
+          sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <ListItem> 
+            <ListItemButton>
+              <ListItemText primary={column.name} />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+      
+          <Droppable droppableId={column.name} type="ticket">
+            {(provided, snapshot) => (
+              <List {...provided.droppableProps} 
+                ref={provided.innerRef} 
+                isDraggingOver={snapshot.isDraggingOver} 
+                sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'inherit', transition: 'background-color 1s ease'}}
+              >
+                {generatedTickets}
+                {provided.placeholder}
+              </List>
+            )}
+          </Droppable>
+          <ProjectTicket title='Create a new ticket' key={-1} />
+        </Box>
+      )}
+    </Draggable>
   )
 }
