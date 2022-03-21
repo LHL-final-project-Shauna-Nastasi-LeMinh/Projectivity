@@ -11,7 +11,6 @@ import Divider from '@mui/material/Divider'
 export default function ProjectColumn (props) {
   const { user, column } = props
   const [tickets, setTickets] = useState([])
-  console.log('tickets', tickets)
 
   useEffect(
 		() => {

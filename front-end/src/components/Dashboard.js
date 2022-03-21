@@ -6,7 +6,7 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import DashboardItem from './DashboardItem'
-import { NEW_PROJECT_FORM } from './constants/Modes'
+import { NEW_PROJECT_FORM, CONFIRM_DELETE_PROJECT } from './constants/Modes'
 
 export default function Dashboard (props) {
   const {
@@ -41,6 +41,11 @@ export default function Dashboard (props) {
 })
   }
 
+  function queueDelete (project_id) {
+    console.log('clicked delete button')
+    setViewMode(CONFIRM_DELETE_PROJECT)
+  }
+
 	// /projects?id=1
   useEffect(() => {
     axios
@@ -60,20 +65,29 @@ export default function Dashboard (props) {
     selectProject={selectProject}
     viewMode={viewMode}
     setViewMode={setViewMode}
+    queueDelete={queueDelete}
 						/>
 					)
 				)
 })
   }, [])
 
-  useEffect(() => {
-    if (dashboardProjects) {
-      selectProject(0)
-    }
-  }, [dashboardProjects])
+  useEffect(
+		() => {
+  if (dashboardProjects) {
+    selectProject(0)
+  }
+},
+		[dashboardProjects]
+	)
 
   function newProject () {
     axios.put()
+  }
+
+  function clickedDelete () {
+    console.log('clicked delete')
+    setViewMode(NEW_PROJECT_FORM)
   }
 
   return (
@@ -89,10 +103,7 @@ export default function Dashboard (props) {
 		>
       <List component='nav' aria-label='main mailbox folders'>
         {projects}
-        <ListItemButton
-          value='Create New Project'
-          onClick={() => setViewMode(NEW_PROJECT_FORM)}
-				>
+        <ListItemButton value='Create New Project'>
           <ListItemIcon />
           <ListItemText primary='Create New Project' />
         </ListItemButton>

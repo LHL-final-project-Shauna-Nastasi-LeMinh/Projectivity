@@ -5,9 +5,19 @@ import ListItemText from '@mui/material/ListItemText'
 import { ADDPROJECT } from './constants/Modes'
 import axios from 'axios'
 import { PROJECT_VIEW } from './constants/Modes'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 
 export default function DashboardItem (props) {
-  const { viewMode, setViewMode, value, listIndex, selectProject } = props
+  const {
+		key,
+		queueDelete,
+		viewMode,
+		setViewMode,
+		value,
+		listIndex,
+		selectProject
+	} = props
   const [selectedIndex, setSelectedIndex] = React.useState()
 
   const handleListItemClick = (event, index) => {
@@ -23,6 +33,8 @@ export default function DashboardItem (props) {
 		>
       <ListItemIcon />
       <ListItemText primary={value} />
+      <EditIcon />
+      <DeleteIcon onClick={() => queueDelete(key)} />
     </ListItemButton>
   )
 }
