@@ -3,15 +3,16 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import axios from 'axios'
+import { PROJECT_VIEW } from './constants/Modes'
 
 export default function DashboardItem (props) {
-  const { value, listIndex, selectProject } = props
-
+  const { viewMode, setViewMode, value, listIndex, selectProject } = props
   const [selectedIndex, setSelectedIndex] = React.useState()
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index)
-    selectProject(index);
+    selectProject(index)
+    setViewMode(PROJECT_VIEW)
   }
 
   return (

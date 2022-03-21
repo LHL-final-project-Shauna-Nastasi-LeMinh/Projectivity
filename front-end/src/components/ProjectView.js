@@ -7,24 +7,23 @@ import Box from '@mui/material/Box'
 
 export default function ProjectView (props) {
   const { user, currentProject } = props
-  const [columns, setColumns] = useState([]);
+  const [columns, setColumns] = useState([])
 
-  useEffect(() => {
-    if (currentProject) { 
-      setColumns(currentProject.Columns);
-    }
-  }, [currentProject])
+  useEffect(
+		() => {
+  if (currentProject) {
+    setColumns(currentProject.Columns)
+  }
+},
+		[currentProject]
+	)
 
   const generatedColumns = columns.map(column =>
-    <ProjectColumn
-      user={user}
-      title={column.name}
-      column={column}
-		/>
+    <ProjectColumn user={user} title={column.name} column={column} />
 	)
 
   return (
-    <Box>
+    <Box sx={{ display: 'flex' }}>
       {generatedColumns}
     </Box>
   )
