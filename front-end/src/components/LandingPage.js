@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Dashboard from './Dashboard'
 import ProjectView from './ProjectView'
 import Container from '@mui/material/Container'
@@ -26,10 +26,19 @@ export default function DashboardProject (props) {
     setCurrentColumn
 	} = props
 
-  const [viewMode, setViewMode] = useState()
+  const [viewMode, setViewMode] = useState(PROJECT_VIEW)
+  const [data, setData] = useState()
+  const [dashboard, setDashboard] = useState()
+
+  function loadForm (newData, mode) {
+    console.log(newData, mode)
+    setData(newData)
+    setViewMode(mode)
+  }
 
   return (
     <Container>
+      {viewMode === PROJECT_VIEW &&
       <Dashboard
         mode={mode}
         setMode={setMode}
@@ -41,14 +50,16 @@ export default function DashboardProject (props) {
         setUserProjects={setUserProjects}
         currentProject={currentProject}
         setCurrentProject={setCurrentProject}
-			/>
-
+        data={data}
+        loadForm={loadForm}
+				/>}
       <Container>
         {viewMode === NEW_PROJECT_FORM &&
         <NewProjectForm user={user} setViewMode={setViewMode} />}
         {viewMode === CONFIRM_DELETE_PROJECT &&
         <ConfirmDeleteForm
-          project={currentProject}
+          data={data}
+          currentProject={currentProject}
           setViewMode={setViewMode}
 					/>}
         {viewMode === NEW_TICKET_FORM && <NewTicketForm  user={user} currentColumn={currentColumn} setViewMode={setViewMode}/>}

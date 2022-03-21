@@ -6,7 +6,11 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import DashboardItem from './DashboardItem'
-import { NEW_PROJECT_FORM, CONFIRM_DELETE_PROJECT } from './constants/Modes'
+import {
+	NEW_PROJECT_FORM,
+	CONFIRM_DELETE_PROJECT,
+	PROJECT_VIEW
+} from './constants/Modes'
 
 export default function Dashboard (props) {
   const {
@@ -16,7 +20,8 @@ export default function Dashboard (props) {
 		setViewMode,
 		user,
 		currentProject,
-		setCurrentProject
+		setCurrentProject,
+		loadForm
 	} = props
 
   const [projects, setProjects] = useState()
@@ -24,29 +29,40 @@ export default function Dashboard (props) {
   const stateRef = useRef()
   stateRef.current = dashboardProjects
 
+  function purgeNullStates (states) {
+    const results = []
+
+    if (stateRef.current) {
+      for (const state of states) {
+        if (state !== null) {
+          results.push(state)
+        }
+      }
+    }
+
+    return results
+  }
+
   let index = 0
 
   function selectProject (index) {
-    axios
-			.get(
-				process.env.REACT_APP_BACKEND_URL +
-					'/projects/' +
-					stateRef.current[index].id +
-					'/columns'
-			)
-			.then(res => {
+    if (stateRef.current[index]) {
+      axios
+				.get(
+					process.env.REACT_APP_BACKEND_URL +
+						'/projects/' +
+						stateRef.current[index].id +
+						'/columns'
+				)
+				.then(res => {
   setCurrentProject(prev => {
     return { ...stateRef.current[index], Columns: res.data }
   })
+  setViewMode(PROJECT_VIEW)
 })
+    }
   }
 
-  function queueDelete (project_id) {
-    console.log('clicked delete button')
-    setViewMode(CONFIRM_DELETE_PROJECT)
-  }
-
-	// /projects?id=1
   useEffect(() => {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
@@ -54,41 +70,29 @@ export default function Dashboard (props) {
   setDashboardProjects(
 					res.data.map(project_assignment => project_assignment.Project)
 				)
-
+  purgeNullStates(stateRef.current)
   setProjects(
-					res.data.map(project_assignment =>
+					stateRef.current.map(project =>
   <DashboardItem
-    key={project_assignment.Project.id}
-    value={project_assignment.Project.name}
+    key={project.id}
+    value={project.name}
     listIndex={index++}
     currentProject={currentProject}
+    dashItemProject={project}
+    setCurrentProject={setCurrentProject}
     selectProject={selectProject}
     viewMode={viewMode}
     setViewMode={setViewMode}
-    queueDelete={queueDelete}
+    loadForm={loadForm}
 						/>
 					)
 				)
+  selectProject(0)
+})
+			.catch(err => {
+  console.log(err)
 })
   }, [])
-
-  useEffect(
-		() => {
-  if (dashboardProjects) {
-    selectProject(0)
-  }
-},
-		[dashboardProjects]
-	)
-
-  function newProject () {
-    axios.put()
-  }
-
-  function clickedDelete () {
-    console.log('clicked delete')
-    setViewMode(NEW_PROJECT_FORM)
-  }
 
   return (
     <Box
@@ -105,7 +109,10 @@ export default function Dashboard (props) {
         {projects}
         <ListItemButton value='Create New Project'>
           <ListItemIcon />
-          <ListItemText primary='Create New Project' />
+          <ListItemText
+            primary='Create New Project'
+            onClick={() => loadForm([], NEW_PROJECT_FORM)}
+					/>
         </ListItemButton>
       </List>
     </Box>

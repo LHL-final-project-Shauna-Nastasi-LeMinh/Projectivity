@@ -9,22 +9,38 @@ import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
 import { NEW_TICKET_FORM } from './constants/Modes'
 import NewTicketForm from './NewTicketForm'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 export default function ProjectColumn (props) {
   const { user, column, setViewMode, setCurrentColumn} = props
   const [tickets, setTickets] = useState([])
 
   useEffect(
-		() => {
-  setTickets(column.Tickets)
-},
+        () => {
+      setTickets(column.Tickets)
+    },
 		[column]
 	)
 
   let index = 0
-  const generatedTickets = tickets.map(ticket =>
-    <ProjectTicket title={ticket.description} key={ticket.id} setViewMode={setViewMode}/>
-	)
+ 
+  const generatedTickets = tickets.map((ticket, index) => {
+    const id = ""+ticket.id
+    return (
+      <Draggable key={id} draggableId={id} index={index}>
+        {(provided, snapshot) => (
+          <div 
+            {...provided.draggableProps} 
+            {...provided.dragHandleProps} 
+            ref={provided.innerRef}
+            
+          >
+            <ProjectTicket title={ticket.description} isDragging={snapshot.isDragging} setViewMode={setViewMode}/>
+          </div>
+        )}
+      </Draggable>
+    )
+  })
 
     const handleClick = () => {
       setCurrentColumn(column.id)
@@ -35,14 +51,27 @@ export default function ProjectColumn (props) {
   return (
     <Box sx={{ width: '20rem', mx: '1rem' }}>
       <List>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemText primary={column.name} />
-          </ListItemButton>
-        </ListItem>
-        <Divider />
-        {generatedTickets}
-        <ListItem disablePadding >
+
+      <ListItem disablePadding >
+        <ListItemButton>
+          <ListItemText primary={column.name} />
+        </ListItemButton>
+      </ListItem>
+      <Divider />
+  
+      <Droppable droppableId={column.name}>
+        {(provided, snapshot) => (
+          <List {...provided.droppableProps} 
+            ref={provided.innerRef} 
+            isDraggingOver={snapshot.isDraggingOver} 
+            sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'white', transition: 'background-color 1s ease'}}
+          >
+            {generatedTickets}
+            {provided.placeholder}
+          </List>
+        )}
+      </Droppable>
+      <ListItem disablePadding >
           <ListItemButton onClick={() => handleClick()}>
             <ListItemText primary="Create New Ticket" />
           </ListItemButton>

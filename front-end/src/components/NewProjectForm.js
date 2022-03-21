@@ -1,7 +1,7 @@
 import useInput from '../hooks/useInput'
 import Button from './Button'
 import axios from 'axios'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { PROJECT_VIEW } from './constants/Modes'
 
 export default function RegistrationForm (props) {
@@ -12,23 +12,20 @@ export default function RegistrationForm (props) {
   const [role, setRole] = useState('')
   const { setViewMode, user, setUser, setCookie } = props
 
-  const register = event => {
-    event.preventDefault()
-
+  function createNewProject () {
     if (projectNameInput.value === '') {
       setMessage('Please enter a project name')
-      return
     }
 
-    setViewMode(PROJECT_VIEW)
-
     axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/projects', {
+			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', {
   name: projectNameInput.value,
   description: projectDescriptionInput.value,
   employee_id: user.id
 })
-			.then(res => {})
+			.then(res => {
+  setViewMode(PROJECT_VIEW)
+})
 			.catch(function (error) {
   console.log(error.message)
   setMessage('Failed to create project')
@@ -47,7 +44,7 @@ export default function RegistrationForm (props) {
       <label>Project Description:</label>
       <input {...projectDescriptionInput} />
       <br />
-      <Button onClick={register}>Create New Project</Button>
+      <Button onClick={() => createNewProject()}>Create New Project</Button>
     </div>
   )
 }
