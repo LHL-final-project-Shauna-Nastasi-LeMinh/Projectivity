@@ -9,7 +9,7 @@ import { ADDPROJECT } from './constants/Modes'
 
 export default function ProjectView (props) {
   const { user, currentProject, mode,
-  setViewMode} = props
+  setViewMode, setCurrentColumn} = props
   const [columns, setColumns] = useState([])
 
   useEffect(
@@ -28,6 +28,7 @@ export default function ProjectView (props) {
       title={column.name}
       column={column}
       setViewMode={setViewMode}
+      setCurrentColumn={setCurrentColumn}
 		/>
 	)
 

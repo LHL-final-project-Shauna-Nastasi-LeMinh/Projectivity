@@ -7,7 +7,7 @@ import { LANDING, LOGIN, REGISTER, ABOUT } from './constants/Modes'
 import AboutPage from './AboutPage'
 
 export default function Main (props) {
-  const { mode, setMode, user, setUser, setCookie, currentProject, setCurrentProject } = props
+  const { mode, setMode, user, setUser, setCookie, currentProject, setCurrentProject, currentColumn, setCurrentColumn } = props
 
   return (
     <Box>
@@ -22,6 +22,8 @@ export default function Main (props) {
         setUser={setUser}
         currentProject={currentProject}
         setCurrentProject={setCurrentProject}
+        currentColumn={currentColumn}
+        setCurrentColumn={setCurrentColumn}
 				/>}
     </Box>
   )

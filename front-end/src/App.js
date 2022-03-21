@@ -12,7 +12,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [currentProject, setCurrentProject] = useState()
-	// const [currentColumns, setCurrentColumns] = useState()
+	const [currentColumn, setCurrentColumn] = useState("")
 	// const [currentTickets, setCurrentTickets] = useState()
 
   return (
@@ -52,6 +52,8 @@ const App = () => {
           setCookie={setCookie}
           currentProject={currentProject}
           setCurrentProject={setCurrentProject}
+          currentColumn={currentColumn}
+          setCurrentColumn={setCurrentColumn}
 				/>
       </Box>
     </Container>
