@@ -2,9 +2,10 @@ import * as React from 'react'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
+import { NEW_TICKET_FORM } from './constants/Modes'
 
 export default function ProjectTicket (props) {
-  const { title, value } = props
+  const { title, value, setViewMode } = props
   const [checked, setChecked] = React.useState([1])
 
   const handleToggle = value => () => {
@@ -21,10 +22,12 @@ export default function ProjectTicket (props) {
   }
 
   return (
-    <ListItem disablePadding>
-      <ListItemButton>
+
+    <ListItem disablePadding >
+      <ListItemButton >
         <ListItemText primary={title} />
       </ListItemButton>
     </ListItem>
+    
   )
 }

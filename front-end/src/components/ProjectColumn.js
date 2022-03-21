@@ -7,9 +7,10 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
+import { NEW_TICKET_FORM } from './constants/Modes'
 
 export default function ProjectColumn (props) {
-  const { user, column } = props
+  const { user, column, setViewMode} = props
   const [tickets, setTickets] = useState([])
 
   useEffect(
@@ -21,7 +22,7 @@ export default function ProjectColumn (props) {
 
   let index = 0
   const generatedTickets = tickets.map(ticket =>
-    <ProjectTicket title={ticket.description} key={ticket.id} />
+    <ProjectTicket title={ticket.description} key={ticket.id} setViewMode={setViewMode}/>
 	)
 
   return (
@@ -34,7 +35,11 @@ export default function ProjectColumn (props) {
         </ListItem>
         <Divider />
         {generatedTickets}
-        <ProjectTicket title='Create a new ticket' key={-1} />
+        <ListItem disablePadding >
+          <ListItemButton onClick={() => setViewMode(NEW_TICKET_FORM)}>
+            <ListItemText primary="Create New Ticket" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   )
