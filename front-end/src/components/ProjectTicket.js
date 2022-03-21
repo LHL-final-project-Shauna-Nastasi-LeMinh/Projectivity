@@ -4,7 +4,7 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 
 export default function ProjectTicket (props) {
-  const { title, value } = props
+  const { title, value, ticketId } = props
   const [checked, setChecked] = React.useState([1])
 
   const handleToggle = value => () => {
@@ -19,9 +19,20 @@ export default function ProjectTicket (props) {
 
     setChecked(newChecked)
   }
+
+  const clickHandler = function() {
+    console.log(ticketId); 
+    if (!ticketId) {
+      // CREATE NEW TICKET GOES HERE
+    } else {
+      // VIEW / UPDATE TICKET DETAILS GOES HERE
+    }
+
+  }
+
   return (
     <ListItem disablePadding >
-      <ListItemButton sx={{ backgroundColor: props.isDragging ? 'lightgreen' : 'white'}}>
+      <ListItemButton sx={{ backgroundColor: props.isDragging ? 'lightgreen' : 'white'}} onClick={clickHandler}>
         <ListItemText primary={title} />
       </ListItemButton>
     </ListItem>

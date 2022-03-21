@@ -31,12 +31,16 @@ export default function ProjectColumn (props) {
             ref={provided.innerRef}
             
           >
-            <ProjectTicket title={ticket.description} isDragging={snapshot.isDragging} />
+            <ProjectTicket title={ticket.description} ticketId={ticket.id} isDragging={snapshot.isDragging} />
           </div>
         )}
       </Draggable>
     )
   })
+
+  const viewTicketDetails = function() {
+    console.log("CLICKED VIEW TICKET DETAILS");
+  }
 
   return (
     <Draggable draggableId={"column_"+column.id} index={colIndex}>
