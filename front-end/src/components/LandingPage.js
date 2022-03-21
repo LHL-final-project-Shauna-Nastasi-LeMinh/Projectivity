@@ -3,11 +3,13 @@ import Dashboard from './Dashboard'
 import ProjectView from './ProjectView'
 import Container from '@mui/material/Container'
 import NewProjectForm from './NewProjectForm'
+import NewTicketForm from './NewTicketForm'
 import ConfirmDeleteForm from './ConfirmDeleteForm'
 import {
 	CONFIRM_DELETE_PROJECT,
 	NEW_PROJECT_FORM,
-	PROJECT_VIEW
+	PROJECT_VIEW,
+  NEW_TICKET_FORM
 } from './constants/Modes'
 
 export default function DashboardProject (props) {
@@ -19,7 +21,9 @@ export default function DashboardProject (props) {
 		userProjects,
 		setUserProjects,
 		currentProject,
-		setCurrentProject
+		setCurrentProject,
+    currentColumn,
+    setCurrentColumn
 	} = props
 
   const [viewMode, setViewMode] = useState(PROJECT_VIEW)
@@ -58,12 +62,14 @@ export default function DashboardProject (props) {
           currentProject={currentProject}
           setViewMode={setViewMode}
 					/>}
-        {/* {viewMode === NEW_TICKET_FORM && <NewTicketForm />} */}
+        {viewMode === NEW_TICKET_FORM && <NewTicketForm  user={user} currentColumn={currentColumn} setViewMode={setViewMode}/>}
         {viewMode === PROJECT_VIEW &&
         <ProjectView
           user={user}
           userProjects={userProjects}
           currentProject={currentProject}
+          setViewMode={setViewMode}
+          setCurrentColumn={setCurrentColumn}
 					/>}
       </Container>
     </Container>

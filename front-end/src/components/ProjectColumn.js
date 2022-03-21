@@ -7,10 +7,13 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
+import { NEW_TICKET_FORM } from './constants/Modes'
+import NewTicketForm from './NewTicketForm'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 export default function ProjectColumn (props) {
-  const { user, column, colIndex } = props
+  const { user, column, setViewMode, setCurrentColumn, colIndex} = props
+
   const [tickets, setTickets] = useState([])
 
   useEffect(
@@ -21,6 +24,7 @@ export default function ProjectColumn (props) {
 	)
 
   let index = 0
+ 
   const generatedTickets = tickets.map((ticket, index) => {
     return (
       <Draggable key={""+ticket.id} draggableId={"ticket_"+ticket.id} index={index}>
@@ -31,17 +35,21 @@ export default function ProjectColumn (props) {
             ref={provided.innerRef}
             
           >
-            <ProjectTicket title={ticket.description} ticketId={ticket.id} isDragging={snapshot.isDragging} />
+          <ProjectTicket title={ticket.description} ticketId={ticket.id} isDragging={snapshot.isDragging} setViewMode={setViewMode}/>
           </div>
         )}
       </Draggable>
     )
   })
 
-  const viewTicketDetails = function() {
-    console.log("CLICKED VIEW TICKET DETAILS");
-  }
-
+    const handleClick = () => {
+      console.log("click")
+      console.log(setCurrentColumn);
+      setCurrentColumn(column.id)
+      setViewMode(NEW_TICKET_FORM)
+      
+    }
+  
   return (
     <Draggable draggableId={"column_"+column.id} index={colIndex}>
       {(provided) => (
@@ -66,11 +74,17 @@ export default function ProjectColumn (props) {
                 sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'inherit', transition: 'background-color 1s ease'}}
               >
                 {generatedTickets}
+                <ListItem disablePadding >
+                  <ListItemButton onClick={() => handleClick()}>
+                    <ListItemText primary="Create New Ticket" />
+                  </ListItemButton>
+                </ListItem>
                 {provided.placeholder}
               </List>
             )}
           </Droppable>
-          <ProjectTicket title='Create a new ticket' key={-1} />
+          
+      
         </Box>
       )}
     </Draggable>

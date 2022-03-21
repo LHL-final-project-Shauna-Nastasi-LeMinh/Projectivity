@@ -9,7 +9,8 @@ import { ADDPROJECT } from './constants/Modes'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 export default function ProjectView (props) {
-  const { user, currentProject, mode } = props
+  const { user, currentProject, mode,
+  setViewMode, setCurrentColumn} = props
   const [columns, setColumns] = useState([])
 
   useEffect(
@@ -88,6 +89,8 @@ export default function ProjectView (props) {
       user={user}
       title={column.name}
       column={column}
+      setViewMode={setViewMode}
+      setCurrentColumn={setCurrentColumn}
       colIndex={colIndex}
 		/>
 	)
