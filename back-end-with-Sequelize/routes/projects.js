@@ -60,6 +60,19 @@ module.exports = sequelizeModels => {
         assignment_date
       })
 
+      await Columns.create({
+        name: 'Open',
+        project_id
+      })
+      await Columns.create({
+        name: 'In Progress',
+        project_id
+      })
+      await Columns.create({
+        name: 'Closed',
+        project_id
+      })
+
       console.log('project assignment', project_assignment)
     } catch (err) {
       console.log(err)
