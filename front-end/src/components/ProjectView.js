@@ -23,16 +23,30 @@ export default function ProjectView (props) {
 
   function handleOnDragEnd(result) {
     const {source, destination, draggableId} = result;
-    // console.log("destination.droppableId:"+ destination.droppableId);
+    console.log("destination.droppableId:"+ destination.droppableId);
     console.log("source.droppableId:"+ source.droppableId);
-    // console.log("destination.id:"+ destination.id);
-    // console.log("source.id:"+ source.id);
+    console.log("destination.index:"+ destination.index);
+    console.log("source.index:"+ source.index);
     if (!destination) return;
     if (destination.droppableId === source.droppableId && destination.index === source.index) return;
+    
+    // const column = columns.filter(col => col.name === source.droppableId)[0];
+    let column;
+    let columnIndex;
+    for (let i = 0; i < columns.length; i++) {
+      if (columns[i].name === source.droppableId) {
+        column = columns[i];
+        columnIndex = i;
+      }
+    }
+    const newTickets = JSON.parse(JSON.stringify(column.Tickets)); // deep clone
+    const [movingTicket] = newTickets.splice(source.index, 1);
+    newTickets.splice(destination.index, 0, movingTicket);
+    const newColumn = {...column, Tickets: newTickets};
+    columns[columnIndex] = newColumn;
+    setColumns(prev => [...prev])
 
-    const column = columns.filter(col => col.name === source.droppableId)[0];
-    console.log("Column");
-    console.log(column);
+    // setTickets(newTickets);
     // const columnArray = Array.from(columns);
     // console.log(columnArray) ;
     // const sourceColumn = columnArray.filter(column => column.name === result.source.droppableId)[0];
@@ -42,10 +56,9 @@ export default function ProjectView (props) {
     // console.log(destColumn);
     // console.log(movingItem);
     // // destColumn
-    // // const [reorderedItem] = items.splice(result.source.index, 1);
-    // // items.splice(result.destination.index, 0, reorderedItem);
 
-    // // setTickets(items);
+
+    
   }
 
   const generatedColumns = columns.map(column =>
