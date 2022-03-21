@@ -21,7 +21,7 @@ export default function ProjectView (props) {
 		[currentProject]
 	)
 
-  function handleOnDragEnd(result) {
+  function onDragEnd(result) {
     const {source, destination, draggableId} = result;
     console.log("destination.droppableId:"+ destination.droppableId);
     console.log("source.droppableId:"+ source.droppableId);
@@ -31,34 +31,49 @@ export default function ProjectView (props) {
     if (destination.droppableId === source.droppableId && destination.index === source.index) return;
     
     // const column = columns.filter(col => col.name === source.droppableId)[0];
-    let column;
-    let columnIndex;
-    for (let i = 0; i < columns.length; i++) {
-      if (columns[i].name === source.droppableId) {
-        column = columns[i];
-        columnIndex = i;
+    if (destination.droppableId === source.droppableId) {
+      let column;
+      let columnIndex;
+      for (let i = 0; i < columns.length; i++) {
+        if (columns[i].name === source.droppableId) {
+          column = columns[i];
+          columnIndex = i;
+        }
       }
+      const newTickets = JSON.parse(JSON.stringify(column.Tickets)); // deep clone
+      const [movingTicket] = newTickets.splice(source.index, 1);
+      newTickets.splice(destination.index, 0, movingTicket);
+      const newColumn = {...column, Tickets: newTickets};
+      columns[columnIndex] = newColumn;
+      
+    } else {
+      let sourceColumn;
+      let sourceColumnIndex;
+      let destColumn;
+      let destColumnIndex;
+      for (let i = 0; i < columns.length; i++) {
+        if (columns[i].name === source.droppableId) {
+          sourceColumn = columns[i];
+          sourceColumnIndex = i;
+        }
+        if (columns[i].name === destination.droppableId) {
+          destColumn = columns[i];
+          destColumnIndex = i;
+        }
+      }
+      const newSourceTickets = JSON.parse(JSON.stringify(sourceColumn.Tickets)); // deep clone
+      const newDestTickets = JSON.parse(JSON.stringify(destColumn.Tickets)); // deep clone
+
+      const [movingTicket] = newSourceTickets.splice(source.index, 1);
+      const newSourceColumn = {...sourceColumn, Tickets: newSourceTickets};
+
+      newDestTickets.splice(destination.index, 0, movingTicket);
+      const newDestColumn = {...destColumn, Tickets: newDestTickets};
+      
+      columns[sourceColumnIndex] = newSourceColumn;
+      columns[destColumnIndex] = newDestColumn;
     }
-    const newTickets = JSON.parse(JSON.stringify(column.Tickets)); // deep clone
-    const [movingTicket] = newTickets.splice(source.index, 1);
-    newTickets.splice(destination.index, 0, movingTicket);
-    const newColumn = {...column, Tickets: newTickets};
-    columns[columnIndex] = newColumn;
     setColumns(prev => [...prev])
-
-    // setTickets(newTickets);
-    // const columnArray = Array.from(columns);
-    // console.log(columnArray) ;
-    // const sourceColumn = columnArray.filter(column => column.name === result.source.droppableId)[0];
-    // const destColumn = columnArray.filter(column => column.name === result.destination.droppableId)[0];
-    // const movingItem = sourceColumn.splice(result.source.index, 1);
-    // console.log(sourceColumn);
-    // console.log(destColumn);
-    // console.log(movingItem);
-    // // destColumn
-
-
-    
   }
 
   const generatedColumns = columns.map(column =>
@@ -67,13 +82,12 @@ export default function ProjectView (props) {
       user={user}
       title={column.name}
       column={column}
-      handleOnDragEnd={handleOnDragEnd}
 		/>
 	)
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <DragDropContext onDragEnd={handleOnDragEnd}>
+      <DragDropContext onDragEnd={onDragEnd}>
         {generatedColumns}
       </DragDropContext>
     </Box>
