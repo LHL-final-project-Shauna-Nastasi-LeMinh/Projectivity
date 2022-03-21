@@ -8,14 +8,17 @@ import NewProjectForm from './NewProjectForm'
 import { ADDPROJECT } from './constants/Modes'
 
 export default function ProjectView (props) {
-  const { user, currentProject, mode} = props
-  const [columns, setColumns] = useState([]);
+  const { user, currentProject, mode } = props
+  const [columns, setColumns] = useState([])
 
-  useEffect(() => {
-    if (currentProject) { 
-      setColumns(currentProject.Columns);
-    }
-  }, [currentProject])
+  useEffect(
+		() => {
+  if (currentProject) {
+    setColumns(currentProject.Columns)
+  }
+},
+		[currentProject]
+	)
 
   const generatedColumns = columns.map(column =>
     <ProjectColumn
@@ -25,18 +28,10 @@ export default function ProjectView (props) {
       column={column}
 		/>
 	)
-    if (mode === ADDPROJECT) {
-      return (
-        <Box>
-          <NewProjectForm/>
-        </Box>
-      )
-    } else {
-      return (
-        <Box>
-          {generatedColumns}
-        </Box>
-      )
-    }
-  
+
+  return (
+    <Box sx={{ display: 'flex' }}>
+      {generatedColumns}
+    </Box>
+  )
 }

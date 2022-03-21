@@ -10,19 +10,23 @@ import Divider from '@mui/material/Divider'
 
 export default function ProjectColumn (props) {
   const { user, column } = props
-  const [tickets, setTickets] = useState([]);
+  const [tickets, setTickets] = useState([])
+  console.log('tickets', tickets)
 
-  useEffect(() => {
-    setTickets(column.Tickets);
-  }, [column])
+  useEffect(
+		() => {
+  setTickets(column.Tickets)
+},
+		[column]
+	)
 
   let index = 0
   const generatedTickets = tickets.map(ticket =>
-    <ProjectTicket title={ticket.description} key={ticket.id}/>
+    <ProjectTicket title={ticket.description} key={ticket.id} />
 	)
 
   return (
-    <Box>
+    <Box sx={{ width: '20rem', mx: '1rem' }}>
       <List>
         <ListItem disablePadding>
           <ListItemButton>
@@ -31,6 +35,7 @@ export default function ProjectColumn (props) {
         </ListItem>
         <Divider />
         {generatedTickets}
+        <ProjectTicket title='Create a new ticket' key={-1} />
       </List>
     </Box>
   )

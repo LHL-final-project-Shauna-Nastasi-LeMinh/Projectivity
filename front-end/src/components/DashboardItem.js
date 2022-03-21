@@ -3,21 +3,17 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { ADDPROJECT } from './constants/Modes'
+import axios from 'axios'
+import { PROJECT_VIEW } from './constants/Modes'
 
 export default function DashboardItem (props) {
-  const { value, listIndex, selectProject, setMode } = props
-
+  const { viewMode, setViewMode, value, listIndex, selectProject } = props
   const [selectedIndex, setSelectedIndex] = React.useState()
 
   const handleListItemClick = (event, index) => {
-    if (index === -1) {
-      setMode(ADDPROJECT)
-    } else {
-      setSelectedIndex(index)
-      selectProject(index);
-    }
-  
-    
+    setSelectedIndex(index)
+    selectProject(index)
+    setViewMode(PROJECT_VIEW)
   }
 
   return (
@@ -26,8 +22,7 @@ export default function DashboardItem (props) {
       onClick={event => handleListItemClick(event, listIndex)}
 		>
       <ListItemIcon />
-      <ListItemText primary={value}/>
+      <ListItemText primary={value} />
     </ListItemButton>
-    
   )
 }
