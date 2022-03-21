@@ -8,7 +8,8 @@ import NewProjectForm from './NewProjectForm'
 import { ADDPROJECT } from './constants/Modes'
 
 export default function ProjectView (props) {
-  const { user, currentProject, mode } = props
+  const { user, currentProject, mode,
+  setViewMode} = props
   const [columns, setColumns] = useState([])
 
   useEffect(
@@ -26,6 +27,7 @@ export default function ProjectView (props) {
       user={user}
       title={column.name}
       column={column}
+      setViewMode={setViewMode}
 		/>
 	)
 

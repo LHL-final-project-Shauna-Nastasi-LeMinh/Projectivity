@@ -3,11 +3,13 @@ import Dashboard from './Dashboard'
 import ProjectView from './ProjectView'
 import Container from '@mui/material/Container'
 import NewProjectForm from './NewProjectForm'
+import NewTicketForm from './NewTicketForm'
 import ConfirmDeleteForm from './ConfirmDeleteForm'
 import {
 	CONFIRM_DELETE_PROJECT,
 	NEW_PROJECT_FORM,
-	PROJECT_VIEW
+	PROJECT_VIEW,
+  NEW_TICKET_FORM
 } from './constants/Modes'
 
 export default function DashboardProject (props) {
@@ -47,12 +49,13 @@ export default function DashboardProject (props) {
           project={currentProject}
           setViewMode={setViewMode}
 					/>}
-        {/* {viewMode === NEW_TICKET_FORM && <NewTicketForm />} */}
+        {viewMode === NEW_TICKET_FORM && <NewTicketForm />}
         {viewMode === PROJECT_VIEW &&
         <ProjectView
           user={user}
           userProjects={userProjects}
           currentProject={currentProject}
+          setViewMode={setViewMode}
 					/>}
       </Container>
     </Container>
