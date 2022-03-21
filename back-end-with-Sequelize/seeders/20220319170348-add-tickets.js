@@ -34,6 +34,27 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        title: 'Server halting',
+        description: 'Server halting when click on new course button',
+        column_id: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        title: 'Typo error in registration',
+        description: 'First name is shown as flirt name',
+        column_id: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        title: 'About us type',
+        description: 'Company name is wrongly display',
+        column_id: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
         title: 'Logout button not working',
         description: 'Logout button is not clickable',
         column_id: 6,
