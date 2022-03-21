@@ -74,17 +74,17 @@ export default function ProjectColumn (props) {
                 sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'inherit', transition: 'background-color 1s ease'}}
               >
                 {generatedTickets}
-                <ListItem disablePadding >
-                  <ListItemButton onClick={() => handleClick()}>
-                    <ListItemText primary="Create New Ticket" />
-                  </ListItemButton>
-                </ListItem>
+                
                 {provided.placeholder}
               </List>
             )}
           </Droppable>
-          
-      
+          <ListItem disablePadding >
+            <ListItemButton onClick={() => handleClick()}>
+              <ListItemText primary="Create New Ticket" />
+            </ListItemButton>
+          </ListItem>
+
         </Box>
       )}
     </Draggable>
