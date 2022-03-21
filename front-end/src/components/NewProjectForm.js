@@ -10,7 +10,7 @@ export default function NewProjectForm() {
 
   return (
     <div>
-      <h2>Create New Project</h2>
+      {/* <h2>Create New Project</h2>
       <TextField 
         id="outlined-name"
         label="Name"
@@ -23,7 +23,7 @@ export default function NewProjectForm() {
         onChange={(evt) => setProjectDescription(evt.target.value)}
       >
 
-      </TextareaAutosize>
+      </TextareaAutosize> */}
     </div>
   )
 
