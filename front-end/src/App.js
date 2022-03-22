@@ -1,49 +1,13 @@
 import './App.css'
-<<<<<<< HEAD
-import { useState } from 'react'
-=======
 import React, { useState } from 'react'
->>>>>>> feature/dashboard-delete
 import { useCookies } from 'react-cookie'
 import Header from './components/Header'
 import Main from './components/Main'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import { LANDING } from './components/constants/Modes'
-<<<<<<< HEAD
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-
-const theme = createTheme({
-  palette: {
-    type: 'light',
-    primary: {
-      main: '#3D405B'
-    },
-    secondary: {
-      main: '#E07A5F'
-    },
-    error: {
-      main: '#AE2012'
-    },
-    warning: {
-      main: '#EE9B00'
-    },
-    success: {
-      main: '#17c3b2'
-    },
-    info: {
-      main: '#81B29A'
-    },
-    background: {
-      default: '#FEF9EF'
-    },
-    divider: '#E07A5F'
-  }
-})
-=======
 import { ThemeProvider } from '@mui/material/styles'
 import { theme } from './Theme'
->>>>>>> feature/dashboard-delete
 
 const App = () => {
   const [mode, setMode] = useState(LANDING)
@@ -76,11 +40,8 @@ const App = () => {
             setUser={setUser}
             cookies={cookies}
             removeCookie={removeCookie}
-<<<<<<< HEAD
-=======
             open={open}
             setOpen={setOpen}
->>>>>>> feature/dashboard-delete
 					/>
         </Box>
         <Box
@@ -102,11 +63,8 @@ const App = () => {
             setCurrentProject={setCurrentProject}
             currentColumn={currentColumn}
             setCurrentColumn={setCurrentColumn}
-<<<<<<< HEAD
-=======
             open={open}
             setOpen={setOpen}
->>>>>>> feature/dashboard-delete
 					/>
         </Box>
       </Container>

@@ -7,9 +7,6 @@ import Container from '@mui/material/Container'
 import NavbarMenu from './NavbarMenu'
 
 export default function Header (props) {
-<<<<<<< HEAD
-  const { mode, setMode, user, setUser, cookies, removeCookie } = props
-=======
   const {
 		mode,
 		setMode,
@@ -20,7 +17,6 @@ export default function Header (props) {
 		open,
 		setOpen
 	} = props
->>>>>>> feature/dashboard-delete
 
   return (
     <AppBar position='static'>
