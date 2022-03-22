@@ -23,34 +23,13 @@ export default function ProjectColumn (props) {
 		[column]
 	)
 
-  let index = 0
- 
-  const generatedTickets = tickets.map((ticket, index) => {
-    return (
-      <Draggable key={""+ticket.id} draggableId={"ticket_"+ticket.id} index={index}>
-        {(provided, snapshot) => (
-          <div 
-            {...provided.draggableProps} 
-            {...provided.dragHandleProps} 
-            ref={provided.innerRef}
-            
-          >
-          <ProjectTicket title={ticket.description} ticketId={ticket.id} isDragging={snapshot.isDragging} setViewMode={setViewMode}/>
-          </div>
-        )}
-      </Draggable>
-    )
-  })
-
-  
-
-    const handleClick = () => {
-      console.log("click")
-      console.log(setCurrentColumn);
-      setCurrentColumn(column.id)
-      setViewMode(NEW_TICKET_FORM)
-      
-    }
+  const handleClick = () => {
+    console.log("click")
+    console.log(setCurrentColumn);
+    setCurrentColumn(column.id)
+    setViewMode(NEW_TICKET_FORM)
+    
+  }
   
   return (
     <Draggable draggableId={"column_"+column.id} index={colIndex}>
@@ -76,7 +55,6 @@ export default function ProjectColumn (props) {
                 sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'inherit', transition: 'background-color 1s ease'}}
               >
                 <ColumnTickets tickets={tickets} setViewMode={setViewMode}/>
-                
                 {provided.placeholder}
               </List>
             )}
