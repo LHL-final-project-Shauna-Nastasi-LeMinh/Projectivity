@@ -36,11 +36,11 @@ module.exports = sequelizeModels => {
 
   router.post('/new', async (req, res) => {
     try {
-      const {description, created_by, column_id} = req.body
+      const {title, created_by, column_id} = req.body
 
       await Tickets.create({
-        title: 'test',
-        description,
+        title,
+        description: 'test',
         created_by,
         column_id,
       })
