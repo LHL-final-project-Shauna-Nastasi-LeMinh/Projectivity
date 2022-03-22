@@ -27,6 +27,7 @@ export default function ProjectColumnNew (props) {
     setOpen(false);
     if (newColumnName === "") return;
     createNewColumn(newColumnName);
+    setNewColumnName("");
   };
 
   const openNewColumnDialog = function(event) {
@@ -52,7 +53,6 @@ export default function ProjectColumnNew (props) {
                 margin="dense"
                 id="name"
                 label="New Column Name"
-                type="email"
                 fullWidth
                 variant="outlined"
                 onChange={setTextValue}

@@ -21,50 +21,83 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { NEW_TICKET_FORM } from './constants/Modes'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
+import Slide from '@mui/material/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function ProjectColumn (props) {
-  const { user, column, setViewMode, setCurrentColumn, colIndex } = props
+  const { user, column, setViewMode, setCurrentColumn, colIndex, deleteColumnFromProjectView, changeColumnFromProjectView } = props
 
   const [tickets, setTickets] = useState([])
   const [dialogOpen, setDialogOpen] = useState(false);
-
+  const [dialogContent, setDialogContent] = useState(false);
+  const [newColumnName, setNewColumnName] = useState("");
+  
   // handle opening and closing of MoreHorizIcon
   const [anchorEl, setAnchorEl] = useState(null);
   const openIconMenu = Boolean(anchorEl);
 
-  const handleClick = (event) => {
+  const menuIconClick = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget)
-    console.log(anchorEl)
   };
   
   const closeIconMenu = () => {
     setAnchorEl(null);
   };
 
-  const openRemoveDialog = () => {
+  const openDeleteDialog = () => {
+    closeIconMenu();
+    const content = {};
+    content.title = `Delete column "${column.name}"?`;
+    content.text = "";
+
+    if (tickets && tickets.length > 0) {
+      dialogContent.text=`You still have tickets in this column. 
+        Column deletion will permanently delete all associated tickets.`
+    }
+    content.confirmLabel = "Delete";
+    setDialogContent(content);
     setDialogOpen(true);
   }
 
-  const remove = () => {
-    setDialogOpen(false);
-    console.log(column)
+  const handleColumnActions = () => {
+    closeDialog();
+    if (dialogContent.confirmLabel === "Delete") {
+      deleteColumnFromProjectView(column.id);
+    }
+    if (dialogContent.confirmLabel === "Change") {
+      if (newColumnName === "") return;
+      changeColumnFromProjectView(column.id, newColumnName)
+    }
   };
 
-  const closeRemoveDialog = () => {
+  const openNewColumnNameDialog = () => {
+    closeIconMenu();
+    const content = {};
+    content.title = `New name for column "${column.name}"?`;
+    content.text = "";
+    content.confirmLabel = "Change";
+    setDialogContent(content);
+    setDialogOpen(true);
+  }
+
+  const closeDialog = () => {
     setDialogOpen(false);
   };
 
-  useEffect(
-		() => {
-  setTickets(column.Tickets)
-},
-		[column]
-	)
+  useEffect(() => {
+      setTickets(column.Tickets)
+    }, [column])
 
   const createNewTicket = () => {
     setCurrentColumn(column.id)
     setViewMode(NEW_TICKET_FORM)
+  }
+
+  const setTextValue = function(event) {
+    setNewColumnName(event.target.value);
   }
 
   return (
@@ -84,7 +117,7 @@ export default function ProjectColumn (props) {
                 aria-controls={openIconMenu ? 'fade-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={openIconMenu ? 'true' : undefined}
-                onClick={handleClick}
+                onClick={menuIconClick}
               >  
                 <MoreHorizIcon />
               </IconButton>
@@ -98,24 +131,40 @@ export default function ProjectColumn (props) {
                 onClose={closeIconMenu}
                 TransitionComponent={Fade}
              >
-              <MenuItem onClick={closeIconMenu}>Change Name</MenuItem>
-              <MenuItem onClick={openRemoveDialog}>Remove</MenuItem>
+              <MenuItem onClick={openNewColumnNameDialog}>Change Name</MenuItem>
+              <MenuItem onClick={openDeleteDialog}>Delete</MenuItem>
             </Menu>
             </ListItemButton>
           </ListItem>
 
-          <Dialog open={dialogOpen} onClose={closeRemoveDialog}>
+          <Dialog 
+            open={dialogOpen}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={closeDialog}
+            aria-describedby="alert-dialog-slide-description"
+          >
             
-            <DialogTitle>{"Column removal?"}</DialogTitle>
+            <DialogTitle>{dialogContent.title}</DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-slide-description">
-                You still have tickets in this column. 
-                Column removal will permanently delete all associated ticket. 
+                {dialogContent.text}
               </DialogContentText>
+              {(dialogContent.confirmLabel === "Change") &&
+              <TextField
+                autoFocus
+                margin="dense"
+                id="name"
+                label="New Column Name"
+                fullWidth
+                variant="outlined"
+                onChange={setTextValue}
+              />
+              }
             </DialogContent>
             <DialogActions>
-              <Button onClick={closeRemoveDialog}>Cancel</Button>
-              <Button onClick={remove}>Remove</Button>
+              <Button onClick={closeDialog}>Cancel</Button>
+              <Button onClick={handleColumnActions}>{dialogContent.confirmLabel}</Button>
             </DialogActions>
           </Dialog>
           <Divider />

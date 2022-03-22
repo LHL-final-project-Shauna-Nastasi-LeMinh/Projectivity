@@ -20,6 +20,33 @@ module.exports = (sequelizeModels) => {
     }
   })
 
+  router.post('/updateName', async (req, res) => {
+    try {
+      const {id, name} = req.body
 
+      const updatedColumn = await Column.update(
+        { name: name },
+        { where: { id: id } }
+      )
+      return res.json(updatedColumn);
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
+  })
+
+  router.delete('/:id', async (req, res) => {
+    try {
+      const {id} = req.body
+
+      await Column.destroy({
+        where: { id: req.params.id },
+      })
+      return res.json({message: "Column deleted successfully"});
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
+  })
   return router;
 };

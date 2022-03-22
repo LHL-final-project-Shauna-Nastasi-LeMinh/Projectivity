@@ -85,19 +85,64 @@ export default function ProjectView (props) {
 				// persist new column id to the ticket details in db
         axios
 					.post(process.env.REACT_APP_BACKEND_URL + '/tickets/updateColumn', {
-  ticketId: movingTicket.id,
-  newColumnId: destColumn.id
-})
-					.then(res => {
-  console.log(res.data)
-})
-					.catch(function (error) {
-  console.log(error.message)
-})
+            ticketId: movingTicket.id,
+            newColumnId: destColumn.id
+          })
+                    .then(res => {
+            console.log(res.data)
+          })
+                    .catch(function (error) {
+            console.log(error.message)
+          })
       }
 			// update state to retain moving position
       setColumns(prev => [...prev])
     }
+  }
+
+  const createNewColumn = function (newColumnName) {
+
+    axios.post(process.env.REACT_APP_BACKEND_URL + '/columns/new', {
+      name: newColumnName,
+      project_id: currentProject.id
+      })
+      .then(res => {
+        console.log(res.data)
+        const newColumn = { ...res.data, Tickets: [] }
+        setColumns([...columns, newColumn])
+      })
+      .catch(function (error) {
+        console.log(error.message)
+      })
+  }
+
+  const deleteColumnFromProjectView = function (columnId) {
+    console.log(columnId);
+    axios.delete(process.env.REACT_APP_BACKEND_URL + `/columns/${columnId}`)
+      .then(res => {
+        console.log(res.data)
+        const newColumns = columns.filter(column => column.id !== columnId)
+        setColumns([...newColumns])
+      })
+      .catch(function (error) {
+        console.log(error.message)
+      })
+  }
+
+  const changeColumnFromProjectView = function (columnId, newName) {
+    axios.post(process.env.REACT_APP_BACKEND_URL + '/columns/updateName', {
+      name: newName,
+      id: columnId
+      })
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(function (error) {
+        console.log(error.message)
+      })
+    const updatedColumn = columns.filter(column => column.id === columnId)[0]
+    updatedColumn.name = newName;
+    setColumns([...columns])
   }
 
   const generatedColumns = columns.map((column, colIndex) =>
@@ -110,27 +155,11 @@ export default function ProjectView (props) {
       setViewMode={setViewMode}
       setCurrentColumn={setCurrentColumn}
       colIndex={colIndex}
+      deleteColumnFromProjectView={deleteColumnFromProjectView}
+      changeColumnFromProjectView={changeColumnFromProjectView}
 		/>
 	)
-  const createNewColumn = function (newColumnName) {
-    console.log('AAAAAAAA:' + newColumnName)
-    console.log(columns)
-
-    axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/columns/new', {
-  name: newColumnName,
-  project_id: currentProject.id
-})
-			.then(res => {
-  console.log(res.data)
-  const newColumn = { ...res.data, Tickets: [] }
-  setColumns([...columns, newColumn])
-})
-			.catch(function (error) {
-  console.log(error.message)
-})
-  }
-
+  
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId='all-column' direction='horizontal' type='column'>
