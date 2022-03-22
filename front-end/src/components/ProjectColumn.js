@@ -106,7 +106,7 @@ const ColumnTickets = React.memo(function ColumnTickets(props){
             ref={provided.innerRef}
             
           >
-          <ProjectTicket title={ticket.description} ticketId={ticket.id} isDragging={snapshot.isDragging} setViewMode={setViewMode}/>
+          <ProjectTicket title={ticket.title} ticketId={ticket.id} isDragging={snapshot.isDragging} setViewMode={setViewMode}/>
           </div>
         )}
       </Draggable>
