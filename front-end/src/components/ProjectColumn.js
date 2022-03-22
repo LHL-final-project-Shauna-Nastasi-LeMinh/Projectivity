@@ -28,7 +28,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function ProjectColumn (props) {
+<<<<<<< HEAD
   const { user, column, setViewMode, setCurrentColumn, colIndex, deleteColumnFromProjectView, changeColumnFromProjectView } = props
+=======
+  const {
+		user,
+		column,
+		setViewMode,
+		setCurrentColumn,
+		colIndex,
+		open,
+		setOpen
+	} = props
+>>>>>>> feature/styling
 
   const [tickets, setTickets] = useState([])
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -187,8 +199,11 @@ export default function ProjectColumn (props) {
               </List>}
           </Droppable>
           <ListItem sx={{ padding: '0.1rem' }}>
-            <ListItemButton onClick={() => createNewTicket()}>
-              <ListItemText primary="Create New Ticket" />
+            <ListItemButton onClick={() => handleClick()}>
+              <ListItemText
+                primary='Create New Ticket'
+                onClick={() => setOpen(NEW_TICKET_FORM)}
+							/>
             </ListItemButton>
           </ListItem>
         </Box>}

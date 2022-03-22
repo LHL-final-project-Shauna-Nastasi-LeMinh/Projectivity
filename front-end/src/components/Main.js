@@ -54,6 +54,8 @@ export default function Main (props) {
         setCurrentProject={setCurrentProject}
         currentColumn={currentColumn}
         setCurrentColumn={setCurrentColumn}
+        open={open}
+        setOpen={setOpen}
 				/>}
     </Paper>
   )

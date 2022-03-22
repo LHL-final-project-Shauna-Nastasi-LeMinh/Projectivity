@@ -8,7 +8,15 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import axios from 'axios'
 
 export default function ProjectView (props) {
-  const { user, currentProject, mode, setViewMode, setCurrentColumn } = props
+  const {
+		user,
+		currentProject,
+		mode,
+		setViewMode,
+		setCurrentColumn,
+		open,
+		setOpen
+	} = props
   const [columns, setColumns] = useState([])
 
   useEffect(
@@ -85,15 +93,15 @@ export default function ProjectView (props) {
 				// persist new column id to the ticket details in db
         axios
 					.post(process.env.REACT_APP_BACKEND_URL + '/tickets/updateColumn', {
-            ticketId: movingTicket.id,
-            newColumnId: destColumn.id
-          })
-                    .then(res => {
-            console.log(res.data)
-          })
-                    .catch(function (error) {
-            console.log(error.message)
-          })
+  ticketId: movingTicket.id,
+  newColumnId: destColumn.id
+})
+					.then(res => {
+  console.log(res.data)
+})
+					.catch(function (error) {
+  console.log(error.message)
+})
       }
 			// update state to retain moving position
       setColumns(prev => [...prev])
@@ -101,47 +109,49 @@ export default function ProjectView (props) {
   }
 
   const createNewColumn = function (newColumnName) {
-
-    axios.post(process.env.REACT_APP_BACKEND_URL + '/columns/new', {
-      name: newColumnName,
-      project_id: currentProject.id
-      })
-      .then(res => {
-        console.log(res.data)
-        const newColumn = { ...res.data, Tickets: [] }
-        setColumns([...columns, newColumn])
-      })
-      .catch(function (error) {
-        console.log(error.message)
-      })
+    axios
+			.post(process.env.REACT_APP_BACKEND_URL + '/columns/new', {
+  name: newColumnName,
+  project_id: currentProject.id
+})
+			.then(res => {
+  console.log(res.data)
+  const newColumn = { ...res.data, Tickets: [] }
+  setColumns([...columns, newColumn])
+})
+			.catch(function (error) {
+  console.log(error.message)
+})
   }
 
   const deleteColumnFromProjectView = function (columnId) {
-    console.log(columnId);
-    axios.delete(process.env.REACT_APP_BACKEND_URL + `/columns/${columnId}`)
-      .then(res => {
-        console.log(res.data)
-        const newColumns = columns.filter(column => column.id !== columnId)
-        setColumns([...newColumns])
-      })
-      .catch(function (error) {
-        console.log(error.message)
-      })
+    console.log(columnId)
+    axios
+			.delete(process.env.REACT_APP_BACKEND_URL + `/columns/${columnId}`)
+			.then(res => {
+  console.log(res.data)
+  const newColumns = columns.filter(column => column.id !== columnId)
+  setColumns([...newColumns])
+})
+			.catch(function (error) {
+  console.log(error.message)
+})
   }
 
   const changeColumnFromProjectView = function (columnId, newName) {
-    axios.post(process.env.REACT_APP_BACKEND_URL + '/columns/updateName', {
-      name: newName,
-      id: columnId
-      })
-      .then(res => {
-        console.log(res.data)
-      })
-      .catch(function (error) {
-        console.log(error.message)
-      })
+    axios
+			.post(process.env.REACT_APP_BACKEND_URL + '/columns/updateName', {
+  name: newName,
+  id: columnId
+})
+			.then(res => {
+  console.log(res.data)
+})
+			.catch(function (error) {
+  console.log(error.message)
+})
     const updatedColumn = columns.filter(column => column.id === columnId)[0]
-    updatedColumn.name = newName;
+    updatedColumn.name = newName
     setColumns([...columns])
   }
 
@@ -155,11 +165,11 @@ export default function ProjectView (props) {
       setViewMode={setViewMode}
       setCurrentColumn={setCurrentColumn}
       colIndex={colIndex}
-      deleteColumnFromProjectView={deleteColumnFromProjectView}
-      changeColumnFromProjectView={changeColumnFromProjectView}
+      open={open}
+      setOpen={setOpen}
 		/>
 	)
-  
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId='all-column' direction='horizontal' type='column'>
