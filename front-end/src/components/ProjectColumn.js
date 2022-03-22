@@ -7,86 +7,239 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import IconButton from '@mui/material/IconButton'
+import Fade from '@mui/material/Fade'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import { NEW_TICKET_FORM } from './constants/Modes'
-import NewTicketForm from './NewTicketForm'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
+import Slide from '@mui/material/Slide'
+
+const Transition = React.forwardRef(function Transition (props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
 export default function ProjectColumn (props) {
-  const { user, column, setViewMode, setCurrentColumn, colIndex} = props
+  const {
+		user,
+		column,
+		setViewMode,
+		setCurrentColumn,
+		colIndex,
+		open,
+		setOpen,
+		deleteColumnFromProjectView,
+		changeColumnFromProjectView,
+		handleClick
+	} = props
 
   const [tickets, setTickets] = useState([])
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogContent, setDialogContent] = useState(false)
+  const [newColumnName, setNewColumnName] = useState('')
+
+	// handle opening and closing of MoreHorizIcon
+  const [anchorEl, setAnchorEl] = useState(null)
+  const openIconMenu = Boolean(anchorEl)
+
+  const menuIconClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const closeIconMenu = () => {
+    setAnchorEl(null)
+  }
+
+  const openDeleteDialog = () => {
+    closeIconMenu()
+    const content = {}
+    content.title = `Delete column "${column.name}"?`
+    content.text = ''
+
+    if (tickets && tickets.length > 0) {
+      dialogContent.text = `You still have tickets in this column. 
+        Column deletion will permanently delete all associated tickets.`
+    }
+    content.confirmLabel = 'Delete'
+    setDialogContent(content)
+    setDialogOpen(true)
+  }
+
+  const handleColumnActions = () => {
+    closeDialog()
+    if (dialogContent.confirmLabel === 'Delete') {
+      deleteColumnFromProjectView(column.id)
+    }
+    if (dialogContent.confirmLabel === 'Change') {
+      if (newColumnName === '') return
+      changeColumnFromProjectView(column.id, newColumnName)
+    }
+  }
+
+  const openNewColumnNameDialog = () => {
+    closeIconMenu()
+    const content = {}
+    content.title = `New name for column "${column.name}"?`
+    content.text = ''
+    content.confirmLabel = 'Change'
+    setDialogContent(content)
+    setDialogOpen(true)
+  }
+
+  const closeDialog = () => {
+    setDialogOpen(false)
+  }
 
   useEffect(
-        () => {
-      setTickets(column.Tickets)
-    },
+		() => {
+  setTickets(column.Tickets)
+},
 		[column]
 	)
 
-  const handleClick = () => {
-    console.log("click")
-    console.log(setCurrentColumn);
+  const createNewTicket = () => {
     setCurrentColumn(column.id)
     setViewMode(NEW_TICKET_FORM)
-    
   }
-  
+
+  const setTextValue = function (event) {
+    setNewColumnName(event.target.value)
+  }
+
   return (
     <Draggable draggableId={column.name} index={colIndex}>
-      {(provided) => (
-        <Box 
+      {provided =>
+        <Box
           sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-        >
-          <ListItem sx={{ padding: '0.1rem' }}> 
+				>
+          <ListItem sx={{ padding: '0.1rem' }}>
             <ListItemButton>
               <ListItemText primary={column.name} />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-      
-          <Droppable droppableId={column.name} type="ticket">
-            {(provided, snapshot) => (
-              <List {...provided.droppableProps} 
-                ref={provided.innerRef} 
-                isDraggingOver={snapshot.isDraggingOver} 
-                sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'inherit', transition: 'background-color 1s ease'}}
-              >
-                <ColumnTickets tickets={tickets} setViewMode={setViewMode}/>
-                {provided.placeholder}
-              </List>
-            )}
-          </Droppable>
-          <ListItem sx={{ padding: '0.1rem' }}>
-            <ListItemButton onClick={() => handleClick()}>
-              <ListItemText primary="Create New Ticket" />
+              <IconButton
+                id='fade-button'
+                aria-controls={openIconMenu ? 'fade-menu' : undefined}
+                aria-haspopup='true'
+                aria-expanded={openIconMenu ? 'true' : undefined}
+                onClick={menuIconClick}
+							>
+                <MoreHorizIcon />
+              </IconButton>
+              <Menu
+                id='fade-menu'
+                MenuListProps={{
+                  'aria-labelledby': 'fade-button'
+                }}
+                anchorEl={anchorEl}
+                open={openIconMenu}
+                onClose={closeIconMenu}
+                TransitionComponent={Fade}
+							>
+                <MenuItem onClick={openNewColumnNameDialog}>
+									Change Name
+								</MenuItem>
+                <MenuItem onClick={openDeleteDialog}>Delete</MenuItem>
+              </Menu>
             </ListItemButton>
           </ListItem>
 
-        </Box>
-      )}
+          <Dialog
+            open={dialogOpen}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={closeDialog}
+            aria-describedby='alert-dialog-slide-description'
+					>
+            <DialogTitle>
+              {dialogContent.title}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id='alert-dialog-slide-description'>
+                {dialogContent.text}
+              </DialogContentText>
+              {dialogContent.confirmLabel === 'Change' &&
+              <TextField
+                autoFocus
+                margin='dense'
+                id='name'
+                label='New Column Name'
+                fullWidth
+                variant='outlined'
+                onChange={setTextValue}
+								/>}
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={closeDialog}>Cancel</Button>
+              <Button onClick={handleColumnActions}>
+                {dialogContent.confirmLabel}
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Divider />
+
+          <Droppable droppableId={column.name} type='ticket'>
+            {(provided, snapshot) =>
+              <List
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                isDraggingOver={snapshot.isDraggingOver}
+                sx={{
+                  backgroundColor: snapshot.isDraggingOver
+										? 'skyblue'
+										: 'inherit',
+                  transition: 'background-color 1s ease'
+                }}
+							>
+                <ColumnTickets tickets={tickets} setViewMode={setViewMode} />
+                {provided.placeholder}
+              </List>}
+          </Droppable>
+          <ListItem sx={{ padding: '0.1rem' }}>
+            <ListItemButton onClick={() => handleClick()}>
+              <ListItemText
+                primary='Create New Ticket'
+                onClick={() => setOpen(NEW_TICKET_FORM)}
+							/>
+            </ListItemButton>
+          </ListItem>
+        </Box>}
     </Draggable>
   )
 }
 
-// React.memo(function ColumnTickets(props) 
-const ColumnTickets = React.memo(function ColumnTickets(props){
-  const {tickets, setViewMode} = props;
+// React.memo(function ColumnTickets(props)
+const ColumnTickets = React.memo(function ColumnTickets (props) {
+  const { tickets, setViewMode } = props
   return tickets.map((ticket, index) => {
     return (
-      <Draggable key={""+ticket.id} draggableId={"ticket_"+ticket.id} index={index}>
-        {(provided, snapshot) => (
-          <div 
-            {...provided.draggableProps} 
-            {...provided.dragHandleProps} 
+      <Draggable
+        key={'' + ticket.id}
+        draggableId={'ticket_' + ticket.id}
+        index={index}
+			>
+        {(provided, snapshot) =>
+          <div
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
             ref={provided.innerRef}
-            
-          >
-          <ProjectTicket title={ticket.title} ticketId={ticket.id} isDragging={snapshot.isDragging} setViewMode={setViewMode}/>
-          </div>
-        )}
+					>
+            <ProjectTicket
+              title={ticket.title}
+              ticketId={ticket.id}
+              isDragging={snapshot.isDragging}
+              setViewMode={setViewMode}
+						/>
+          </div>}
       </Draggable>
     )
   })

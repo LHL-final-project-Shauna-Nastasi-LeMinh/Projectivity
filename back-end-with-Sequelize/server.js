@@ -30,6 +30,7 @@ const accessControlRoutes = require('./routes/accessControl')
 const roleRoutes = require('./routes/roles')
 const projectRoutes = require('./routes/projects')
 const ticketRoutes = require('./routes/tickets')
+const columnRoutes = require('./routes/columns')
 
 // pass the whole models, as well pusher server, to routes.
 // Consider refactor to pass individual model object only, e.g. sequelizeModels.USER if only access 1 table
@@ -42,6 +43,7 @@ app.use('/accessControl', accessControlRoutes(sequelizeModels))
 app.use('/roles', roleRoutes(sequelizeModels))
 app.use('/projects', projectRoutes(sequelizeModels))
 app.use('/tickets', ticketRoutes(sequelizeModels))
+app.use('/columns', columnRoutes(sequelizeModels))
 
 app.get('/', (req, res) => {
   res.render('index')

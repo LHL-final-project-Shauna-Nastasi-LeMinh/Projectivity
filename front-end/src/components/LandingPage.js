@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Dashboard from './Dashboard'
 import ProjectView from './ProjectView'
 import Container from '@mui/material/Container'
-import NewProjectForm from './NewProjectForm'
-import NewTicketForm from './NewTicketForm'
-import ConfirmDeleteForm from './ConfirmDeleteForm'
+import NewProjectForm from './Forms/NewProjectForm'
+import NewTicketForm from './Forms/NewTicketForm'
+import ConfirmDeleteForm from './Forms/ConfirmDeleteForm'
 import {
 	CONFIRM_DELETE_PROJECT,
 	NEW_PROJECT_FORM,
 	PROJECT_VIEW,
-  NEW_TICKET_FORM
+	NEW_TICKET_FORM
 } from './constants/Modes'
 
 export default function DashboardProject (props) {
@@ -22,11 +22,14 @@ export default function DashboardProject (props) {
 		setUserProjects,
 		currentProject,
 		setCurrentProject,
-    currentColumn,
-    setCurrentColumn
+		currentColumn,
+		setCurrentColumn,
+		open,
+		setOpen,
+		viewMode,
+		setViewMode
 	} = props
 
-  const [viewMode, setViewMode] = useState(PROJECT_VIEW)
   const [data, setData] = useState()
   const [dashboard, setDashboard] = useState()
 
@@ -52,17 +55,33 @@ export default function DashboardProject (props) {
         setCurrentProject={setCurrentProject}
         data={data}
         loadForm={loadForm}
+        open={open}
+        setOpen={setOpen}
 				/>}
       <Container>
-        {viewMode === NEW_PROJECT_FORM &&
-        <NewProjectForm user={user} setViewMode={setViewMode} />}
-        {viewMode === CONFIRM_DELETE_PROJECT &&
+        {open === NEW_PROJECT_FORM &&
+        <NewProjectForm
+          user={user}
+          setViewMode={setViewMode}
+          open={open}
+          setOpen={setOpen}
+					/>}
+        {open === CONFIRM_DELETE_PROJECT &&
         <ConfirmDeleteForm
           data={data}
           currentProject={currentProject}
           setViewMode={setViewMode}
+          open={open}
+          setOpen={setOpen}
 					/>}
-        {viewMode === NEW_TICKET_FORM && <NewTicketForm  user={user} currentColumn={currentColumn} setViewMode={setViewMode}/>}
+        {open === NEW_TICKET_FORM &&
+        <NewTicketForm
+          user={user}
+          currentColumn={currentColumn}
+          setViewMode={setViewMode}
+          open={open}
+          setOpen={setOpen}
+					/>}
         {viewMode === PROJECT_VIEW &&
         <ProjectView
           user={user}
@@ -70,6 +89,8 @@ export default function DashboardProject (props) {
           currentProject={currentProject}
           setViewMode={setViewMode}
           setCurrentColumn={setCurrentColumn}
+          open={open}
+          setOpen={setOpen}
 					/>}
       </Container>
     </Container>

@@ -21,7 +21,9 @@ export default function Dashboard (props) {
 		user,
 		currentProject,
 		setCurrentProject,
-		loadForm
+		loadForm,
+		open,
+		setOpen
 	} = props
 
   const [projects, setProjects] = useState()
@@ -101,8 +103,7 @@ export default function Dashboard (props) {
         left: 0,
         top: '4rem',
         width: '100%',
-        maxWidth: 360,
-        bgcolor: '#555555'
+        maxWidth: 360
       }}
 		>
       <List component='nav' aria-label='main mailbox folders'>
@@ -111,7 +112,7 @@ export default function Dashboard (props) {
           <ListItemIcon />
           <ListItemText
             primary='Create New Project'
-            onClick={() => loadForm([], NEW_PROJECT_FORM)}
+            onClick={() => setOpen(NEW_PROJECT_FORM)}
 					/>
         </ListItemButton>
       </List>
