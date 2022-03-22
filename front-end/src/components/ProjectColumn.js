@@ -12,81 +12,89 @@ import NewTicketForm from './NewTicketForm'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 export default function ProjectColumn (props) {
-  const { user, column, setViewMode, setCurrentColumn, colIndex} = props
+  const { user, column, setViewMode, setCurrentColumn, colIndex } = props
 
   const [tickets, setTickets] = useState([])
 
   useEffect(
-        () => {
-      setTickets(column.Tickets)
-    },
+		() => {
+  setTickets(column.Tickets)
+},
 		[column]
 	)
 
   let index = 0
- 
+
   const generatedTickets = tickets.map((ticket, index) => {
     return (
-      <Draggable key={""+ticket.id} draggableId={"ticket_"+ticket.id} index={index}>
-        {(provided, snapshot) => (
-          <div 
-            {...provided.draggableProps} 
-            {...provided.dragHandleProps} 
+      <Draggable
+        key={'' + ticket.id}
+        draggableId={'ticket_' + ticket.id}
+        index={index}
+			>
+        {(provided, snapshot) =>
+          <div
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
             ref={provided.innerRef}
-            
-          >
-          <ProjectTicket title={ticket.description} ticketId={ticket.id} isDragging={snapshot.isDragging} setViewMode={setViewMode}/>
-          </div>
-        )}
+					>
+            <ProjectTicket
+              title={ticket.description}
+              ticketId={ticket.id}
+              isDragging={snapshot.isDragging}
+              setViewMode={setViewMode}
+						/>
+          </div>}
       </Draggable>
     )
   })
 
-    const handleClick = () => {
-      console.log("click")
-      console.log(setCurrentColumn);
-      setCurrentColumn(column.id)
-      setViewMode(NEW_TICKET_FORM)
-      
-    }
-  
+  const handleClick = () => {
+    console.log('click')
+    console.log(setCurrentColumn)
+    setCurrentColumn(column.id)
+    setViewMode(NEW_TICKET_FORM)
+  }
+
   return (
-    <Draggable draggableId={"column_"+column.id} index={colIndex}>
-      {(provided) => (
-        <Box 
+    <Draggable draggableId={'column_' + column.id} index={colIndex}>
+      {provided =>
+        <Box
           sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-        >
-          <ListItem> 
+				>
+          <ListItem>
             <ListItemButton>
               <ListItemText primary={column.name} />
             </ListItemButton>
           </ListItem>
           <Divider />
-      
-          <Droppable droppableId={column.name} type="ticket">
-            {(provided, snapshot) => (
-              <List {...provided.droppableProps} 
-                ref={provided.innerRef} 
-                isDraggingOver={snapshot.isDraggingOver} 
-                sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'inherit', transition: 'background-color 1s ease'}}
-              >
+
+          <Droppable droppableId={column.name} type='ticket'>
+            {(provided, snapshot) =>
+              <List
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                isDraggingOver={snapshot.isDraggingOver}
+                sx={{
+                  backgroundColor: snapshot.isDraggingOver
+										? 'skyblue'
+										: 'inherit',
+                  transition: 'background-color 1s ease'
+                }}
+							>
                 {generatedTickets}
-                <ListItem disablePadding >
+                <ListItem disablePadding>
                   <ListItemButton onClick={() => handleClick()}>
-                    <ListItemText primary="Create New Ticket" />
+                    <ListItemText primary='Create New Ticket' />
                   </ListItemButton>
                 </ListItem>
                 {provided.placeholder}
-              </List>
-            )}
+              </List>}
           </Droppable>
-          
-      
-        </Box>
-      )}
+        </Box>}
     </Draggable>
   )
 }

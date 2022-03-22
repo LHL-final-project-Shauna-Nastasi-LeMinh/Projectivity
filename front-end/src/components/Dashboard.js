@@ -101,8 +101,7 @@ export default function Dashboard (props) {
         left: 0,
         top: '4rem',
         width: '100%',
-        maxWidth: 360,
-        bgcolor: '#555555'
+        maxWidth: 360
       }}
 		>
       <List component='nav' aria-label='main mailbox folders'>

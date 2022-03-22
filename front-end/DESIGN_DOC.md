@@ -4,11 +4,15 @@
 
 ## Colors
 
-Primary: #FDFFFC
-Secondary: #011627
-Action: #2EC4B6
-Warning: #FF9F1C
-Danger: #E71D36
+
+Background: #FEF9EF
+Primary: #3D405B
+Secondary: #E07A5F
+Warning: #EE9B00
+Error: #AE2012
+Info: #81B29A
+Success: #17c3b2
+
 
 ## MUI through NPM
 
