@@ -32,7 +32,7 @@ export default function ProjectColumn (props) {
   }
   
   return (
-    <Draggable draggableId={"column_"+column.id} index={colIndex}>
+    <Draggable draggableId={column.name} index={colIndex}>
       {(provided) => (
         <Box 
           sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}

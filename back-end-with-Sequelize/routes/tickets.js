@@ -52,5 +52,19 @@ module.exports = sequelizeModels => {
     }
   })
 
+  router.post('/updateColumn', async (req, res) => {
+    try {
+      const {ticketId, newColumnId} = req.body
+      console.log(ticketId, newColumnId)
+      // await Tickets.create({
+
+      // })
+
+      return res.json({ message: "Column updated for ticket" });
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
+  })
   return router
 }
