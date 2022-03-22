@@ -20,11 +20,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { NEW_TICKET_FORM } from './constants/Modes'
-import NewTicketForm from './NewTicketForm'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 
 export default function ProjectColumn (props) {
-  const { user, column, setViewMode, setCurrentColumn, colIndex} = props
+  const { user, column, setViewMode, setCurrentColumn, colIndex } = props
 
   const [tickets, setTickets] = useState([])
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -57,9 +56,9 @@ export default function ProjectColumn (props) {
   };
 
   useEffect(
-        () => {
-      setTickets(column.Tickets)
-    },
+		() => {
+  setTickets(column.Tickets)
+},
 		[column]
 	)
 
@@ -67,17 +66,17 @@ export default function ProjectColumn (props) {
     setCurrentColumn(column.id)
     setViewMode(NEW_TICKET_FORM)
   }
-  
+
   return (
     <Draggable draggableId={column.name} index={colIndex}>
-      {(provided) => (
-        <Box 
+      {provided =>
+        <Box
           sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-        >
-          <ListItem sx={{ padding: '0.1rem' }}> 
+				>
+          <ListItem sx={{ padding: '0.1rem' }}>
             <ListItemButton>
               <ListItemText primary={column.name} />
               <IconButton
@@ -116,51 +115,61 @@ export default function ProjectColumn (props) {
             </DialogContent>
             <DialogActions>
               <Button onClick={closeRemoveDialog}>Cancel</Button>
-              <Button onClick={remove}>Create</Button>
+              <Button onClick={remove}>Remove</Button>
             </DialogActions>
           </Dialog>
           <Divider />
-      
-          <Droppable droppableId={column.name} type="ticket">
-            {(provided, snapshot) => (
-              <List {...provided.droppableProps} 
-                ref={provided.innerRef} 
-                isDraggingOver={snapshot.isDraggingOver} 
-                sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'inherit', transition: 'background-color 1s ease'}}
-              >
-                <ColumnTickets tickets={tickets} setViewMode={setViewMode}/>
+
+          <Droppable droppableId={column.name} type='ticket'>
+            {(provided, snapshot) =>
+              <List
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                isDraggingOver={snapshot.isDraggingOver}
+                sx={{
+                  backgroundColor: snapshot.isDraggingOver
+										? 'skyblue'
+										: 'inherit',
+                  transition: 'background-color 1s ease'
+                }}
+							>
+                <ColumnTickets tickets={tickets} setViewMode={setViewMode} />
                 {provided.placeholder}
-              </List>
-            )}
+              </List>}
           </Droppable>
           <ListItem sx={{ padding: '0.1rem' }}>
             <ListItemButton onClick={() => createNewTicket()}>
               <ListItemText primary="Create New Ticket" />
             </ListItemButton>
           </ListItem>
-
-        </Box>
-      )}
+        </Box>}
     </Draggable>
   )
 }
 
-// React.memo(function ColumnTickets(props) 
-const ColumnTickets = React.memo(function ColumnTickets(props){
-  const {tickets, setViewMode} = props;
+// React.memo(function ColumnTickets(props)
+const ColumnTickets = React.memo(function ColumnTickets (props) {
+  const { tickets, setViewMode } = props
   return tickets.map((ticket, index) => {
     return (
-      <Draggable key={""+ticket.id} draggableId={"ticket_"+ticket.id} index={index}>
-        {(provided, snapshot) => (
-          <div 
-            {...provided.draggableProps} 
-            {...provided.dragHandleProps} 
+      <Draggable
+        key={'' + ticket.id}
+        draggableId={'ticket_' + ticket.id}
+        index={index}
+			>
+        {(provided, snapshot) =>
+          <div
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
             ref={provided.innerRef}
-            
-          >
-          <ProjectTicket title={ticket.title} ticketId={ticket.id} isDragging={snapshot.isDragging} setViewMode={setViewMode}/>
-          </div>
-        )}
+					>
+            <ProjectTicket
+              title={ticket.title}
+              ticketId={ticket.id}
+              isDragging={snapshot.isDragging}
+              setViewMode={setViewMode}
+						/>
+          </div>}
       </Draggable>
     )
   })

@@ -1,19 +1,49 @@
 import React from 'react'
-import LoginForm from './LoginForm'
-import RegistrationForm from './RegistrationForm'
+import LoginForm from './Forms/LoginForm'
+import RegistrationForm from './Forms/RegistrationForm'
 import LandingPage from './LandingPage'
-import Box from '@mui/material/Box'
 import { LANDING, LOGIN, REGISTER, ABOUT } from './constants/Modes'
 import AboutPage from './AboutPage'
+import Paper from '@mui/material/Paper'
+import Modal from '@mui/material/Modal'
 
 export default function Main (props) {
-  const { mode, setMode, user, setUser, setCookie, currentProject, setCurrentProject, currentColumn, setCurrentColumn } = props
+  const {
+		mode,
+		setMode,
+		user,
+		setUser,
+		setCookie,
+		currentProject,
+		setCurrentProject,
+		currentColumn,
+		setCurrentColumn,
+		open,
+		setOpen
+	} = props
+
+  console.log('inside main', open)
+  console.log('inside main', user)
 
   return (
-    <Box>
+    <Paper>
       {mode === ABOUT && <AboutPage />}
-      {mode === LOGIN && !user && <LoginForm setUser={setUser} setCookie={setCookie}/>}
-      {mode === REGISTER && !user && <RegistrationForm setUser={setUser} setCookie={setCookie}/>}
+      {open === LOGIN &&
+				!user &&
+				<LoginForm
+  setUser={setUser}
+  setCookie={setCookie}
+  open={open}
+  setOpen={setOpen}
+				/>}
+      {open === REGISTER &&
+				!user &&
+				<RegistrationForm
+  setUser={setUser}
+  setCookie={setCookie}
+  open={open}
+  setOpen={setOpen}
+				/>}
       {user &&
       <LandingPage
         mode={mode}
@@ -25,6 +55,6 @@ export default function Main (props) {
         currentColumn={currentColumn}
         setCurrentColumn={setCurrentColumn}
 				/>}
-    </Box>
+    </Paper>
   )
 }

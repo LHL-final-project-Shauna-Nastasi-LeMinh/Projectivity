@@ -1,33 +1,35 @@
-import useInput from '../hooks/useInput';
-import axios from "axios";
-import {useEffect, useState} from 'react';
-import Pusher from 'pusher-js';
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import Pusher from 'pusher-js'
 
 const UserInput = () => {
-  const firstnameInput = useInput('');
-  const lastnameInput = useInput('');
-  const [messages, setMessages] = useState([]);
+  const firstnameInput = useInput('')
+  const lastnameInput = useInput('')
+  const [messages, setMessages] = useState([])
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    axios.put(process.env.REACT_APP_BACKEND_URL + "/users", { 
-        firstname: firstnameInput.value, 
-        lastname: lastnameInput.value 
-      })
-      .then(res => {
-        alert("New record has been saved to USERS table");
-      });
-  };
+  const handleSubmit = event => {
+    event.preventDefault()
+    axios
+			.put(process.env.REACT_APP_BACKEND_URL + '/users', {
+  firstname: firstnameInput.value,
+  lastname: lastnameInput.value
+})
+			.then(res => {
+  alert('New record has been saved to USERS table')
+})
+  }
 
-  //WebSocket code start - subscribe to Pusher channel 
+	// WebSocket code start - subscribe to Pusher channel
   useEffect(() => {
-    const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {cluster: process.env.REACT_APP_PUSHER_CLUSTER});
-    const channel = pusher.subscribe("USER_CHANNEL");
-    channel.bind("USER_SAVED_EVENT", function (data) {
-      setMessages(prev => [...prev, JSON.stringify(data.user)]);
+    const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+      cluster: process.env.REACT_APP_PUSHER_CLUSTER
+    })
+    const channel = pusher.subscribe('USER_CHANNEL')
+    channel.bind('USER_SAVED_EVENT', function (data) {
+      setMessages(prev => [...prev, JSON.stringify(data.user)])
     })
   }, [])
-  // WebSocket code end
+	// WebSocket code end
 
   return (
     <div>
@@ -35,20 +37,20 @@ const UserInput = () => {
 
       <form onSubmit={handleSubmit}>
         <label>First Name:</label>
-        <input 
-          { ...firstnameInput }
-        />
+        <input {...firstnameInput} />
         <label>Last Name:</label>
-        <input 
-          { ...lastnameInput }
-        />
-        <button type="submit">Save!</button>
+        <input {...lastnameInput} />
+        <button type='submit'>Save!</button>
       </form>
-      <br/> 
+      <br />
       <h2>WEBSOCKET VIA PUSHER SERVER DEMO DOWN HERE</h2>
-      {messages.map((message) => <p>{message}</p>)}
+      {messages.map(message =>
+        <p>
+          {message}
+        </p>
+			)}
     </div>
-  );
-};
+  )
+}
 
-export default UserInput;
+export default UserInput
