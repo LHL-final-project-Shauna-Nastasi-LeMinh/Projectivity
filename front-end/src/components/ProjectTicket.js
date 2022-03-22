@@ -20,10 +20,14 @@ export default function ProjectTicket (props) {
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log(event.currentTarget)
-    console.log(anchorEl)
   };
-  const handleClose = () => {
+  const handleClose = (evt) => {
+    console.log(ticketId)
+    console.log(evt.target.id)
+
+    if (evt.target.id === 'remove') {
+
+    }
     setAnchorEl(null);
   };
 
@@ -77,9 +81,26 @@ export default function ProjectTicket (props) {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem onClick={handleClose}>Details</MenuItem>
-        <MenuItem onClick={handleClose}>Edit</MenuItem>
-        <MenuItem onClick={handleClose}>Remove</MenuItem>
+        <MenuItem id="details" onClick={evt => handleClose(evt)}>
+          Details
+          <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Text in a modal
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                </Typography>
+              </Box>
+            </Modal>
+          </MenuItem>
+        <MenuItem id="edit" onClick={handleClose}>Edit</MenuItem>
+        <MenuItem  id="remove" onClick={handleClose}>Remove</MenuItem>
       </Menu>
       </div>
 
