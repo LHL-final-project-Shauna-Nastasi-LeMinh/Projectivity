@@ -8,7 +8,15 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import axios from 'axios'
 
 export default function ProjectView (props) {
-  const { user, currentProject, mode, setViewMode, setCurrentColumn } = props
+  const {
+		user,
+		currentProject,
+		mode,
+		setViewMode,
+		setCurrentColumn,
+		open,
+		setOpen
+	} = props
   const [columns, setColumns] = useState([])
 
   useEffect(
@@ -110,6 +118,8 @@ export default function ProjectView (props) {
       setViewMode={setViewMode}
       setCurrentColumn={setCurrentColumn}
       colIndex={colIndex}
+      open={open}
+      setOpen={setOpen}
 		/>
 	)
   const createNewColumn = function (newColumnName) {

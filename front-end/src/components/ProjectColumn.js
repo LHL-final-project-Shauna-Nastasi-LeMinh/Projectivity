@@ -12,7 +12,15 @@ import NewTicketForm from './Forms/NewTicketForm'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 export default function ProjectColumn (props) {
-  const { user, column, setViewMode, setCurrentColumn, colIndex } = props
+  const {
+		user,
+		column,
+		setViewMode,
+		setCurrentColumn,
+		colIndex,
+		open,
+		setOpen
+	} = props
 
   const [tickets, setTickets] = useState([])
 
@@ -65,7 +73,10 @@ export default function ProjectColumn (props) {
           </Droppable>
           <ListItem sx={{ padding: '0.1rem' }}>
             <ListItemButton onClick={() => handleClick()}>
-              <ListItemText primary='Create New Ticket' />
+              <ListItemText
+                primary='Create New Ticket'
+                onClick={() => setOpen(NEW_TICKET_FORM)}
+							/>
             </ListItemButton>
           </ListItem>
         </Box>}
