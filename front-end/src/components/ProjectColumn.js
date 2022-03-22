@@ -42,6 +42,8 @@ export default function ProjectColumn (props) {
     )
   })
 
+  
+
     const handleClick = () => {
       console.log("click")
       console.log(setCurrentColumn);
@@ -73,7 +75,7 @@ export default function ProjectColumn (props) {
                 isDraggingOver={snapshot.isDraggingOver} 
                 sx={{ backgroundColor: snapshot.isDraggingOver ? 'skyblue' : 'inherit', transition: 'background-color 1s ease'}}
               >
-                {generatedTickets}
+                <ColumnTickets tickets={tickets} setViewMode={setViewMode}/>
                 
                 {provided.placeholder}
               </List>
@@ -90,3 +92,24 @@ export default function ProjectColumn (props) {
     </Draggable>
   )
 }
+
+// React.memo(function ColumnTickets(props) 
+const ColumnTickets = React.memo(function ColumnTickets(props){
+  const {tickets, setViewMode} = props;
+  return tickets.map((ticket, index) => {
+    return (
+      <Draggable key={""+ticket.id} draggableId={"ticket_"+ticket.id} index={index}>
+        {(provided, snapshot) => (
+          <div 
+            {...provided.draggableProps} 
+            {...provided.dragHandleProps} 
+            ref={provided.innerRef}
+            
+          >
+          <ProjectTicket title={ticket.description} ticketId={ticket.id} isDragging={snapshot.isDragging} setViewMode={setViewMode}/>
+          </div>
+        )}
+      </Draggable>
+    )
+  })
+})
