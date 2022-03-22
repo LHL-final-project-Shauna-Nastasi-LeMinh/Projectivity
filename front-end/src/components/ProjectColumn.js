@@ -40,7 +40,7 @@ export default function ProjectColumn (props) {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <ListItem> 
+          <ListItem sx={{ padding: '0.1rem' }}> 
             <ListItemButton>
               <ListItemText primary={column.name} />
             </ListItemButton>
@@ -59,7 +59,7 @@ export default function ProjectColumn (props) {
               </List>
             )}
           </Droppable>
-          <ListItem disablePadding >
+          <ListItem sx={{ padding: '0.1rem' }}>
             <ListItemButton onClick={() => handleClick()}>
               <ListItemText primary="Create New Ticket" />
             </ListItemButton>

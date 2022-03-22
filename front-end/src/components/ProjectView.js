@@ -83,7 +83,7 @@ export default function ProjectView (props) {
         columns[destColumnIndex] = newDestColumn;
 
         // persist new column id to the ticket details in db
-        axios.post(process.env.REACT_APP_BACKEND_URL + "tickets/updateColumn", { 
+        axios.post(process.env.REACT_APP_BACKEND_URL + "/tickets/updateColumn", { 
           ticketId: movingTicket.id, 
           newColumnId: destColumn.id
         })
