@@ -5,7 +5,7 @@ const router = express.Router()
 
 module.exports = sequelizeModels => {
   projectTickets = sequelizeModels.ProjectAssignment
-  Tickets = sequelizeModels.Ticket
+  Ticket = sequelizeModels.Ticket
 
   router.get('/:employee_id', async (req, res) => {
     try {
@@ -55,11 +55,10 @@ module.exports = sequelizeModels => {
   router.post('/updateColumn', async (req, res) => {
     try {
       const {ticketId, newColumnId} = req.body
-      console.log(ticketId, newColumnId)
-      // await Tickets.create({
-
-      // })
-
+      await Ticket.update(
+        { column_id: newColumnId },
+        { where: { id: ticketId } }
+      )
       return res.json({ message: "Column updated for ticket" });
     } catch (err) {
       console.log(err)
