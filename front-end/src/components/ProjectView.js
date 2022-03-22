@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import TableContainer from '@mui/material/TableContainer'
 import Paper from '@mui/material/Paper'
 import ProjectColumn from './ProjectColumn'
+import ProjectColumnNew from './ProjectColumnNew'
 import Box from '@mui/material/Box'
 import NewProjectForm from './NewProjectForm'
 import { ADDPROJECT } from './constants/Modes'
@@ -110,6 +111,23 @@ export default function ProjectView (props) {
       colIndex={colIndex}
 		/>
 	)
+  const createNewColumn = function(newColumnName) {
+    console.log("AAAAAAAA:"+newColumnName);
+    console.log(columns);
+
+    axios.post(process.env.REACT_APP_BACKEND_URL + "/columns/new", { 
+      name: newColumnName, 
+      project_id: currentProject.id
+    })
+    .then(res => {
+      console.log(res.data);
+      const newColumn = {...res.data, Tickets:[]}
+      setColumns([...columns, newColumn])
+    })
+    .catch(function (error) {
+      console.log(error.message)
+    });
+  }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -125,7 +143,9 @@ export default function ProjectView (props) {
             ref={provided.innerRef}
           >
             {generatedColumns}
+            <ProjectColumnNew name={"+ New Status"} createNewColumn={createNewColumn}/>
             {provided.placeholder}
+            
           </Box>
         }
       </Droppable>
