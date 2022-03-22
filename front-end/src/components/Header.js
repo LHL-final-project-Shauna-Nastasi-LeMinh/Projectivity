@@ -1,23 +1,40 @@
-import React, { useState } from 'react'
-import NavbarMenu from './NavbarMenu'
+import * as React from 'react'
+import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import NavbarMenu from './NavbarMenu'
 
 export default function Header (props) {
+<<<<<<< HEAD
   const { mode, setMode, user, setUser, cookies, removeCookie } = props
+=======
+  const {
+		mode,
+		setMode,
+		user,
+		setUser,
+		cookies,
+		removeCookie,
+		open,
+		setOpen
+	} = props
+>>>>>>> feature/dashboard-delete
 
   return (
-    <header>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          mx: '1rem'
-        }}
-			>
-        <div>
-          <h2>Productivity Manager App</h2>
-        </div>
-        <div>
+    <AppBar position='static'>
+      <Container maxWidth='100%'>
+        <Toolbar disableGutters>
+          <Typography
+            variant='h6'
+            noWrap
+            component='div'
+            sx={{ display: { xs: 'none', md: 'flex' } }}
+					>
+						PRODUCTIVITY MANAGER APP
+					</Typography>
+          <Box sx={{ flexGrow: 1 }} />
           <NavbarMenu
             mode={mode}
             setMode={setMode}
@@ -25,10 +42,12 @@ export default function Header (props) {
             setUser={setUser}
             cookies={cookies}
             removeCookie={removeCookie}
+            open={open}
+            setOpen={setOpen}
 					/>
-        </div>
-      </Box>
-    </header>
+        </Toolbar>
+      </Container>
+    </AppBar>
   )
 }
 

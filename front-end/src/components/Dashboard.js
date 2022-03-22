@@ -21,7 +21,9 @@ export default function Dashboard (props) {
 		user,
 		currentProject,
 		setCurrentProject,
-		loadForm
+		loadForm,
+		openModal,
+		setOpenModal
 	} = props
 
   const [projects, setProjects] = useState()
@@ -110,7 +112,7 @@ export default function Dashboard (props) {
           <ListItemIcon />
           <ListItemText
             primary='Create New Project'
-            onClick={() => loadForm([], NEW_PROJECT_FORM)}
+            onClick={() => setOpenModal(true)}
 					/>
         </ListItemButton>
       </List>
