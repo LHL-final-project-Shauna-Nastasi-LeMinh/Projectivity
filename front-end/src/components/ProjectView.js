@@ -143,7 +143,7 @@ export default function ProjectView (props) {
             ref={provided.innerRef}
           >
             {generatedColumns}
-            <ProjectColumnNew disablePadding name={"+ New Column"} createNewColumn={createNewColumn}/>
+            <ProjectColumnNew name={"+ New Column"} createNewColumn={createNewColumn}/>
             {provided.placeholder}
             
           </Box>
