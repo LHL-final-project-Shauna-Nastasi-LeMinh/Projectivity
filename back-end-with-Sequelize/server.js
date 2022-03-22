@@ -41,7 +41,7 @@ app.use('/users', usersRoutes(sequelizeModels, pusher))
 app.use('/accessControl', accessControlRoutes(sequelizeModels))
 app.use('/roles', roleRoutes(sequelizeModels))
 app.use('/projects', projectRoutes(sequelizeModels))
-app.use('/tickets', projectRoutes(sequelizeModels))
+app.use('/tickets', ticketRoutes(sequelizeModels))
 
 app.get('/', (req, res) => {
   res.render('index')

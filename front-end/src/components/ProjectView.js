@@ -7,6 +7,7 @@ import Box from '@mui/material/Box'
 import NewProjectForm from './NewProjectForm'
 import { ADDPROJECT } from './constants/Modes'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import axios from 'axios'
 
 export default function ProjectView (props) {
   const { user, currentProject, mode,
@@ -22,12 +23,13 @@ export default function ProjectView (props) {
 		[currentProject]
 	)
 
-  function onDragEnd(result) {
-    const {source, destination, draggableId, type} = result;
+  function onDragEnd(result, provided) {
+    const {source, destination, type} = result;
     if (!destination) return;
     if(!destination.droppableId) return;
     if (destination.droppableId === source.droppableId && destination.index === source.index) return;
     
+    // moving the whole column
     if (type === "column") {
       
       const newColumns = JSON.parse(JSON.stringify(columns)); // deep clone
@@ -35,6 +37,7 @@ export default function ProjectView (props) {
       newColumns.splice(destination.index, 0, movingColumn);
       setColumns(newColumns);
     }
+    // moving ticket
     else if (type === "ticket") {
 
       if (destination.droppableId === source.droppableId) {
@@ -78,7 +81,20 @@ export default function ProjectView (props) {
         
         columns[sourceColumnIndex] = newSourceColumn;
         columns[destColumnIndex] = newDestColumn;
+
+        // persist new column id to the ticket details in db
+        axios.post(process.env.REACT_APP_BACKEND_URL + "/tickets/updateColumn", { 
+          ticketId: movingTicket.id, 
+          newColumnId: destColumn.id
+        })
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(function (error) {
+          console.log(error.message)
+        });
       }
+      // update state to retain moving position
       setColumns(prev => [...prev])
     }
   }
