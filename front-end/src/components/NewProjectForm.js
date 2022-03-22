@@ -45,6 +45,7 @@ export default function RegistrationForm (props) {
       <input {...projectDescriptionInput} />
       <br />
       <Button onClick={() => createNewProject()}>Create New Project</Button>
+      <Button onClick={() => setViewMode(PROJECT_VIEW)}>Cancel</Button>
     </div>
   )
 }
