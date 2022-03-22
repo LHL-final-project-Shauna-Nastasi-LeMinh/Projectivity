@@ -33,7 +33,7 @@ export default function ProjectTicket (props) {
 
   return (
     <ListItem disablePadding >
-      <ListItemButton sx={{ backgroundColor: props.isDragging ? 'lightgreen' : 'white'}} onClick={clickHandler}>
+      <ListItemButton sx={{ backgroundColor: props.isDragging ? 'lightgreen' : 'white', transition: 'background-color 1s ease'}} onClick={clickHandler}>
         <ListItemText primary={title} />
       </ListItemButton>
     </ListItem>
