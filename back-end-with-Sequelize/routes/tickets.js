@@ -38,7 +38,7 @@ module.exports = sequelizeModels => {
     try {
       const {description, created_by, column_id} = req.body
 
-      const ticket = await Tickets.create({
+      await Tickets.create({
         title: 'test',
         description,
         created_by,
