@@ -39,7 +39,7 @@ export default function ProjectColumnNew (props) {
 
   return (
         <Box sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}>
-          <ListItem> 
+          <ListItem sx={{ padding: '0.1rem' }}> 
             <ListItemButton onClick={openNewColumnDialog}>
               <ListItemText primary={name} />
             </ListItemButton>
