@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import ProjectColumn from './ProjectColumn'
+import ProjectColumnNew from './ProjectColumnNew'
 import Box from '@mui/material/Box'
 import NewProjectForm from './Forms/NewProjectForm'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
@@ -111,6 +112,24 @@ export default function ProjectView (props) {
       colIndex={colIndex}
 		/>
 	)
+  const createNewColumn = function (newColumnName) {
+    console.log('AAAAAAAA:' + newColumnName)
+    console.log(columns)
+
+    axios
+			.post(process.env.REACT_APP_BACKEND_URL + '/columns/new', {
+  name: newColumnName,
+  project_id: currentProject.id
+})
+			.then(res => {
+  console.log(res.data)
+  const newColumn = { ...res.data, Tickets: [] }
+  setColumns([...columns, newColumn])
+})
+			.catch(function (error) {
+  console.log(error.message)
+})
+  }
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -123,6 +142,11 @@ export default function ProjectView (props) {
             ref={provided.innerRef}
 					>
             {generatedColumns}
+            <ProjectColumnNew
+              disablePadding
+              name={'+ New Column'}
+              createNewColumn={createNewColumn}
+						/>
             {provided.placeholder}
           </Box>}
       </Droppable>
