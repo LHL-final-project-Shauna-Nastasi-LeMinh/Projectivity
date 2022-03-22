@@ -1,13 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LoginForm from './Forms/LoginForm'
 import RegistrationForm from './Forms/RegistrationForm'
 import LandingPage from './LandingPage'
-import { LANDING, LOGIN, REGISTER, ABOUT } from './constants/Modes'
+import {
+	LANDING,
+	LOGIN,
+	REGISTER,
+	ABOUT,
+	NEW_TICKET_FORM,
+	NEW_PROJECT_FORM,
+	PROJECT_VIEW
+} from './constants/Modes'
 import AboutPage from './AboutPage'
 import Paper from '@mui/material/Paper'
 import Modal from '@mui/material/Modal'
+import NewProjectForm from './Forms/NewProjectForm'
+import NewTicketForm from './Forms/NewTicketForm'
 
 export default function Main (props) {
+  const [viewMode, setViewMode] = useState(PROJECT_VIEW)
+
   const {
 		mode,
 		setMode,
@@ -44,6 +56,14 @@ export default function Main (props) {
   open={open}
   setOpen={setOpen}
 				/>}
+      {open === NEW_PROJECT_FORM &&
+      <NewProjectForm
+        user={user}
+        setViewMode={setViewMode}
+        open={open}
+        setOpen={setOpen}
+				/>}
+      {open === NEW_TICKET_FORM && <NewTicketForm />}
       {user &&
       <LandingPage
         mode={mode}
@@ -56,6 +76,8 @@ export default function Main (props) {
         setCurrentColumn={setCurrentColumn}
         open={open}
         setOpen={setOpen}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
 				/>}
     </Paper>
   )

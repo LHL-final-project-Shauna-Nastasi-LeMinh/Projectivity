@@ -14,7 +14,7 @@ export default function RegistrationForm (props) {
   const [message, setMessage] = useState('')
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const { setViewMode, user, openModal, setOpenModal } = props
+  const { setViewMode, user, open, setOpen } = props
 
   const handleNameChange = event => {
     setName(event.target.value)
@@ -40,14 +40,10 @@ export default function RegistrationForm (props) {
 })
   }
 
-  const cancel = event => {
-    setOpenModal(false)
-  }
-
   return (
     <Modal
-      open={openModal}
-      onClose={() => setOpenModal(false)}
+      open={open}
+      onClose={() => setOpen(false)}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -90,7 +86,7 @@ export default function RegistrationForm (props) {
           <Button variant='outlined' onClick={createNewProject}>
 						Create Project
 					</Button>
-          <Button variant='outlined' onClick={cancel}>
+          <Button variant='outlined' onClick={() => setOpen(false)}>
 						Cancel
 					</Button>
         </Box>

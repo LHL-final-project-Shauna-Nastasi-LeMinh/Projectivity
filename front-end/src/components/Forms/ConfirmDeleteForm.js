@@ -19,8 +19,6 @@ export default function ConfirmDeletedForm (props) {
   }
 
   const {
-		openModal,
-		setOpenModal,
 		currentProject,
 		data,
 		setViewMode,
@@ -48,10 +46,6 @@ export default function ConfirmDeletedForm (props) {
   setMessage('Failed to delete project')
 })
     }
-  }
-
-  const cancel = event => {
-    setOpenModal(false)
   }
 
   return (

@@ -25,10 +25,11 @@ export default function DashboardProject (props) {
 		currentColumn,
 		setCurrentColumn,
 		open,
-		setOpen
+		setOpen,
+		viewMode,
+		setViewMode
 	} = props
 
-  const [viewMode, setViewMode] = useState(PROJECT_VIEW)
   const [data, setData] = useState()
   const [dashboard, setDashboard] = useState()
 
