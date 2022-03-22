@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Dashboard from './Dashboard'
 import ProjectView from './ProjectView'
 import Container from '@mui/material/Container'
-import NewProjectForm from './NewProjectForm'
-import NewTicketForm from './NewTicketForm'
-import ConfirmDeleteForm from './ConfirmDeleteForm'
+import NewProjectForm from './Forms/NewProjectForm'
+import NewTicketForm from './Forms/NewTicketForm'
+import ConfirmDeleteForm from './Forms/ConfirmDeleteForm'
 import {
 	CONFIRM_DELETE_PROJECT,
 	NEW_PROJECT_FORM,
 	PROJECT_VIEW,
-  NEW_TICKET_FORM
+	NEW_TICKET_FORM
 } from './constants/Modes'
 
 export default function DashboardProject (props) {
@@ -22,8 +22,10 @@ export default function DashboardProject (props) {
 		setUserProjects,
 		currentProject,
 		setCurrentProject,
-    currentColumn,
-    setCurrentColumn
+		currentColumn,
+		setCurrentColumn,
+		handleOpen,
+		handleClose
 	} = props
 
   const [viewMode, setViewMode] = useState(PROJECT_VIEW)
@@ -52,17 +54,33 @@ export default function DashboardProject (props) {
         setCurrentProject={setCurrentProject}
         data={data}
         loadForm={loadForm}
+        handleOpen={handleOpen}
+        handleClose={handleClose}
 				/>}
       <Container>
         {viewMode === NEW_PROJECT_FORM &&
-        <NewProjectForm user={user} setViewMode={setViewMode} />}
+        <NewProjectForm
+          user={user}
+          setViewMode={setViewMode}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+					/>}
         {viewMode === CONFIRM_DELETE_PROJECT &&
         <ConfirmDeleteForm
           data={data}
           currentProject={currentProject}
           setViewMode={setViewMode}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
 					/>}
-        {viewMode === NEW_TICKET_FORM && <NewTicketForm  user={user} currentColumn={currentColumn} setViewMode={setViewMode}/>}
+        {viewMode === NEW_TICKET_FORM &&
+        <NewTicketForm
+          user={user}
+          currentColumn={currentColumn}
+          setViewMode={setViewMode}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+					/>}
         {viewMode === PROJECT_VIEW &&
         <ProjectView
           user={user}
