@@ -9,32 +9,32 @@ export default function NewTicketForm (props) {
 
   const {user, setViewMode, currentColumn} = props;
 
-  const ticketDescriptionInput = useInput('')
+  const ticketTitleInput = useInput('')
   const [message, setMessage] = useState('')
   
   const onAdd = (evt) => {
     evt.preventDefault();
 
-    if (!ticketDescriptionInput.value.length) {
+    if (!ticketTitleInput.value.length) {
       setMessage('Please enter a ticket description')
       return;
-    }
-    console.log(currentColumn)
-    setViewMode(PROJECT_VIEW);
-
-    // add new ticket to db /tickets route
-    // axios
-		// 	.post(process.env.REACT_APP_BACKEND_URL + '/tickets', {
-    //     description: ticketDescriptionInput.value,
-    //     created_by: user.id,
-    //     column_id: currentColumn
+    } 
+    
+    // add new ticket to db 
+    axios
+			.post(process.env.REACT_APP_BACKEND_URL + "/tickets/new", {
+        title: ticketTitleInput.value,
+        created_by: user.id,
+        column_id: currentColumn
         
-    // })
-		// 	.then(res => {})
-		// 	.catch(function (error) {
-    //     console.log(error.message)
-    //     setMessage('Failed to create new ticket')
-    // })
+    })
+			.then(res => {
+        setViewMode(PROJECT_VIEW);
+      })
+			.catch(function (error) {
+        console.log(error.message)
+        setMessage('Failed to create new ticket')
+    })
   }
 
   return (
@@ -46,7 +46,7 @@ export default function NewTicketForm (props) {
       <br/>
       
       <label>Ticket Description:</label>
-      <input {...ticketDescriptionInput} />
+      <input {...ticketTitleInput} />
       <br />
       <Button onClick={(evt)=> onAdd(evt)}>Create New Ticket</Button>
       <Button onClick={() => setViewMode(PROJECT_VIEW)}>Cancel</Button>
