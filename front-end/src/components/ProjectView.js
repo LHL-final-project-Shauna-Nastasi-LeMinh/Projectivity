@@ -207,9 +207,9 @@ export default function ProjectView (props) {
 					>
             {generatedColumns}
             <ProjectColumnNew
-              isDropDisable
               name={'+ New Column'}
               createNewColumn={createNewColumn}
+              columnsCount={columns.length}
 						/>
             {provided.placeholder}
           </Box>}
