@@ -19,7 +19,6 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { ADD_TICKET } from './constants/Modes'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
 
@@ -34,13 +33,14 @@ export default function ProjectColumn (props) {
 		setViewMode,
 		setCurrentColumn,
 		colIndex,
-		open,
-		setOpen,
+		modals,
+		openModals,
+		closeModals,
 		deleteColumnFromProjectView,
 		changeColumnFromProjectView,
 		handleClick,
-    currentTicket, 
-    setCurrentTicket
+		currentTicket,
+		setCurrentTicket
 	} = props
 
   const [tickets, setTickets] = useState([])
@@ -109,7 +109,7 @@ export default function ProjectColumn (props) {
 
   const createNewTicket = () => {
     setCurrentColumn(column.id)
-    setOpen(ADD_TICKET)
+    openModals('newTicketForm')
   }
 
   const setTextValue = function (event) {
@@ -202,8 +202,15 @@ export default function ProjectColumn (props) {
                   transition: 'background-color 1s ease'
                 }}
 							>
-                <ColumnTickets tickets={tickets} setViewMode={setViewMode} setOpen={setOpen} currentTicket={currentTicket}
-              setCurrentTicket={setCurrentTicket}/>
+                <ColumnTickets
+                  tickets={tickets}
+                  setViewMode={setViewMode}
+                  modals={modals}
+                  openModals={openModals}
+                  closeModals={closeModals}
+                  currentTicket={currentTicket}
+                  setCurrentTicket={setCurrentTicket}
+								/>
                 {provided.placeholder}
               </List>}
           </Droppable>
@@ -222,7 +229,13 @@ export default function ProjectColumn (props) {
 
 // React.memo(function ColumnTickets(props)
 const ColumnTickets = React.memo(function ColumnTickets (props) {
-  const { tickets, setViewMode, setOpen, currentTicket, setCurrentTicket} = props
+  const {
+		tickets,
+		setViewMode,
+		setOpen,
+		currentTicket,
+		setCurrentTicket
+	} = props
   return tickets.map((ticket, index) => {
     return (
       <Draggable

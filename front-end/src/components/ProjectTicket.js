@@ -31,8 +31,6 @@ export default function ProjectTicket (props) {
   const open = Boolean(anchorEl)
   const handleClick = event => {
     setAnchorEl(event.currentTarget)
-    console.log(event.currentTarget)
-    console.log(anchorEl)
   }
   const handleClose = () => {
     setAnchorEl(null)
@@ -54,7 +52,6 @@ export default function ProjectTicket (props) {
   }
 
   const clickHandler = function () {
-    console.log(ticketId)
     if (!ticketId) {
 			// CREATE NEW TICKET GOES HERE
     } else {

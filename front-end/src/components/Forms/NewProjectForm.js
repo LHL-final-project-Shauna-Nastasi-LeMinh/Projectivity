@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { AddBox } from '@mui/icons-material'
 import {
 	Button,
 	Modal,
@@ -9,34 +10,24 @@ import {
 	Divider,
 	Paper
 } from '@mui/material'
-import { AddBox } from '@mui/icons-material'
-import { PROJECT_VIEW } from '../constants/Modes'
 
 export default function RegistrationForm (props) {
-  const { setViewMode, user, open, setOpen } = props
-  const [values, setValues] = useState({
-    message: '',
-    name: undefined,
-    description: undefined
-  })
-
-  const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
+  const { state, setState } = props
 
   const createNewProject = event => {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', {
-  name: values.name,
-  description: values.description,
-  employee_id: user.id
+  name: state.formData.name,
+  description: state.formData.description,
+  employee_id: state.currentUser.id
 })
 			.then(res => {
-  setOpen(false)
+				// close newProjectForm modal
+  state.setModal('newProjectForm', false)
 })
 			.catch(function (error) {
   console.log(error.message)
-  setValues({ ...values, message: 'Form invalid' })
+  setState({ ...state, [state.formData.message]: 'Form invalid' })
 })
   }
 
@@ -53,8 +44,8 @@ export default function RegistrationForm (props) {
 
   return (
     <Modal
-      open={open.newProjectForm}
-      onClose={() => setOpen(false)}
+      open={state.modals.newProjectForm}
+      onClose={state.setModal('newProjectForm', false)}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -81,21 +72,21 @@ export default function RegistrationForm (props) {
             <TextField
               sx={{ m: 2 }}
               label='Project Title'
-              value={values.name}
+              value={state.formData.name}
               type='text'
-              onChange={handleChange('name')}
-              helperText={values.name === '' && 'Required field'}
-              error={values.name === ''}
+              onChange={state.setFormData('name')}
+              helperText={state.formData.name === '' && 'Required field'}
+              error={state.formData.name === ''}
               required
 						/>
             <TextField
               sx={{ m: 2 }}
               label='Ticket Details'
-              value={values.description}
+              value={state.formData.description}
               type='text'
-              onChange={handleChange('description')}
-              helperText={values.description === '' && 'Required field'}
-              error={values.description === ''}
+              onChange={state.setFormData('description')}
+              helperText={state.formData.description === '' && 'Required field'}
+              error={state.formData.description === ''}
               required
 						/>
           </Box>
@@ -125,7 +116,7 @@ export default function RegistrationForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={() => setOpen(false)}
+            onClick={state.setModal('newProjectForm', false)}
 					>
 						Cancel
 					</Button>

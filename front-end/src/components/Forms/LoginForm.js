@@ -14,23 +14,14 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function LoginForm (props) {
-  const { setUser, setCookie, modals, closeModals } = props
-  const [values, setValues] = useState({
-    message: '',
-    email: null,
-    password: null,
-    showPassword: false
-  })
-
-  const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
+  const { state } = props
 
   const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword
-    })
+    if (state.formData.showPassword === true) {
+      state.setFormData('showPassword', false)
+    } else {
+      state.setFormData('showPassword', true)
+    }
   }
 
   const handleMouseDownPassword = event => {
@@ -40,18 +31,18 @@ export default function LoginForm (props) {
   const login = event => {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/login', {
-  email: values.email,
-  password: values.password
+  email: state.formData.email,
+  password: state.formData.password
 })
 			.then(res => {
-  setUser(res.data)
-  setCookie('user', res.data, {
-    path: '/'
-  })
+  console.log('logged in successfully!')
+  state.setCurrentUser(res.data)
+  state.setCurrentCookies('user', res.data, { path: '/' })
+  state.setModal('loginForm', false)
 })
 			.catch(function (error) {
   console.log(error.message)
-  setValues({ ...values, message: 'Form invalid' })
+  state.setFormData('message', 'Login invalid')
 })
   }
 
@@ -68,8 +59,8 @@ export default function LoginForm (props) {
 
   return (
     <Modal
-      open={modals.loginForm}
-      onClose={closeModals('loginForm')}
+      open={state.modals.loginForm}
+      onClose={state.setModal('loginForm', false)}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -96,21 +87,21 @@ export default function LoginForm (props) {
             <TextField
               sx={{ m: 2 }}
               label='Email Address'
-              value={values.email}
+              value={state.formData.email}
               type='email'
-              onChange={handleChange('email')}
-              helperText={values.email === '' && 'Required field'}
-              error={values.email === ''}
+              onChange={state.setFormData('email')}
+              helperText={state.formData.email === '' && 'Required field'}
+              error={state.formData.email === ''}
               required
 						/>
             <TextField
               sx={{ m: 2 }}
               label='Password'
-              value={values.password}
+              value={state.formData.password}
               type='password'
-              onChange={handleChange('password')}
-              helperText={values.password === '' && 'Required field'}
-              error={values.password === ''}
+              onChange={state.setFormData('password')}
+              helperText={state.formData.password === '' && 'Required field'}
+              error={state.formData.password === ''}
               endadornment={
                 <InputAdornment position='end'>
                   <IconButton
@@ -118,7 +109,9 @@ export default function LoginForm (props) {
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
 									>
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    {state.formData.showPassword
+											? <VisibilityOff />
+											: <Visibility />}
                   </IconButton>
                 </InputAdornment>
 							}
@@ -151,7 +144,7 @@ export default function LoginForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={closeModals('loginForm')}
+            onClick={state.setModal('loginForm', false)}
 					>
 						Cancel
 					</Button>
