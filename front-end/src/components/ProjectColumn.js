@@ -200,7 +200,7 @@ export default function ProjectColumn (props) {
                   transition: 'background-color 1s ease'
                 }}
 							>
-                <ColumnTickets tickets={tickets} setViewMode={setViewMode} />
+                <ColumnTickets tickets={tickets} setViewMode={setViewMode} setOpen={setOpen}/>
                 {provided.placeholder}
               </List>}
           </Droppable>
