@@ -63,7 +63,7 @@ export default function Main (props) {
         open={open}
         setOpen={setOpen}
 				/>}
-      {open === ADD_TICKET && <NewTicketForm />}
+      
       {user &&
       <LandingPage
         mode={mode}
@@ -79,6 +79,7 @@ export default function Main (props) {
         viewMode={viewMode}
         setViewMode={setViewMode}
 				/>}
+        
     </Paper>
   )
 }

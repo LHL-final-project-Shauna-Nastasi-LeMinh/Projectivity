@@ -76,7 +76,8 @@ export default function DashboardProject (props) {
           open={open}
           setOpen={setOpen}
 					/>}
-        {open === ADD_TICKET &&
+        
+          {open === EDIT_TICKET &&
         <NewTicketForm
           user={user}
           currentColumn={currentColumn}
@@ -84,7 +85,7 @@ export default function DashboardProject (props) {
           open={open}
           setOpen={setOpen}
 					/>}
-          {open === EDIT_TICKET &&
+          {open === ADD_TICKET &&
         <NewTicketForm
           user={user}
           currentColumn={currentColumn}

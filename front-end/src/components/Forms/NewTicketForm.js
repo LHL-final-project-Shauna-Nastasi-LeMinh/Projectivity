@@ -26,20 +26,22 @@ export default function NewTicketForm (props) {
   }
 
   const onAdd = event => {
+    event.preventDefault()
 		// add new ticket to db
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
-  title: title,
-  description: description,
-  created_by: user.id,
-  column_id: currentColumn
-})
+        title: title,
+        description: description,
+        created_by: user.id,
+        column_id: currentColumn
+      })
 			.then(res => {
-  setViewMode(PROJECT_VIEW)
+        setViewMode(PROJECT_VIEW)
+        setOpen(false)
 })
 			.catch(function (error) {
-  console.log(error.message)
-  setMessage('Failed to create new ticket')
+        console.log(error.message)
+        setMessage('Failed to create new ticket')
 })
   }
 
@@ -103,8 +105,8 @@ export default function NewTicketForm (props) {
             <FormHelperText id='component-description-error-text'>
 							Error
 						</FormHelperText>
-            <Button variant='outlined' onClick={onAdd}>
-							Create Project
+            <Button variant='outlined' onClick={evt => onAdd(evt)}>
+							Create Ticket
 						</Button>
             <Button variant='outlined' onClick={() => setOpen(false)}>
 							Cancel
