@@ -8,23 +8,23 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Fade from '@mui/material/Fade';
+import RemoveTicket from './Forms/RemoveTicket'
 
 import { SHOW_TICKET_DETAILS, EDIT_TICKET, REMOVE_TICKET } from './constants/Modes'
 
 export default function ProjectTicket (props) {
-  const { title, value, ticketId, setViewMode, setOpen, setCurrentTicket} = props
+  const { title, value, ticketId, setViewMode, setOpen, setCurrentTicket, tickets, setTickets} = props
   const [checked, setChecked] = React.useState([1])
+  const [dialogOpen, setDialogOpen] = useState(false)
 
   // handle opening and closing of MoreVertIcon
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const openMenu = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (evt) => {
-    console.log(ticketId)
-    console.log(evt.target.id)
-
+   
     if (evt.target.id === 'edit') {
       setOpen(EDIT_TICKET)
     }
@@ -35,8 +35,8 @@ export default function ProjectTicket (props) {
     }
 
     if (evt.target.id === 'remove') {
-      console.log('clicked delete btn')
-      setOpen(REMOVE_TICKET)
+      console.log(ticketId)
+      setDialogOpen(REMOVE_TICKET)
       setCurrentTicket(ticketId)
 
     }
@@ -77,12 +77,22 @@ export default function ProjectTicket (props) {
         <div>
         <IconButton
           id="fade-button"
-          aria-controls={open ? 'fade-menu' : undefined}
+          aria-controls={openMenu ? 'fade-menu' : undefined}
           aria-haspopup="true"
-          aria-expanded={open ? 'true' : undefined}
+          aria-expanded={openMenu ? 'true' : undefined}
           onClick={handleClick}
         >  
           <MoreVertIcon />
+          {dialogOpen === REMOVE_TICKET &&
+          <RemoveTicket
+          tickets={tickets}
+          setTickets={setTickets}
+          ticketId={ticketId}
+          setViewMode={setViewMode}
+          dialogOpen={dialogOpen}
+          setDialogOpen={setDialogOpen}
+          
+					/>}
         </IconButton>
         <Menu
         id="fade-menu"
@@ -90,7 +100,7 @@ export default function ProjectTicket (props) {
           'aria-labelledby': 'fade-button',
         }}
         anchorEl={anchorEl}
-        open={open}
+        open={openMenu}
         onClose={handleClose}
         TransitionComponent={Fade}
       >
