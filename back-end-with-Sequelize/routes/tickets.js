@@ -52,6 +52,22 @@ module.exports = sequelizeModels => {
     }
   })
 
+  router.delete('/:ticket_id/delete', async (req, res) => {
+    try {
+      const ticket_id = req.params.ticket_id
+      Tickets.destroy({
+        where: {
+          id: ticket_id
+        }
+      })
+
+      return res.json('success!')
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
+  })
+
   router.post('/updateColumn', async (req, res) => {
     try {
       const {ticketId, newColumnId} = req.body
