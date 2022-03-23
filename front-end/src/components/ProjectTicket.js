@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Fade from '@mui/material/Fade';
 
-import { NEW_TICKET_FORM } from './constants/Modes'
+import { SHOW_TICKET_DETAILS, EDIT_TICKET } from './constants/Modes'
 
 export default function ProjectTicket (props) {
   const { title, value, ticketId, setViewMode } = props
@@ -25,8 +25,12 @@ export default function ProjectTicket (props) {
     console.log(ticketId)
     console.log(evt.target.id)
 
-    if (evt.target.id === 'remove') {
+    if (evt.target.id === 'edit') {
+      setOpen(EDIT_TICKET)
+    }
 
+    if (evt.target.id === 'details') {
+      setOpen(SHOW_TICKET_DETAILS)
     }
     setAnchorEl(null);
   };
@@ -83,21 +87,6 @@ export default function ProjectTicket (props) {
       >
         <MenuItem id="details" onClick={evt => handleClose(evt)}>
           Details
-          <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Text in a modal
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </Typography>
-              </Box>
-            </Modal>
           </MenuItem>
         <MenuItem id="edit" onClick={handleClose}>Edit</MenuItem>
         <MenuItem  id="remove" onClick={handleClose}>Remove</MenuItem>
