@@ -21,10 +21,18 @@ export default function ProjectTicket (props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
   const handleClick = (event) => {
+    console.log(event.currentTarget)
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = (evt) => {
-   
+
+
+  const closeMenu = () => {
+    setAnchorEl(null)
+  }
+
+  const handleDialogOpening = (evt) => {
+    
+
     if (evt.target.id === 'edit') {
       setOpen(EDIT_TICKET)
     }
@@ -35,13 +43,13 @@ export default function ProjectTicket (props) {
     }
 
     if (evt.target.id === 'remove') {
-      console.log(ticketId)
       setDialogOpen(REMOVE_TICKET)
-      setCurrentTicket(ticketId)
-
+    
     }
 
-    setAnchorEl(null);
+    closeMenu()
+
+    
   };
 
 	//
@@ -75,7 +83,7 @@ export default function ProjectTicket (props) {
           backgroundColor: props.isDragging ? 'lightgreen' : 'white',
           transition: 'background-color 1s ease'
         }}
-        onClick={evt => handleClick(evt)}
+        
 			>
         <ListItemText primary={title} />
         <div>
@@ -105,14 +113,14 @@ export default function ProjectTicket (props) {
         }}
         anchorEl={anchorEl}
         open={openMenu}
-        onClose={handleClose}
+        onClose={closeMenu}
         TransitionComponent={Fade}
       >
-        <MenuItem id="details" onClick={evt => handleClose(evt)}>
+        <MenuItem id="details" onClick={evt => handleDialogOpening(evt)}>
           Details
           </MenuItem>
-        <MenuItem id="edit" onClick={handleClose}>Edit</MenuItem>
-        <MenuItem  id="remove" onClick={handleClose}>Remove</MenuItem>
+        <MenuItem id="edit" onClick={handleDialogOpening}>Edit</MenuItem>
+        <MenuItem  id="remove" onClick={evt =>handleDialogOpening(evt)}>Remove</MenuItem>
       </Menu>
       </div>
 
