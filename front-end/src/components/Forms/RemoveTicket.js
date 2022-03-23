@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Button from '@mui/material/Button'
 import axios from 'axios'
 
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -17,46 +16,52 @@ const Transition = React.forwardRef(function Transition (props, ref) {
 })
 
 
+
+
 export default function RemoveTicket (props) {
 
   const {open, setOpen, currentTicket} = props
 
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
+  const onConfirmDelete = () => {
+  
+    axios
+      .delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${currentTicket}`)
+      .then(res => {
+        console.log(res.data)
+       setOpen(false)
+      })
+      .catch(function (error) {
+        console.log(error.message)
+    })
+  }
 
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
-    <div>
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open form dialog
-      </Button> */}
-      <Dialog open={open} onClose={handleClose}>
+   
+      <Dialog 
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby='alert-dialog-slide-description'>
+
         <DialogTitle>Subscribe</DialogTitle>
         <DialogContent>
           <DialogContentText>
             To subscribe to this website, please enter your email address here. We
             will send updates occasionally.
           </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
+         
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
+          <Button onClick={onConfirmDelete}>Delete</Button>
         </DialogActions>
       </Dialog>
-    </div>
+
   );
 
 }
