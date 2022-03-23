@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Fade from '@mui/material/Fade';
 import RemoveTicket from './Forms/RemoveTicket'
+import ShowTicketDetails from './Forms/ShowTicketDetails'
 
 import { SHOW_TICKET_DETAILS, EDIT_TICKET, REMOVE_TICKET } from './constants/Modes'
 
@@ -21,7 +22,6 @@ export default function ProjectTicket (props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
   const handleClick = (event) => {
-    console.log(event.currentTarget)
     setAnchorEl(event.currentTarget);
   };
 
@@ -31,19 +31,20 @@ export default function ProjectTicket (props) {
   }
 
   const handleDialogOpening = (evt) => {
-    
+    console.log(evt.target.id)
 
     if (evt.target.id === 'edit') {
       setOpen(EDIT_TICKET)
     }
 
     if (evt.target.id === 'details') {
-      setOpen(SHOW_TICKET_DETAILS)
-
+      setDialogOpen(SHOW_TICKET_DETAILS)
+      console.log(dialogOpen)
     }
 
     if (evt.target.id === 'remove') {
       setDialogOpen(REMOVE_TICKET)
+      console.log(dialogOpen)
     
     }
 
@@ -95,8 +96,11 @@ export default function ProjectTicket (props) {
           onClick={handleClick}
         >  
           <MoreVertIcon />
-          {dialogOpen === REMOVE_TICKET &&
-          <RemoveTicket
+
+        </IconButton>
+
+        {dialogOpen === SHOW_TICKET_DETAILS &&
+          <ShowTicketDetails
           tickets={tickets}
           setTickets={setTickets}
           ticketId={ticketId}
@@ -105,7 +109,14 @@ export default function ProjectTicket (props) {
           setDialogOpen={setDialogOpen}
           
 					/>}
-        </IconButton>
+          {dialogOpen === REMOVE_TICKET &&
+          <RemoveTicket
+          tickets={tickets}
+          ticketId={ticketId}
+          dialogOpen={dialogOpen}
+          setDialogOpen={setDialogOpen}
+          
+					/>}
         <Menu
         id="fade-menu"
         MenuListProps={{
