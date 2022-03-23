@@ -219,7 +219,7 @@ export default function ProjectColumn (props) {
 
 // React.memo(function ColumnTickets(props)
 const ColumnTickets = React.memo(function ColumnTickets (props) {
-  const { tickets, setViewMode } = props
+  const { tickets, setViewMode, setOpen} = props
   return tickets.map((ticket, index) => {
     return (
       <Draggable
