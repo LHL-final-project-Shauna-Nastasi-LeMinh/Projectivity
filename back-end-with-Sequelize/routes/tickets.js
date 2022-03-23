@@ -52,10 +52,28 @@ module.exports = sequelizeModels => {
     }
   })
 
-  router.delete('/:ticket_id/delete', async (req, res) => {
+  router.delete('/:ticket_id', async (req, res) => {
     try {
       const ticket_id = req.params.ticket_id
       Tickets.destroy({
+        where: {
+          id: ticket_id
+        }
+      })
+
+      return res.json('success!')
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
+  })
+
+  router.put('/:ticket_id', async (req, res) => {
+    try {
+      const {ticket_id, title, description} = req.body
+      Tickets.update(
+        {title, description},
+        {
         where: {
           id: ticket_id
         }
