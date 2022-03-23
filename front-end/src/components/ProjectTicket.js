@@ -9,10 +9,10 @@ import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import Fade from '@mui/material/Fade';
 
-import { SHOW_TICKET_DETAILS, EDIT_TICKET } from './constants/Modes'
+import { SHOW_TICKET_DETAILS, EDIT_TICKET, REMOVE_TICKET } from './constants/Modes'
 
 export default function ProjectTicket (props) {
-  const { title, value, ticketId, setViewMode, setOpen } = props
+  const { title, value, ticketId, setViewMode, setOpen, setCurrentTicket} = props
   const [checked, setChecked] = React.useState([1])
 
   // handle opening and closing of MoreVertIcon
@@ -31,7 +31,16 @@ export default function ProjectTicket (props) {
 
     if (evt.target.id === 'details') {
       setOpen(SHOW_TICKET_DETAILS)
+
     }
+
+    if (evt.target.id === 'remove') {
+      console.log('clicked delete btn')
+      setOpen(REMOVE_TICKET)
+      setCurrentTicket(ticketId)
+
+    }
+
     setAnchorEl(null);
   };
 
