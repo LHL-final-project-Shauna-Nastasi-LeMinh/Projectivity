@@ -13,88 +13,66 @@ import {
 } from './constants/Modes'
 
 export default function Dashboard (props) {
-  const {
-		mode,
-		setMode,
-		viewMode,
-		setViewMode,
-		user,
-		currentProject,
-		setCurrentProject,
-		loadForm,
-		open,
-		setOpen
-	} = props
+  const { state } = props
 
-  const [projects, setProjects] = useState()
-  const [dashboardProjects, setDashboardProjects] = useState()
-  const stateRef = useRef()
-  stateRef.current = dashboardProjects
+	// const [projects, setProjects] = useState()
+	// const [dashboardProjects, setDashboardProjects] = useState()
+	// const stateRef = useRef()
+	// stateRef.current = dashboardProjects
 
-  function purgeNullStates (states) {
-    const results = []
+	// function purgeNullStates (states) {
+	//   const results = []
 
-    if (stateRef.current) {
-      for (const state of states) {
-        if (state !== null) {
-          results.push(state)
-        }
-      }
-    }
+	//   if (stateRef.current) {
+	//     for (const state of states) {
+	//       if (state !== null) {
+	//         results.push(state)
+	//       }
+	//     }
+	//   }
 
-    return results
-  }
+	//   return results
+	// }
 
-  let index = 0
+	//   let index = 0
 
-  function selectProject (index) {
-    if (stateRef.current[index]) {
-      axios
-				.get(
-					process.env.REACT_APP_BACKEND_URL +
-						'/projects/' +
-						stateRef.current[index].id +
-						'/columns'
-				)
-				.then(res => {
-  setCurrentProject(prev => {
-    return { ...stateRef.current[index], Columns: res.data }
-  })
-  setViewMode(PROJECT_VIEW)
-})
-    }
-  }
+	//   function selectProject (index) {
+	//     if (stateRef.current[index]) {
+	//       axios
+	// 				.get(
+	// 					process.env.REACT_APP_BACKEND_URL +
+	// 						'/projects/' +
+	// 						stateRef.current[index].id +
+	// 						'/columns'
+	// 				)
+	// 				.then(res => {
+	//   setCurrentProject(prev => {
+	//     return { ...stateRef.current[index], Columns: res.data }
+	//   })
+	//   setViewMode(PROJECT_VIEW)
+	// })
+	//     }
+	//   }
 
-  useEffect(() => {
-    axios
-			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
-			.then(res => {
-  setDashboardProjects(
-					res.data.map(project_assignment => project_assignment.Project)
-				)
-  purgeNullStates(stateRef.current)
-  setProjects(
-					stateRef.current.map(project =>
-  <DashboardItem
-    key={project.id}
-    value={project.name}
-    listIndex={index++}
-    currentProject={currentProject}
-    dashItemProject={project}
-    setCurrentProject={setCurrentProject}
-    selectProject={selectProject}
-    viewMode={viewMode}
-    setViewMode={setViewMode}
-    loadForm={loadForm}
-						/>
-					)
-				)
-  selectProject(0)
-})
-			.catch(err => {
-  console.log(err)
-})
-  }, [])
+	//   useEffect(() => {
+	//     axios
+	// 			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
+	// 			.then(res => {
+	//   setDashboardProjects(
+	// 					res.data.map(project_assignment => project_assignment.Project)
+	// 				)
+	//   purgeNullStates(stateRef.current)
+	//   setProjects(
+	// 					stateRef.current.map(project =>
+
+	// 					)
+	// 				)
+	//   selectProject(0)
+	// })
+	// 			.catch(err => {
+	//   console.log(err)
+	// })
+	//   }, [])
 
   return (
     <Box
@@ -107,12 +85,14 @@ export default function Dashboard (props) {
       }}
 		>
       <List component='nav' aria-label='main mailbox folders'>
-        {projects}
+        {state.userProjects.map(project => {
+          <DashboardItem state={state} />
+        })}
         <ListItemButton value='Create New Project'>
           <ListItemIcon />
           <ListItemText
             primary='Create New Project'
-            onClick={() => setOpen(NEW_PROJECT_FORM)}
+            onClick={() => state.openModal('newProjectForm')}
 					/>
         </ListItemButton>
       </List>
