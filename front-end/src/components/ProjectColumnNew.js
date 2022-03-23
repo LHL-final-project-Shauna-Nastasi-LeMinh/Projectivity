@@ -10,15 +10,23 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { NEW_COLUMN_FORM } from './constants/Modes'
+import DialogContent from '@mui/material/DialogContent'
+import { Draggable } from 'react-beautiful-dnd'
+import Slide from '@mui/material/Slide'
+
+const Transition = React.forwardRef(function Transition (props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
 export default function ProjectColumnNew (props) {
-  const { name, createNewColumn } = props
+  const { name, createNewColumn, columnsCount } = props
   const [open, setOpen] = useState(false)
   const [newColumnName, setNewColumnName] = useState('')
+
+  const cancel = () => {
+    setOpen(false)
+  }
 
   const create = () => {
     setOpen(false)

@@ -25,6 +25,7 @@ export default function NewTicketForm (props) {
   }
 
   const onAdd = event => {
+    event.preventDefault()
 		// add new ticket to db
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
@@ -35,6 +36,7 @@ export default function NewTicketForm (props) {
 })
 			.then(res => {
   setViewMode(PROJECT_VIEW)
+  setOpen(false)
 })
 			.catch(function (error) {
   console.log(error.message)
