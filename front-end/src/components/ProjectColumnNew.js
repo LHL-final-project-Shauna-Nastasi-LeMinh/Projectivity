@@ -10,8 +10,14 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent';
 import { Draggable } from 'react-beautiful-dnd'
+import Slide from '@mui/material/Slide'
+
+const Transition = React.forwardRef(function Transition (props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
 export default function ProjectColumnNew (props) {
   const { name, createNewColumn, columnsCount} = props
@@ -51,7 +57,14 @@ export default function ProjectColumnNew (props) {
           </ListItemButton>
         </ListItem>
         <Divider />
-        <Dialog open={open} onClose={cancel}>
+        <Dialog open={open} onClose={cancel}
+          TransitionComponent={Transition}
+          keepMounted
+          aria-describedby='alert-dialog-slide-description'
+        >
+          <DialogTitle>
+            Create column
+          </DialogTitle>
           <DialogContent>
             <TextField
               autoFocus

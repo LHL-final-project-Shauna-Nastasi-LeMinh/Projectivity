@@ -43,7 +43,7 @@ export default function ProjectColumn (props) {
 
   const [tickets, setTickets] = useState([])
   const [dialogOpen, setDialogOpen] = useState(false)
-  const [dialogContent, setDialogContent] = useState(false)
+  const [dialogContent, setDialogContent] = useState({})
   const [newColumnName, setNewColumnName] = useState('')
 
 	// handle opening and closing of MoreHorizIcon
@@ -65,7 +65,7 @@ export default function ProjectColumn (props) {
     content.text = ''
 
     if (tickets && tickets.length > 0) {
-      dialogContent.text = `You still have tickets in this column. 
+      content.text = `You still have tickets in this column. 
         Column deletion will permanently delete all associated tickets.`
     }
     content.confirmLabel = 'Delete'
