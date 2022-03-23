@@ -7,6 +7,8 @@ import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import {List, ListItem, Divider, ListItemText} from '@mui/material'
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -50,7 +52,10 @@ export default function ShowTicketDetails(props) {
 
   const {dialogOpen, setDialogOpen, ticketId, tickets} = props
 
+  const ticketDetails = tickets.filter(ticket => ticket.id === ticketId)[0]
+
   const handleClose = () => {
+   
     setDialogOpen(false);
   };
 
@@ -62,25 +67,28 @@ export default function ShowTicketDetails(props) {
         open={dialogOpen}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Ticket title
+          {ticketDetails.title}
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Description Text
-            Description Text
-            Description Text
-          </Typography>
-          <Typography gutterBottom>
-            
-            Description Text
-            Description Text
-            Description Text
-          </Typography>
-          <Typography gutterBottom>
-           Description Text
-           Description Text
-           Description Text
-          </Typography>
+          <List
+            sx={{
+              width: '100%',
+             
+              bgcolor: 'background.paper',
+            }}
+          >
+            <ListItem>
+             
+              <ListItemText primary="Description:" secondary={ticketDetails.description} />
+            </ListItem>
+            <Divider variant="inset" component="li" />
+
+            <ListItem>
+             
+              <ListItemText primary="Created at:" secondary={ticketDetails.created_at} />
+            </ListItem>
+          </List>
+
         </DialogContent>
   
       </BootstrapDialog>
