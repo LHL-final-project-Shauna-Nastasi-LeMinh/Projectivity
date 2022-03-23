@@ -20,15 +20,17 @@ const Transition = React.forwardRef(function Transition (props, ref) {
 
 export default function RemoveTicket (props) {
 
-  const {open, setOpen, currentTicket} = props
+  const {dialogOpen, setDialogOpen, ticketId, tickets, setTickets} = props
 
   const onConfirmDelete = () => {
   
     axios
-      .delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${currentTicket}`)
+      .delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticketId}`)
       .then(res => {
-        console.log(res.data)
-       setOpen(false)
+        const updatedTickets = tickets.filter(ticket => ticket.id !== ticketId)
+        setTickets([...updatedTickets])
+        
+       setDialogOpen(false)
       })
       .catch(function (error) {
         console.log(error.message)
@@ -36,13 +38,14 @@ export default function RemoveTicket (props) {
   }
 
   const handleClose = () => {
-    setOpen(false);
+    console.log(ticketId)
+    setDialogOpen(false);
   };
 
   return (
-   
+    
       <Dialog 
-        open={open}
+        open={dialogOpen}
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
