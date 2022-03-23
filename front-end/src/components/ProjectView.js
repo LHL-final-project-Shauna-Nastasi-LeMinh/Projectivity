@@ -44,7 +44,30 @@ export default function ProjectView (props) {
       const newColumns = JSON.parse(JSON.stringify(columns)) // deep clone
       const [movingColumn] = newColumns.splice(source.index, 1)
       newColumns.splice(destination.index, 0, movingColumn)
+      console.log("source:")
+      console.log(source)
+      console.log("destination:")
+      console.log(destination)
       setColumns(newColumns)
+      
+      // persist new columns ordering into db
+      const orderingObject = {}
+      newColumns.forEach((col, index) => {
+        orderingObject[col.id] = index;
+      })
+        
+      axios.post(process.env.REACT_APP_BACKEND_URL + '/columns/reodering', 
+        JSON.stringify(orderingObject), 
+        { headers: {
+          'Content-Type': 'application/json'
+          }
+        })
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(function (error) {
+          console.log(error.message)
+        })
     } else if (type === 'ticket') {
 			// moving ticket
       if (destination.droppableId === source.droppableId) {
@@ -93,15 +116,15 @@ export default function ProjectView (props) {
 				// persist new column id to the ticket details in db
         axios
 					.post(process.env.REACT_APP_BACKEND_URL + '/tickets/updateColumn', {
-  ticketId: movingTicket.id,
-  newColumnId: destColumn.id
-})
-					.then(res => {
-  console.log(res.data)
-})
-					.catch(function (error) {
-  console.log(error.message)
-})
+            ticketId: movingTicket.id,
+            newColumnId: destColumn.id
+          })
+                    .then(res => {
+            console.log(res.data)
+          })
+                    .catch(function (error) {
+            console.log(error.message)
+          })
       }
 			// update state to retain moving position
       setColumns(prev => [...prev])
@@ -111,17 +134,17 @@ export default function ProjectView (props) {
   const createNewColumn = function (newColumnName) {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/columns/new', {
-  name: newColumnName,
-  project_id: currentProject.id
-})
-			.then(res => {
-  console.log(res.data)
-  const newColumn = { ...res.data, Tickets: [] }
-  setColumns([...columns, newColumn])
-})
-			.catch(function (error) {
-  console.log(error.message)
-})
+        name: newColumnName,
+        project_id: currentProject.id
+      })
+            .then(res => {
+        console.log(res.data)
+        const newColumn = { ...res.data, Tickets: [] }
+        setColumns([...columns, newColumn])
+      })
+            .catch(function (error) {
+        console.log(error.message)
+      })
   }
 
   const deleteColumnFromProjectView = function (columnId) {
@@ -167,6 +190,8 @@ export default function ProjectView (props) {
       colIndex={colIndex}
       open={open}
       setOpen={setOpen}
+      deleteColumnFromProjectView={deleteColumnFromProjectView}
+      changeColumnFromProjectView={changeColumnFromProjectView}
 		/>
 	)
 

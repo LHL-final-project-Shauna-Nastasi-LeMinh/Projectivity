@@ -35,7 +35,7 @@ module.exports = sequelizeModels => {
             model: sequelizeModels.Ticket
           }
         ],
-        order: [['id', 'ASC']]
+        order: [['ordering_index', 'ASC']]
       })
       return res.json(columns)
     } catch (err) {

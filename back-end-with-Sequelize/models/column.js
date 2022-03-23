@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Column.init({
     name: DataTypes.STRING,
-    project_id: DataTypes.INTEGER
+    project_id: DataTypes.INTEGER,
+    ordering_index: DataTypes.INTEGER
   }, {
     sequelize,
     tableName: 'columns',
