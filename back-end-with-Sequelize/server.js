@@ -31,6 +31,11 @@ const roleRoutes = require('./routes/roles')
 const projectRoutes = require('./routes/projects')
 const ticketRoutes = require('./routes/tickets')
 const columnRoutes = require('./routes/columns')
+const severityRoutes = require('./routes/severities')
+const priorityRoutes = require('./routes/priorities')
+const typeRoutes = require('./routes/types')
+const buildRoutes = require('./routes/builds')
+const milestoneRoutes = require('./routes/milestones')
 
 // pass the whole models, as well pusher server, to routes.
 // Consider refactor to pass individual model object only, e.g. sequelizeModels.USER if only access 1 table
@@ -44,6 +49,11 @@ app.use('/roles', roleRoutes(sequelizeModels))
 app.use('/projects', projectRoutes(sequelizeModels))
 app.use('/tickets', ticketRoutes(sequelizeModels))
 app.use('/columns', columnRoutes(sequelizeModels))
+app.use('/severities', severityRoutes(sequelizeModels))
+app.use('/priorities', priorityRoutes(sequelizeModels))
+app.use('/types', typeRoutes(sequelizeModels))
+app.use('/builds', buildRoutes(sequelizeModels))
+app.use('/milestones', milestoneRoutes(sequelizeModels))
 
 app.get('/', (req, res) => {
   res.render('index')

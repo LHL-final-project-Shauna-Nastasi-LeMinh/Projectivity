@@ -22,20 +22,20 @@ module.exports = {
       completed_at: {
         type: Sequelize.DATE
       },
-      severity_id: {
-        type: Sequelize.INTEGER
+      severity: {
+        type: Sequelize.STRING
       },
-      priority_id: {
-        type: Sequelize.INTEGER
+      priority: {
+        type: Sequelize.STRING
       },
-      type_id: {
-        type: Sequelize.INTEGER
+      type: {
+        type: Sequelize.STRING
       },
-      build_id: {
-        type: Sequelize.INTEGER
+      build: {
+        type: Sequelize.STRING
       },
-      milestone_id: {
-        type: Sequelize.INTEGER
+      milestone: {
+        type: Sequelize.STRING
       },
       created_by: {
         type: Sequelize.INTEGER

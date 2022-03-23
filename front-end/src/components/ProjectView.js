@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import ProjectColumn from './ProjectColumn'
 import ProjectColumnNew from './ProjectColumnNew'
 import Box from '@mui/material/Box'
+import SearchPane from './SearchPane'
 import NewProjectForm from './Forms/NewProjectForm'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import axios from 'axios'
@@ -178,6 +179,47 @@ export default function ProjectView (props) {
     setColumns([...columns])
   }
 
+  const searchFilter = function(criteria) {
+    const DESC = "DESC"
+    const SEVERITY = "SEVERITY"
+    const PRIORITY = "PRIORITY"
+    const TYPE = "TYPE"
+    const MILESTONE = "MILESTONE"
+
+    const allColumns = JSON.parse(JSON.stringify(currentProject.Columns));
+    
+    allColumns.forEach(column => {
+      const tickets = column.Tickets.filter(ticket => {
+        let matchSeverity = true;
+        let matchPriority = true;
+        let matchType = true;
+        let matchMilestone = true;
+        let matchDescOrTitle = true;
+
+        if (criteria[DESC] !== "") {
+          matchDescOrTitle = ticket.title.toLowerCase().includes(criteria[DESC].toLowerCase()) 
+            || ticket.description.toLowerCase().includes(criteria[DESC].toLowerCase())
+        }
+        if (criteria[SEVERITY] !== "All") {
+          matchSeverity = (ticket.severity === criteria[SEVERITY]);
+        }
+        if (criteria[PRIORITY] !== "All") {
+          matchPriority = (ticket.priority === criteria[PRIORITY]);
+        }
+        if (criteria[TYPE] !== "All") {
+          matchType = (ticket.type === criteria[TYPE]);
+        }
+        if (criteria[MILESTONE] !== "All") {
+          matchMilestone = (ticket.milestone === criteria[MILESTONE]);
+        }
+        return matchSeverity && matchPriority && matchType && matchMilestone && matchDescOrTitle;
+      })
+      column.Tickets = tickets;
+    })
+    
+    setColumns([...allColumns]);
+  }
+
   const generatedColumns = columns.map((column, colIndex) =>
     <ProjectColumn
       disablePadding
@@ -196,24 +238,27 @@ export default function ProjectView (props) {
 	)
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId='all-column' direction='horizontal' type='column'>
-        {provided =>
-          <Box
-            disablePadding
-            sx={{ display: 'flex' }}
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-					>
-            {generatedColumns}
-            <ProjectColumnNew
-              name={'+ New Column'}
-              createNewColumn={createNewColumn}
-              columnsCount={columns.length}
-						/>
-            {provided.placeholder}
-          </Box>}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <SearchPane searchFilter={searchFilter}/>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId='all-column' direction='horizontal' type='column'>
+          {provided =>
+            <Box
+              disablePadding
+              sx={{ display: 'flex' }}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {generatedColumns}
+              <ProjectColumnNew
+                name={'+ New Column'}
+                createNewColumn={createNewColumn}
+                columnsCount={columns.length}
+              />
+              {provided.placeholder}
+            </Box>}
+        </Droppable>
+      </DragDropContext>
+    </>
   )
 }
