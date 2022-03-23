@@ -69,9 +69,7 @@ export default function ProjectView (props) {
           }
         }
 				)
-				.then(res => {
-  console.log(res.data)
-})
+				.then(res => {})
 				.catch(function (error) {
   console.log(error.message)
 })

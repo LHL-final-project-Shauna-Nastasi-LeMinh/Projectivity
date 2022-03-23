@@ -28,22 +28,19 @@ export default function LoginForm (props) {
     event.preventDefault()
   }
 
-  const login = event => {
-    axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/login', {
-  email: state.formData.email,
-  password: state.formData.password
-})
-			.then(res => {
-  console.log('logged in successfully!')
-  state.setCurrentUser(res.data)
-  state.setCurrentCookies('user', res.data, { path: '/' })
-  state.setModal('loginForm', false)
-})
-			.catch(function (error) {
-  console.log(error.message)
-  state.setFormData('message', 'Login invalid')
-})
+  function login () {
+    state.usersList.map(user => {
+      if (user.email === state.formData.email) {
+        if (user.password === state.formData.password) {
+          state.setStateTarget('currentUser', user)
+          state.setStateTarget('currentCookies', user)
+          state.setStateTarget('userLoggedIn', true)
+          const userData = state.getUserData(user.id)
+          console.log('userData', userData)
+          state.closeModal('loginForm')
+        }
+      }
+    })
   }
 
   const style = {
@@ -60,7 +57,7 @@ export default function LoginForm (props) {
   return (
     <Modal
       open={state.modals.loginForm}
-      onClose={state.setModal('loginForm', false)}
+      onClose={() => state.closeModal('loginForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -135,7 +132,7 @@ export default function LoginForm (props) {
             color='success'
             size='large'
             variant='contained'
-            onClick={login}
+            onClick={() => login()}
 					>
 						Login
 					</Button>
@@ -144,7 +141,7 @@ export default function LoginForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={state.setModal('loginForm', false)}
+            onClick={() => state.closeModal('loginForm')}
 					>
 						Cancel
 					</Button>

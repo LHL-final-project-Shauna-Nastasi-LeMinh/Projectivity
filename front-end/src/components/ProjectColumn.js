@@ -205,9 +205,8 @@ export default function ProjectColumn (props) {
                 <ColumnTickets
                   tickets={tickets}
                   setViewMode={setViewMode}
-                  setOpen={setOpen}
+                  openModals={openModals}
                   currentTicket={currentTicket}
-                  open={open}
                   setCurrentTicket={setCurrentTicket}
                   setTickets={setTickets}
 								/>

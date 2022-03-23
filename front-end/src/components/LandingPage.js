@@ -10,14 +10,9 @@ import RemoveTicket from './Forms/RemoveTicket'
 export default function DashboardProject (props) {
   const { state } = props
 
-	// function loadForm (newData, mode) {
-	//   state.setFormData(newData)
-	//   state.setMode(mode)
-	// }
-
   return (
     <Container>
-      {state.modals.editTicketForm && <Dashboard state={state} />}
+      {state.modes.projectView && <Dashboard state={state} />}
       <Container>
         {state.modals.newProjectForm && <NewProjectForm state={state} />}
         {state.modals.deleteProjectForm && <DeleteProjectForm state={state} />}

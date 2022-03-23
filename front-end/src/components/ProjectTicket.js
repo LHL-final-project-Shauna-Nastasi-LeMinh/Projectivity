@@ -25,7 +25,9 @@ export default function ProjectTicket (props) {
 		setOpen,
 		setCurrentTicket,
 		tickets,
-		setTickets
+		setTickets,
+		openMenu,
+		closeMenu
 	} = props
   const [checked, setChecked] = React.useState([1])
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -53,7 +55,7 @@ export default function ProjectTicket (props) {
       setDialogOpen(REMOVE_TICKET)
     }
 
-    closeMenu()
+		// closeMenu()
   }
 
 	//

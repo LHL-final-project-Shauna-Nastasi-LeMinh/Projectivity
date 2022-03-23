@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 module.exports = sequelizeModels => {
+  Employees = sequelizeModels.Employee
+  Roles = sequelizeModels.Role
+
   router.get('/', async (req, res) => {
     try {
-      Employees = sequelizeModels.Employee
-      Roles = sequelizeModels.Role
-
       const roles = await Roles.findAll()
       const users = await Employees.findAll()
 

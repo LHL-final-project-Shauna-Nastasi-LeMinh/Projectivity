@@ -3,87 +3,131 @@ const router = express.Router()
 
 module.exports = sequelizeModels => {
   router.get('/:employee_id', async (req, res) => {
-    try {
-      Users = sequelizeModels.User
-      Columns = sequelizeModels.Column
-      Employees = sequelizeModels.Employee
-      Milestones = sequelizeModels.Milestone
-      Priorities = sequelizeModels.Priority
-      Projects = sequelizeModels.Project
-      Project_Assignments = sequelizeModels.Project_Assignments
-      Roles = sequelizeModels.Roles
-      Severity = sequelizeModels.Severity
-      Tickets = sequelizeModels.Ticket
-      Types = sequelizeModels.Types
+    console.log('started request')
 
-      const all_project_assignments = Project_Assignments.findAll({
+    Users = sequelizeModels.User
+    Columns = sequelizeModels.Column
+    Employees = sequelizeModels.Employee
+    Milestones = sequelizeModels.Milestone
+    Priorities = sequelizeModels.Priority
+    Projects = sequelizeModels.Project
+    Project_Assignments = sequelizeModels.ProjectAssignment
+    Roles = sequelizeModels.Role
+    Severity = sequelizeModels.Severity
+    Tickets = sequelizeModels.Ticket
+    Types = sequelizeModels.Types
+
+    try {
+      console.log('getting data')
+
+      const all_project_assignments = await Project_Assignments.findAll({
         where: { employee_id: req.params.employee_id }
       })
+      const all_columns = await Column.findAll()
+      const all_employees = await Employee.findAll()
+      const all_projects = await Projects.findAll()
+      const all_tickets = await Tickets.findAll()
+      const ticket_severity = await Severity.findAll()
+      const ticket_priority = await Priorities.findAll()
+      const ticket_type = await Types.findAll()
+      const all_milestones = await Milestones.findAll()
 
-      const user_project_assignments = all_project_assignments.filter(
-				project => project.employee_id === req.params.employee_id
-			)
+      const user_project_assignments = []
+
+      if (all_project_assignments.length === 1) {
+        user_project_assignments.push(all_project_assignments[0].dataValues)
+      } else if (all_project_assignments.length > 1) {
+        all_project_assignments.map(project_assignment => {
+          if (
+						project_assignment.dataValues.employee_id === req.params.employee_id
+					) {
+            user_project_assignments.push(project_assignment.dataValues)
+          }
+        })
+      }
+
+      const user_project_ids = []
+
+      all_project_assignments.map(project_assignment => {
+        user_project_ids.push(project_assignment.dataValues.project_id)
+      })
 
       const user_projects = []
-      const user_project_employees = []
+
+      for (const project of all_projects) {
+        if (user_project_ids.includes(project.dataValues.id)) {
+          user_projects.push(project.dataValues)
+        }
+      }
+
+      const user_project_employee_ids = []
+
+      all_project_assignments.map(project_assignment => {
+        if (
+					user_project_ids.includes(project_assignment.dataValues.project_id)
+				) {
+          user_project_employee_ids.push(
+						project_assignment.dataValues.employee_id
+					)
+        }
+      })
+
+      const user_employees = []
+
+      for (const employee_id of user_project_employee_ids) {
+        for (const employee of all_employees) {
+          if (employee.dataValues.id === employee_id) {
+            user_employees.push(employee.dataValues)
+          }
+        }
+      }
+
       const user_columns = []
+
+      for (const project of user_projects) {
+        for (const column of all_columns) {
+          if (column.project_id === project.id) {
+            user_columns.push(column.dataValues)
+          }
+        }
+      }
+
       const user_tickets = []
-      const ticket_severity = Severities.findAll()
-      const ticket_priority = Priorities.findAll()
-      const ticket_type = Type.findAll()
-      const ticket_build = Build.findAll()
-      const user_milestones = []
 
-      user_project_assignments.array.forEach(project_assignment => {
-        user_projects.push(
-					Projects.findAll({
-  where: { id: project_assignment.project_id }
-})
-				)
-        user_project_employees.push(
-					Employee.findAll({
-  where: { id: project.id && project_id }
-})
-				)
-      })
+      for (const column of user_columns) {
+        for (const ticket of all_tickets) {
+          if (column.id === ticket.dataValues.column_id) {
+            user_tickets.push(ticket.dataValues)
+          }
+        }
+      }
 
-      user_projects.map(project => {
-        user_columns.push(
-					Columns.findAll({
-  where: { project_id: project.id }
-})
-				)
-      })
+			// MILESTONES NOT IMPLEMENTED YET
+			// const user_milestones = []
 
-      user_columns.map(column => {
-        user_tickets.push(
-					Tickets.findAll({
-  where: { column_id: column.id }
-})
-				)
-      })
+			// for (const ticket of all_tickets) {
+			//   for (const milestone of all_milestones) {
+			//     if (ticket.dataValues.milestone_id === milestone.dataValues.id) {
+			//       if (!user_milestones.includes(milestone.dataValues)) {
+			//         user_milestones.push(milestone.dataValues)
+			//       }
+			//     }
+			//   }
+			// }
 
-      user_tickets.map(ticket => {
-        user_milestones.push(
-					Milestone.findAll({
-  where: { id: ticket.milestone_id }
-})
-				)
-      })
-
-      const userData = {
+      const userData = await {
         user_project_assignments,
         user_projects,
         user_columns,
         user_tickets,
-        user_milestones,
         ticket_severity,
         ticket_priority,
-        ticket_type,
-        ticket_build
+        ticket_type
       }
 
-      return userData
+      console.log('returning data')
+
+      return res.json(userData)
     } catch (err) {
       console.log(err)
       return res.status(500).json(err)

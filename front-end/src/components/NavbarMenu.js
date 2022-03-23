@@ -29,24 +29,11 @@ export default function NavbarMenu (props) {
 
   function handleMenuClick (string, newMode) {
     if (string === 'Logout') {
-      state.setCurrentUser(null)
-      state.setMode('landingView')
-      state.setCurrentCookies(null)
+      state.setStateTarget('currentUser', null)
+      state.setStateTarget('currentCookies', null)
     }
 
-    if (string === 'Login') {
-      state.setModal('state.modals.loginForm', true)
-    }
-
-    if (string === 'Register') {
-      state.setModal('state.modals.registerForm', true)
-    }
-
-    setState({
-      ...state,
-      mode: setState({ ...state, [state.mode]: newMode })
-    })
-
+    state.setMode(newMode)
     setAnchorElUser(null)
   }
 
@@ -59,14 +46,14 @@ export default function NavbarMenu (props) {
 				>
         <Button
           key='about'
-          onClick={state.setMode('aboutView')}
+          onClick={() => state.setMode('aboutView')}
           sx={{ color: 'white', display: 'block' }}
 					>
 						About
 					</Button>
         <Button
           key='login'
-          onClick={state.setModal('loginForm', true)}
+          onClick={() => state.openModal('loginForm')}
           sx={{ color: 'white', display: 'block' }}
 					>
 						Login
@@ -74,7 +61,7 @@ export default function NavbarMenu (props) {
         <Button
           key='register'
           sx={{ color: 'white', display: 'block' }}
-          onClick={state.setModal('registerForm', true)}
+          onClick={() => state.openModal('registerForm')}
 					>
 						Register
 					</Button>

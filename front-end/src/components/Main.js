@@ -14,14 +14,18 @@ export default function Main (props) {
     <Paper>
       {state.modes.aboutView && <AboutPage />}
       {state.modals.loginForm &&
-				state.currentUser === null &&
+				!state.userLoggedIn &&
 				<LoginForm state={state} />}
       {state.modals.registerForm &&
-				!state.currentUser &&
+				!state.userLoggedIn &&
 				<RegistrationForm state={state} />}
-      {state.modals.newProjectForm && <NewProjectForm state={state} />}
-      {state.modals.newTicketForm && <NewTicketForm state={state} />}
-      {state.currentUser && <LandingPage state={state} />}
+      {state.modals.newProjectForm &&
+				state.userLoggedIn &&
+				<NewProjectForm state={state} />}
+      {state.modals.newTicketForm &&
+				state.userLoggedIn &&
+				<NewTicketForm state={state} />}
+      {state.userLoggedIn && <LandingPage state={state} />}
     </Paper>
   )
 }
