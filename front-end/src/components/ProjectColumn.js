@@ -8,96 +8,110 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import IconButton from '@mui/material/IconButton'
+import Fade from '@mui/material/Fade'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import { NEW_TICKET_FORM } from './constants/Modes'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
-import Slide from '@mui/material/Slide';
+import Slide from '@mui/material/Slide'
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+const Transition = React.forwardRef(function Transition (props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
 export default function ProjectColumn (props) {
-  const { user, column, setViewMode, setCurrentColumn, colIndex, deleteColumnFromProjectView, changeColumnFromProjectView } = props
+  const {
+		user,
+		column,
+		setViewMode,
+		setCurrentColumn,
+		colIndex,
+		open,
+		setOpen,
+		deleteColumnFromProjectView,
+		changeColumnFromProjectView,
+		handleClick
+	} = props
 
   const [tickets, setTickets] = useState([])
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogContent, setDialogContent] = useState(false);
-  const [newColumnName, setNewColumnName] = useState("");
-  
-  // handle opening and closing of MoreHorizIcon
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openIconMenu = Boolean(anchorEl);
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [dialogContent, setDialogContent] = useState(false)
+  const [newColumnName, setNewColumnName] = useState('')
 
-  const menuIconClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  
+	// handle opening and closing of MoreHorizIcon
+  const [anchorEl, setAnchorEl] = useState(null)
+  const openIconMenu = Boolean(anchorEl)
+
+  const menuIconClick = event => {
+    setAnchorEl(event.currentTarget)
+  }
+
   const closeIconMenu = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   const openDeleteDialog = () => {
-    closeIconMenu();
-    const content = {};
-    content.title = `Delete column "${column.name}"?`;
-    content.text = "";
+    closeIconMenu()
+    const content = {}
+    content.title = `Delete column "${column.name}"?`
+    content.text = ''
 
     if (tickets && tickets.length > 0) {
-      dialogContent.text=`You still have tickets in this column. 
+      dialogContent.text = `You still have tickets in this column. 
         Column deletion will permanently delete all associated tickets.`
     }
-    content.confirmLabel = "Delete";
-    setDialogContent(content);
-    setDialogOpen(true);
+    content.confirmLabel = 'Delete'
+    setDialogContent(content)
+    setDialogOpen(true)
   }
 
   const handleColumnActions = () => {
-    closeDialog();
-    if (dialogContent.confirmLabel === "Delete") {
-      deleteColumnFromProjectView(column.id);
+    closeDialog()
+    if (dialogContent.confirmLabel === 'Delete') {
+      deleteColumnFromProjectView(column.id)
     }
-    if (dialogContent.confirmLabel === "Change") {
-      if (newColumnName === "") return;
+    if (dialogContent.confirmLabel === 'Change') {
+      if (newColumnName === '') return
       changeColumnFromProjectView(column.id, newColumnName)
     }
-  };
+  }
 
   const openNewColumnNameDialog = () => {
-    closeIconMenu();
-    const content = {};
-    content.title = `New name for column "${column.name}"?`;
-    content.text = "";
-    content.confirmLabel = "Change";
-    setDialogContent(content);
-    setDialogOpen(true);
+    closeIconMenu()
+    const content = {}
+    content.title = `New name for column "${column.name}"?`
+    content.text = ''
+    content.confirmLabel = 'Change'
+    setDialogContent(content)
+    setDialogOpen(true)
   }
 
   const closeDialog = () => {
-    setDialogOpen(false);
-  };
+    setDialogOpen(false)
+  }
 
-  useEffect(() => {
-      setTickets(column.Tickets)
-    }, [column])
+  useEffect(
+		() => {
+  setTickets(column.Tickets)
+},
+		[column]
+	)
 
   const createNewTicket = () => {
     setCurrentColumn(column.id)
     setViewMode(NEW_TICKET_FORM)
   }
 
-  const setTextValue = function(event) {
-    setNewColumnName(event.target.value);
+  const setTextValue = function (event) {
+    setNewColumnName(event.target.value)
   }
 
   return (
@@ -113,58 +127,62 @@ export default function ProjectColumn (props) {
             <ListItemButton>
               <ListItemText primary={column.name} />
               <IconButton
-                id="fade-button"
+                id='fade-button'
                 aria-controls={openIconMenu ? 'fade-menu' : undefined}
-                aria-haspopup="true"
+                aria-haspopup='true'
                 aria-expanded={openIconMenu ? 'true' : undefined}
                 onClick={menuIconClick}
-              >  
+							>
                 <MoreHorizIcon />
               </IconButton>
               <Menu
-                id="fade-menu"
+                id='fade-menu'
                 MenuListProps={{
-                  'aria-labelledby': 'fade-button',
+                  'aria-labelledby': 'fade-button'
                 }}
                 anchorEl={anchorEl}
                 open={openIconMenu}
                 onClose={closeIconMenu}
                 TransitionComponent={Fade}
-             >
-              <MenuItem onClick={openNewColumnNameDialog}>Change Name</MenuItem>
-              <MenuItem onClick={openDeleteDialog}>Delete</MenuItem>
-            </Menu>
+							>
+                <MenuItem onClick={openNewColumnNameDialog}>
+									Change Name
+								</MenuItem>
+                <MenuItem onClick={openDeleteDialog}>Delete</MenuItem>
+              </Menu>
             </ListItemButton>
           </ListItem>
 
-          <Dialog 
+          <Dialog
             open={dialogOpen}
             TransitionComponent={Transition}
             keepMounted
             onClose={closeDialog}
-            aria-describedby="alert-dialog-slide-description"
-          >
-            
-            <DialogTitle>{dialogContent.title}</DialogTitle>
+            aria-describedby='alert-dialog-slide-description'
+					>
+            <DialogTitle>
+              {dialogContent.title}
+            </DialogTitle>
             <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description">
+              <DialogContentText id='alert-dialog-slide-description'>
                 {dialogContent.text}
               </DialogContentText>
-              {(dialogContent.confirmLabel === "Change") &&
+              {dialogContent.confirmLabel === 'Change' &&
               <TextField
                 autoFocus
-                margin="dense"
-                id="name"
-                label="New Column Name"
+                margin='dense'
+                id='name'
+                label='New Column Name'
                 fullWidth
-                variant="outlined"
+                variant='outlined'
                 onChange={setTextValue}
-              />
-              }
+								/>}
             </DialogContent>
             <DialogActions>
               <Button onClick={closeDialog}>Cancel</Button>
-              <Button onClick={handleColumnActions}>{dialogContent.confirmLabel}</Button>
+              <Button onClick={handleColumnActions}>
+                {dialogContent.confirmLabel}
+              </Button>
             </DialogActions>
           </Dialog>
           <Divider />
@@ -187,8 +205,11 @@ export default function ProjectColumn (props) {
               </List>}
           </Droppable>
           <ListItem sx={{ padding: '0.1rem' }}>
-            <ListItemButton onClick={() => createNewTicket()}>
-              <ListItemText primary="Create New Ticket" />
+            <ListItemButton onClick={() => handleClick()}>
+              <ListItemText
+                primary='Create New Ticket'
+                onClick={() => setOpen(NEW_TICKET_FORM)}
+							/>
             </ListItemButton>
           </ListItem>
         </Box>}

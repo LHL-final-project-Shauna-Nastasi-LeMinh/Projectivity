@@ -19,14 +19,14 @@ export default function ConfirmDeletedForm (props) {
   }
 
   const {
-		openModal,
-		setOpenModal,
 		currentProject,
 		data,
 		setViewMode,
 		user,
 		setUser,
-		setCookie
+		setCookie,
+		open,
+		setOpen
 	} = props
 
   const delete_confirmed = event => {
@@ -48,14 +48,10 @@ export default function ConfirmDeletedForm (props) {
     }
   }
 
-  const cancel = event => {
-    setOpenModal(false)
-  }
-
   return (
     <Modal
-      open={openModal}
-      onClose={() => setOpenModal(false)}
+      open={open}
+      onClose={() => setOpen('')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -88,7 +84,7 @@ export default function ConfirmDeletedForm (props) {
           <Button variant='outlined' onClick={delete_confirmed}>
 						Confirm Delete
 					</Button>
-          <Button variant='outlined' onClick={cancel}>
+          <Button variant='outlined' onClick={() => setOpen('')}>
 						Cancel
 					</Button>
         </Box>

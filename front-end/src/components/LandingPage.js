@@ -24,11 +24,12 @@ export default function DashboardProject (props) {
 		setCurrentProject,
 		currentColumn,
 		setCurrentColumn,
-		handleOpen,
-		handleClose
+		open,
+		setOpen,
+		viewMode,
+		setViewMode
 	} = props
 
-  const [viewMode, setViewMode] = useState(PROJECT_VIEW)
   const [data, setData] = useState()
   const [dashboard, setDashboard] = useState()
 
@@ -54,32 +55,32 @@ export default function DashboardProject (props) {
         setCurrentProject={setCurrentProject}
         data={data}
         loadForm={loadForm}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
+        open={open}
+        setOpen={setOpen}
 				/>}
       <Container>
-        {viewMode === NEW_PROJECT_FORM &&
+        {open === NEW_PROJECT_FORM &&
         <NewProjectForm
           user={user}
           setViewMode={setViewMode}
-          handleOpen={handleOpen}
-          handleClose={handleClose}
+          open={open}
+          setOpen={setOpen}
 					/>}
-        {viewMode === CONFIRM_DELETE_PROJECT &&
+        {open === CONFIRM_DELETE_PROJECT &&
         <ConfirmDeleteForm
           data={data}
           currentProject={currentProject}
           setViewMode={setViewMode}
-          handleOpen={handleOpen}
-          handleClose={handleClose}
+          open={open}
+          setOpen={setOpen}
 					/>}
-        {viewMode === NEW_TICKET_FORM &&
+        {open === NEW_TICKET_FORM &&
         <NewTicketForm
           user={user}
           currentColumn={currentColumn}
           setViewMode={setViewMode}
-          handleOpen={handleOpen}
-          handleClose={handleClose}
+          open={open}
+          setOpen={setOpen}
 					/>}
         {viewMode === PROJECT_VIEW &&
         <ProjectView
@@ -88,6 +89,8 @@ export default function DashboardProject (props) {
           currentProject={currentProject}
           setViewMode={setViewMode}
           setCurrentColumn={setCurrentColumn}
+          open={open}
+          setOpen={setOpen}
 					/>}
       </Container>
     </Container>
