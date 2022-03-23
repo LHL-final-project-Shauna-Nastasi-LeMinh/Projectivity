@@ -238,6 +238,7 @@ const ColumnTickets = React.memo(function ColumnTickets (props) {
               ticketId={ticket.id}
               isDragging={snapshot.isDragging}
               setViewMode={setViewMode}
+              setOpen={setOpen}
 						/>
           </div>}
       </Draggable>
