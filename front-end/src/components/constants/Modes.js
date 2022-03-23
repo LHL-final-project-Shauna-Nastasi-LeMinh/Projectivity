@@ -1,9 +1,15 @@
-export const LANDING = 'Landing'
-export const LOGIN = 'Login'
-export const REGISTER = 'Register'
-export const ABOUT = 'About'
-export const NEW_PROJECT_FORM = 'New Project Form'
-export const NEW_TICKET_FORM = 'NewTicketForm'
-export const PROJECT_VIEW = 'Project View'
-export const CONFIRM_DELETE_PROJECT = 'Confirm Delete Project'
-export const VIEW_DASH = 'View Dashboard'
+// forms
+export const LOGIN_FORM = true
+export const REGISTER_FORM = true
+export const NEW_PROJECT_FORM = true
+export const NEW_TICKET_FORM = true
+export const NEW_COLUMN_FORM = true
+export const DELETE_PROJECT_FORM = true
+export const DELETE_TICKET_FORM = true
+export const DELETE_COLUMN_FORM = true
+
+// views
+export const ABOUT_VIEW = true
+export const PROJECT_VIEW = true
+export const DASH_VIEW = true
+export const LANDING_VIEW = true

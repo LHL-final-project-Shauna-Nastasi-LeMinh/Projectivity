@@ -3,7 +3,12 @@ import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { LANDING, LOGIN, REGISTER, ABOUT } from './constants/Modes'
+import {
+	LANDING_VIEW,
+	LOGIN_FORM,
+	REGISTER_FORM,
+	ABOUT_VIEW
+} from './constants/Modes'
 import Menu from '@mui/material/Menu'
 import IconButton from '@mui/material/IconButton'
 import Avatar from '@mui/material/Avatar'
@@ -14,9 +19,9 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import Typography from '@mui/material/Typography'
 
 const page_strings = ['About', 'Login', 'Register']
-const page_views = [ABOUT, LOGIN, REGISTER]
+const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
-const setting_views = [LANDING, LANDING, LANDING, LANDING]
+const setting_views = [LANDING_VIEW, LANDING_VIEW, LANDING_VIEW, LANDING_VIEW]
 
 function LinkTab (props) {
   return (
@@ -38,8 +43,8 @@ export default function NavbarMenu (props) {
 		setUser,
 		cookies,
 		removeCookie,
-		open,
-		setOpen
+		modals,
+		openModals
 	} = props
   const [email, setEmail] = useState(null)
   const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -56,8 +61,7 @@ export default function NavbarMenu (props) {
 				.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
 				.then(res => {
   setUser(null)
-  setOpen(false)
-  setMode(LANDING)
+  setMode(LANDING_VIEW)
   removeCookie('user')
 })
 				.catch(err => {
@@ -92,14 +96,14 @@ export default function NavbarMenu (props) {
 				>
         <Button
           key='about'
-          onClick={() => setMode(ABOUT)}
+          onClick={() => setMode(ABOUT_VIEW)}
           sx={{ color: 'white', display: 'block' }}
 					>
 						About
 					</Button>
         <Button
           key='login'
-          onClick={() => setOpen(LOGIN)}
+          onClick={openModals('loginForm')}
           sx={{ color: 'white', display: 'block' }}
 					>
 						Login
@@ -107,7 +111,7 @@ export default function NavbarMenu (props) {
         <Button
           key='register'
           sx={{ color: 'white', display: 'block' }}
-          onClick={() => setOpen(REGISTER)}
+          onClick={openModals('registerForm')}
 					>
 						Register
 					</Button>

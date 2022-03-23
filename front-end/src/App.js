@@ -5,20 +5,47 @@ import Header from './components/Header'
 import Main from './components/Main'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import { LANDING } from './components/constants/Modes'
 import { ThemeProvider } from '@mui/material/styles'
 import { theme } from './Theme'
+import {
+	LANDING_VIEW,
+	LOGIN_FORM,
+	REGISTER_FORM,
+	ABOUT_VIEW,
+	NEW_PROJECT_FORM,
+	NEW_TICKET_FORM,
+	PROJECT_VIEW,
+	DELETE_PROJECT_FORM,
+	DASH_VIEW,
+	DELETE_TICKET_FORM,
+	NEW_COLUMN_FORM
+} from './components/constants/Modes'
 
 const App = () => {
-  const [mode, setMode] = useState(LANDING)
+  const [mode, setMode] = useState(LANDING_VIEW)
   const [user, setUser] = useState(null)
   const [cookies, setCookie, removeCookie] = useCookies(['user'])
   const [currentProject, setCurrentProject] = useState()
   const [currentColumn, setCurrentColumn] = useState('')
 
 	// MODAL STATE
-  const [open, setOpen] = useState()
-  console.log(open)
+  const [modals, setModals] = useState({
+    loginForm: false,
+    registerForm: false,
+    newProjectForm: false,
+    newTicketForm: false,
+    newColumnForm: false,
+    deleteProjectForm: false,
+    deleteTicketForm: false
+  })
+
+  const openModals = prop => event => {
+    setModals({ ...modals, [prop]: true })
+  }
+
+  const closeModals = prop => event => {
+    setModals({ ...modals, [prop]: false })
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -39,8 +66,8 @@ const App = () => {
             setUser={setUser}
             cookies={cookies}
             removeCookie={removeCookie}
-            open={open}
-            setOpen={setOpen}
+            modals={modals}
+            openModals={openModals}
 					/>
         </Box>
         <Box
@@ -62,8 +89,9 @@ const App = () => {
             setCurrentProject={setCurrentProject}
             currentColumn={currentColumn}
             setCurrentColumn={setCurrentColumn}
-            open={open}
-            setOpen={setOpen}
+            modals={modals}
+            openModals={openModals}
+            closeModals={closeModals}
 					/>
         </Box>
       </Container>

@@ -12,32 +12,43 @@ import {
 import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
-export default function RegistrationForm (props) {
-  const { setViewMode, user, open, setOpen } = props
+export default function DeleteProjectForm (props) {
+  const {
+		currentProject,
+		data,
+		setViewMode,
+		user,
+		setUser,
+		setCookie,
+		open,
+		setOpen
+	} = props
   const [values, setValues] = useState({
     message: '',
-    name: undefined,
-    description: undefined
+    confirm: undefined
   })
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }
 
-  const createNewProject = event => {
-    axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', {
-  name: values.name,
-  description: values.description,
-  employee_id: user.id
-})
-			.then(res => {
+  const delete_confirmed = event => {
+    if (values.confirm === 'DELETE') {
+      axios
+				.delete(
+					process.env.REACT_APP_BACKEND_URL + `/projects/${data.id}/delete`,
+        {
+          project_id: data.id
+        }
+				)
+				.then(res => {
   setOpen(false)
 })
-			.catch(function (error) {
+				.catch(function (error) {
   console.log(error.message)
   setValues({ ...values, message: 'Form invalid' })
 })
+    }
   }
 
   const style = {
@@ -53,7 +64,7 @@ export default function RegistrationForm (props) {
 
   return (
     <Modal
-      open={open.newProjectForm}
+      open={open.deleteProjectForm}
       onClose={() => setOpen(false)}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
@@ -116,7 +127,7 @@ export default function RegistrationForm (props) {
             color='success'
             size='large'
             variant='contained'
-            onClick={createNewProject}
+            onClick={delete_confirmed}
 					>
 						Create Ticket
 					</Button>

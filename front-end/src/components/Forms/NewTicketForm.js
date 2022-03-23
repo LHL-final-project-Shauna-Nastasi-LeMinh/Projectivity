@@ -1,36 +1,35 @@
 import React, { useState } from 'react'
-import Button from '@mui/material/Button'
-import Modal from '@mui/material/Modal'
 import axios from 'axios'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
-import Input from '@mui/material/Input'
-import InputLabel from '@mui/material/InputLabel'
+import {
+	Button,
+	Modal,
+	Typography,
+	Box,
+	TextField,
+	Divider,
+	Paper
+} from '@mui/material'
+import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
-import Card from '@mui/material/Card'
 
 export default function NewTicketForm (props) {
-  const [message, setMessage] = useState('')
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
   const { user, setViewMode, currentColumn, open, setOpen } = props
+  const [values, setValues] = useState({
+    message: '',
+    title: undefined,
+    description: undefined
+  })
 
-  const handleTitleChange = event => {
-    setTitle(event.target.value)
-  }
-
-  const handleDescriptionChange = event => {
-    setDescription(event.target.value)
+  const handleChange = prop => event => {
+    setValues({ ...values, [prop]: event.target.value })
   }
 
   const onAdd = event => {
 		// add new ticket to db
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
-  title: title,
-  description: description,
+  title: values.title,
+  description: values.description,
   created_by: user.id,
   column_id: currentColumn
 })
@@ -39,7 +38,7 @@ export default function NewTicketForm (props) {
 })
 			.catch(function (error) {
   console.log(error.message)
-  setMessage('Failed to create new ticket')
+  setValues({ ...values, message: 'Form invalid' })
 })
   }
 
@@ -48,70 +47,92 @@ export default function NewTicketForm (props) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'palette.primary.main',
-    border: '2px solid palette.secondary.main',
-    boxShadow: 24,
-    p: 4
+    width: 'fit-content',
+    height: 'fit-content',
+    backgroundColor: 'primary.main',
+    boxShadow: 24
   }
 
   return (
     <Modal
-      open={open}
+      open={open.newTicketForm}
       onClose={() => setOpen(false)}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
-      <Card sx={style}>
-        <FormControl>
-          <Box
-            component='form'
-            sx={{
-              '& .MuiTextField-root': { m: 1, width: '25ch' }
-            }}
-            noValidate
-            autoComplete='off'
-					>
-            <Typography variant='h4'>Create New Ticket</Typography>
-            <Typography variant='h6'>
-							Please enter your ticket details below
-						</Typography>
-            <Typography variant='h6' sx={{ color: 'palette.error.main' }}>
-              {message}
-            </Typography>
-            <InputLabel htmlFor='component-error'>Ticket Title</InputLabel>
-            <Input
-              id='component-title-error'
-              value={title}
-              onChange={handleTitleChange}
-              aria-describedby='component-title-error-text'
+      <Paper sx={style}>
+        <Box
+          sx={{
+            backgroundColor: 'primary.main',
+            color: 'background.default',
+            m: 2
+          }}
+				>
+          <Typography variant='h4' align='center'>
+            <AddBox color='secondary' fontSize='large' />
+          </Typography>
+          <Typography variant='h4' align='center'>
+						Create A New Ticket
+					</Typography>
+        </Box>
+
+        <Divider />
+
+        <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
+          <Box sx={{ display: 'flex' }}>
+            <TextField
+              sx={{ m: 2 }}
+              label='Ticket Title'
+              value={values.title}
+              type='text'
+              onChange={handleChange('title')}
+              helperText={values.title === '' && 'Required field'}
+              error={values.title === ''}
+              required
 						/>
-            <FormHelperText id='component-title-error-text'>
-							Error
-						</FormHelperText>
-            <InputLabel htmlFor='component-error'>
-							Ticket Description
-						</InputLabel>
-            <Input
-              id='component-description-error'
-              multiline
-              rows={2}
-              value={description}
-              onChange={handleDescriptionChange}
-              aria-describedby='component-description-error-text'
+            <TextField
+              sx={{ m: 2 }}
+              label='Ticket Details'
+              value={values.description}
+              type='text'
+              onChange={handleChange('description')}
+              helperText={values.description === '' && 'Required field'}
+              error={values.description === ''}
+              required
 						/>
-            <FormHelperText id='component-description-error-text'>
-							Error
-						</FormHelperText>
-            <Button variant='outlined' onClick={onAdd}>
-							Create Project
-						</Button>
-            <Button variant='outlined' onClick={() => setOpen(false)}>
-							Cancel
-						</Button>
           </Box>
-        </FormControl>
-      </Card>
+        </Box>
+
+        <Divider />
+
+        <Box
+          sx={{
+            display: 'flex',
+            backgroundColor: 'primary.main',
+            color: 'background.default',
+            my: 3
+          }}
+				>
+          <Button
+            sx={{ mx: 2, width: '100%' }}
+            color='success'
+            size='large'
+            variant='contained'
+            onClick={onAdd}
+					>
+						Create Ticket
+					</Button>
+          <Button
+            sx={{ mx: 2, width: '100%' }}
+            color='secondary'
+            size='large'
+            variant='contained'
+            onClick={() => setOpen(false)}
+					>
+						Cancel
+					</Button>
+        </Box>
+      </Paper>
     </Modal>
   )
 }
