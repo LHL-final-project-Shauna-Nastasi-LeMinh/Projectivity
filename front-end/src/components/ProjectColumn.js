@@ -202,8 +202,8 @@ export default function ProjectColumn (props) {
                   transition: 'background-color 1s ease'
                 }}
 							>
-                <ColumnTickets tickets={tickets} setViewMode={setViewMode} setOpen={setOpen} currentTicket={currentTicket}
-              setCurrentTicket={setCurrentTicket}/>
+                <ColumnTickets tickets={tickets} setViewMode={setViewMode} setOpen={setOpen} currentTicket={currentTicket} open={open}
+              setCurrentTicket={setCurrentTicket} setTickets={setTickets}/>
                 {provided.placeholder}
               </List>}
           </Droppable>
@@ -222,7 +222,7 @@ export default function ProjectColumn (props) {
 
 // React.memo(function ColumnTickets(props)
 const ColumnTickets = React.memo(function ColumnTickets (props) {
-  const { tickets, setViewMode, setOpen, currentTicket, setCurrentTicket} = props
+  const { tickets, setViewMode, setOpen, currentTicket, setCurrentTicket, setTickets, open} = props
   return tickets.map((ticket, index) => {
     return (
       <Draggable
@@ -241,9 +241,12 @@ const ColumnTickets = React.memo(function ColumnTickets (props) {
               ticketId={ticket.id}
               isDragging={snapshot.isDragging}
               setViewMode={setViewMode}
+              open={open}
               setOpen={setOpen}
               currentTicket={currentTicket}
               setCurrentTicket={setCurrentTicket}
+              tickets={tickets}
+              setTickets={setTickets}
 						/>
           </div>}
       </Draggable>

@@ -97,14 +97,7 @@ export default function DashboardProject (props) {
           open={open}
           setOpen={setOpen}
 					/>}
-          {open === REMOVE_TICKET &&
-        <RemoveTicket
-          user={user}
-          currentTicket={currentTicket}
-          setViewMode={setViewMode}
-          open={open}
-          setOpen={setOpen}
-					/>}
+         
         {viewMode === PROJECT_VIEW &&
         <ProjectView
           user={user}
