@@ -7,7 +7,7 @@ import {
 	LOGIN,
 	REGISTER,
 	ABOUT,
-	NEW_TICKET_FORM,
+	ADD_TICKET,
 	NEW_PROJECT_FORM,
 	PROJECT_VIEW
 } from './constants/Modes'
@@ -63,7 +63,7 @@ export default function Main (props) {
         open={open}
         setOpen={setOpen}
 				/>}
-      {open === NEW_TICKET_FORM && <NewTicketForm />}
+      {open === ADD_TICKET && <NewTicketForm />}
       {user &&
       <LandingPage
         mode={mode}
