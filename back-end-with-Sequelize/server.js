@@ -1,19 +1,19 @@
-const sequelizeModels = require('./models');
-const cors = require("cors");
-const express = require('express');
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
-require('dotenv').config();
+const sequelizeModels = require('./models')
+const cors = require('cors')
+const express = require('express')
+const morgan = require('morgan')
+const bodyParser = require('body-parser')
+require('dotenv').config()
 
 const Pusher = require('pusher')
 const PORT = process.env.PORT || 8080
 const app = express()
 app.use(express.json())
 app.use(cors())
-app.use(morgan("dev"));
-app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(morgan('dev'))
+app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static('public'))
 
 // Pusher WebSocket server
 const pusher = new Pusher({
@@ -31,6 +31,8 @@ const roleRoutes = require('./routes/roles')
 const projectRoutes = require('./routes/projects')
 const ticketRoutes = require('./routes/tickets')
 const columnRoutes = require('./routes/columns')
+const getGenericData = require('./routes/getGenericData')
+const getUserData = require('./routes/getUserData')
 
 // pass the whole models, as well pusher server, to routes.
 // Consider refactor to pass individual model object only, e.g. sequelizeModels.USER if only access 1 table
@@ -44,6 +46,8 @@ app.use('/roles', roleRoutes(sequelizeModels))
 app.use('/projects', projectRoutes(sequelizeModels))
 app.use('/tickets', ticketRoutes(sequelizeModels))
 app.use('/columns', columnRoutes(sequelizeModels))
+app.use('/getGenericData', getGenericData(sequelizeModels))
+app.use('/getUserData', getUserData(sequelizeModels))
 
 app.get('/', (req, res) => {
   res.render('index')

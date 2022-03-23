@@ -1,53 +1,26 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
-import Tab from '@mui/material/Tab'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useState, useEffect } from 'react'
 import {
-	LANDING_VIEW,
-	LOGIN_FORM,
-	REGISTER_FORM,
-	ABOUT_VIEW
-} from './constants/Modes'
-import Menu from '@mui/material/Menu'
-import IconButton from '@mui/material/IconButton'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import MenuItem from '@mui/material/MenuItem'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import Typography from '@mui/material/Typography'
+	Box,
+	Tab,
+	Menu,
+	IconButton,
+	Avatar,
+	Button,
+	Tooltip,
+	MenuItem,
+	ButtonGroup,
+	Typography
+} from '@mui/material'
 
-const page_strings = ['About', 'Login', 'Register']
-const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM]
+const page_strings = ['About', 'Login', 'Sign Up']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
-const setting_views = [LANDING_VIEW, LANDING_VIEW, LANDING_VIEW, LANDING_VIEW]
-
-function LinkTab (props) {
-  return (
-    <Tab
-      component='a'
-      onClick={event => {
-        event.preventDefault()
-      }}
-      {...props}
-		/>
-  )
-}
+const setting_views = ['aboutView', 'aboutView', 'aboutView', 'aboutView']
 
 export default function NavbarMenu (props) {
-  const {
-		mode,
-		setMode,
-		user,
-		setUser,
-		cookies,
-		removeCookie,
-		modals,
-		openModals
-	} = props
-  const [email, setEmail] = useState(null)
-  const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const { state, setState } = props
+
+	// const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
   const handleOpenUserMenu = event => {
@@ -56,54 +29,44 @@ export default function NavbarMenu (props) {
 
   function handleMenuClick (string, newMode) {
     if (string === 'Logout') {
-			// a axios call to clear cookie session in server side too
-      axios
-				.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
-				.then(res => {
-  setUser(null)
-  setMode(LANDING_VIEW)
-  removeCookie('user')
-})
-				.catch(err => {
-  console.log(err)
-})
+      state.setCurrentUser(null)
+      state.setMode('landingView')
+      state.setCurrentCookies(null)
     }
 
-    if (string === 'Login' || string === 'Register') {
-			// handleOpenLogin
+    if (string === 'Login') {
+      state.setModal('state.modals.loginForm', true)
     }
 
-    console.log('string is:', string)
-    setMode(newMode)
+    if (string === 'Register') {
+      state.setModal('state.modals.registerForm', true)
+    }
+
+    setState({
+      ...state,
+      mode: setState({ ...state, [state.mode]: newMode })
+    })
+
     setAnchorElUser(null)
   }
 
-  useEffect(
-		() => {
-  if (user) {
-    setEmail(user.email)
-  }
-},
-		[user]
-	)
-
   return (
     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-      {!user &&
+      {!state.currentUser &&
       <ButtonGroup
         orientiation={{ vertical: 'top', horizontal: 'right' }}
         variant='text'
 				>
         <Button
           key='about'
-          onClick={() => setMode(ABOUT_VIEW)}
+          onClick={state.setMode('aboutView')}
           sx={{ color: 'white', display: 'block' }}
 					>
 						About
 					</Button>
         <Button
           key='login'
-          onClick={openModals('loginForm')}
+          onClick={state.setModal('loginForm', true)}
           sx={{ color: 'white', display: 'block' }}
 					>
 						Login
@@ -111,12 +74,12 @@ export default function NavbarMenu (props) {
         <Button
           key='register'
           sx={{ color: 'white', display: 'block' }}
-          onClick={openModals('registerForm')}
+          onClick={state.setModal('registerForm', true)}
 					>
 						Register
 					</Button>
       </ButtonGroup>}
-      {user &&
+      {state.currentUser &&
       <Box>
         <Box
           sx={{
@@ -132,7 +95,7 @@ export default function NavbarMenu (props) {
             }}
 						>
             <Typography variant='h6'>
-              {email}
+              {state.currentUser.email}
             </Typography>
           </Box>
           <Tooltip title='Open settings'>
