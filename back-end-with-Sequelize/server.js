@@ -1,19 +1,19 @@
-const sequelizeModels = require('./models')
-const cors = require('cors')
-const express = require('express')
-const morgan = require('morgan')
-const bodyParser = require('body-parser')
-require('dotenv').config()
+const sequelizeModels = require('./models');
+const cors = require("cors");
+const express = require('express');
+const morgan = require("morgan");
+const bodyParser = require("body-parser");
+require('dotenv').config();
 
 const Pusher = require('pusher')
 const PORT = process.env.PORT || 8080
 const app = express()
 app.use(express.json())
 app.use(cors())
-app.use(morgan('dev'))
-app.use(express.urlencoded({ extended: true }))
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.static('public'))
+app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 // Pusher WebSocket server
 const pusher = new Pusher({

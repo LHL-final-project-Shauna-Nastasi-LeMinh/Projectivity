@@ -7,6 +7,17 @@ import Container from '@mui/material/Container'
 import NavbarMenu from './NavbarMenu'
 
 export default function Header (props) {
+  const {
+		mode,
+		setMode,
+		user,
+		setUser,
+		cookies,
+		removeCookie,
+		modals,
+		openModals
+	} = props
+
   return (
     <AppBar position='static'>
       <Container maxWidth='100%'>
@@ -20,7 +31,16 @@ export default function Header (props) {
 						PRODUCTIVITY MANAGER APP
 					</Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <NavbarMenu state={props.state} />
+          <NavbarMenu
+            mode={mode}
+            setMode={setMode}
+            user={user}
+            setUser={setUser}
+            cookies={cookies}
+            removeCookie={removeCookie}
+            modals={modals}
+            openModals={openModals}
+					/>
         </Toolbar>
       </Container>
     </AppBar>

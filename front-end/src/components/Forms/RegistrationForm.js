@@ -16,7 +16,7 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function RegistrationForm (props) {
-  const { state } = props
+  const { setUser, setCookie, modals, closeModals } = props
 
   const [roles, setRoles] = useState([])
   const [role, setRole] = useState()
@@ -70,17 +70,18 @@ export default function RegistrationForm (props) {
   const register = event => {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/register', {
-  first_name: state.formData.firstName,
-  last_name: state.formData.lastName,
-  email: state.formData.email,
-  password: state.formData.password,
-  phone: state.formData.phone,
-  role_id: state.formData.roleInput
+  first_name: values.firstName,
+  last_name: values.lastName,
+  email: values.email,
+  password: values.password,
+  phone: values.phone,
+  role_id: values.roleInput
 })
 			.then(res => {
-  state.setCurrentUser(res.data)
-  state.setCurrentCookies('user', res.data, { path: '/' })
-  state.closeModal('registerForm')
+  setUser(res.data)
+  setCookie('user', res.data, {
+    path: '/'
+  })
 })
 			.catch(function (error) {
   console.log(error.message)
@@ -101,8 +102,8 @@ export default function RegistrationForm (props) {
 
   return (
     <Modal
-      open={state.modals.registerForm}
-      onClose={state.closeModal('registerForm')}
+      open={modals.registerForm}
+      onClose={closeModals('registerForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -227,7 +228,7 @@ export default function RegistrationForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={state.closeModal('registerForm')}
+            onClick={closeModals('registerForm')}
 					>
 						Cancel
 					</Button>

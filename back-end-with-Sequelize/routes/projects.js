@@ -104,7 +104,10 @@ module.exports = sequelizeModels => {
 
       const column_ids = columns_data.map(column => column.dataValues.id)
 
+      console.log(column_ids)
+
       for (const column of column_ids) {
+        console.log(column)
         Tickets.destroy({
           where: {
             column_id: column
