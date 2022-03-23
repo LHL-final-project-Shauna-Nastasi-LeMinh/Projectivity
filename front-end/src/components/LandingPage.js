@@ -9,7 +9,9 @@ import {
 	CONFIRM_DELETE_PROJECT,
 	NEW_PROJECT_FORM,
 	PROJECT_VIEW,
-	NEW_TICKET_FORM
+	ADD_TICKET,
+  EDIT_TICKET,
+  SHOW_TICKET_DETAILS
 } from './constants/Modes'
 
 export default function DashboardProject (props) {
@@ -74,7 +76,15 @@ export default function DashboardProject (props) {
           open={open}
           setOpen={setOpen}
 					/>}
-        {open === NEW_TICKET_FORM &&
+        {open === ADD_TICKET &&
+        <NewTicketForm
+          user={user}
+          currentColumn={currentColumn}
+          setViewMode={setViewMode}
+          open={open}
+          setOpen={setOpen}
+					/>}
+          {open === EDIT_TICKET &&
         <NewTicketForm
           user={user}
           currentColumn={currentColumn}
