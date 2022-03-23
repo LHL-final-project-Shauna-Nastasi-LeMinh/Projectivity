@@ -12,7 +12,7 @@ import Fade from '@mui/material/Fade';
 import { SHOW_TICKET_DETAILS, EDIT_TICKET } from './constants/Modes'
 
 export default function ProjectTicket (props) {
-  const { title, value, ticketId, setViewMode } = props
+  const { title, value, ticketId, setViewMode, setOpen } = props
   const [checked, setChecked] = React.useState([1])
 
   // handle opening and closing of MoreVertIcon
