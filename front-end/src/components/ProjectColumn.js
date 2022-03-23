@@ -19,7 +19,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { NEW_TICKET_FORM } from './constants/Modes'
+import { ADD_TICKET } from './constants/Modes'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
 
@@ -107,7 +107,7 @@ export default function ProjectColumn (props) {
 
   const createNewTicket = () => {
     setCurrentColumn(column.id)
-    setViewMode(NEW_TICKET_FORM)
+    setOpen(ADD_TICKET)
   }
 
   const setTextValue = function (event) {
@@ -208,7 +208,7 @@ export default function ProjectColumn (props) {
             <ListItemButton onClick={() => handleClick()}>
               <ListItemText
                 primary='Create New Ticket'
-                onClick={() => setOpen(NEW_TICKET_FORM)}
+                onClick={() => createNewTicket()}
 							/>
             </ListItemButton>
           </ListItem>
