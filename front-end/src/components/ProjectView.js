@@ -36,7 +36,30 @@ export default function ProjectView (props) {
       const newColumns = JSON.parse(JSON.stringify(columns)) // deep clone
       const [movingColumn] = newColumns.splice(source.index, 1)
       newColumns.splice(destination.index, 0, movingColumn)
+      console.log("source:")
+      console.log(source)
+      console.log("destination:")
+      console.log(destination)
       setColumns(newColumns)
+      
+      // persist new columns ordering into db
+      const orderingObject = {}
+      newColumns.forEach((col, index) => {
+        orderingObject[col.id] = index;
+      })
+        
+      axios.post(process.env.REACT_APP_BACKEND_URL + '/columns/reodering', 
+        JSON.stringify(orderingObject), 
+        { headers: {
+          'Content-Type': 'application/json'
+          }
+        })
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch(function (error) {
+          console.log(error.message)
+        })
     } else if (type === 'ticket') {
 			// moving ticket
       if (destination.droppableId === source.droppableId) {

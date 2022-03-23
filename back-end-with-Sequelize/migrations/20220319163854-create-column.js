@@ -16,6 +16,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
+      ordering_index: {
+        allowNull: false,
+        autoIncrement: true,
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
