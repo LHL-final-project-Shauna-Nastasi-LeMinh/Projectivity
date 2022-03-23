@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {useState} from 'react'
+import { useState } from 'react'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
@@ -44,7 +44,7 @@ export default function ProjectTicket (props) {
     setAnchorEl(null);
   };
 
-  // 
+	//
 
   const handleToggle = value => () => {
     const currentIndex = checked.indexOf(value)
@@ -59,20 +59,24 @@ export default function ProjectTicket (props) {
     setChecked(newChecked)
   }
 
-  const clickHandler = function() {
-    console.log(ticketId); 
+  const clickHandler = function () {
+    console.log(ticketId)
     if (!ticketId) {
-      // CREATE NEW TICKET GOES HERE
+			// CREATE NEW TICKET GOES HERE
     } else {
-      // VIEW / UPDATE TICKET DETAILS GOES HERE
+			// VIEW / UPDATE TICKET DETAILS GOES HERE
     }
-
   }
 
   return (
-    <ListItem sx={{ padding: '0.1rem' }}
-    >
-      <ListItemButton sx={{ backgroundColor: props.isDragging ? 'lightgreen' : 'white', transition: 'background-color 1s ease'}} onCLick={evt => handleClick(evt)}>
+    <ListItem sx={{ padding: '0.1rem' }}>
+      <ListItemButton
+        sx={{
+          backgroundColor: props.isDragging ? 'lightgreen' : 'white',
+          transition: 'background-color 1s ease'
+        }}
+        onClick={evt => handleClick(evt)}
+			>
         <ListItemText primary={title} />
         <div>
         <IconButton
@@ -114,6 +118,5 @@ export default function ProjectTicket (props) {
 
       </ListItemButton>
     </ListItem>
-    
   )
 }

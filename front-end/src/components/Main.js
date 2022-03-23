@@ -3,11 +3,11 @@ import LoginForm from './Forms/LoginForm'
 import RegistrationForm from './Forms/RegistrationForm'
 import LandingPage from './LandingPage'
 import {
-	LANDING,
-	LOGIN,
-	REGISTER,
-	ABOUT,
-	ADD_TICKET,
+	LANDING_VIEW,
+	LOGIN_FORM,
+	REGISTER_FORM,
+	ABOUT_VIEW,
+	NEW_TICKET_FORM,
 	NEW_PROJECT_FORM,
 	PROJECT_VIEW
 } from './constants/Modes'
@@ -30,42 +30,38 @@ export default function Main (props) {
 		setCurrentProject,
 		currentColumn,
 		setCurrentColumn,
-		open,
-		setOpen,
-    currentTicket,
-    setCurrentTicket
+		modals,
+		openModals,
+		closeModals
 	} = props
-
-  console.log('inside main', open)
-  console.log('inside main', user)
 
   return (
     <Paper>
-      {mode === ABOUT && <AboutPage />}
-      {open === LOGIN &&
+      {mode === ABOUT_VIEW && <AboutPage />}
+      {modals.loginForm &&
 				!user &&
 				<LoginForm
   setUser={setUser}
   setCookie={setCookie}
-  open={open}
-  setOpen={setOpen}
+  modals={modals}
+  closeModals={closeModals}
 				/>}
-      {open === REGISTER &&
+      {modals.registerForm === REGISTER_FORM &&
 				!user &&
 				<RegistrationForm
   setUser={setUser}
   setCookie={setCookie}
-  open={open}
-  setOpen={setOpen}
+  modals={modals}
+  closeModals={closeModals}
 				/>}
-      {open === NEW_PROJECT_FORM &&
+      {modals.newProjectForm &&
       <NewProjectForm
         user={user}
         setViewMode={setViewMode}
-        open={open}
-        setOpen={setOpen}
+        modals={modals}
+        closeModals={closeModals}
 				/>}
-      
+      {modals.newTicketForm && <NewTicketForm closeModals={closeModals} />}
       {user &&
       <LandingPage
         mode={mode}
@@ -76,14 +72,9 @@ export default function Main (props) {
         setCurrentProject={setCurrentProject}
         currentColumn={currentColumn}
         setCurrentColumn={setCurrentColumn}
-        currentTicket={currentTicket}
-        setCurrentTicket={setCurrentTicket}
-        open={open}
-        setOpen={setOpen}
         viewMode={viewMode}
         setViewMode={setViewMode}
 				/>}
-        
     </Paper>
   )
 }

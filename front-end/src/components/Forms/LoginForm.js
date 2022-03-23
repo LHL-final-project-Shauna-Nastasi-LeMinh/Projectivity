@@ -1,25 +1,24 @@
 import React, { useState } from 'react'
-import Button from '@mui/material/Button'
-import Modal from '@mui/material/Modal'
 import axios from 'axios'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import TextField from '@mui/material/TextField'
-import HowToRegIcon from '@mui/icons-material/HowToReg'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import InputAdornment from '@mui/material/InputAdornment'
-import IconButton from '@mui/material/IconButton'
-import Divider from '@mui/material/Divider'
-import Paper from '@mui/material/Paper'
+import {
+	Button,
+	Modal,
+	Typography,
+	Box,
+	TextField,
+	InputAdornment,
+	IconButton,
+	Divider,
+	Paper
+} from '@mui/material'
+import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function LoginForm (props) {
-  const { setUser, setCookie, open, setOpen } = props
-  const [values, setValues] = React.useState({
+  const { setUser, setCookie, modals, closeModals } = props
+  const [values, setValues] = useState({
     message: '',
-    email: '',
-    password: '',
+    email: null,
+    password: null,
     showPassword: false
   })
 
@@ -52,7 +51,7 @@ export default function LoginForm (props) {
 })
 			.catch(function (error) {
   console.log(error.message)
-  setValues({ ...values, [values.message]: 'Login invalid' })
+  setValues({ ...values, message: 'Form invalid' })
 })
   }
 
@@ -69,8 +68,8 @@ export default function LoginForm (props) {
 
   return (
     <Modal
-      open={open}
-      onClose={() => setOpen(false)}
+      open={modals.loginForm}
+      onClose={closeModals('loginForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -83,7 +82,7 @@ export default function LoginForm (props) {
           }}
 				>
           <Typography variant='h4' align='center'>
-            <HowToRegIcon color='secondary' fontSize='large' />
+            <HowToReg color='secondary' fontSize='large' />
           </Typography>
           <Typography variant='h4' align='center'>
 						Login
@@ -92,44 +91,40 @@ export default function LoginForm (props) {
 
         <Divider />
 
-        {/* <FormControl
-          component='form'
-          sx={{
-            '& .MuiTextField-root': { m: 2, width: '25ch' },
-            backgroundColor: 'background.default'
-          }}
-				> */}
-        <Box sx={{ display: 'flex' }}>
-          <TextField
-            label='Email Address'
-            value={values.email}
-            type='email'
-            onChange={handleChange('email')}
-            helperText=''
-            required
-					/>
-          <TextField
-            label='Password'
-            value={values.password}
-            type='password'
-            onChange={handleChange('password')}
-            helperText=''
-            endAdornment={
-              <InputAdornment position='end'>
-                <IconButton
-                  aria-label='toggle password visibility'
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-								>
-                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-						}
-            required
-					/>
-          <Typography variant='h6' sx={{ color: 'palette.error.main' }}>
-            {values.message}
-          </Typography>
+        <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
+          <Box sx={{ display: 'flex' }}>
+            <TextField
+              sx={{ m: 2 }}
+              label='Email Address'
+              value={values.email}
+              type='email'
+              onChange={handleChange('email')}
+              helperText={values.email === '' && 'Required field'}
+              error={values.email === ''}
+              required
+						/>
+            <TextField
+              sx={{ m: 2 }}
+              label='Password'
+              value={values.password}
+              type='password'
+              onChange={handleChange('password')}
+              helperText={values.password === '' && 'Required field'}
+              error={values.password === ''}
+              endadornment={
+                <InputAdornment position='end'>
+                  <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+									>
+                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+							}
+              required
+						/>
+          </Box>
         </Box>
 
         <Divider />
@@ -156,12 +151,11 @@ export default function LoginForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={() => setOpen(false)}
+            onClick={closeModals('loginForm')}
 					>
 						Cancel
 					</Button>
         </Box>
-        {/* </FormControl> */}
       </Paper>
     </Modal>
   )

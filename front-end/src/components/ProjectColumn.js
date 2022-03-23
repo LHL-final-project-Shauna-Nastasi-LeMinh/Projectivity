@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, forwardRef } from 'react'
 import axios from 'axios'
 import ProjectTicket from './ProjectTicket'
 import Box from '@mui/material/Box'
@@ -23,7 +23,7 @@ import { ADD_TICKET } from './constants/Modes'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
 
-const Transition = React.forwardRef(function Transition (props, ref) {
+const Transition = forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 
@@ -194,9 +194,9 @@ export default function ProjectColumn (props) {
               <List
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                isDraggingOver={snapshot.isDraggingOver}
+                isdraggingover={snapshot.isdraggingover}
                 sx={{
-                  backgroundColor: snapshot.isDraggingOver
+                  backgroundColor: snapshot.isdraggingover
 										? 'skyblue'
 										: 'inherit',
                   transition: 'background-color 1s ease'

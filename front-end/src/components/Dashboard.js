@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText'
 import DashboardItem from './DashboardItem'
 import {
 	NEW_PROJECT_FORM,
-	CONFIRM_DELETE_PROJECT,
+	DELETE_PROJECT_FORM,
 	PROJECT_VIEW
 } from './constants/Modes'
 

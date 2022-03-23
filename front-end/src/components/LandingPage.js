@@ -4,9 +4,9 @@ import ProjectView from './ProjectView'
 import Container from '@mui/material/Container'
 import NewProjectForm from './Forms/NewProjectForm'
 import NewTicketForm from './Forms/NewTicketForm'
-import ConfirmDeleteForm from './Forms/ConfirmDeleteForm'
+import DeleteProjectForm from './Forms/DeleteProjectForm'
 import {
-	CONFIRM_DELETE_PROJECT,
+	DELETE_PROJECT_FORM,
 	NEW_PROJECT_FORM,
 	PROJECT_VIEW,
 	ADD_TICKET,
@@ -72,8 +72,8 @@ export default function DashboardProject (props) {
           open={open}
           setOpen={setOpen}
 					/>}
-        {open === CONFIRM_DELETE_PROJECT &&
-        <ConfirmDeleteForm
+        {open === DELETE_PROJECT_FORM &&
+        <DeleteProjectForm
           data={data}
           currentProject={currentProject}
           setViewMode={setViewMode}
