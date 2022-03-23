@@ -9,6 +9,7 @@ import FormHelperText from '@mui/material/FormHelperText'
 import Input from '@mui/material/Input'
 import InputLabel from '@mui/material/InputLabel'
 import { PROJECT_VIEW } from '../constants/Modes'
+import Card from '@mui/material/Card'
 
 export default function NewTicketForm (props) {
   const [message, setMessage] = useState('')
@@ -42,6 +43,18 @@ export default function NewTicketForm (props) {
 })
   }
 
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'palette.primary.main',
+    border: '2px solid palette.secondary.main',
+    boxShadow: 24,
+    p: 4
+  }
+
   return (
     <Modal
       open={open}
@@ -49,50 +62,56 @@ export default function NewTicketForm (props) {
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
-      <FormControl>
-        <Box
-          component='form'
-          sx={{
-            '& .MuiTextField-root': { m: 1, width: '25ch' }
-          }}
-          noValidate
-          autoComplete='off'
-				>
-          <Typography variant='h4'>Create New Ticket</Typography>
-          <Typography variant='h6'>
-						Please enter your ticket details below
-					</Typography>
-          <Typography variant='h6' sx={{ color: 'palette.error.main' }}>
-            {message}
-          </Typography>
-          <InputLabel htmlFor='component-error'>Ticket Title</InputLabel>
-          <Input
-            id='component-title-error'
-            value={title}
-            onChange={handleTitleChange}
-            aria-describedby='component-title-error-text'
-					/>
-          <FormHelperText id='component-title-error-text'>Error</FormHelperText>
-          <InputLabel htmlFor='component-error'>Ticket Description</InputLabel>
-          <Input
-            id='component-description-error'
-            multiline
-            rows={2}
-            value={description}
-            onChange={handleDescriptionChange}
-            aria-describedby='component-description-error-text'
-					/>
-          <FormHelperText id='component-description-error-text'>
-						Error
-					</FormHelperText>
-          <Button variant='outlined' onClick={onAdd}>
-						Create Project
-					</Button>
-          <Button variant='outlined' onClick={() => setOpen(false)}>
-						Cancel
-					</Button>
-        </Box>
-      </FormControl>
+      <Card sx={style}>
+        <FormControl>
+          <Box
+            component='form'
+            sx={{
+              '& .MuiTextField-root': { m: 1, width: '25ch' }
+            }}
+            noValidate
+            autoComplete='off'
+					>
+            <Typography variant='h4'>Create New Ticket</Typography>
+            <Typography variant='h6'>
+							Please enter your ticket details below
+						</Typography>
+            <Typography variant='h6' sx={{ color: 'palette.error.main' }}>
+              {message}
+            </Typography>
+            <InputLabel htmlFor='component-error'>Ticket Title</InputLabel>
+            <Input
+              id='component-title-error'
+              value={title}
+              onChange={handleTitleChange}
+              aria-describedby='component-title-error-text'
+						/>
+            <FormHelperText id='component-title-error-text'>
+							Error
+						</FormHelperText>
+            <InputLabel htmlFor='component-error'>
+							Ticket Description
+						</InputLabel>
+            <Input
+              id='component-description-error'
+              multiline
+              rows={2}
+              value={description}
+              onChange={handleDescriptionChange}
+              aria-describedby='component-description-error-text'
+						/>
+            <FormHelperText id='component-description-error-text'>
+							Error
+						</FormHelperText>
+            <Button variant='outlined' onClick={onAdd}>
+							Create Project
+						</Button>
+            <Button variant='outlined' onClick={() => setOpen(false)}>
+							Cancel
+						</Button>
+          </Box>
+        </FormControl>
+      </Card>
     </Modal>
   )
 }

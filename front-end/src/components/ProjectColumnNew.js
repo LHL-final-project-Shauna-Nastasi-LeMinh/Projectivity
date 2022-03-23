@@ -11,11 +11,10 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import { Draggable } from 'react-beautiful-dnd'
 
 export default function ProjectColumnNew (props) {
-  const { name, createNewColumn} = props
+  const { name, createNewColumn, columnsCount} = props
   const [open, setOpen] = useState(false);
   const [newColumnName, setNewColumnName] = useState("");
 
@@ -39,31 +38,38 @@ export default function ProjectColumnNew (props) {
   }
 
   return (
-        <Box sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}>
-          <ListItem sx={{ padding: '0.1rem' }}> 
-            <ListItemButton onClick={openNewColumnDialog}>
-              <ListItemText primary={name} />
-            </ListItemButton>
-          </ListItem>
-          <Divider />
-          <Dialog open={open} onClose={cancel}>
-            <DialogContent>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="New Column Name"
-                fullWidth
-                variant="outlined"
-                onChange={setTextValue}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={cancel}>Cancel</Button>
-              <Button onClick={create}>Create</Button>
-            </DialogActions>
-          </Dialog>
-        </Box>
+    <Draggable draggableId={`newColumn`} index={columnsCount} isDragDisabled={true}>
+    {provided =>
+      <Box sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        ref={provided.innerRef}
+      >
+        <ListItem sx={{ padding: '0.1rem' }}> 
+          <ListItemButton onClick={openNewColumnDialog}>
+            <ListItemText primary={name} />
+          </ListItemButton>
+        </ListItem>
+        <Divider />
+        <Dialog open={open} onClose={cancel}>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="New Column Name"
+              fullWidth
+              variant="outlined"
+              onChange={setTextValue}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={cancel}>Cancel</Button>
+            <Button onClick={create}>Create</Button>
+          </DialogActions>
+        </Dialog>
+      </Box>}
+    </Draggable>
 
   )
 }

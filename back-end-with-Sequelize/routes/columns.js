@@ -35,6 +35,22 @@ module.exports = (sequelizeModels) => {
     }
   })
 
+  router.post('/reodering', async (req, res) => {
+    try {
+      for (const columnId in req.body) {
+        await Column.update(
+          { ordering_index: req.body[columnId] },
+          { where: { id: columnId } }
+        )
+
+      }
+      return res.json({message: "column reordered successfully"});
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
+  })
+
   router.delete('/:id', async (req, res) => {
     try {
       const {id} = req.body
@@ -50,3 +66,5 @@ module.exports = (sequelizeModels) => {
   })
   return router;
 };
+
+
