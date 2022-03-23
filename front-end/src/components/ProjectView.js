@@ -15,7 +15,9 @@ export default function ProjectView (props) {
 		setViewMode,
 		setCurrentColumn,
 		open,
-		setOpen
+		setOpen,
+    currentTicket, 
+    setCurrentTicket
 	} = props
   const [columns, setColumns] = useState([])
 
@@ -187,6 +189,8 @@ export default function ProjectView (props) {
       column={column}
       setViewMode={setViewMode}
       setCurrentColumn={setCurrentColumn}
+      currentTicket={currentTicket} 
+      setCurrentTicket={setCurrentTicket}
       colIndex={colIndex}
       open={open}
       setOpen={setOpen}

@@ -38,7 +38,9 @@ export default function ProjectColumn (props) {
 		setOpen,
 		deleteColumnFromProjectView,
 		changeColumnFromProjectView,
-		handleClick
+		handleClick,
+    currentTicket, 
+    setCurrentTicket
 	} = props
 
   const [tickets, setTickets] = useState([])
@@ -200,7 +202,8 @@ export default function ProjectColumn (props) {
                   transition: 'background-color 1s ease'
                 }}
 							>
-                <ColumnTickets tickets={tickets} setViewMode={setViewMode} setOpen={setOpen}/>
+                <ColumnTickets tickets={tickets} setViewMode={setViewMode} setOpen={setOpen} currentTicket={currentTicket}
+              setCurrentTicket={setCurrentTicket}/>
                 {provided.placeholder}
               </List>}
           </Droppable>
@@ -219,7 +222,7 @@ export default function ProjectColumn (props) {
 
 // React.memo(function ColumnTickets(props)
 const ColumnTickets = React.memo(function ColumnTickets (props) {
-  const { tickets, setViewMode, setOpen} = props
+  const { tickets, setViewMode, setOpen, currentTicket, setCurrentTicket} = props
   return tickets.map((ticket, index) => {
     return (
       <Draggable
@@ -239,6 +242,8 @@ const ColumnTickets = React.memo(function ColumnTickets (props) {
               isDragging={snapshot.isDragging}
               setViewMode={setViewMode}
               setOpen={setOpen}
+              currentTicket={currentTicket}
+              setCurrentTicket={setCurrentTicket}
 						/>
           </div>}
       </Draggable>

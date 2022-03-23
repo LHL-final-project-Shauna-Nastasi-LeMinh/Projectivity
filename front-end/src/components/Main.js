@@ -31,7 +31,9 @@ export default function Main (props) {
 		currentColumn,
 		setCurrentColumn,
 		open,
-		setOpen
+		setOpen,
+    currentTicket,
+    setCurrentTicket
 	} = props
 
   console.log('inside main', open)
@@ -74,6 +76,8 @@ export default function Main (props) {
         setCurrentProject={setCurrentProject}
         currentColumn={currentColumn}
         setCurrentColumn={setCurrentColumn}
+        currentTicket={currentTicket}
+        setCurrentTicket={setCurrentTicket}
         open={open}
         setOpen={setOpen}
         viewMode={viewMode}
