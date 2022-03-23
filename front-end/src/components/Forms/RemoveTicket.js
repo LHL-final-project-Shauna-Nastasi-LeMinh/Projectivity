@@ -48,17 +48,16 @@ export default function RemoveTicket (props) {
         onClose={handleClose}
         aria-describedby='alert-dialog-slide-description'>
 
-        <DialogTitle>Subscribe</DialogTitle>
+        <DialogTitle>Delete</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
+            Are you sure you want to delete this ticket?
           </DialogContentText>
          
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={onConfirmDelete}>Delete</Button>
+          <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
 
