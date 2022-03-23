@@ -1,84 +1,31 @@
-import React, { useState } from 'react'
+import React from 'react'
 import LoginForm from './Forms/LoginForm'
 import RegistrationForm from './Forms/RegistrationForm'
-import LandingPage from './LandingPage'
-import {
-	LANDING,
-	LOGIN,
-	REGISTER,
-	ABOUT,
-	NEW_TICKET_FORM,
-	NEW_PROJECT_FORM,
-	PROJECT_VIEW
-} from './constants/Modes'
-import AboutPage from './AboutPage'
-import Paper from '@mui/material/Paper'
-import Modal from '@mui/material/Modal'
 import NewProjectForm from './Forms/NewProjectForm'
 import NewTicketForm from './Forms/NewTicketForm'
+import LandingPage from './LandingPage'
+import AboutPage from './AboutPage'
+import Paper from '@mui/material/Paper'
 
 export default function Main (props) {
-  const [viewMode, setViewMode] = useState(PROJECT_VIEW)
-
-  const {
-		mode,
-		setMode,
-		user,
-		setUser,
-		setCookie,
-		currentProject,
-		setCurrentProject,
-		currentColumn,
-		setCurrentColumn,
-		open,
-		setOpen
-	} = props
-
-  console.log('inside main', open)
-  console.log('inside main', user)
+  const { state } = props
 
   return (
     <Paper>
-      {mode === ABOUT && <AboutPage />}
-      {open === LOGIN &&
-				!user &&
-				<LoginForm
-  setUser={setUser}
-  setCookie={setCookie}
-  open={open}
-  setOpen={setOpen}
-				/>}
-      {open === REGISTER &&
-				!user &&
-				<RegistrationForm
-  setUser={setUser}
-  setCookie={setCookie}
-  open={open}
-  setOpen={setOpen}
-				/>}
-      {open === NEW_PROJECT_FORM &&
-      <NewProjectForm
-        user={user}
-        setViewMode={setViewMode}
-        open={open}
-        setOpen={setOpen}
-				/>}
-      {open === NEW_TICKET_FORM && <NewTicketForm />}
-      {user &&
-      <LandingPage
-        mode={mode}
-        setMode={setMode}
-        user={user}
-        setUser={setUser}
-        currentProject={currentProject}
-        setCurrentProject={setCurrentProject}
-        currentColumn={currentColumn}
-        setCurrentColumn={setCurrentColumn}
-        open={open}
-        setOpen={setOpen}
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-				/>}
+      {state.modes.aboutView && <AboutPage />}
+      {state.modals.loginForm &&
+				!state.userLoggedIn &&
+				<LoginForm state={state} />}
+      {state.modals.registerForm &&
+				!state.userLoggedIn &&
+				<RegistrationForm state={state} />}
+      {state.modals.newProjectForm &&
+				state.userLoggedIn &&
+				<NewProjectForm state={state} />}
+      {state.modals.newTicketForm &&
+				state.userLoggedIn &&
+				<NewTicketForm state={state} />}
+      {state.userLoggedIn && <LandingPage state={state} />}
     </Paper>
   )
 }

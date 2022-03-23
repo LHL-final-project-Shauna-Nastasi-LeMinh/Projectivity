@@ -1,43 +1,33 @@
 import React, { useState } from 'react'
-import Button from '@mui/material/Button'
-import Modal from '@mui/material/Modal'
 import axios from 'axios'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
-import Input from '@mui/material/Input'
-import InputLabel from '@mui/material/InputLabel'
-import { PROJECT_VIEW } from '../constants/Modes'
-import Card from '@mui/material/Card'
+import { AddBox } from '@mui/icons-material'
+import {
+	Button,
+	Modal,
+	Typography,
+	Box,
+	TextField,
+	Divider,
+	Paper
+} from '@mui/material'
 
 export default function RegistrationForm (props) {
-  const [message, setMessage] = useState('')
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const { setViewMode, user, open, setOpen } = props
-
-  const handleNameChange = event => {
-    setName(event.target.value)
-  }
-
-  const handleDescriptionChange = event => {
-    setDescription(event.target.value)
-  }
+  const { state, setState } = props
 
   const createNewProject = event => {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', {
-  name: name,
-  description: description,
-  employee_id: user.id
+  name: state.formData.name,
+  description: state.formData.description,
+  employee_id: state.currentUser.id
 })
 			.then(res => {
-  setViewMode(PROJECT_VIEW)
+				// close newProjectForm modal
+  state.setModal('newProjectForm', false)
 })
 			.catch(function (error) {
   console.log(error.message)
-  setMessage('Failed to create project')
+  setState({ ...state, [state.formData.message]: 'Form invalid' })
 })
   }
 
@@ -46,70 +36,92 @@ export default function RegistrationForm (props) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'palette.primary.main',
-    border: '2px solid palette.secondary.main',
-    boxShadow: 24,
-    p: 4
+    width: 'fit-content',
+    height: 'fit-content',
+    backgroundColor: 'primary.main',
+    boxShadow: 24
   }
 
   return (
     <Modal
-      open={open}
-      onClose={() => setOpen(false)}
+      open={state.modals.newProjectForm}
+      onClose={state.setModal('newProjectForm', false)}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
-      <Card sx={style}>
-        <FormControl>
-          <Box
-            component='form'
-            sx={{
-              '& .MuiTextField-root': { m: 1, width: '25ch' }
-            }}
-            noValidate
-            autoComplete='off'
-					>
-            <Typography variant='h4'>Create New Project</Typography>
-            <Typography variant='h6'>
-							Please enter your project details below
-						</Typography>
-            <Typography variant='h6' sx={{ color: 'palette.error.main' }}>
-              {message}
-            </Typography>
-            <InputLabel htmlFor='component-error'>Project Name</InputLabel>
-            <Input
-              id='component-name-error'
-              value={name}
-              onChange={handleNameChange}
-              aria-describedby='component-name-error-text'
+      <Paper sx={style}>
+        <Box
+          sx={{
+            backgroundColor: 'primary.main',
+            color: 'background.default',
+            m: 2
+          }}
+				>
+          <Typography variant='h4' align='center'>
+            <AddBox color='secondary' fontSize='large' />
+          </Typography>
+          <Typography variant='h4' align='center'>
+						Create A New Ticket
+					</Typography>
+        </Box>
+
+        <Divider />
+
+        <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
+          <Box sx={{ display: 'flex' }}>
+            <TextField
+              sx={{ m: 2 }}
+              label='Project Title'
+              value={state.formData.name}
+              type='text'
+              onChange={state.setFormData('name')}
+              helperText={state.formData.name === '' && 'Required field'}
+              error={state.formData.name === ''}
+              required
 						/>
-            <FormHelperText id='component-name-error-text'>
-							Error
-						</FormHelperText>
-            <InputLabel htmlFor='component-error'>
-							Project Description
-						</InputLabel>
-            <Input
-              id='component-description-error'
-              multiline
-              rows={2}
-              value={description}
-              onChange={handleDescriptionChange}
-              aria-describedby='component-description-error-text'
+            <TextField
+              sx={{ m: 2 }}
+              label='Ticket Details'
+              value={state.formData.description}
+              type='text'
+              onChange={state.setFormData('description')}
+              helperText={state.formData.description === '' && 'Required field'}
+              error={state.formData.description === ''}
+              required
 						/>
-            <FormHelperText id='component-description-error-text'>
-							Error
-						</FormHelperText>
-            <Button variant='outlined' onClick={createNewProject}>
-							Create Project
-						</Button>
-            <Button variant='outlined' onClick={() => setOpen(false)}>
-							Cancel
-						</Button>
           </Box>
-        </FormControl>
-      </Card>
+        </Box>
+
+        <Divider />
+
+        <Box
+          sx={{
+            display: 'flex',
+            backgroundColor: 'primary.main',
+            color: 'background.default',
+            my: 3
+          }}
+				>
+          <Button
+            sx={{ mx: 2, width: '100%' }}
+            color='success'
+            size='large'
+            variant='contained'
+            onClick={createNewProject}
+					>
+						Create Ticket
+					</Button>
+          <Button
+            sx={{ mx: 2, width: '100%' }}
+            color='secondary'
+            size='large'
+            variant='contained'
+            onClick={state.setModal('newProjectForm', false)}
+					>
+						Cancel
+					</Button>
+        </Box>
+      </Paper>
     </Modal>
   )
 }

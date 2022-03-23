@@ -4,7 +4,7 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { ADDPROJECT } from './constants/Modes'
 import axios from 'axios'
-import { PROJECT_VIEW, CONFIRM_DELETE_PROJECT } from './constants/Modes'
+import { PROJECT_VIEW, DELETE_PROJECT_FORM } from './constants/Modes'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 
@@ -41,7 +41,7 @@ export default function DashboardItem (props) {
 			/>
       <EditIcon />
       <DeleteIcon
-        onClick={() => loadForm(dashItemProject, CONFIRM_DELETE_PROJECT)}
+        onClick={() => loadForm(dashItemProject, DELETE_PROJECT_FORM)}
 			/>
     </ListItemButton>
   )

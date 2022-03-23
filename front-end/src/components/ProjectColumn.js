@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, forwardRef } from 'react'
 import axios from 'axios'
 import ProjectTicket from './ProjectTicket'
 import Box from '@mui/material/Box'
@@ -19,11 +19,10 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { NEW_TICKET_FORM } from './constants/Modes'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
 
-const Transition = React.forwardRef(function Transition (props, ref) {
+const Transition = forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 
@@ -34,11 +33,14 @@ export default function ProjectColumn (props) {
 		setViewMode,
 		setCurrentColumn,
 		colIndex,
-		open,
-		setOpen,
+		modals,
+		openModals,
+		closeModals,
 		deleteColumnFromProjectView,
 		changeColumnFromProjectView,
-		handleClick
+		handleClick,
+		currentTicket,
+		setCurrentTicket
 	} = props
 
   const [tickets, setTickets] = useState([])
@@ -107,7 +109,7 @@ export default function ProjectColumn (props) {
 
   const createNewTicket = () => {
     setCurrentColumn(column.id)
-    setViewMode(NEW_TICKET_FORM)
+    openModals('newTicketForm')
   }
 
   const setTextValue = function (event) {
@@ -192,15 +194,22 @@ export default function ProjectColumn (props) {
               <List
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                isDraggingOver={snapshot.isDraggingOver}
+                isdraggingover={snapshot.isdraggingover}
                 sx={{
-                  backgroundColor: snapshot.isDraggingOver
+                  backgroundColor: snapshot.isdraggingover
 										? 'skyblue'
 										: 'inherit',
                   transition: 'background-color 1s ease'
                 }}
 							>
-                <ColumnTickets tickets={tickets} setViewMode={setViewMode} />
+                <ColumnTickets
+                  tickets={tickets}
+                  setViewMode={setViewMode}
+                  openModals={openModals}
+                  currentTicket={currentTicket}
+                  setCurrentTicket={setCurrentTicket}
+                  setTickets={setTickets}
+								/>
                 {provided.placeholder}
               </List>}
           </Droppable>
@@ -208,7 +217,7 @@ export default function ProjectColumn (props) {
             <ListItemButton onClick={() => handleClick()}>
               <ListItemText
                 primary='Create New Ticket'
-                onClick={() => setOpen(NEW_TICKET_FORM)}
+                onClick={() => createNewTicket()}
 							/>
             </ListItemButton>
           </ListItem>
@@ -219,7 +228,15 @@ export default function ProjectColumn (props) {
 
 // React.memo(function ColumnTickets(props)
 const ColumnTickets = React.memo(function ColumnTickets (props) {
-  const { tickets, setViewMode } = props
+  const {
+		tickets,
+		setViewMode,
+		setOpen,
+		currentTicket,
+		setCurrentTicket,
+		setTickets,
+		open
+	} = props
   return tickets.map((ticket, index) => {
     return (
       <Draggable
@@ -238,6 +255,12 @@ const ColumnTickets = React.memo(function ColumnTickets (props) {
               ticketId={ticket.id}
               isDragging={snapshot.isDragging}
               setViewMode={setViewMode}
+              open={open}
+              setOpen={setOpen}
+              currentTicket={currentTicket}
+              setCurrentTicket={setCurrentTicket}
+              tickets={tickets}
+              setTickets={setTickets}
 						/>
           </div>}
       </Draggable>

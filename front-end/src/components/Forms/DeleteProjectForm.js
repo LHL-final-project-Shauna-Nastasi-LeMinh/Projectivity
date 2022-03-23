@@ -12,36 +12,43 @@ import {
 import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
-export default function NewTicketForm (props) {
-  const { user, setViewMode, currentColumn, open, setOpen } = props
+export default function DeleteProjectForm (props) {
+  const {
+		currentProject,
+		data,
+		setViewMode,
+		user,
+		setUser,
+		setCookie,
+		open,
+		setOpen
+	} = props
   const [values, setValues] = useState({
     message: '',
-    title: undefined,
-    description: undefined
+    confirm: undefined
   })
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }
 
-  const onAdd = event => {
-    event.preventDefault()
-		// add new ticket to db
-    axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
-  title: values.title,
-  description: values.description,
-  created_by: user.id,
-  column_id: currentColumn
-})
-			.then(res => {
-  setViewMode(PROJECT_VIEW)
+  const delete_confirmed = event => {
+    if (values.confirm === 'DELETE') {
+      axios
+				.delete(
+					process.env.REACT_APP_BACKEND_URL + `/projects/${data.id}/delete`,
+        {
+          project_id: data.id
+        }
+				)
+				.then(res => {
   setOpen(false)
 })
-			.catch(function (error) {
+				.catch(function (error) {
   console.log(error.message)
   setValues({ ...values, message: 'Form invalid' })
 })
+    }
   }
 
   const style = {
@@ -57,7 +64,7 @@ export default function NewTicketForm (props) {
 
   return (
     <Modal
-      open={open.newTicketForm}
+      open={open.deleteProjectForm}
       onClose={() => setOpen(false)}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
@@ -84,12 +91,12 @@ export default function NewTicketForm (props) {
           <Box sx={{ display: 'flex' }}>
             <TextField
               sx={{ m: 2 }}
-              label='Ticket Title'
-              value={values.title}
+              label='Project Title'
+              value={values.name}
               type='text'
-              onChange={handleChange('title')}
-              helperText={values.title === '' && 'Required field'}
-              error={values.title === ''}
+              onChange={handleChange('name')}
+              helperText={values.name === '' && 'Required field'}
+              error={values.name === ''}
               required
 						/>
             <TextField
@@ -120,7 +127,7 @@ export default function NewTicketForm (props) {
             color='success'
             size='large'
             variant='contained'
-            onClick={onAdd}
+            onClick={delete_confirmed}
 					>
 						Create Ticket
 					</Button>

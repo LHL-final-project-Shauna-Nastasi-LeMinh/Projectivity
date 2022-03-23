@@ -1,36 +1,32 @@
 import React, { useState, useEffect } from 'react'
-import Button from '@mui/material/Button'
-import Modal from '@mui/material/Modal'
 import axios from 'axios'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import FormControl, { useFormControl } from '@mui/material/FormControl'
-import MenuItem from '@mui/material/MenuItem'
-import TextField from '@mui/material/TextField'
-import HowToRegIcon from '@mui/icons-material/HowToReg'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import InputAdornment from '@mui/material/InputAdornment'
-import IconButton from '@mui/material/IconButton'
-import Divider from '@mui/material/Divider'
-import Paper from '@mui/material/Paper'
-import FormHelperText from '@mui/material/FormHelperText'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import InputLabel from '@mui/material/InputLabel'
-import Input from '@mui/material/Input'
+import {
+	Button,
+	Modal,
+	Typography,
+	Box,
+	Select,
+	MenuItem,
+	TextField,
+	InputAdornment,
+	IconButton,
+	Divider,
+	Paper
+} from '@mui/material'
+import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function RegistrationForm (props) {
-  const { setUser, setCookie, open, setOpen, setMode } = props
+  const { state } = props
 
   const [roles, setRoles] = useState([])
-  const [role, setRole] = useState('')
-  const [select, setSelect] = useState('')
+  const [role, setRole] = useState()
+  const [dropdown, setDropdown] = useState()
   const [values, setValues] = useState({
-    firstName: undefined,
-    lastName: undefined,
-    phone: undefined,
-    email: undefined,
-    password: undefined,
+    firstName: null,
+    lastName: null,
+    phone: null,
+    email: null,
+    password: null,
     roleInput: 'Manager',
     showPassword: false
   })
@@ -54,34 +50,37 @@ export default function RegistrationForm (props) {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + '/roles')
 			.then(result => {
-  const roleOptions = result.data.map(role =>
-    <MenuItem key={role.name} value={role.name}>
+  const roles_names = result.data.map(role => role.name)
+
+  const newMenu = roles_names.map(role => {
+    <MenuItem value={role.name}>
       {role.name}
     </MenuItem>
-				)
-  setRole(result.data[0].id)
-  setRoles(roleOptions)
+  })
+
+  setDropdown(newMenu)
+  setRoles(result.data)
 })
 			.catch(err => {
   console.log(err)
+  setValues({ ...values, message: 'Form invalid' })
 })
   }, [])
 
   const register = event => {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/register', {
-  first_name: values.firstName,
-  last_name: values.lastName,
-  email: values.email,
-  password: values.password,
-  phone: values.phone,
-  role_id: values.roleInput
+  first_name: state.formData.firstName,
+  last_name: state.formData.lastName,
+  email: state.formData.email,
+  password: state.formData.password,
+  phone: state.formData.phone,
+  role_id: state.formData.roleInput
 })
 			.then(res => {
-  setUser(res.data)
-  setCookie('user', res.data, {
-    path: '/'
-  })
+  state.setCurrentUser(res.data)
+  state.setCurrentCookies('user', res.data, { path: '/' })
+  state.closeModal('registerForm')
 })
 			.catch(function (error) {
   console.log(error.message)
@@ -102,8 +101,8 @@ export default function RegistrationForm (props) {
 
   return (
     <Modal
-      open={open}
-      onClose={() => setOpen(false)}
+      open={state.modals.registerForm}
+      onClose={state.closeModal('registerForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -116,7 +115,7 @@ export default function RegistrationForm (props) {
           }}
 				>
           <Typography variant='h4' align='center'>
-            <HowToRegIcon color='secondary' fontSize='large' />
+            <HowToReg color='secondary' fontSize='large' />
           </Typography>
           <Typography variant='h4' align='center'>
 						Sign Up
@@ -125,132 +124,114 @@ export default function RegistrationForm (props) {
 
         <Divider />
 
-        <FormControl component='form'>
-          <Typography variant='h6' sx={{ color: 'error.main' }}>
-            {values.message}
-          </Typography>
-          <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
-            <Box sx={{ display: 'flex' }}>
-              <Box sx={{ m: 2 }}>
-                <TextField
-                  label='First Name'
-                  value={values.firstName}
-                  type='text'
-                  onChange={handleChange('firstName')}
-                  helperText={values.firstName === '' && 'Required field'}
-                  error={values.firstName === ''}
-                  required
-								/>
-              </Box>
-              <Box sx={{ m: 2 }}>
-                <TextField
-                  label='Last Name'
-                  value={values.lastName}
-                  type='text'
-                  onChange={handleChange('lastName')}
-                  helperText={values.lastName === '' && 'Required field'}
-                  error={values.lastName === ''}
-                  required
-								/>
-              </Box>
-            </Box>
-            <Box sx={{ display: 'flex' }}>
-              <Box sx={{ m: 2 }}>
-                <TextField
-                  label='Phone Number'
-                  value={values.phone}
-                  type='tel'
-                  onChange={handleChange('phone')}
-                  helperText={values.phone === '' && 'Required field'}
-                  error={values.phone === ''}
-                  required
-								/>
-              </Box>
-              <Box sx={{ m: 2 }}>
-                <TextField
-                  label='Email Address'
-                  value={values.email}
-                  type='email'
-                  onChange={handleChange('email')}
-                  helperText={values.email === '' && 'Required field'}
-                  error={values.email === ''}
-                  required
-								/>
-              </Box>
-            </Box>
-            <Box sx={{ display: 'flex' }}>
-              <Box sx={{ m: 2, width: '50%' }}>
-                <TextField
-                  label='Password'
-                  value={values.password}
-                  type='password'
-                  onChange={handleChange('password')}
-                  helperText={values.password === '' && 'Required field'}
-                  error={values.password === ''}
-                  endAdornment={
-                    <InputAdornment position='end'>
-                    <IconButton
+        <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
+          <Box sx={{ display: 'flex' }}>
+            <TextField
+              sx={{ m: 2 }}
+              label='First Name'
+              value={values.firstName}
+              type='text'
+              onChange={handleChange('firstName')}
+              helperText={values.firstName === '' && 'Required field'}
+              error={values.firstName === ''}
+              required
+						/>
+            <TextField
+              sx={{ m: 2 }}
+              label='Last Name'
+              value={values.lastName}
+              type='text'
+              onChange={handleChange('lastName')}
+              helperText={values.lastName === '' && 'Required field'}
+              error={values.lastName === ''}
+              required
+						/>
+          </Box>
+          <Box sx={{ display: 'flex' }}>
+            <TextField
+              sx={{ m: 2 }}
+              label='Phone Number'
+              value={values.phone}
+              type='tel'
+              onChange={handleChange('phone')}
+              helperText={values.phone === '' && 'Required field'}
+              error={values.phone === ''}
+              required
+						/>
+            <TextField
+              sx={{ m: 2 }}
+              label='Email Address'
+              value={values.email}
+              type='email'
+              onChange={handleChange('email')}
+              helperText={values.email === '' && 'Required field'}
+              error={values.email === ''}
+              required
+						/>
+          </Box>
+          <Box sx={{ display: 'flex' }}>
+            <TextField
+              sx={{ m: 2, width: '50%' }}
+              label='Password'
+              value={values.password}
+              type='password'
+              onChange={handleChange('password')}
+              helperText={values.password === '' && 'Required field'}
+              error={values.password === ''}
+              endadornment={
+                <InputAdornment position='end'>
+                  <IconButton
                     aria-label='toggle password visibility'
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
-											>
-                    {values.showPassword
-													? <VisibilityOff />
-													: <Visibility />}
+									>
+                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
-                  </InputAdornment>
-									}
-                  required
-								/>
-              </Box>
-              <Box sx={{ m: 2, width: '50%' }}>
-                <TextField
-                  label='Select A Role'
-                  value={values.roleInput}
-                  onChange={handleChange('roleInput')}
-                  defaultValue={values.roleInput}
-                  helperText={values.roleInput === '' && 'Required field'}
-                  error={values.roleInput === ''}
-                  sx={{ width: '100%' }}
-                  select
-                  required
-								>
-                  {roles}
-                </TextField>
-              </Box>
-            </Box>
+                </InputAdornment>
+							}
+              required
+						/>
+            <Select
+              sx={{ m: 2 }}
+              label='Select A Role'
+              defaultValue={values.roleInput}
+              onChange={handleChange('roleInput')}
+              required
+						>
+              {dropdown}
+            </Select>
           </Box>
+        </Box>
 
-          <Divider />
+        <Divider />
 
-          <Box
-            sx={{
-              display: 'flex',
-              backgroundColor: 'primary.main',
-              color: 'background.default',
-              my: 3
-            }}
+        <Box
+          sx={{
+            display: 'flex',
+            backgroundColor: 'primary.main',
+            color: 'background.default',
+            my: 3
+          }}
+				>
+          <Button
+            sx={{ mx: 2, width: '100%' }}
+            color='success'
+            size='large'
+            variant='contained'
+            onClick={register}
 					>
-            <Button
-              sx={{ mx: 2, width: '100%' }}
-              color='success'
-              size='large'
-              variant='contained'
-              onClick={register}
-						>
-							Sign Up
-						</Button>
-            <Button
-              sx={{ mx: 2, width: '100%' }}
-              color='secondary'
-              size='large'
-              variant='contained'
-              onClick={() => setOpen(false)}
-						>
-							Cancel
-						</Button>
-          </Box>
-        </FormControl>
+						Sign Up
+					</Button>
+          <Button
+            sx={{ mx: 2, width: '100%' }}
+            color='secondary'
+            size='large'
+            variant='contained'
+            onClick={state.closeModal('registerForm')}
+					>
+						Cancel
+					</Button>
+        </Box>
       </Paper>
     </Modal>
   )
