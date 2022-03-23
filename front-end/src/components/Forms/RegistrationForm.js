@@ -4,48 +4,50 @@ import Modal from '@mui/material/Modal'
 import axios from 'axios'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
-import Input from '@mui/material/Input'
-import InputLabel from '@mui/material/InputLabel'
+import FormControl, { useFormControl } from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
-import Select from '@mui/material/Select'
-import Card from '@mui/material/Card'
+import TextField from '@mui/material/TextField'
+import HowToRegIcon from '@mui/icons-material/HowToReg'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import InputAdornment from '@mui/material/InputAdornment'
+import IconButton from '@mui/material/IconButton'
+import Divider from '@mui/material/Divider'
+import Paper from '@mui/material/Paper'
+import FormHelperText from '@mui/material/FormHelperText'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import InputLabel from '@mui/material/InputLabel'
+import Input from '@mui/material/Input'
 
 export default function RegistrationForm (props) {
-  const [message, setMessage] = useState('')
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [roleInput, setRoleInput] = useState('')
+  const { setUser, setCookie, open, setOpen, setMode } = props
+
   const [roles, setRoles] = useState([])
   const [role, setRole] = useState('')
   const [select, setSelect] = useState('')
-  const { setUser, setCookie, open, setOpen, setMode } = props
+  const [values, setValues] = useState({
+    firstName: undefined,
+    lastName: undefined,
+    phone: undefined,
+    email: undefined,
+    password: undefined,
+    roleInput: 'Manager',
+    showPassword: false
+  })
 
-  const handleFirstNameChange = event => {
-    setFirstName(event.target.value)
+  const handleChange = prop => event => {
+    setValues({ ...values, [prop]: event.target.value })
   }
 
-  const handleLastNameChange = event => {
-    setLastName(event.target.value)
-  }
-  const handlePhoneChange = event => {
-    setPhone(event.target.value)
-  }
-
-  const handleEmailChange = event => {
-    setEmail(event.target.value)
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword
+    })
   }
 
-  const handlePasswordChange = event => {
-    setPassword(event.target.value)
-  }
-
-  const handleRoleInputChange = event => {
-    setRoleInput(event.target.value)
+  const handleMouseDownPassword = event => {
+    event.preventDefault()
   }
 
   useEffect(() => {
@@ -53,7 +55,7 @@ export default function RegistrationForm (props) {
 			.get(process.env.REACT_APP_BACKEND_URL + '/roles')
 			.then(result => {
   const roleOptions = result.data.map(role =>
-    <MenuItem value={role.name}>
+    <MenuItem key={role.name} value={role.name}>
       {role.name}
     </MenuItem>
 				)
@@ -68,12 +70,12 @@ export default function RegistrationForm (props) {
   const register = event => {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/register', {
-  first_name: firstName,
-  last_name: lastName,
-  email: email,
-  password: password,
-  phone: phone,
-  role_id: roleInput
+  first_name: values.firstName,
+  last_name: values.lastName,
+  email: values.email,
+  password: values.password,
+  phone: values.phone,
+  role_id: values.roleInput
 })
 			.then(res => {
   setUser(res.data)
@@ -83,12 +85,8 @@ export default function RegistrationForm (props) {
 })
 			.catch(function (error) {
   console.log(error.message)
-  setMessage('Registration invalid')
+  setValues({ ...values, [values.message]: 'Registration invalid' })
 })
-  }
-
-  const cancel = event => {
-    setOpen(false)
   }
 
   const style = {
@@ -96,11 +94,10 @@ export default function RegistrationForm (props) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'palette.primary.main',
-    border: '2px solid palette.secondary.main',
-    boxShadow: 24,
-    p: 4
+    width: 'fit-content',
+    height: 'fit-content',
+    backgroundColor: 'primary.main',
+    boxShadow: 24
   }
 
   return (
@@ -110,96 +107,151 @@ export default function RegistrationForm (props) {
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
-      <Card sx={style}>
-        <FormControl>
+      <Paper sx={style}>
+        <Box
+          sx={{
+            backgroundColor: 'primary.main',
+            color: 'background.default',
+            m: 2
+          }}
+				>
+          <Typography variant='h4' align='center'>
+            <HowToRegIcon color='secondary' fontSize='large' />
+          </Typography>
+          <Typography variant='h4' align='center'>
+						Sign Up
+					</Typography>
+        </Box>
+
+        <Divider />
+
+        <FormControl component='form'>
+          <Typography variant='h6' sx={{ color: 'error.main' }}>
+            {values.message}
+          </Typography>
+          <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
+            <Box sx={{ display: 'flex' }}>
+              <Box sx={{ m: 2 }}>
+                <TextField
+                  label='First Name'
+                  value={values.firstName}
+                  type='text'
+                  onChange={handleChange('firstName')}
+                  helperText={values.firstName === '' && 'Required field'}
+                  error={values.firstName === ''}
+                  required
+								/>
+              </Box>
+              <Box sx={{ m: 2 }}>
+                <TextField
+                  label='Last Name'
+                  value={values.lastName}
+                  type='text'
+                  onChange={handleChange('lastName')}
+                  helperText={values.lastName === '' && 'Required field'}
+                  error={values.lastName === ''}
+                  required
+								/>
+              </Box>
+            </Box>
+            <Box sx={{ display: 'flex' }}>
+              <Box sx={{ m: 2 }}>
+                <TextField
+                  label='Phone Number'
+                  value={values.phone}
+                  type='tel'
+                  onChange={handleChange('phone')}
+                  helperText={values.phone === '' && 'Required field'}
+                  error={values.phone === ''}
+                  required
+								/>
+              </Box>
+              <Box sx={{ m: 2 }}>
+                <TextField
+                  label='Email Address'
+                  value={values.email}
+                  type='email'
+                  onChange={handleChange('email')}
+                  helperText={values.email === '' && 'Required field'}
+                  error={values.email === ''}
+                  required
+								/>
+              </Box>
+            </Box>
+            <Box sx={{ display: 'flex' }}>
+              <Box sx={{ m: 2, width: '50%' }}>
+                <TextField
+                  label='Password'
+                  value={values.password}
+                  type='password'
+                  onChange={handleChange('password')}
+                  helperText={values.password === '' && 'Required field'}
+                  error={values.password === ''}
+                  endAdornment={
+                    <InputAdornment position='end'>
+                    <IconButton
+                    aria-label='toggle password visibility'
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+											>
+                    {values.showPassword
+													? <VisibilityOff />
+													: <Visibility />}
+                  </IconButton>
+                  </InputAdornment>
+									}
+                  required
+								/>
+              </Box>
+              <Box sx={{ m: 2, width: '50%' }}>
+                <TextField
+                  label='Select A Role'
+                  value={values.roleInput}
+                  onChange={handleChange('roleInput')}
+                  defaultValue={values.roleInput}
+                  helperText={values.roleInput === '' && 'Required field'}
+                  error={values.roleInput === ''}
+                  sx={{ width: '100%' }}
+                  select
+                  required
+								>
+                  {roles}
+                </TextField>
+              </Box>
+            </Box>
+          </Box>
+
+          <Divider />
+
           <Box
-            component='form'
             sx={{
-              '& .MuiTextField-root': { m: 1, width: '25ch' }
+              display: 'flex',
+              backgroundColor: 'primary.main',
+              color: 'background.default',
+              my: 3
             }}
-            noValidate
-            autoComplete='off'
 					>
-            <Typography variant='h4'>Register</Typography>
-            <Typography variant='h6'>
-							Please enter your details below
-						</Typography>
-            <Typography variant='h6' sx={{ color: 'palette.error.main' }}>
-              {message}
-            </Typography>
-            <Input
-              id='component-firstName-error'
-              value={firstName}
-              onChange={handleFirstNameChange}
-              aria-describedby='component-firstName-error-text'
-              required
-						/>
-            <FormHelperText id='component-firstName-error-text'>
-							First Name
-						</FormHelperText>
-            <Input
-              id='component-lastName-error'
-              value={lastName}
-              onChange={handleLastNameChange}
-              aria-describedby='component-lastName-error-text'
-              required
-						/>
-            <FormHelperText id='component-lastName-error-text'>
-							Last Name
-						</FormHelperText>
-            <Input
-              id='component-phone-error'
-              value={phone}
-              type='phone'
-              onChange={handlePhoneChange}
-              aria-describedby='component-phone-error-text'
-              required
-						/>
-            <FormHelperText id='component-phone-error-text'>
-							PhoneNumber
-						</FormHelperText>
-            <Input
-              id='component-email-error'
-              value={email}
-              type='email'
-              onChange={handleEmailChange}
-              aria-describedby='component-email-error-text'
-              required
-						/>
-            <FormHelperText id='component-email-error-text'>
-							Email Address
-						</FormHelperText>
-            <Input
-              id='component-password-error'
-              value={password}
-              type='password'
-              onChange={handlePasswordChange}
-              aria-describedby='component-password-error-text'
-              required
-						/>
-            <FormHelperText id='component-name-error-text'>
-							Password
-						</FormHelperText>
-            <Select
-              labelId='demo-roleInput-label'
-              id='demo-roleInput-select'
-              value={roleInput}
-              label='Role'
-              onChange={handleRoleInputChange}
-              required
+            <Button
+              sx={{ mx: 2, width: '100%' }}
+              color='success'
+              size='large'
+              variant='contained'
+              onClick={register}
 						>
-              {roles}
-            </Select>
-            <FormHelperText id='component-name-error-text'>Role</FormHelperText>
-            <Button variant='outlined' onClick={register}>
-							Login
+							Sign Up
 						</Button>
-            <Button variant='outlined' onClick={cancel}>
+            <Button
+              sx={{ mx: 2, width: '100%' }}
+              color='secondary'
+              size='large'
+              variant='contained'
+              onClick={() => setOpen(false)}
+						>
 							Cancel
 						</Button>
           </Box>
         </FormControl>
-      </Card>
+      </Paper>
     </Modal>
   )
 }

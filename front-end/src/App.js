@@ -15,7 +15,6 @@ const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user'])
   const [currentProject, setCurrentProject] = useState()
   const [currentColumn, setCurrentColumn] = useState('')
-	// const [currentTickets, setCurrentTickets] = useState()
 
 	// MODAL STATE
   const [open, setOpen] = useState()
