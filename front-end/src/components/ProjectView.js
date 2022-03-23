@@ -207,7 +207,7 @@ export default function ProjectView (props) {
 					>
             {generatedColumns}
             <ProjectColumnNew
-              disablePadding
+              isDropDisable
               name={'+ New Column'}
               createNewColumn={createNewColumn}
 						/>
