@@ -9,19 +9,23 @@ import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import useDebounce from "../hooks/useDebounce";
+import { MANAGER_LEVEL} from './constants/AccessLevel'
 
 export default function SearchPane (props) {
   
-  const {searchFilter} = props;
+  const {searchFilter, resetSearchPane, user} = props;
 
   const [severities, setSeverities] = useState([]);
   const [priorities, setPriorities] = useState([]);
   const [types, setTypes] = useState([]);
   const [milestones, setMilestones] = useState([]);
-  
-  const [criteria, setCriteria] = useState({DESC:"", SEVERITY: "All", PRIORITY: "All", TYPE: "All", MILESTONE: "All"});
-  const [searchInput, setSearchInput] = useState("");
+   
+  const [criteria, setCriteria] = useState({ALL_TICKETS: true, DESC:"abc", SEVERITY: "All", PRIORITY: "All", TYPE: "All", MILESTONE: "All"});
+  const [searchInput, setSearchInput] = useState();
 
   const delayedInput = useDebounce(searchInput, 500);
 
@@ -30,11 +34,17 @@ export default function SearchPane (props) {
   const PRIORITY = "PRIORITY"
   const TYPE = "TYPE"
   const MILESTONE = "MILESTONE"
+  const ALL_TICKETS = "ALL_TICKETS"
 
   useEffect(() => {
     criteria[DESC] = delayedInput;
     searchFilter({...criteria})
   },[delayedInput, criteria])
+
+  useEffect(() => {
+    setCriteria({ALL_TICKETS: true, DESC:"", SEVERITY: "All", PRIORITY: "All", TYPE: "All", MILESTONE: "All"})
+    setSearchInput("");
+  },[resetSearchPane])
 
 
   useEffect(() => {
@@ -79,6 +89,17 @@ export default function SearchPane (props) {
 
   return (
     <Box sx={{ m: 3, display: 'flex' }}>
+      {user.access_level != MANAGER_LEVEL &&
+      <FormControlLabel control={
+        <Checkbox 
+          defaultChecked 
+          checked={criteria[ALL_TICKETS]}
+          color="success"
+          onChange={e => setCriteria({...criteria, ALL_TICKETS: !criteria[ALL_TICKETS]})}
+        />
+      } 
+      label="All" 
+      />}
       <TextField
           autoFocus
           margin="dense"
