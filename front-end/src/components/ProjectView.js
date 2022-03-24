@@ -255,7 +255,6 @@ export default function ProjectView (props) {
             >
               {generatedColumns}
               <ProjectColumnNew
-                name={'+ New Column'}
                 createNewColumn={createNewColumn}
                 columnsCount={columns.length}
               />

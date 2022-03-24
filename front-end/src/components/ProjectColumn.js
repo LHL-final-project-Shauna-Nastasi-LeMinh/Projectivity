@@ -181,10 +181,10 @@ export default function ProjectColumn (props) {
 								/>}
             </DialogContent>
             <DialogActions>
-              <Button onClick={closeDialog}>Cancel</Button>
               <Button onClick={handleColumnActions}>
                 {dialogContent.confirmLabel}
               </Button>
+              <Button onClick={closeDialog}>Cancel</Button>
             </DialogActions>
           </Dialog>
           <Divider />

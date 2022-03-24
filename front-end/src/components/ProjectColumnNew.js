@@ -12,6 +12,8 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
+import AddSharpIcon from '@mui/icons-material/AddSharp';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
 import { NEW_COLUMN_FORM } from './constants/Modes'
@@ -21,13 +23,9 @@ const Transition = React.forwardRef(function Transition (props, ref) {
 })
 
 export default function ProjectColumnNew (props) {
-  const { name, createNewColumn, columnsCount } = props
+  const { createNewColumn } = props
   const [open, setOpen] = useState(false)
   const [newColumnName, setNewColumnName] = useState('')
-
-  const cancel = () => {
-    setOpen(false)
-  }
 
   const create = () => {
     setOpen(false)
@@ -43,8 +41,9 @@ export default function ProjectColumnNew (props) {
   return (
     <Box sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}>
       <ListItem sx={{ padding: '0.1rem' }}>
-        <ListItemButton onClick={() => setOpen(NEW_COLUMN_FORM)}>
-          <ListItemText primary={name} />
+        <ListItemButton onClick={() => setOpen(NEW_COLUMN_FORM)} >
+            <ListItemText primary='New' />
+            <AddCircleIcon fontSize='large'/>
         </ListItemButton>
       </ListItem>
       <Divider />
