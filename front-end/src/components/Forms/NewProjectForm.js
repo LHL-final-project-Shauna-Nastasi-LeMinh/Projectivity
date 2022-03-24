@@ -14,13 +14,14 @@ import { PROJECT_VIEW } from '../constants/Modes'
 
 export default function RegistrationForm (props) {
   const { state } = props
+  const [values, setValues] = useState()
 
   const createNewProject = event => {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', {
   name: values.name,
   description: values.description,
-  employee_id: user.id
+  employee_id: state.currentUser.id
 })
 			.then(res => {
 				// close newProjectForm modal
@@ -79,7 +80,7 @@ export default function RegistrationForm (props) {
               label='Project Title'
               value={values.name}
               type='text'
-              onChange={handleChange('name')}
+              onChange={event => setValues(event.target.value)}
               helperText={values.name === '' && 'Required field'}
               error={values.name === ''}
               required
@@ -89,7 +90,7 @@ export default function RegistrationForm (props) {
               label='Ticket Details'
               value={values.description}
               type='text'
-              onChange={handleChange('description')}
+              onChange={event => setValues(event.target.value)}
               helperText={values.description === '' && 'Required field'}
               error={values.description === ''}
               required

@@ -136,7 +136,7 @@ export default function ProjectColumn (props) {
                   'aria-labelledby': 'fade-button'
                 }}
                 anchorEl={anchorEl}
-                open={openIconMenu}
+								// open={openIconMenu}
                 onClose={closeIconMenu}
                 TransitionComponent={Fade}
 							>
@@ -198,8 +198,8 @@ export default function ProjectColumn (props) {
                 <ColumnTickets
                   tickets={state.currentTickets}
                   currentTicket={state.currentTicket}
-                  open={open}
-                  setCurrentTicket={setCurrentTicket}
+									// open={open}
+									// setCurrentTicket={setCurrentTicket}
                   setTickets={setTickets}
 								/>
                 {provided.placeholder}

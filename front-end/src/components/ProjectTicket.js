@@ -100,29 +100,29 @@ export default function ProjectTicket (props) {
         <div>
           <IconButton
             id='fade-button'
-            aria-controls={openMenu ? 'fade-menu' : undefined}
+            aria-controls={ticketDialogOpen ? 'fade-menu' : undefined}
             aria-haspopup='true'
-            aria-expanded={openMenu ? 'true' : undefined}
-            onClick={handleClick}
+            aria-expanded={ticketDialogOpen ? 'true' : undefined}
+            onClick={() => setTicketDialogOpen(true)}
 					>
             <MoreVertIcon />
           </IconButton>
 
-          {dialogOpen === SHOW_TICKET_DETAILS &&
+          {detailsDialogOpen &&
           <ShowTicketDetails
-            tickets={tickets}
-            setTickets={setTickets}
+							// tickets={tickets}
+							// setTickets={setTickets}
             ticketId={ticketId}
-            setViewMode={setViewMode}
-            dialogOpen={dialogOpen}
-            setDialogOpen={setDialogOpen}
+							// setViewMode={setViewMode}
+            dialogOpen={detailsDialogOpen}
+            setDialogOpen={setDetailsDialogOpen}
 						/>}
-          {dialogOpen === REMOVE_TICKET &&
+          {removeDialogOpen &&
           <RemoveTicket
-            tickets={tickets}
+							// tickets={tickets}
             ticketId={ticketId}
-            dialogOpen={dialogOpen}
-            setDialogOpen={setDialogOpen}
+            dialogOpen={removeDialogOpen}
+            setDialogOpen={setRemoveDialogOpen}
 						/>}
           <Menu
             id='fade-menu'
@@ -130,17 +130,17 @@ export default function ProjectTicket (props) {
               'aria-labelledby': 'fade-button'
             }}
             anchorEl={anchorEl}
-            open={openMenu}
-            onClose={closeMenu}
+						// open={openMenu}
+            onClose={() => setTicketDialogOpen(false)}
             TransitionComponent={Fade}
 					>
-            <MenuItem id='details' onClick={evt => handleDialogOpening(evt)}>
+            <MenuItem id='details' onClick={() => setDetailsDialogOpen(true)}>
 							Details
 						</MenuItem>
-            <MenuItem id='edit' onClick={handleDialogOpening}>
+            <MenuItem id='edit' onClick={() => setEditDialogOpen(true)}>
 							Edit
 						</MenuItem>
-            <MenuItem id='remove' onClick={evt => handleDialogOpening(evt)}>
+            <MenuItem id='remove' onClick={() => setRemoveDialogOpen(true)}>
 							Remove
 						</MenuItem>
           </Menu>

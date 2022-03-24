@@ -18,7 +18,8 @@ export default function ProjectView (props) {
 		open,
 		setOpen,
     currentTicket, 
-    setCurrentTicket
+    setCurrentTicket,
+    state
 	} = props
   // const [columns, setColumns] = useState([])
 
@@ -202,7 +203,7 @@ export default function ProjectView (props) {
     const TYPE = "TYPE"
     const MILESTONE = "MILESTONE"
 
-    const allColumns = JSON.parse(JSON.stringify(columns));
+    const allColumns = state.currentColumns;
     
     allColumns.forEach(column => {
       const tickets = column.Tickets.filter(ticket => {
@@ -233,10 +234,11 @@ export default function ProjectView (props) {
       column.Tickets = tickets;
     })
     
-    setColumns([...allColumns]);
+    state.setStateTarget('currentColumns', [...allColumns])
+    // setColumns([...allColumns]);
   }
 
-  const generatedColumns = columns.map((column, colIndex) =>
+  const generatedColumns = state.currentColumns.map((column, colIndex) =>
     <ProjectColumn
       state={state}
       disablePadding

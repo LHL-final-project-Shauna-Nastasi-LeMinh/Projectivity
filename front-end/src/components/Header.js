@@ -15,7 +15,8 @@ export default function Header (props) {
 		cookies,
 		removeCookie,
 		modals,
-		openModals
+		openModals,
+		state
 	} = props
 
   return (
@@ -32,6 +33,7 @@ export default function Header (props) {
 					</Typography>
           <Box sx={{ flexGrow: 1 }} />
           <NavbarMenu
+            state={state}
             mode={mode}
             setMode={setMode}
             user={user}

@@ -14,7 +14,7 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function LoginForm (props) {
-  const { setUser, setCookie, modals, closeModals } = props
+  const { setUser, setCookie, modals, closeModals, state } = props
   const [values, setValues] = useState({
     message: '',
     email: null,
@@ -65,8 +65,8 @@ export default function LoginForm (props) {
 
   return (
     <Modal
-      open={modals.loginForm}
-      onClose={closeModals('loginForm')}
+      open={state.modals.loginForm}
+      onClose={state.closeModal('loginForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -148,7 +148,7 @@ export default function LoginForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={closeModals('loginForm')}
+            onClick={state.closeModal('loginForm')}
 					>
 						Cancel
 					</Button>

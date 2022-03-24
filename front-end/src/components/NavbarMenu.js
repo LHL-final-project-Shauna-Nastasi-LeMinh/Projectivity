@@ -55,9 +55,9 @@ export default function NavbarMenu (props) {
 			// handleOpenLogin
     }
 
-    console.log('string is:', string)
-    setMode(newMode)
-    setAnchorElUser(null)
+		// console.log('string is:', string)
+		// state.openModal(newMode)
+		// setAnchorElUser(null)
   }
 
 	//   useEffect(
@@ -71,21 +71,21 @@ export default function NavbarMenu (props) {
 
   return (
     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-      {!user &&
+      {!state.userLoggedIn &&
       <ButtonGroup
         orientiation={{ vertical: 'top', horizontal: 'right' }}
         variant='text'
 				>
         <Button
           key='about'
-          onClick={() => setMode(ABOUT_VIEW)}
+          onClick={() => state.openModal('aboutView')}
           sx={{ color: 'white', display: 'block' }}
 					>
 						About
 					</Button>
         <Button
           key='login'
-          onClick={openModals('loginForm')}
+          onClick={() => state.openModal('loginForm')}
           sx={{ color: 'white', display: 'block' }}
 					>
 						Login
@@ -93,12 +93,12 @@ export default function NavbarMenu (props) {
         <Button
           key='register'
           sx={{ color: 'white', display: 'block' }}
-          onClick={openModals('registerForm')}
+          onClick={() => state.openModal('registerForm')}
 					>
 						Register
 					</Button>
       </ButtonGroup>}
-      {user &&
+      {state.userLoggedIn &&
       <Box>
         <Box
           sx={{
@@ -114,7 +114,7 @@ export default function NavbarMenu (props) {
             }}
 						>
             <Typography variant='h6'>
-              {email}
+              {state.currentUser.email}
             </Typography>
           </Box>
           <Tooltip title='Open settings'>

@@ -10,9 +10,9 @@ import {
 	NEW_PROJECT_FORM,
 	PROJECT_VIEW,
 	ADD_TICKET,
-  EDIT_TICKET,
-  SHOW_TICKET_DETAILS,
-  REMOVE_TICKET
+	EDIT_TICKET,
+	SHOW_TICKET_DETAILS,
+	REMOVE_TICKET
 } from './constants/Modes'
 import RemoveTicket from './Forms/RemoveTicket'
 
@@ -32,8 +32,9 @@ export default function DashboardProject (props) {
 		setOpen,
 		viewMode,
 		setViewMode,
-    currentTicket,
-    setCurrentTicket
+		currentTicket,
+		setCurrentTicket,
+		state
 	} = props
 
   const [data, setData] = useState()
@@ -82,8 +83,8 @@ export default function DashboardProject (props) {
           open={open}
           setOpen={setOpen}
 					/>}
-        
-          {open === EDIT_TICKET &&
+
+        {open === EDIT_TICKET &&
         <NewTicketForm
           user={user}
           currentColumn={currentColumn}
@@ -91,7 +92,7 @@ export default function DashboardProject (props) {
           open={open}
           setOpen={setOpen}
 					/>}
-          {open === ADD_TICKET &&
+        {open === ADD_TICKET &&
         <NewTicketForm
           user={user}
           currentColumn={currentColumn}
@@ -99,7 +100,7 @@ export default function DashboardProject (props) {
           open={open}
           setOpen={setOpen}
 					/>}
-         
+
         {viewMode === PROJECT_VIEW &&
         <ProjectView
           user={user}

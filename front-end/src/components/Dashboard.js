@@ -17,7 +17,8 @@ export default function Dashboard (props) {
 		setCurrentProject,
 		loadForm,
 		open,
-		setOpen
+		setOpen,
+		state
 	} = props
 
 	//   const [projects, setProjects] = useState()
@@ -59,7 +60,7 @@ export default function Dashboard (props) {
     const newCurrentTickets = []
 
     for (const column of newCurrentColumns) {
-      for (const ticket of allUserTickets) {
+      for (const ticket of state.allUserTickets) {
         if (column.id === ticket.column_id) {
           newCurrentTickets.push(ticket)
         }
@@ -121,6 +122,8 @@ export default function Dashboard (props) {
 	// })
 	//   }, [])
 
+  let index = 0
+
   return (
     <Box
       sx={{
@@ -147,7 +150,7 @@ export default function Dashboard (props) {
           <ListItemIcon />
           <ListItemText
             primary='Create New Project'
-            onClick={() => setOpen(NEW_PROJECT_FORM)}
+            onClick={() => state.openModal('newProjectForm')}
 					/>
         </ListItemButton>
       </List>
