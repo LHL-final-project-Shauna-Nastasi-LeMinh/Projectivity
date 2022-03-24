@@ -38,14 +38,14 @@ module.exports = sequelizeModels => {
     try {
       const {title, created_by, column_id} = req.body
 
-      await Tickets.create({
+      const newTicket = await Tickets.create({
         title,
         description: 'test',
         created_by,
         column_id,
       })
 
-      return res.json('success!')
+      return res.json(newTicket);
     } catch (err) {
       console.log(err, "foo")
       return res.status(500).json(err)
