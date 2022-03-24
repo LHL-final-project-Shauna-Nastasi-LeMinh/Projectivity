@@ -18,7 +18,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 const setting_views = ['aboutView', 'aboutView', 'aboutView', 'aboutView']
 
 export default function NavbarMenu (props) {
-  const { state, setState } = props
+  const { state } = props
 
 	// const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
@@ -31,6 +31,7 @@ export default function NavbarMenu (props) {
     if (string === 'Logout') {
       state.setStateTarget('currentUser', null)
       state.setStateTarget('currentCookies', null)
+      state.setStateTarget('userLoggedIn', false)
     }
 
     state.setMode(newMode)

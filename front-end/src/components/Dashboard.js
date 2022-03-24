@@ -1,78 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react'
-import axios from 'axios'
+import React from 'react'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import DashboardItem from './DashboardItem'
-import {
-	NEW_PROJECT_FORM,
-	DELETE_PROJECT_FORM,
-	PROJECT_VIEW
-} from './constants/Modes'
 
 export default function Dashboard (props) {
   const { state } = props
 
-	// const [projects, setProjects] = useState()
-	// const [dashboardProjects, setDashboardProjects] = useState()
-	// const stateRef = useRef()
-	// stateRef.current = dashboardProjects
-
-	// function purgeNullStates (states) {
-	//   const results = []
-
-	//   if (stateRef.current) {
-	//     for (const state of states) {
-	//       if (state !== null) {
-	//         results.push(state)
-	//       }
-	//     }
-	//   }
-
-	//   return results
-	// }
-
-	//   let index = 0
-
-	//   function selectProject (index) {
-	//     if (stateRef.current[index]) {
-	//       axios
-	// 				.get(
-	// 					process.env.REACT_APP_BACKEND_URL +
-	// 						'/projects/' +
-	// 						stateRef.current[index].id +
-	// 						'/columns'
-	// 				)
-	// 				.then(res => {
-	//   setCurrentProject(prev => {
-	//     return { ...stateRef.current[index], Columns: res.data }
-	//   })
-	//   setViewMode(PROJECT_VIEW)
-	// })
-	//     }
-	//   }
-
-	//   useEffect(() => {
-	//     axios
-	// 			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
-	// 			.then(res => {
-	//   setDashboardProjects(
-	// 					res.data.map(project_assignment => project_assignment.Project)
-	// 				)
-	//   purgeNullStates(stateRef.current)
-	//   setProjects(
-	// 					stateRef.current.map(project =>
-
-	// 					)
-	// 				)
-	//   selectProject(0)
-	// })
-	// 			.catch(err => {
-	//   console.log(err)
-	// })
-	//   }, [])
+  let index = 0
 
   return (
     <Box
@@ -85,10 +22,17 @@ export default function Dashboard (props) {
       }}
 		>
       <List component='nav' aria-label='main mailbox folders'>
-        {state.userProjects.map(project => {
-          <DashboardItem state={state} />
+        {state.allUserProjects.map(project => {
+          return (
+            <DashboardItem
+              key={index++}
+              value={project.id}
+              primary={project.name}
+              state={state}
+						/>
+          )
         })}
-        <ListItemButton value='Create New Project'>
+        <ListItemButton key={index++} value='Create New Project'>
           <ListItemIcon />
           <ListItemText
             primary='Create New Project'

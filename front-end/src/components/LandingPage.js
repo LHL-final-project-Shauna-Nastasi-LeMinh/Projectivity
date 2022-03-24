@@ -10,6 +10,8 @@ import RemoveTicket from './Forms/RemoveTicket'
 export default function DashboardProject (props) {
   const { state } = props
 
+  console.log('landing page', state)
+
   return (
     <Container>
       {state.modes.projectView && <Dashboard state={state} />}

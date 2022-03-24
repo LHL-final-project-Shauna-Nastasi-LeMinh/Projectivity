@@ -26,16 +26,18 @@ export default function useApplicationData () {
     allUserStatuses: null,
 
 		// DATA FOR CURRENT SELECTED PROJECT
-    selectedProjectAssignments: null,
-    selectedProjects: null,
-    selectedColumns: null,
-    selectedTickets: null,
-    selectedEmployees: null,
-    selectedMilestones: null,
-    selectedSeverities: null,
-    selectedPriorities: null,
-    selectedTypes: null,
-    selectedStatuses: null,
+    currentProjectAssignments: null,
+    currentProject: null,
+    currentColumns: null,
+    currentColumn: null,
+    currentTickets: null,
+    currentTicket: null,
+    currentEmployees: null,
+    currentMilestones: null,
+    currentSeverities: null,
+    currentPriorities: null,
+    currentTypes: null,
+    currentStatuses: null,
 
 		// A GENERIC STATE SETTER WITH DATA
 		// use this to set all of the above states
@@ -44,6 +46,39 @@ export default function useApplicationData () {
         ...prev,
         [target]: data
       }))
+    },
+    setCurrentProject: function (target_project_id) {
+      const target_project = state.allUserProjects.map(project => {
+        if (project.id === target_project_id) {
+          return project
+        }
+        return null
+      })
+      const columns = state.allUserColumns.map(column => {
+        if (column.project_id === target_project_id) {
+          return column
+        }
+        return null
+      })
+
+      const tickets = []
+      for (const column of columns) {
+        for (const ticket of state.allUserTickets) {
+          if (ticket.column_id === column.id && !tickets.includes(ticket)) {
+            tickets.push(ticket)
+          }
+        }
+      }
+
+      console.log('nPct', target_project, columns, tickets)
+
+      setState(prev => ({
+        ...prev,
+        currentProject: target_project,
+        currentColumns: columns,
+        currentTickets: tickets
+      }))
+      state.setMode('projectView')
     },
 
 		// FORM DATA
@@ -64,7 +99,7 @@ export default function useApplicationData () {
 
 		// MODE VIEWS
     modes: {
-      aboutView: false,
+      aboutView: true,
       projectView: false,
       dashView: false,
       landingView: false
@@ -75,12 +110,14 @@ export default function useApplicationData () {
         ...prev,
         modes: { ...prev.modes, [target]: true, [state.currentMode]: false }
       }))
+      setState(prev => ({ ...prev, currentMode: target }))
     },
 
 		// MODALS
     modals: {
       loginForm: false,
       registerForm: false,
+      showTicketDetail: false,
       newProjectForm: false,
       newColumnForm: false,
       newTicketForm: false,
@@ -112,16 +149,35 @@ export default function useApplicationData () {
         }
 				)
 				.then(res => {
-  this.setStateTarget('allUserPriorities', res.data.ticket_priority)
-  this.setStateTarget('allUserSeverities', res.data.ticket_severity)
-  this.setStateTarget('allUserTypes', res.data.ticket_type)
-  this.setStateTarget('allUserColumns', res.data.user_columns)
-  this.setStateTarget(
-						'allUserProjectAssignments',
-						res.data.user_project_assignments
-					)
-  this.setStateTarget('allUserProjects', res.data.user_projects)
-  this.setStateTarget('allUserTickets', res.data.user_tickets)
+  const first_project = res.data.user_projects[0]
+  const project_columns = res.data.user_columns.filter(column => {
+    if (column.project_id === first_project.id) {
+      return column
+    }
+  })
+  const project_tickets = []
+  for (const column of project_columns) {
+    for (const ticket of res.data.user_tickets) {
+      if (ticket.column_id === column.id) {
+        if (!project_tickets.includes(ticket)) {
+          project_tickets.push(ticket)
+        }
+      }
+    }
+  }
+
+  setState(prev => ({
+    ...prev,
+    allUserSeverities: res.data.ticket_severity,
+    allUserTypes: res.data.ticket_type,
+    allUserColumns: res.data.user_columns,
+    allUserProjectAssignments: res.data.user_project_assignments,
+    allUserProjects: res.data.user_projects,
+    allUserTickets: res.data.user_tickets,
+    currentProject: first_project,
+    currentColumns: project_columns,
+    currentTickets: project_tickets
+  }))
 })
 				.catch(err => {
   console.log('GET USER DATA FAILED', err)

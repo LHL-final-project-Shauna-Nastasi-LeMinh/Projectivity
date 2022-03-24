@@ -13,7 +13,7 @@ import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
 export default function NewTicketForm (props) {
-  const { user, setViewMode, currentColumn, open, setOpen } = props
+  const { state } = props
   const [values, setValues] = useState({
     message: '',
     title: undefined,
@@ -31,12 +31,12 @@ export default function NewTicketForm (props) {
 			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
   title: values.title,
   description: values.description,
-  created_by: user.id,
-  column_id: currentColumn
+  created_by: state.currentUser.id,
+  column_id: state.currentColumn
 })
 			.then(res => {
-  setViewMode(PROJECT_VIEW)
-  setOpen(false)
+  state.setMode('projectView')
+  state.closeModal('newTicketForm')
 })
 			.catch(function (error) {
   console.log(error.message)
@@ -57,8 +57,8 @@ export default function NewTicketForm (props) {
 
   return (
     <Modal
-      open={open.newTicketForm}
-      onClose={() => setOpen(false)}
+      open={state.modes.newTicketForm}
+      onClose={() => state.closeModal('newTicketForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -129,7 +129,7 @@ export default function NewTicketForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={() => setOpen(false)}
+            onClick={() => state.closeModal('newTicketForm')}
 					>
 						Cancel
 					</Button>

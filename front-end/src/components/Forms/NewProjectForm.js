@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 
 export default function RegistrationForm (props) {
-  const { state, setState } = props
+  const { state } = props
 
   const createNewProject = event => {
     axios
@@ -23,11 +23,15 @@ export default function RegistrationForm (props) {
 })
 			.then(res => {
 				// close newProjectForm modal
-  state.setModal('newProjectForm', false)
+  state.openModal('newProjectForm')
 })
 			.catch(function (error) {
   console.log(error.message)
-  setState({ ...state, [state.formData.message]: 'Form invalid' })
+  state.setStateTarget('formData', {
+    ...state.formData,
+    message: 'Form invalid'
+  })
+				// state.setState({ ...state, [state.formData.message]: 'Form invalid' })
 })
   }
 
@@ -45,7 +49,7 @@ export default function RegistrationForm (props) {
   return (
     <Modal
       open={state.modals.newProjectForm}
-      onClose={state.setModal('newProjectForm', false)}
+      onClose={state.closeModal('newProjectForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -116,7 +120,7 @@ export default function RegistrationForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={state.setModal('newProjectForm', false)}
+            onClick={state.closeModal('newProjectForm')}
 					>
 						Cancel
 					</Button>

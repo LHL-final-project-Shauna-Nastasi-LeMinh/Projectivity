@@ -36,8 +36,8 @@ export default function LoginForm (props) {
           state.setStateTarget('currentCookies', user)
           state.setStateTarget('userLoggedIn', true)
           const userData = state.getUserData(user.id)
-          console.log('userData', userData)
           state.closeModal('loginForm')
+          state.setMode('projectView')
         }
       }
     })

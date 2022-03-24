@@ -10,6 +10,16 @@ import Paper from '@mui/material/Paper'
 export default function Main (props) {
   const { state } = props
 
+  const dataLoaded =
+		state.currentProject !== null &&
+		state.currentColumns !== null &&
+		state.currentTickets !== null &&
+		state.allUserProjects !== null &&
+		state.allUserColumns !== null &&
+		state.allUserProjects !== null
+
+  console.log(dataLoaded)
+
   return (
     <Paper>
       {state.modes.aboutView && <AboutPage />}
@@ -25,7 +35,7 @@ export default function Main (props) {
       {state.modals.newTicketForm &&
 				state.userLoggedIn &&
 				<NewTicketForm state={state} />}
-      {state.userLoggedIn && <LandingPage state={state} />}
+      {state.userLoggedIn && dataLoaded && <LandingPage state={state} />}
     </Paper>
   )
 }
