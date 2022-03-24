@@ -7,6 +7,7 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import DashboardItem from './DashboardItem'
 import DeleteProjectForm from './Forms/DeleteProjectForm'
+import NewProjectForm from './Forms/NewProjectForm'
 import {
 	NEW_PROJECT_FORM,
 	DELETE_PROJECT_FORM,
@@ -124,6 +125,16 @@ export default function Dashboard (props) {
         setViewMode={setViewMode}
         modals={modals}
         closeModals={closeModals}
+        dashboardProjects={dashboardProjects}
+        setDashboardProjects={setDashboardProjects}
+				/>}
+      {modals.newProjectForm &&
+      <NewProjectForm
+        user={user}
+        setViewMode={setViewMode}
+        modals={modals}
+        closeModals={closeModals}
+        setProjects={setProjects}
         dashboardProjects={dashboardProjects}
         setDashboardProjects={setDashboardProjects}
 				/>}

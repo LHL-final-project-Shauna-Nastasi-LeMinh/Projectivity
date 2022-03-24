@@ -76,15 +76,6 @@ export default function DashboardProject (props) {
         setRefresh={setRefresh}
 				/>}
       <Container>
-        {modals.newProjectForm &&
-        <NewProjectForm
-          user={user}
-          setViewMode={setViewMode}
-          modals={modals}
-          closeModals={closeModals}
-          setRefresh={setRefresh}
-					/>}
-
         {modals.newTicketForm &&
         <NewTicketForm
           user={user}

@@ -13,7 +13,14 @@ import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
 export default function NewTicketForm (props) {
-  const { user, currentColumn, dialogOpen, setDialogOpen, tickets, setTickets } = props
+  const {
+		user,
+		currentColumn,
+		dialogOpen,
+		setDialogOpen,
+		tickets,
+		setTickets
+	} = props
   const [values, setValues] = useState({
     message: '',
     title: undefined,
@@ -25,22 +32,19 @@ export default function NewTicketForm (props) {
   }
 
   const onAdd = event => {
-    
 		// add new ticket to db
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
-        title: values.title,
-        description: values.description,
-        created_by: user.id,
-        column_id: currentColumn
-      })
-			.then((res) => {
-      
-        console.log("created new ticket", res.data)
-       
-        const newTicket = { ...res.data}
-        setTickets([...tickets, newTicket])
-        setDialogOpen(false)
+  title: values.title,
+  description: values.description,
+  created_by: user.id,
+  column_id: currentColumn
+})
+			.then(res => {
+  console.log('created new ticket', res.data)
+  const newTicket = { ...res.data }
+  setTickets([...tickets, newTicket])
+  setDialogOpen(false)
 })
 			.catch(function (error) {
   console.log(error.message)

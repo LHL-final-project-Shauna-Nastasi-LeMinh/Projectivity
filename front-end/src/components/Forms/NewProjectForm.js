@@ -13,7 +13,16 @@ import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
 export default function RegistrationForm (props) {
-  const { setViewMode, user, modals, openModals, closeModals } = props
+  const {
+		setViewMode,
+		user,
+		modals,
+		openModals,
+		closeModals,
+		dashboardProjects,
+		setDashboardProjects,
+		setProjects
+	} = props
   const [values, setValues] = useState({
     message: '',
     name: undefined,
@@ -25,8 +34,6 @@ export default function RegistrationForm (props) {
   }
 
   function createNewProject () {
-    console.log('create new project')
-    closeModals('newProjectForm')
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', {
   name: values.name,
@@ -34,7 +41,19 @@ export default function RegistrationForm (props) {
   employee_id: user.id
 })
 			.then(res => {
+  axios
+					.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
+					.then(res => {
+  const data = res.data.map(
+							project_assignment => project_assignment.Project
+						)
+  setDashboardProjects(data)
+  setProjects(data)
   closeModals('newProjectForm')
+})
+					.catch(err => {
+  console.log(err)
+})
 })
 			.catch(function (error) {
   console.log(error.message)
