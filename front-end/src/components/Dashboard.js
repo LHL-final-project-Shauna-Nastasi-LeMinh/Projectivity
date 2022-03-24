@@ -139,7 +139,7 @@ export default function Dashboard (props) {
           return (
             <DashboardItem
               key={index++}
-              value={project.id}
+              value={project}
               listIndex={index++}
               primary={project.name}
               state={state}

@@ -206,7 +206,7 @@ export default function ProjectView (props) {
     const allColumns = state.currentColumns;
     
     allColumns.forEach(column => {
-      const tickets = column.Tickets.filter(ticket => {
+      const tickets = state.currentTickets.filter(ticket => {
         let matchSeverity = true;
         let matchPriority = true;
         let matchType = true;

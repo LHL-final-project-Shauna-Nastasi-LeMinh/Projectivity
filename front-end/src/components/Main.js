@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper'
 import Modal from '@mui/material/Modal'
 import NewProjectForm from './Forms/NewProjectForm'
 import NewTicketForm from './Forms/NewTicketForm'
+import DeleteProjectForm from './Forms/DeleteProjectForm'
 
 export default function Main (props) {
   const [viewMode, setViewMode] = useState(PROJECT_VIEW)
@@ -44,8 +45,6 @@ export default function Main (props) {
 		state.allUserColumns !== null &&
 		state.allUserProjects !== null
 
-  console.log(dataLoaded)
-
   return (
     <Paper>
       {state.modes.aboutView && <AboutPage />}
@@ -61,6 +60,9 @@ export default function Main (props) {
       {state.modals.newTicketForm &&
 				state.userLoggedIn &&
 				<NewTicketForm state={state} />}
+      {state.modals.deleteProjectForm &&
+				state.userLoggedIn &&
+				<DeleteProjectForm state={state} />}
       {state.userLoggedIn && dataLoaded && <LandingPage state={state} />}
     </Paper>
   )

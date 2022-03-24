@@ -25,18 +25,6 @@ const setting_views = [LANDING_VIEW, LANDING_VIEW, LANDING_VIEW, LANDING_VIEW]
 
 export default function NavbarMenu (props) {
   const { state } = props
-
-	// const {
-	// 	mode,
-	// 	setMode,
-	// 	user,
-	// 	setUser,
-	// 	cookies,
-	// 	removeCookie,
-	// 	modals,
-	// 	openModals
-	// } = props
-	// const [email, setEmail] = useState(null)
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
@@ -56,7 +44,7 @@ export default function NavbarMenu (props) {
     }
 
 		// console.log('string is:', string)
-		// state.openModal(newMode)
+    state.openModal(newMode)
 		// setAnchorElUser(null)
   }
 

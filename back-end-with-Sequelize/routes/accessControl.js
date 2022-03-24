@@ -25,7 +25,7 @@ module.exports = sequelizeModels => {
       if (employees.length > 0) {
         const employee = employees[0]
 
-        return res.json( {
+        return res.json({
           id: employee.id,
           email: employee.email,
           role_id: employee.Role.id
@@ -41,13 +41,20 @@ module.exports = sequelizeModels => {
 
   router.post('/register', async (req, res) => {
     try {
-      const {first_name, last_name, phone, email, password, role_id} = req.body;
-      const employee = await Employee.create({first_name, last_name, phone, email, password, role_id})
-      return res.json( {
-        id: employee.id,
-        email: employee.email,
-        role_id: role_id
-      })
+      const newEmployee = ({
+				first_name,
+				last_name,
+				phone,
+				email,
+				password,
+				role_id
+			} = req.body)
+      const employee = await Employee.create(newEmployee)
+
+      console.log('employee', employee, newEmployee)
+
+			// return newEmployee
+      return res.json(newEmployee)
     } catch (err) {
       console.log(err)
       return res.status(500).json(err)
@@ -56,9 +63,8 @@ module.exports = sequelizeModels => {
 
   router.get('/logout', async (req, res) => {
     try {
-      return res.json({ message: "Logged out" });
-    } catch(err) {
-    }
+      return res.json({ message: 'Logged out' })
+    } catch (err) {}
   })
 
   return router

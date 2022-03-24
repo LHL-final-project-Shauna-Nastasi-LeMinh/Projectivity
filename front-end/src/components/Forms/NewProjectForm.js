@@ -14,7 +14,10 @@ import { PROJECT_VIEW } from '../constants/Modes'
 
 export default function RegistrationForm (props) {
   const { state } = props
-  const [values, setValues] = useState()
+  const [values, setValues] = useState({
+    name: null,
+    description: null
+  })
 
   const createNewProject = event => {
     axios
@@ -51,7 +54,7 @@ export default function RegistrationForm (props) {
   return (
     <Modal
       open={state.modals.newProjectForm}
-      onClose={state.closeModal('newProjectForm')}
+      onClose={() => state.closeModal('newProjectForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -122,7 +125,7 @@ export default function RegistrationForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={state.closeModal('newProjectForm')}
+            onClick={() => state.closeModal('newProjectForm')}
 					>
 						Cancel
 					</Button>

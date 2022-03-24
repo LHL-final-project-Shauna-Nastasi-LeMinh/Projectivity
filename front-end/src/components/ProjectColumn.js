@@ -196,6 +196,7 @@ export default function ProjectColumn (props) {
                 }}
 							>
                 <ColumnTickets
+                  state={state}
                   tickets={state.currentTickets}
                   currentTicket={state.currentTicket}
 									// open={open}

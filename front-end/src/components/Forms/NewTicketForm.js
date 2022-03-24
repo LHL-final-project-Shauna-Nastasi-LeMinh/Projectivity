@@ -57,7 +57,7 @@ export default function NewTicketForm (props) {
 
   return (
     <Modal
-      open={state.modes.newTicketForm}
+      open={state.modals.newTicketForm}
       onClose={() => state.closeModal('newTicketForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'

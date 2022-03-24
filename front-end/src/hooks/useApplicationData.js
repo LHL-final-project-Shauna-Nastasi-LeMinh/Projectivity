@@ -106,6 +106,7 @@ export default function useApplicationData () {
     },
     currentMode: 'aboutView',
     setMode: function (target) {
+      console.log('set view mode', target)
       setState(prev => ({
         ...prev,
         modes: { ...prev.modes, [target]: true, [state.currentMode]: false }
@@ -129,12 +130,14 @@ export default function useApplicationData () {
       deleteTicketForm: false
     },
     openModal: function (target) {
+      console.log('open modal', target)
       setState(prev => ({
         ...prev,
         modals: { ...prev.modals, [target]: true }
       }))
     },
     closeModal: function (target) {
+      console.log('close modal', target)
       setState(prev => ({
         ...prev,
         modals: { ...prev.modals, [target]: false }
@@ -207,6 +210,10 @@ export default function useApplicationData () {
 
   useEffect(() => {
     getGenericData()
+    console.log(
+			'generic data loaded',
+			state.currentRoles !== null && state.usersList !== null
+		)
   }, [])
 
   return { state }

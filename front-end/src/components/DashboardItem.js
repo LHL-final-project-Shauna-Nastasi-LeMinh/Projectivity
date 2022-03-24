@@ -15,7 +15,7 @@ export default function DashboardItem (props) {
         key={key}
         value={value}
         primary={primary}
-        onClick={() => state.setCurrentProject(value)}
+        onClick={() => state.setStateTarget('currentProject', value)}
 			/>
       <EditIcon />
       <DeleteIcon onClick={() => state.openModal('deleteProjectForm')} />

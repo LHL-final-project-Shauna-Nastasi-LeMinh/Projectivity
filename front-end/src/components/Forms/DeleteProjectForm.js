@@ -21,12 +21,15 @@ export default function DeleteProjectForm (props) {
 		setUser,
 		setCookie,
 		open,
-		setOpen
+		setOpen,
+		state
 	} = props
   const [values, setValues] = useState({
     message: '',
     confirm: undefined
   })
+
+  console.log('delete project form')
 
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
@@ -36,13 +39,14 @@ export default function DeleteProjectForm (props) {
     if (values.confirm === 'DELETE') {
       axios
 				.delete(
-					process.env.REACT_APP_BACKEND_URL + `/projects/${data.id}/delete`,
+					process.env.REACT_APP_BACKEND_URL +
+						`/projects/${state.currentProject.id}/delete`,
         {
-          project_id: data.id
+          project_id: state.currentProject.id
         }
 				)
 				.then(res => {
-  setOpen(false)
+  state.closeModal('deleteProjectForm')
 })
 				.catch(function (error) {
   console.log(error.message)
@@ -64,8 +68,8 @@ export default function DeleteProjectForm (props) {
 
   return (
     <Modal
-      open={open.deleteProjectForm}
-      onClose={() => setOpen(false)}
+      open={state.modals.deleteProjectForm}
+      onClose={() => state.closeModal('deleteProjectForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -136,7 +140,7 @@ export default function DeleteProjectForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={() => setOpen(false)}
+            onClick={() => state.closeModal('deleteProjectForm')}
 					>
 						Cancel
 					</Button>

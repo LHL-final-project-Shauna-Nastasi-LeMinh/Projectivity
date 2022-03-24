@@ -22,6 +22,8 @@ export default function LoginForm (props) {
     showPassword: false
   })
 
+  console.log('modals after open', state.modals)
+
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }
@@ -39,12 +41,12 @@ export default function LoginForm (props) {
 
   function login () {
     state.usersList.map(user => {
-      if (user.email === state.formData.email) {
-        if (user.password === state.formData.password) {
+      if (user.email === values.email) {
+        if (user.password === values.password) {
           state.setStateTarget('currentUser', user)
           state.setStateTarget('currentCookies', user)
           state.setStateTarget('userLoggedIn', true)
-          const userData = state.getUserData(user.id)
+          state.getUserData(user.id)
           state.closeModal('loginForm')
           state.setMode('projectView')
         }
@@ -66,7 +68,7 @@ export default function LoginForm (props) {
   return (
     <Modal
       open={state.modals.loginForm}
-      onClose={state.closeModal('loginForm')}
+      onClose={() => state.closeModal('loginForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -139,7 +141,7 @@ export default function LoginForm (props) {
             color='success'
             size='large'
             variant='contained'
-            onClick={login}
+            onClick={() => login()}
 					>
 						Login
 					</Button>
@@ -148,7 +150,7 @@ export default function LoginForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={state.closeModal('loginForm')}
+            onClick={() => state.closeModal('loginForm')}
 					>
 						Cancel
 					</Button>

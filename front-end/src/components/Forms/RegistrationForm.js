@@ -16,10 +16,12 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function RegistrationForm (props) {
-  const { setUser, setCookie, modals, closeModals } = props
+  const { state } = props
 
-  const [roles, setRoles] = useState([])
-  const [role, setRole] = useState()
+  console.log('currentRoles', state.currentRoles)
+
+	// const [roles, setRoles] = useState([])
+	// const [role, setRole] = useState()
   const [dropdown, setDropdown] = useState()
   const [values, setValues] = useState({
     firstName: null,
@@ -27,7 +29,7 @@ export default function RegistrationForm (props) {
     phone: null,
     email: null,
     password: null,
-    roleInput: 'Manager',
+    roleInput: 1,
     showPassword: false
   })
 
@@ -46,44 +48,48 @@ export default function RegistrationForm (props) {
     event.preventDefault()
   }
 
-  useEffect(() => {
-    axios
-			.get(process.env.REACT_APP_BACKEND_URL + '/roles')
-			.then(result => {
-  const roles_names = result.data.map(role => role.name)
+	//   useEffect(() => {
+	//     axios
+	// 			.get(process.env.REACT_APP_BACKEND_URL + '/roles')
+	// 			.then(result => {
+	//   const roles_names = result.data.map(role => role.name)
 
-  const newMenu = roles_names.map(role => {
-    <MenuItem value={role.name}>
-      {role.name}
-    </MenuItem>
-  })
+	//   const newMenu = roles_names.map(role => {
+	//     <MenuItem value={role.name}>
+	//       {role.name}
+	//     </MenuItem>
+	//   })
 
-  setDropdown(newMenu)
-  setRoles(result.data)
-})
-			.catch(err => {
-  console.log(err)
-  setValues({ ...values, message: 'Form invalid' })
-})
-  }, [])
+	//   setDropdown(newMenu)
+	//   setRoles(result.data)
+	// })
+	// 			.catch(err => {
+	//   console.log(err)
+	//   setValues({ ...values, message: 'Form invalid' })
+	// })
+	//   }, [])
 
   const register = event => {
+    console.log('trying to register')
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/register', {
   first_name: values.firstName,
   last_name: values.lastName,
+  phone: values.phone,
   email: values.email,
   password: values.password,
-  phone: values.phone,
   role_id: values.roleInput
 })
 			.then(res => {
-  setUser(res.data)
-  setCookie('user', res.data, {
-    path: '/'
-  })
+  console.log('register data', res.data)
+  state.setStateTarget('currentUser', res.data)
+  state.setStateTarget('currentCookies', res.data)
+  state.setStateTarget('userLoggedIn', true)
+				// state.getUserData(res.data)
+  state.closeModal('registerForm')
+  state.setMode('projectView')
 })
-			.catch(function (error) {
+			.catch(error => {
   console.log(error.message)
   setValues({ ...values, [values.message]: 'Registration invalid' })
 })
@@ -102,8 +108,8 @@ export default function RegistrationForm (props) {
 
   return (
     <Modal
-      open={modals.registerForm}
-      onClose={closeModals('registerForm')}
+      open={state.modals.registerForm}
+      onClose={() => state.closeModal('registerForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -193,13 +199,20 @@ export default function RegistrationForm (props) {
               required
 						/>
             <Select
-              sx={{ m: 2 }}
+              sx={{ m: 2, width: '50%' }}
               label='Select A Role'
               defaultValue={values.roleInput}
               onChange={handleChange('roleInput')}
               required
 						>
-              {dropdown}
+              {state.currentRoles !== null &&
+								state.currentRoles.map(role => {
+  return (
+    <MenuItem key={role.id} value={role.id}>
+      {role.name}
+    </MenuItem>
+  )
+})}
             </Select>
           </Box>
         </Box>
@@ -228,7 +241,7 @@ export default function RegistrationForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={closeModals('registerForm')}
+            onClick={() => state.closeModal('registerForm')}
 					>
 						Cancel
 					</Button>
