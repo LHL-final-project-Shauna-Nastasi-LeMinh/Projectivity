@@ -41,6 +41,9 @@ export default function DashboardProject (props) {
 
   function loadForm (newData, mode) {
     console.log(newData, mode)
+    console.log("AAAAAAAAAAAAAAAAAAAAa")
+    console.log(newData)
+    console.log("mode:"+mode)
     setData(newData)
     setViewMode(mode)
   }

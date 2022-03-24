@@ -26,7 +26,9 @@ module.exports = (sequelize, DataTypes) => {
     milestone: DataTypes.STRING,
     created_by: DataTypes.INTEGER,
     column_id: DataTypes.INTEGER,
-    owner_id: DataTypes.INTEGER
+    owner_id: DataTypes.INTEGER,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     sequelize,
     tableName: 'tickets',

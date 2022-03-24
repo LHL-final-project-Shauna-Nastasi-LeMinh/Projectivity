@@ -87,6 +87,7 @@ export default function Dashboard (props) {
     viewMode={viewMode}
     setViewMode={setViewMode}
     loadForm={loadForm}
+    user={user}
 						/>
 					)
 				)

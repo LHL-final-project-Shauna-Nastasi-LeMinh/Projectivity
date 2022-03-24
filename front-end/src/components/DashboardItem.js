@@ -7,6 +7,7 @@ import axios from 'axios'
 import { PROJECT_VIEW, DELETE_PROJECT_FORM } from './constants/Modes'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
+import { MANAGER_LEVEL} from './constants/AccessLevel'
 
 export default function DashboardItem (props) {
   const {
@@ -20,7 +21,8 @@ export default function DashboardItem (props) {
 		value,
 		listIndex,
 		selectProject,
-		loadForm
+		loadForm,
+    user
 	} = props
   const [selectedIndex, setSelectedIndex] = React.useState()
 
@@ -39,10 +41,8 @@ export default function DashboardItem (props) {
         onClick={event =>
 					handleListItemClick(event, listIndex, dashItemProject)}
 			/>
-      <EditIcon />
-      <DeleteIcon
-        onClick={() => loadForm(dashItemProject, DELETE_PROJECT_FORM)}
-			/>
+      {user && user.access_level == MANAGER_LEVEL && <EditIcon />}
+      {user && user.access_level == MANAGER_LEVEL && <DeleteIcon onClick={() => loadForm(dashItemProject, DELETE_PROJECT_FORM)}/>}
     </ListItemButton>
   )
 }
