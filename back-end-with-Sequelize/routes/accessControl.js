@@ -28,7 +28,8 @@ module.exports = sequelizeModels => {
         return res.json( {
           id: employee.id,
           email: employee.email,
-          role_id: employee.Role.id
+          role_id: employee.Role.id,
+          access_level: employee.Role.access_level
         })
       } else {
         return res.status(403).json(new Error('Access forbidden'))

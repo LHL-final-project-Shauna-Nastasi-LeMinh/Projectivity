@@ -13,19 +13,9 @@ module.exports = {
     */
      await queryInterface.bulkInsert('employees', [
       {
-        first_name: 'John',
-        last_name: 'Man',
-        email: 'john@gmail.com',
-        password: 'password',
-        phone: '9021111111',
-        role_id: 1,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
         first_name: 'Jane',
         last_name: 'De',
-        email: 'jane@gmail.com',
+        email: 'managerA@gmail.com',
         password: 'password',
         phone: '9021111111',
         role_id: 2,
@@ -34,11 +24,31 @@ module.exports = {
       },
       {
         first_name: 'Alice',
-        last_name: 'Te',
-        email: 'alice@gmail.com',
+        last_name: 'Doe',
+        email: 'devA@gmail.com',
         password: 'password',
         phone: '9021111111',
         role_id: 3,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        first_name: 'Brian',
+        last_name: 'Doe',
+        email: 'testerA@gmail.com',
+        password: 'password',
+        phone: '9021111111',
+        role_id: 4,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        first_name: 'John',
+        last_name: 'Man',
+        email: 'HR@gmail.com',
+        password: 'password',
+        phone: '9021111111',
+        role_id: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       },
