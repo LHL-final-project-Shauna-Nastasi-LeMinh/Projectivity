@@ -36,13 +36,26 @@ module.exports = sequelizeModels => {
 
   router.post('/new', async (req, res) => {
     try {
-      const {title, created_by, column_id} = req.body
+      const {
+        title,
+        description,
+        created_by,
+        column_id,
+        severity,
+        priority,
+        type,
+        milestone
+      } = req.body
 
       const newTicket = await Tickets.create({
         title,
-        description: 'test',
+        description,
         created_by,
         column_id,
+        severity,
+        priority,
+        type,
+        milestone
       })
 
       return res.json(newTicket);
