@@ -1,4 +1,5 @@
 import React from 'react';
+import { format } from "date-fns";
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -84,12 +85,12 @@ export default function ShowTicketDetails(props) {
               <ListItemText primary="Description:" secondary={ticketDetails.description} />
             </ListItem>
 
-            <Divider component="li" />
+            {/* <Divider component="li" />
 
             <ListItem>
              
-              <ListItemText primary="Created at:" secondary={ticketDetails.created_at} />
-            </ListItem>
+              <ListItemText primary="Created at:" secondary={format(ticketDetails.created_at, "MMMM Do, YYYY")} />
+            </ListItem> */}
           
 
           <Divider component="li" />
