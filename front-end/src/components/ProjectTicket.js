@@ -3,70 +3,81 @@ import { useState } from 'react'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
-import Fade from '@mui/material/Fade';
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import IconButton from '@mui/material/IconButton'
+import Fade from '@mui/material/Fade'
 import RemoveTicket from './Forms/RemoveTicket'
 import ShowTicketDetails from './Forms/ShowTicketDetails'
 
-import { SHOW_TICKET_DETAILS, EDIT_TICKET, REMOVE_TICKET } from './constants/Modes'
+import {
+	SHOW_TICKET_DETAILS,
+	EDIT_TICKET,
+	REMOVE_TICKET
+} from './constants/Modes'
 
 export default function ProjectTicket (props) {
-  const { title, value, ticketId, setViewMode, setOpen, setCurrentTicket, tickets, setTickets} = props
+  const {
+		state,
+		title,
+		// value,
+		ticketId,
+		setCurrentTicket,
+		// tickets,
+		// setTickets,
+		isDragging
+	} = props
   const [checked, setChecked] = React.useState([1])
-  const [dialogOpen, setDialogOpen] = useState(false)
+  const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [detailsDialogOpen, setDetailsDialogOpen] = useState(false)
+  const [removeDialogOpen, setRemoveDialogOpen] = useState(false)
+  const [menuDialogOpen, setMenuDialogOpen] = useState(false)
+  const [ticketDialogOpen, setTicketDialogOpen] = useState(false)
 
-  // handle opening and closing of MoreVertIcon
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openMenu = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+	// handle opening and closing of MoreVertIcon
+  const [anchorEl, setAnchorEl] = useState(null)
+	// const open = Boolean(anchorEl)
+	// const handleClick = event => {
+	//   setAnchorEl(event.currentTarget)
+	// }
+	// const handleClose = () => {
+	//   setAnchorEl(null)
+	// }
 
+	// const handleDialogOpening = evt => {
+	//   if (evt.target.id === 'edit') {
+	//     setEditDialogOpen(true)
+	//   }
 
-  const closeMenu = () => {
-    setAnchorEl(null)
-  }
+	//   if (evt.target.id === 'details') {
+	//     setDetailsDialogOpen(true)
+	//   }
 
-  const handleDialogOpening = (evt) => {
-    console.log(evt.target.id)
+	//   if (evt.target.id === 'remove') {
+	//     setRemoveDialogOpen(true)
+	//   }
 
-    if (evt.target.id === 'edit') {
-      setOpen(EDIT_TICKET)
-    }
+	//   setEditDialogOpen(false)
+	//   setDetailsDialogOpen(false)
+	//   setRemoveDialogOpen(false)
+	// }
 
-    if (evt.target.id === 'details') {
-      setDialogOpen(SHOW_TICKET_DETAILS)
-      console.log(dialogOpen)
-    }
+	// const handleToggle = value => () => {
+	//   const currentIndex = checked.indexOf(value)
+	//   const newChecked = [...checked]
 
-    if (evt.target.id === 'remove') {
-      setDialogOpen(REMOVE_TICKET)
-      console.log(dialogOpen)
-    
-    }
+	//   if (currentIndex === -1) {
+	//     newChecked.push(value)
+	//   } else {
+	//     newChecked.splice(currentIndex, 1)
+	//   }
 
-    closeMenu()
+	//   setChecked(newChecked)
+	// }
 
-    
-  };
-
-	//
-
-  const handleToggle = value => () => {
-    const currentIndex = checked.indexOf(value)
-    const newChecked = [...checked]
-
-    if (currentIndex === -1) {
-      newChecked.push(value)
-    } else {
-      newChecked.splice(currentIndex, 1)
-    }
-
-    setChecked(newChecked)
-  }
+	// setChecked(newChecked)
+	// }
 
   const clickHandler = function () {
     console.log(ticketId)
@@ -81,61 +92,115 @@ export default function ProjectTicket (props) {
     <ListItem sx={{ padding: '0.1rem' }}>
       <ListItemButton
         sx={{
-          backgroundColor: props.isDragging ? 'lightgreen' : 'white',
+          backgroundColor: isDragging ? 'lightgreen' : 'white',
           transition: 'background-color 1s ease'
         }}
-        
 			>
-        <ListItemText primary={title} />
+        <ListItemText primary={state.currentTickets.title} />
         <div>
-        <IconButton
-          id="fade-button"
-          aria-controls={openMenu ? 'fade-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={openMenu ? 'true' : undefined}
-          onClick={handleClick}
-        >  
-          <MoreVertIcon />
+          <IconButton
+            id='fade-button'
+            aria-controls={openMenu ? 'fade-menu' : undefined}
+            aria-haspopup='true'
+            aria-expanded={openMenu ? 'true' : undefined}
+            onClick={handleClick}
+					>
+            <MoreVertIcon />
+          </IconButton>
 
-        </IconButton>
-
-        {dialogOpen === SHOW_TICKET_DETAILS &&
+          {dialogOpen === SHOW_TICKET_DETAILS &&
           <ShowTicketDetails
-          tickets={tickets}
-          setTickets={setTickets}
-          ticketId={ticketId}
-          setViewMode={setViewMode}
-          dialogOpen={dialogOpen}
-          setDialogOpen={setDialogOpen}
-          
-					/>}
+            tickets={tickets}
+            setTickets={setTickets}
+            ticketId={ticketId}
+            setViewMode={setViewMode}
+            dialogOpen={dialogOpen}
+            setDialogOpen={setDialogOpen}
+						/>}
           {dialogOpen === REMOVE_TICKET &&
           <RemoveTicket
-          tickets={tickets}
-          ticketId={ticketId}
-          dialogOpen={dialogOpen}
-          setDialogOpen={setDialogOpen}
-          
-					/>}
-        <Menu
-        id="fade-menu"
-        MenuListProps={{
-          'aria-labelledby': 'fade-button',
-        }}
-        anchorEl={anchorEl}
-        open={openMenu}
-        onClose={closeMenu}
-        TransitionComponent={Fade}
-      >
-        <MenuItem id="details" onClick={evt => handleDialogOpening(evt)}>
-          Details
-          </MenuItem>
-        <MenuItem id="edit" onClick={handleDialogOpening}>Edit</MenuItem>
-        <MenuItem  id="remove" onClick={evt =>handleDialogOpening(evt)}>Remove</MenuItem>
-      </Menu>
-      </div>
-
+            tickets={tickets}
+            ticketId={ticketId}
+            dialogOpen={dialogOpen}
+            setDialogOpen={setDialogOpen}
+						/>}
+          <Menu
+            id='fade-menu'
+            MenuListProps={{
+              'aria-labelledby': 'fade-button'
+            }}
+            anchorEl={anchorEl}
+            open={openMenu}
+            onClose={closeMenu}
+            TransitionComponent={Fade}
+					>
+            <MenuItem id='details' onClick={evt => handleDialogOpening(evt)}>
+							Details
+						</MenuItem>
+            <MenuItem id='edit' onClick={handleDialogOpening}>
+							Edit
+						</MenuItem>
+            <MenuItem id='remove' onClick={evt => handleDialogOpening(evt)}>
+							Remove
+						</MenuItem>
+          </Menu>
+        </div>
       </ListItemButton>
     </ListItem>
   )
+}
+
+{
+	/* <IconButton
+            id='fade-button'
+            aria-controls={ticketDialogOpen === true ? 'fade-menu' : undefined}
+            aria-haspopup='true'
+            aria-expanded={ticketDialogOpen === true ? 'true' : undefined}
+            onClick={() => {
+              ticketDialogOpen
+								? setTicketDialogOpen(false)
+								: setTicketDialogOpen(true)
+            }}
+					>
+            <MoreVertIcon />
+          </IconButton>
+
+          {detailsDialogOpen &&
+          <ShowTicketDetails
+							// tickets={tickets}
+							// setTickets={setTickets}
+            state={state}
+            ticketId={ticketId}
+            dialogOpen={detailsDialogOpen}
+            setDialogOpen={setDetailsDialogOpen}
+						/>}
+          {removeDialogOpen &&
+          <RemoveTicket
+							// tickets={tickets}
+            state={state}
+            ticketId={ticketId}
+            dialogOpen={removeDialogOpen}
+            setDialogOpen={setRemoveDialogOpen}
+						/>}
+          <Menu
+            id='fade-menu'
+            MenuListProps={{
+              'aria-labelledby': 'fade-button'
+            }}
+            anchorEl={anchorEl}
+            open={menuDialogOpen}
+            onClose={() => setMenuDialogOpen(false)}
+            TransitionComponent={Fade}
+					>
+            <MenuItem id='details' onClick={() => setDetailsDialogOpen(true)}>
+							Details
+						</MenuItem>
+            <MenuItem id='edit' onClick={() => setEditDialogOpen(true)}>
+							Edit
+						</MenuItem>
+            <MenuItem id='remove' onClick={() => setRemoveDialogOpen(true)}>
+							Remove
+						</MenuItem>
+          </Menu>
+        </div> */
 }

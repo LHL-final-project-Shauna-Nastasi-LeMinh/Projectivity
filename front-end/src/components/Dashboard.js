@@ -1,16 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
-import axios from 'axios'
+import React from 'react'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import DashboardItem from './DashboardItem'
-import {
-	NEW_PROJECT_FORM,
-	DELETE_PROJECT_FORM,
-	PROJECT_VIEW
-} from './constants/Modes'
 
 export default function Dashboard (props) {
   const {
@@ -26,75 +20,106 @@ export default function Dashboard (props) {
 		setOpen
 	} = props
 
-  const [projects, setProjects] = useState()
-  const [dashboardProjects, setDashboardProjects] = useState()
-  const stateRef = useRef()
-  stateRef.current = dashboardProjects
+	//   const [projects, setProjects] = useState()
+	//   const [dashboardProjects, setDashboardProjects] = useState()
+	//   const stateRef = useRef()
+	//   stateRef.current = dashboardProjects
 
-  function purgeNullStates (states) {
-    const results = []
+	//   function purgeNullStates (states) {
+	//     const results = []
 
-    if (stateRef.current) {
-      for (const state of states) {
-        if (state !== null) {
-          results.push(state)
+	//     if (stateRef.current) {
+	//       for (const state of states) {
+	//         if (state !== null) {
+	//           results.push(state)
+	//         }
+	//       }
+	//     }
+
+	//     return results
+	//   }
+
+	//   let index = 0
+
+  function selectProject (index) {
+    const newCurrentProject = state.allUserProjects.filter(project => {
+      if (project.id === index) {
+        return project
+      }
+    })
+
+    state.setStateTarget('currentProject', newCurrentProject)
+
+    const newCurrentColumns = state.allUserColumns.filter(column => {
+      if (column.project_id === index) {
+        return column
+      }
+    })
+
+    const newCurrentTickets = []
+
+    for (const column of newCurrentColumns) {
+      for (const ticket of allUserTickets) {
+        if (column.id === ticket.column_id) {
+          newCurrentTickets.push(ticket)
         }
       }
     }
 
-    return results
+    console.log(
+			'Select Current Project',
+			newCurrentProject,
+			newCurrentColumns,
+			newCurrentTickets
+		)
+
+		//     if (stateRef.current[index]) {
+		//       axios
+		// 				.get(
+		// 					process.env.REACT_APP_BACKEND_URL +
+		// 						'/projects/' +
+		// 						stateRef.current[index].id +
+		// 						'/columns'
+		// 				)
+		// 				.then(res => {
+		//   setCurrentProject(prev => {
+		//     return { ...stateRef.current[index], Columns: res.data }
+		//   })
+		//   setViewMode(PROJECT_VIEW)
+		// })
+		//     }
   }
 
-  let index = 0
-
-  function selectProject (index) {
-    if (stateRef.current[index]) {
-      axios
-				.get(
-					process.env.REACT_APP_BACKEND_URL +
-						'/projects/' +
-						stateRef.current[index].id +
-						'/columns'
-				)
-				.then(res => {
-  setCurrentProject(prev => {
-    return { ...stateRef.current[index], Columns: res.data }
-  })
-  setViewMode(PROJECT_VIEW)
-})
-    }
-  }
-
-  useEffect(() => {
-    axios
-			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
-			.then(res => {
-  setDashboardProjects(
-					res.data.map(project_assignment => project_assignment.Project)
-				)
-  purgeNullStates(stateRef.current)
-  setProjects(
-					stateRef.current.map(project =>
-  <DashboardItem
-    key={project.id}
-    value={project.name}
-    listIndex={index++}
-    currentProject={currentProject}
-    dashItemProject={project}
-    setCurrentProject={setCurrentProject}
-    selectProject={selectProject}
-    viewMode={viewMode}
-    setViewMode={setViewMode}
-    loadForm={loadForm}
-						/>
-					)
-				)
-  selectProject(0)
-})
-			.catch(err => {
-  console.log(err)
-})
-  }, [])
+	//   useEffect(() => {
+	//     axios
+	// 			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
+	// 			.then(res => {
+	//   setDashboardProjects(
+	// 					res.data.map(project_assignment => project_assignment.Project)
+	// 				)
+	//   purgeNullStates(stateRef.current)
+	//   setProjects(
+	// 					stateRef.current.map(project =>
+	//   <DashboardItem
+	//     key={project.id}
+	//     value={project.name}
+	//     listIndex={index++}
+	//     currentProject={currentProject}
+	//     dashItemProject={project}
+	//     setCurrentProject={setCurrentProject}
+	//     selectProject={selectProject}
+	//     viewMode={viewMode}
+	//     setViewMode={setViewMode}
+	//     loadForm={loadForm}
+	// 						/>
+	// 					)
+	// 				)
+	//   selectProject(0)
+	// })
+	// 			.catch(err => {
+	//   console.log(err)
+	// })
+	//   }, [])
 
   return (
     <Box
@@ -107,8 +132,18 @@ export default function Dashboard (props) {
       }}
 		>
       <List component='nav' aria-label='main mailbox folders'>
-        {projects}
-        <ListItemButton value='Create New Project'>
+        {state.allUserProjects.map(project => {
+          return (
+            <DashboardItem
+              key={index++}
+              value={project.id}
+              listIndex={index++}
+              primary={project.name}
+              state={state}
+						/>
+          )
+        })}
+        <ListItemButton key={index++} value='Create New Project'>
           <ListItemIcon />
           <ListItemText
             primary='Create New Project'

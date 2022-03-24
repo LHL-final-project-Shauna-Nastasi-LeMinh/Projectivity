@@ -45,6 +45,8 @@ export default function DashboardProject (props) {
     setViewMode(mode)
   }
 
+  console.log('landing page', state)
+
   return (
     <Container>
       {viewMode === PROJECT_VIEW &&

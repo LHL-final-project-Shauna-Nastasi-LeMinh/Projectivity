@@ -37,22 +37,19 @@ export default function LoginForm (props) {
     event.preventDefault()
   }
 
-  const login = event => {
-    axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/login', {
-  email: values.email,
-  password: values.password
-})
-			.then(res => {
-  setUser(res.data)
-  setCookie('user', res.data, {
-    path: '/'
-  })
-})
-			.catch(function (error) {
-  console.log(error.message)
-  setValues({ ...values, message: 'Form invalid' })
-})
+  function login () {
+    state.usersList.map(user => {
+      if (user.email === state.formData.email) {
+        if (user.password === state.formData.password) {
+          state.setStateTarget('currentUser', user)
+          state.setStateTarget('currentCookies', user)
+          state.setStateTarget('userLoggedIn', true)
+          const userData = state.getUserData(user.id)
+          state.closeModal('loginForm')
+          state.setMode('projectView')
+        }
+      }
+    })
   }
 
   const style = {

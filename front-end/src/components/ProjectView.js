@@ -20,16 +20,16 @@ export default function ProjectView (props) {
     currentTicket, 
     setCurrentTicket
 	} = props
-  const [columns, setColumns] = useState([])
+  // const [columns, setColumns] = useState([])
 
-  useEffect(
-		() => {
-  if (currentProject) {
-    setColumns(currentProject.Columns)
-  }
-},
-		[currentProject]
-	)
+//   useEffect(
+// 		() => {
+//   if (currentProject) {
+//     setColumns(currentProject.Columns)
+//   }
+// },
+// 		[currentProject]
+// 	)
 
   function onDragEnd (result, provided) {
     const { source, destination, type } = result
@@ -44,16 +44,19 @@ export default function ProjectView (props) {
 
 		// moving the whole column
     if (type === 'column') {
-      const newColumns = JSON.parse(JSON.stringify(columns)) // deep clone
+			// const newColumns = JSON.parse(JSON.stringify(columns)) // deep clone
+      const newColumns = state.currentColumns
       const [movingColumn] = newColumns.splice(source.index, 1)
       newColumns.splice(destination.index, 0, movingColumn)
       console.log("source:")
       console.log(source)
       console.log("destination:")
       console.log(destination)
-      setColumns(newColumns)
-      
-      // persist new columns ordering into db
+
+			// setColumns(newColumns)
+      state.setStateTarget('currentColumns', newColumns)
+
+			// persist new columns ordering into db
       const orderingObject = {}
       newColumns.forEach((col, index) => {
         orderingObject[col.id] = index;
@@ -76,9 +79,9 @@ export default function ProjectView (props) {
       if (destination.droppableId === source.droppableId) {
         let column
         let columnIndex
-        for (let i = 0; i < columns.length; i++) {
-          if (columns[i].name === source.droppableId) {
-            column = columns[i]
+        for (let i = 0; i < state.currentColumns.length; i++) {
+          if (state.currentColumns[i].name === source.droppableId) {
+            column = state.currentColumns[i]
             columnIndex = i
           }
         }
@@ -86,19 +89,19 @@ export default function ProjectView (props) {
         const [movingTicket] = newTickets.splice(source.index, 1)
         newTickets.splice(destination.index, 0, movingTicket)
         const newColumn = { ...column, Tickets: newTickets }
-        columns[columnIndex] = newColumn
+        state.currentColumns[columnIndex] = newColumn
       } else {
         let sourceColumn
         let sourceColumnIndex
         let destColumn
         let destColumnIndex
-        for (let i = 0; i < columns.length; i++) {
-          if (columns[i].name === source.droppableId) {
-            sourceColumn = columns[i]
+        for (let i = 0; i < state.currentColumns.length; i++) {
+          if (state.currentColumns[i].name === source.droppableId) {
+            sourceColumn = state.currentColumns[i]
             sourceColumnIndex = i
           }
-          if (columns[i].name === destination.droppableId) {
-            destColumn = columns[i]
+          if (state.currentColumns[i].name === destination.droppableId) {
+            destColumn = state.currentColumns[i]
             destColumnIndex = i
           }
         }
@@ -113,8 +116,8 @@ export default function ProjectView (props) {
         newDestTickets.splice(destination.index, 0, movingTicket)
         const newDestColumn = { ...destColumn, Tickets: newDestTickets }
 
-        columns[sourceColumnIndex] = newSourceColumn
-        columns[destColumnIndex] = newDestColumn
+        state.currentColumns[sourceColumnIndex] = newSourceColumn
+        state.currentColumns[destColumnIndex] = newDestColumn
 
 				// persist new column id to the ticket details in db
         axios
@@ -130,24 +133,29 @@ export default function ProjectView (props) {
           })
       }
 			// update state to retain moving position
-      setColumns(prev => [...prev])
+			// setColumns(prev => [...prev])
+      state.setStateTarget('currentColumns', prev => [...prev])
     }
   }
 
   const createNewColumn = function (newColumnName) {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/columns/new', {
-        name: newColumnName,
-        project_id: currentProject.id
-      })
-            .then(res => {
-        console.log(res.data)
-        const newColumn = { ...res.data, Tickets: [] }
-        setColumns([...columns, newColumn])
-      })
-            .catch(function (error) {
-        console.log(error.message)
-      })
+  name: newColumnName,
+  project_id: state.currentProject.id
+})
+			.then(res => {
+  console.log(res.data)
+  const newColumn = { ...res.data, Tickets: [] }
+				// setColumns([...columns, newColumn])
+  state.setStateTarget('currentColumns', [
+    ...state.currentColumns,
+    newColumn
+  ])
+})
+			.catch(function (error) {
+  console.log(error.message)
+})
   }
 
   const deleteColumnFromProjectView = function (columnId) {
@@ -156,8 +164,11 @@ export default function ProjectView (props) {
 			.delete(process.env.REACT_APP_BACKEND_URL + `/columns/${columnId}`)
 			.then(res => {
   console.log(res.data)
-  const newColumns = columns.filter(column => column.id !== columnId)
-  setColumns([...newColumns])
+  const newColumns = state.currentColumns.filter(
+					column => column.id !== columnId
+				)
+				// setColumns([...newColumns])
+  state.setStateTarget('currentColumns', [...newColumns])
 })
 			.catch(function (error) {
   console.log(error.message)
@@ -176,9 +187,12 @@ export default function ProjectView (props) {
 			.catch(function (error) {
   console.log(error.message)
 })
-    const updatedColumn = columns.filter(column => column.id === columnId)[0]
+    const updatedColumn = state.currentColumns.filter(
+			column => column.id === columnId
+		)[0]
     updatedColumn.name = newName
-    setColumns([...columns])
+		// setColumns([...columns])
+    state.setStateTarget('currentColumns', [...state.currentColumns])
   }
 
   const searchFilter = function(criteria) {
@@ -224,9 +238,9 @@ export default function ProjectView (props) {
 
   const generatedColumns = columns.map((column, colIndex) =>
     <ProjectColumn
+      state={state}
       disablePadding
       key={column.id}
-      user={user}
       title={column.name}
       column={column}
       setViewMode={setViewMode}
@@ -257,7 +271,7 @@ export default function ProjectView (props) {
               <ProjectColumnNew
                 name={'+ New Column'}
                 createNewColumn={createNewColumn}
-                columnsCount={columns.length}
+                columnsCount={state.currentColumns.length}
               />
               {provided.placeholder}
             </Box>}

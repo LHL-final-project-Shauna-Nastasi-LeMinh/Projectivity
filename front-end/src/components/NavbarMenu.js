@@ -23,30 +23,20 @@ const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 const setting_views = [LANDING_VIEW, LANDING_VIEW, LANDING_VIEW, LANDING_VIEW]
 
-function LinkTab (props) {
-  return (
-    <Tab
-      component='a'
-      onClick={event => {
-        event.preventDefault()
-      }}
-      {...props}
-		/>
-  )
-}
-
 export default function NavbarMenu (props) {
-  const {
-		mode,
-		setMode,
-		user,
-		setUser,
-		cookies,
-		removeCookie,
-		modals,
-		openModals
-	} = props
-  const [email, setEmail] = useState(null)
+  const { state } = props
+
+	// const {
+	// 	mode,
+	// 	setMode,
+	// 	user,
+	// 	setUser,
+	// 	cookies,
+	// 	removeCookie,
+	// 	modals,
+	// 	openModals
+	// } = props
+	// const [email, setEmail] = useState(null)
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
 
@@ -56,17 +46,9 @@ export default function NavbarMenu (props) {
 
   function handleMenuClick (string, newMode) {
     if (string === 'Logout') {
-			// a axios call to clear cookie session in server side too
-      axios
-				.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
-				.then(res => {
-  setUser(null)
-  setMode(LANDING_VIEW)
-  removeCookie('user')
-})
-				.catch(err => {
-  console.log(err)
-})
+      state.setStateTarget('currentUser', null)
+      state.setStateTarget('currentCookies', null)
+      state.setStateTarget('userLoggedIn', false)
     }
 
     if (string === 'Login' || string === 'Register') {
@@ -78,14 +60,14 @@ export default function NavbarMenu (props) {
     setAnchorElUser(null)
   }
 
-  useEffect(
-		() => {
-  if (user) {
-    setEmail(user.email)
-  }
-},
-		[user]
-	)
+	//   useEffect(
+	// 		() => {
+	//   if (user) {
+	//     setEmail(user.email)
+	//   }
+	// },
+	// 		[user]
+	// 	)
 
   return (
     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

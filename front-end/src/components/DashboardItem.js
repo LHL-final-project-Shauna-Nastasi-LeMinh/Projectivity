@@ -1,48 +1,24 @@
-import React from 'react'
-import ListItemButton from '@mui/material/ListItemButton'
+import React, { useState } from 'react'
+import { ListItemButton, ListItemText } from '@mui/material/'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import { ADDPROJECT } from './constants/Modes'
-import axios from 'axios'
-import { PROJECT_VIEW, DELETE_PROJECT_FORM } from './constants/Modes'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-
 export default function DashboardItem (props) {
-  const {
-		key,
-		project,
-		currentProject,
-		setCurrentProject,
-		dashItemProject,
-		viewMode,
-		setViewMode,
-		value,
-		listIndex,
-		selectProject,
-		loadForm
-	} = props
-  const [selectedIndex, setSelectedIndex] = React.useState()
+  const { state, value, primary, key } = props
 
-  const handleListItemClick = (event, index, project_id) => {
-    setSelectedIndex(index)
-    selectProject(index)
-    setViewMode(PROJECT_VIEW)
-  }
+  console.log('dashboarditem')
 
   return (
-    <ListItemButton selected={selectedIndex === listIndex}>
+    <ListItemButton>
       <ListItemIcon />
       <ListItemText
         key={key}
-        primary={value}
-        onClick={event =>
-					handleListItemClick(event, listIndex, dashItemProject)}
+        value={value}
+        primary={primary}
+        onClick={() => state.setCurrentProject(value)}
 			/>
       <EditIcon />
-      <DeleteIcon
-        onClick={() => loadForm(dashItemProject, DELETE_PROJECT_FORM)}
-			/>
+      <DeleteIcon onClick={() => state.openModal('deleteProjectForm')} />
     </ListItemButton>
   )
 }

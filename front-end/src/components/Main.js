@@ -32,49 +32,36 @@ export default function Main (props) {
 		setCurrentColumn,
 		modals,
 		openModals,
-		closeModals
+		closeModals,
+		state
 	} = props
+
+  const dataLoaded =
+		state.currentProject !== null &&
+		state.currentColumns !== null &&
+		state.currentTickets !== null &&
+		state.allUserProjects !== null &&
+		state.allUserColumns !== null &&
+		state.allUserProjects !== null
+
+  console.log(dataLoaded)
 
   return (
     <Paper>
-      {mode === ABOUT_VIEW && <AboutPage />}
-      {modals.loginForm &&
-				!user &&
-				<LoginForm
-  setUser={setUser}
-  setCookie={setCookie}
-  modals={modals}
-  closeModals={closeModals}
-				/>}
-      {modals.registerForm === REGISTER_FORM &&
-				!user &&
-				<RegistrationForm
-  setUser={setUser}
-  setCookie={setCookie}
-  modals={modals}
-  closeModals={closeModals}
-				/>}
-      {modals.newProjectForm &&
-      <NewProjectForm
-        user={user}
-        setViewMode={setViewMode}
-        modals={modals}
-        closeModals={closeModals}
-				/>}
-      {modals.newTicketForm && <NewTicketForm closeModals={closeModals} />}
-      {user &&
-      <LandingPage
-        mode={mode}
-        setMode={setMode}
-        user={user}
-        setUser={setUser}
-        currentProject={currentProject}
-        setCurrentProject={setCurrentProject}
-        currentColumn={currentColumn}
-        setCurrentColumn={setCurrentColumn}
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-				/>}
+      {state.modes.aboutView && <AboutPage />}
+      {state.modals.loginForm &&
+				!state.userLoggedIn &&
+				<LoginForm state={state} />}
+      {state.modals.registerForm &&
+				!state.userLoggedIn &&
+				<RegistrationForm state={state} />}
+      {state.modals.newProjectForm &&
+				state.userLoggedIn &&
+				<NewProjectForm state={state} />}
+      {state.modals.newTicketForm &&
+				state.userLoggedIn &&
+				<NewTicketForm state={state} />}
+      {state.userLoggedIn && dataLoaded && <LandingPage state={state} />}
     </Paper>
   )
 }
