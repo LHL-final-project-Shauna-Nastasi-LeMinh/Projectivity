@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
 	Button,
@@ -7,19 +7,65 @@ import {
 	Box,
 	TextField,
 	Divider,
-	Paper
+	Paper,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
 } from '@mui/material'
 import { AddBox } from '@mui/icons-material'
-import { PROJECT_VIEW } from '../constants/Modes'
+
 
 export default function NewTicketForm (props) {
   const { user, currentColumn, dialogOpen, setDialogOpen, tickets, setTickets } = props
+
+  // state to keep ticket details
+  const [ticketDetails, setTicketDetails] = useState({
+    severities: [],
+    priorities: [],
+    types: [],
+    milestones: []
+  });
+
+ 
+ // fetch available tikets details from db such as tickets type/priority etc.
+  useEffect (() =>
+    Promise.all([
+      axios.get(process.env.REACT_APP_BACKEND_URL + '/severities'),
+      axios.get(process.env.REACT_APP_BACKEND_URL + '/priorities'),
+      axios.get(process.env.REACT_APP_BACKEND_URL + '/types'),
+      axios.get(process.env.REACT_APP_BACKEND_URL + '/milestones')
+    ])
+    .then((res) => {
+      console.log("get details", res)
+      setTicketDetails({ severities: res[0].data, priorities: res[1].data, types: res[2].data, milestones: res[3].data });
+      
+    })
+      .catch(function (error) {
+      console.log(error.message)
+      }), 
+      []
+  )
+ 
+      // map over each ticket detail to create a list for dropdown menu
+    const severitiesMenu = ticketDetails.severities.map(severity => <MenuItem key={severity.id} value={severity.name}>{severity.name}</MenuItem>)
+    const prioritiesMenu = ticketDetails.priorities.map(priority => <MenuItem key={priority.id} value={priority.name}>{priority.name}</MenuItem>)
+    const typesMenu = ticketDetails.types.map(type => <MenuItem key={type.id} value={type.name}>{type.name}</MenuItem>)
+    const milestonesMenu = ticketDetails.milestones.map(milestone => <MenuItem key={milestone.id} value={milestone.name}>{milestone.name}</MenuItem>)
+
+
+  
   const [values, setValues] = useState({
     message: '',
     title: undefined,
-    description: undefined
+    description: undefined,
+    severity: '',
+    priority: '',
+    type: '',
+    milestone: ''
   })
 
+  
   const handleChange = prop => event => {
     setValues({ ...values, [prop]: event.target.value })
   }
@@ -47,7 +93,7 @@ export default function NewTicketForm (props) {
   setValues({ ...values, message: 'Form invalid' })
 })
   }
-
+  console.log(values.priority)
   const style = {
     position: 'absolute',
     top: '50%',
@@ -106,6 +152,67 @@ export default function NewTicketForm (props) {
               error={values.description === ''}
               required
 						/>
+           
+          </Box>
+          <Box>
+          <FormControl sx={{ m: 1, minWidth: 150 }}>
+              <InputLabel id="PriorityLabel">Priority</InputLabel>
+              <Select
+                labelId="PriorityLabel"
+                label="Priority"
+                id="Priority"
+                value={values.priority}
+                onChange={handleChange('priority')}
+              >
+                
+                {prioritiesMenu}
+              </Select>
+            </FormControl>
+
+            <Divider orientation="vertical" variant="middle" flexItem />
+
+            <FormControl sx={{ m: 1, minWidth: 150 }}>
+              <InputLabel id="SeverityLabel">Severity</InputLabel>
+              <Select
+                labelId="SeverityLabel"
+                label="Severity"
+                id="Severity"
+                value={values.severity}
+                onChange={handleChange('severity')}
+              >
+                
+                {severitiesMenu}
+              </Select>
+            </FormControl>
+
+            <FormControl sx={{ m: 1, minWidth: 150 }}>
+              <InputLabel id="TypeLabel">Type</InputLabel>
+              <Select
+                labelId="TypeLabel"
+                label="Type"
+                id="Type"
+                value={values.type}
+                onChange={handleChange('type')}
+              >
+                <MenuItem value=""><em>&nbsp</em></MenuItem>
+               {typesMenu}
+              </Select>
+            </FormControl>
+
+            <FormControl sx={{ m: 1, minWidth: 150 }}>
+              <InputLabel id="MilestoneLabel">Milestone</InputLabel>
+              <Select
+                labelId="MilestoneLabel"
+                label="Milestone"
+                id="Milestone"
+                value={values.milestone}
+                onChange={handleChange('milestone')}
+              >
+                
+                {milestonesMenu}
+              </Select>
+            </FormControl>
+            
           </Box>
         </Box>
 
