@@ -223,7 +223,8 @@ export default function ProjectColumn (props) {
         <NewTicketForm
           user={user}
           currentColumn={currentColumn}
-          setViewMode={setViewMode}
+          tickets={tickets}
+          setTickets={setTickets}
           dialogOpen={dialogOpen}
           setDialogOpen={setDialogOpen}
 					/>}
