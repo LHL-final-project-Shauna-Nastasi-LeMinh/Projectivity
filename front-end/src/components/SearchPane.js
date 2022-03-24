@@ -140,7 +140,7 @@ export default function SearchPane (props) {
       </FormControl>
 
       <FormControl sx={{ m: 1, minWidth: 150 }}>
-        <InputLabel id="MilestoneLabel">Severity</InputLabel>
+        <InputLabel id="MilestoneLabel">Milestone</InputLabel>
         <Select
           labelId="MilestoneLabel"
           label="Milestone"
