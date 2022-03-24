@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import ProjectColumn from './ProjectColumn'
-import ProjectColumnNew from './ProjectColumnNew'
+import ProjectColumnNew from './Forms/ProjectColumnNew'
 import Box from '@mui/material/Box'
 import SearchPane from './SearchPane'
 import NewProjectForm from './Forms/NewProjectForm'

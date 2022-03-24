@@ -10,9 +10,10 @@ import {
 	NEW_PROJECT_FORM,
 	PROJECT_VIEW,
 	ADD_TICKET,
-  EDIT_TICKET,
-  SHOW_TICKET_DETAILS,
-  REMOVE_TICKET
+	EDIT_TICKET,
+	SHOW_TICKET_DETAILS,
+	REMOVE_TICKET,
+	NEW_TICKET_FORM
 } from './constants/Modes'
 import RemoveTicket from './Forms/RemoveTicket'
 
@@ -32,8 +33,13 @@ export default function DashboardProject (props) {
 		setOpen,
 		viewMode,
 		setViewMode,
-    currentTicket,
-    setCurrentTicket
+		currentTicket,
+		setCurrentTicket,
+		modals,
+		openModals,
+		closeModals,
+		refresh,
+		setRefresh
 	} = props
 
   const [data, setData] = useState()
@@ -63,34 +69,32 @@ export default function DashboardProject (props) {
         loadForm={loadForm}
         open={open}
         setOpen={setOpen}
+        modals={modals}
+        openModals={openModals}
+        closeModals={closeModals}
+        refresh={refresh}
+        setRefresh={setRefresh}
 				/>}
       <Container>
-        {open === NEW_PROJECT_FORM &&
+        {modals.newProjectForm &&
         <NewProjectForm
           user={user}
           setViewMode={setViewMode}
-          open={open}
-          setOpen={setOpen}
+          modals={modals}
+          closeModals={closeModals}
+          setRefresh={setRefresh}
 					/>}
-        {open === DELETE_PROJECT_FORM &&
-        <DeleteProjectForm
-          data={data}
-          currentProject={currentProject}
-          setViewMode={setViewMode}
-          open={open}
-          setOpen={setOpen}
-					/>}
-        
-          {open === EDIT_TICKET &&
+
+        {modals.newTicketForm &&
         <NewTicketForm
           user={user}
           currentColumn={currentColumn}
           setViewMode={setViewMode}
-          open={open}
-          setOpen={setOpen}
+          modals={modals}
+          closeModals={closeModals}
+          setRefresh={setRefresh}
 					/>}
-          
-         
+
         {viewMode === PROJECT_VIEW &&
         <ProjectView
           user={user}

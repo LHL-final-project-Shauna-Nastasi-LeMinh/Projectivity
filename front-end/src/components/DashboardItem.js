@@ -20,7 +20,10 @@ export default function DashboardItem (props) {
 		value,
 		listIndex,
 		selectProject,
-		loadForm
+		loadForm,
+		modals,
+		openModals,
+		closeModals
 	} = props
   const [selectedIndex, setSelectedIndex] = React.useState()
 
@@ -31,18 +34,14 @@ export default function DashboardItem (props) {
   }
 
   return (
-    <ListItemButton selected={selectedIndex === listIndex}>
+    <ListItemButton
+      selected={selectedIndex === listIndex}
+      onClick={event => handleListItemClick(event, listIndex, dashItemProject)}
+		>
       <ListItemIcon />
-      <ListItemText
-        key={key}
-        primary={value}
-        onClick={event =>
-					handleListItemClick(event, listIndex, dashItemProject)}
-			/>
+      <ListItemText key={key} primary={value} />
       <EditIcon />
-      <DeleteIcon
-        onClick={() => loadForm(dashItemProject, DELETE_PROJECT_FORM)}
-			/>
+      <DeleteIcon onClick={() => openModals('deleteProjectForm')} />
     </ListItemButton>
   )
 }

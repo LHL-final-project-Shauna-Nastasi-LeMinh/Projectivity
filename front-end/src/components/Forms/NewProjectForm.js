@@ -13,7 +13,7 @@ import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
 export default function RegistrationForm (props) {
-  const { setViewMode, user, open, setOpen } = props
+  const { setViewMode, user, modals, openModals, closeModals } = props
   const [values, setValues] = useState({
     message: '',
     name: undefined,
@@ -24,7 +24,9 @@ export default function RegistrationForm (props) {
     setValues({ ...values, [prop]: event.target.value })
   }
 
-  const createNewProject = event => {
+  function createNewProject () {
+    console.log('create new project')
+    closeModals('newProjectForm')
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', {
   name: values.name,
@@ -32,7 +34,7 @@ export default function RegistrationForm (props) {
   employee_id: user.id
 })
 			.then(res => {
-  setOpen(false)
+  closeModals('newProjectForm')
 })
 			.catch(function (error) {
   console.log(error.message)
@@ -53,8 +55,8 @@ export default function RegistrationForm (props) {
 
   return (
     <Modal
-      open={open.newProjectForm}
-      onClose={() => setOpen(false)}
+      open={modals.newProjectForm}
+      onClose={() => closeModals('newProjectForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -116,7 +118,7 @@ export default function RegistrationForm (props) {
             color='success'
             size='large'
             variant='contained'
-            onClick={createNewProject}
+            onClick={() => createNewProject()}
 					>
 						Create Ticket
 					</Button>
@@ -125,7 +127,7 @@ export default function RegistrationForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={() => setOpen(false)}
+            onClick={() => closeModals('newProjectForm')}
 					>
 						Cancel
 					</Button>

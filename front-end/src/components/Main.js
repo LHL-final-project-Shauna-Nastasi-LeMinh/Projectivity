@@ -19,6 +19,9 @@ import NewTicketForm from './Forms/NewTicketForm'
 
 export default function Main (props) {
   const [viewMode, setViewMode] = useState(PROJECT_VIEW)
+  const [refresh, setRefresh] = useState(false)
+
+  console.log(refresh)
 
   const {
 		mode,
@@ -45,6 +48,7 @@ export default function Main (props) {
   setCookie={setCookie}
   modals={modals}
   closeModals={closeModals}
+  setRefresh={setRefresh}
 				/>}
       {modals.registerForm === REGISTER_FORM &&
 				!user &&
@@ -53,6 +57,7 @@ export default function Main (props) {
   setCookie={setCookie}
   modals={modals}
   closeModals={closeModals}
+  setRefresh={setRefresh}
 				/>}
       {modals.newProjectForm &&
       <NewProjectForm
@@ -60,6 +65,7 @@ export default function Main (props) {
         setViewMode={setViewMode}
         modals={modals}
         closeModals={closeModals}
+        setRefresh={setRefresh}
 				/>}
       {modals.newTicketForm && <NewTicketForm closeModals={closeModals} />}
       {user &&
@@ -74,6 +80,11 @@ export default function Main (props) {
         setCurrentColumn={setCurrentColumn}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        modals={modals}
+        openModals={openModals}
+        closeModals={closeModals}
+        refresh={refresh}
+        setRefresh={setRefresh}
 				/>}
     </Paper>
   )

@@ -19,7 +19,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { ADD_TICKET } from './constants/Modes'
+import { NEW_TICKET_FORM } from './constants/Modes'
 import NewTicketForm from './Forms/NewTicketForm'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
@@ -33,15 +33,15 @@ export default function ProjectColumn (props) {
 		user,
 		column,
 		setViewMode,
-    currentColumn,
+		currentColumn,
 		setCurrentColumn,
 		colIndex,
 		open,
 		setOpen,
 		deleteColumnFromProjectView,
 		changeColumnFromProjectView,
-    currentTicket, 
-    setCurrentTicket
+		currentTicket,
+		setCurrentTicket
 	} = props
 
   const [tickets, setTickets] = useState([])
@@ -109,10 +109,11 @@ export default function ProjectColumn (props) {
 	)
 
   const createNewTicket = () => {
-    console.log("clicked create new ticket")
+    console.log('clicked create new ticket')
     setCurrentColumn(column.id)
-    setDialogOpen(ADD_TICKET)
-    console.log("ticket", dialogOpen)
+    setOpen(NEW_TICKET_FORM)
+		// setDialogOpen(NEW_TICKET_FORM)
+    console.log('ticket', dialogOpen)
   }
 
   const setTextValue = function (event) {
@@ -184,7 +185,6 @@ export default function ProjectColumn (props) {
 								/>}
             </DialogContent>
             <DialogActions>
-              
               <Button onClick={handleColumnActions}>
                 {dialogContent.confirmLabel}
               </Button>
@@ -206,29 +206,36 @@ export default function ProjectColumn (props) {
                   transition: 'background-color 1s ease'
                 }}
 							>
-                <ColumnTickets tickets={tickets} setViewMode={setViewMode} setOpen={setOpen} currentTicket={currentTicket} open={open}
-              setCurrentTicket={setCurrentTicket} setTickets={setTickets}/>
+                <ColumnTickets
+                  tickets={tickets}
+                  setViewMode={setViewMode}
+                  setOpen={setOpen}
+                  currentTicket={currentTicket}
+                  open={open}
+                  setCurrentTicket={setCurrentTicket}
+                  setTickets={setTickets}
+								/>
                 {provided.placeholder}
               </List>}
           </Droppable>
           <ListItem sx={{ padding: '0.1rem' }}>
-            <ListItemButton >
+            <ListItemButton>
               <ListItemText
                 primary='Create New Ticket'
                 onClick={() => createNewTicket()}
 							/>
             </ListItemButton>
           </ListItem>
-{/* move opening of create new ticket from landing page */}
-          {dialogOpen === ADD_TICKET &&
-        <NewTicketForm
-          user={user}
-          currentColumn={currentColumn}
-          tickets={tickets}
-          setTickets={setTickets}
-          dialogOpen={dialogOpen}
-          setDialogOpen={setDialogOpen}
-					/>}
+          {/* move opening of create new ticket from landing page */}
+          {open === NEW_TICKET_FORM &&
+          <NewTicketForm
+            user={user}
+            currentColumn={currentColumn}
+            tickets={tickets}
+            setTickets={setTickets}
+            dialogOpen={dialogOpen}
+            setDialogOpen={setDialogOpen}
+						/>}
         </Box>}
     </Draggable>
   )
@@ -236,7 +243,15 @@ export default function ProjectColumn (props) {
 
 // React.memo(function ColumnTickets(props)
 const ColumnTickets = React.memo(function ColumnTickets (props) {
-  const { tickets, setViewMode, setOpen, currentTicket, setCurrentTicket, setTickets, open} = props
+  const {
+		tickets,
+		setViewMode,
+		setOpen,
+		currentTicket,
+		setCurrentTicket,
+		setTickets,
+		open
+	} = props
   return tickets.map((ticket, index) => {
     return (
       <Draggable

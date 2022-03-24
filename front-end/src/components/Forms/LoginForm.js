@@ -44,6 +44,7 @@ export default function LoginForm (props) {
   password: values.password
 })
 			.then(res => {
+  closeModals('loginForm')
   setUser(res.data)
   setCookie('user', res.data, {
     path: '/'
@@ -66,10 +67,11 @@ export default function LoginForm (props) {
     boxShadow: 24
   }
 
+  console.log(modals.loginForm)
   return (
     <Modal
       open={modals.loginForm}
-      onClose={closeModals('loginForm')}
+      onClose={() => closeModals('loginForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -114,12 +116,12 @@ export default function LoginForm (props) {
               endadornment={
                 <InputAdornment position='end'>
                   <IconButton
-                    aria-label='toggle password visibility'
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
+                  aria-label='toggle password visibility'
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
 									>
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
+                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
                 </InputAdornment>
 							}
               required
@@ -151,7 +153,7 @@ export default function LoginForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={closeModals('loginForm')}
+            onClick={() => closeModals('loginForm')}
 					>
 						Cancel
 					</Button>

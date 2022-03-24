@@ -40,11 +40,13 @@ const App = () => {
     deleteTicketForm: false
   })
 
-  const openModals = prop => event => {
+  function openModals (prop) {
+    console.log('open modals', prop, modals)
     setModals({ ...modals, [prop]: true })
   }
 
-  const closeModals = prop => event => {
+  function closeModals (prop) {
+    console.log('close modals', prop, modals)
     setModals({ ...modals, [prop]: false })
   }
 
