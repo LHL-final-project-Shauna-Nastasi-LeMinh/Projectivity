@@ -23,7 +23,7 @@ const Transition = React.forwardRef(function Transition (props, ref) {
 })
 
 export default function ProjectColumnNew (props) {
-  const { createNewColumn } = props
+  const { createNewColumn, columnsCount } = props
   const [open, setOpen] = useState(false)
   const [newColumnName, setNewColumnName] = useState('')
 
@@ -39,10 +39,16 @@ export default function ProjectColumnNew (props) {
   }
 
   return (
-    <Box sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}>
+    <Draggable draggableId={`newColumn`} index={columnsCount} isDragDisabled={true}>
+    {provided =>
+      <Box sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        ref={provided.innerRef}
+      >
       <ListItem sx={{ padding: '0.1rem' }}>
         <ListItemButton onClick={() => setOpen(NEW_COLUMN_FORM)} >
-            <ListItemText primary='New' />
+            <ListItemText primary='New Column' />
             <AddCircleIcon fontSize='large'/>
         </ListItemButton>
       </ListItem>
@@ -64,6 +70,7 @@ export default function ProjectColumnNew (props) {
           <Button onClick={() => setOpen(false)}>Cancel</Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </Box>}
+    </Draggable>
   )
 }
