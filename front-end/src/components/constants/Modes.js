@@ -2,7 +2,7 @@
 export const LOGIN_FORM = true
 export const REGISTER_FORM = true
 export const NEW_PROJECT_FORM = true
-export const ADD_TICKET = true
+export const ADD_TICKET = 'AddNewTicket'
 export const EDIT_TICKET = true
 export const REMOVE_TICKET = 'RemoveTicket'
 export const SHOW_TICKET_DETAILS = 'ShowTicket'

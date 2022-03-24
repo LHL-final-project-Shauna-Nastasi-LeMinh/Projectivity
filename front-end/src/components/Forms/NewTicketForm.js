@@ -13,7 +13,7 @@ import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
 export default function NewTicketForm (props) {
-  const { user, setViewMode, currentColumn, open, setOpen } = props
+  const { user, setViewMode, currentColumn, dialogOpen, setDialogOpen } = props
   const [values, setValues] = useState({
     message: '',
     title: undefined,
@@ -36,7 +36,7 @@ export default function NewTicketForm (props) {
 })
 			.then(res => {
   setViewMode(PROJECT_VIEW)
-  setOpen(false)
+  setDialogOpen(false)
 })
 			.catch(function (error) {
   console.log(error.message)
@@ -57,8 +57,8 @@ export default function NewTicketForm (props) {
 
   return (
     <Modal
-      open={open.newTicketForm}
-      onClose={() => setOpen(false)}
+      open={dialogOpen}
+      onClose={() => setDialogOpen(false)}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -129,7 +129,7 @@ export default function NewTicketForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={() => setOpen(false)}
+            onClick={() => setDialogOpen(false)}
 					>
 						Cancel
 					</Button>
