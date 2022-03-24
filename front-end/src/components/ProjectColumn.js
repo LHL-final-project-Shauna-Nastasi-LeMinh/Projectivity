@@ -20,6 +20,7 @@ import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import { ADD_TICKET } from './constants/Modes'
+import NewTicketForm from './Forms/NewTicketForm'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
 import { MANAGER_LEVEL} from './constants/AccessLevel'
@@ -33,13 +34,13 @@ export default function ProjectColumn (props) {
 		user,
 		column,
 		setViewMode,
+    currentColumn,
 		setCurrentColumn,
 		colIndex,
 		open,
 		setOpen,
 		deleteColumnFromProjectView,
 		changeColumnFromProjectView,
-		handleClick,
     currentTicket, 
     setCurrentTicket
 	} = props
@@ -109,8 +110,10 @@ export default function ProjectColumn (props) {
 	)
 
   const createNewTicket = () => {
+    console.log("clicked create new ticket")
     setCurrentColumn(column.id)
-    setOpen(ADD_TICKET)
+    setDialogOpen(ADD_TICKET)
+    console.log("ticket", dialogOpen)
   }
 
   const setTextValue = function (event) {
@@ -213,13 +216,23 @@ export default function ProjectColumn (props) {
               </List>}
           </Droppable>
           <ListItem sx={{ padding: '0.1rem' }}>
-            <ListItemButton onClick={() => handleClick()}>
+            <ListItemButton >
               <ListItemText
                 primary='Create New Ticket'
                 onClick={() => createNewTicket()}
 							/>
             </ListItemButton>
           </ListItem>
+{/* move opening of create new ticket from landing page */}
+          {dialogOpen === ADD_TICKET &&
+        <NewTicketForm
+          user={user}
+          currentColumn={currentColumn}
+          tickets={tickets}
+          setTickets={setTickets}
+          dialogOpen={dialogOpen}
+          setDialogOpen={setDialogOpen}
+					/>}
         </Box>}
     </Draggable>
   )

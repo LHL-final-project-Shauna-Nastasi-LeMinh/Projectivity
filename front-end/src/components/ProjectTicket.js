@@ -113,6 +113,7 @@ export default function ProjectTicket (props) {
           {dialogOpen === REMOVE_TICKET && 
           <RemoveTicket
           tickets={tickets}
+          setTickets={setTickets}
           ticketId={ticketId}
           dialogOpen={dialogOpen}
           setDialogOpen={setDialogOpen}

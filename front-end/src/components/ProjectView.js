@@ -12,6 +12,7 @@ import { MANAGER_LEVEL} from './constants/AccessLevel'
 export default function ProjectView (props) {
   const {
 		user,
+    currentColumn,
 		currentProject,
 		mode,
 		setViewMode,
@@ -241,6 +242,7 @@ export default function ProjectView (props) {
       title={column.name}
       column={column}
       setViewMode={setViewMode}
+      currentColumn={currentColumn}
       setCurrentColumn={setCurrentColumn}
       currentTicket={currentTicket} 
       setCurrentTicket={setCurrentTicket}

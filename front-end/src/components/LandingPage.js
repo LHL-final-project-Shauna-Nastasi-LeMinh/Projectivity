@@ -89,14 +89,7 @@ export default function DashboardProject (props) {
           open={open}
           setOpen={setOpen}
 					/>}
-          {open === ADD_TICKET &&
-        <NewTicketForm
-          user={user}
-          currentColumn={currentColumn}
-          setViewMode={setViewMode}
-          open={open}
-          setOpen={setOpen}
-					/>}
+          
          
         {viewMode === PROJECT_VIEW &&
         <ProjectView
@@ -109,6 +102,7 @@ export default function DashboardProject (props) {
           setOpen={setOpen}
           currentTicket={currentTicket}
           setCurrentTicket={setCurrentTicket}
+          currentColumn={currentColumn}
 					/>}
       </Container>
     </Container>

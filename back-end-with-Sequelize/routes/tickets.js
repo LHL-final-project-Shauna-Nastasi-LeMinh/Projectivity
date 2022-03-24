@@ -36,16 +36,29 @@ module.exports = sequelizeModels => {
 
   router.post('/new', async (req, res) => {
     try {
-      const {title, created_by, column_id} = req.body
-
-      await Tickets.create({
+      const {
         title,
-        description: 'test',
+        description,
         created_by,
         column_id,
+        severity,
+        priority,
+        type,
+        milestone
+      } = req.body
+
+      const newTicket = await Tickets.create({
+        title,
+        description,
+        created_by,
+        column_id,
+        severity,
+        priority,
+        type,
+        milestone
       })
 
-      return res.json('success!')
+      return res.json(newTicket);
     } catch (err) {
       console.log(err, "foo")
       return res.status(500).json(err)
