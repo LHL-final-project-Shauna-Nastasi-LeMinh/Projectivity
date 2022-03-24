@@ -33,7 +33,7 @@ export default function SearchPane (props) {
 
   useEffect(() => {
     criteria[DESC] = delayedInput;
-    searchFilter(criteria)
+    searchFilter({...criteria})
   },[delayedInput, criteria])
 
 
@@ -72,10 +72,10 @@ export default function SearchPane (props) {
 
   }, [])
   
-  const severitiesMenu = severities.map(severity => <MenuItem value={severity.name}>{severity.name}</MenuItem>)
-  const prioritiesMenu = priorities.map(priority => <MenuItem value={priority.name}>{priority.name}</MenuItem>)
-  const typesMenu = types.map(type => <MenuItem value={type.name}>{type.name}</MenuItem>)
-  const milestonesMenu = milestones.map(milestone => <MenuItem value={milestone.name}>{milestone.name}</MenuItem>)
+  const severitiesMenu = severities.map(severity => <MenuItem key={severity.id} value={severity.name}>{severity.name}</MenuItem>)
+  const prioritiesMenu = priorities.map(priority => <MenuItem key={priority.id} value={priority.name}>{priority.name}</MenuItem>)
+  const typesMenu = types.map(type => <MenuItem key={type.id} value={type.name}>{type.name}</MenuItem>)
+  const milestonesMenu = milestones.map(milestone => <MenuItem key={milestone.id} value={milestone.name}>{milestone.name}</MenuItem>)
 
   return (
     <Box sx={{ m: 3, display: 'flex' }}>

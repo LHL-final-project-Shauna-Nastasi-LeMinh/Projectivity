@@ -36,8 +36,8 @@ const priorityRoutes = require('./routes/priorities')
 const typeRoutes = require('./routes/types')
 const buildRoutes = require('./routes/builds')
 const milestoneRoutes = require('./routes/milestones')
-const getGenericData = require('./routes/getGenericData')
-const getUserData = require('./routes/getUserData')
+// const getGenericData = require('./routes/getGenericData')
+// const getUserData = require('./routes/getUserData')
 
 // pass the whole models, as well pusher server, to routes.
 // Consider refactor to pass individual model object only, e.g. sequelizeModels.USER if only access 1 table
@@ -56,8 +56,8 @@ app.use('/priorities', priorityRoutes(sequelizeModels))
 app.use('/types', typeRoutes(sequelizeModels))
 app.use('/builds', buildRoutes(sequelizeModels))
 app.use('/milestones', milestoneRoutes(sequelizeModels))
-app.use('/getGenericData', getGenericData(sequelizeModels))
-app.use('/getUserData', getUserData(sequelizeModels))
+// app.use('/getGenericData', getGenericData(sequelizeModels))
+// app.use('/getUserData', getUserData(sequelizeModels))
 
 app.get('/', (req, res) => {
   res.render('index')

@@ -188,7 +188,7 @@ export default function ProjectView (props) {
     const TYPE = "TYPE"
     const MILESTONE = "MILESTONE"
 
-    const allColumns = JSON.parse(JSON.stringify(currentProject.Columns));
+    const allColumns = JSON.parse(JSON.stringify(columns));
     
     allColumns.forEach(column => {
       const tickets = column.Tickets.filter(ticket => {
