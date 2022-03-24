@@ -181,6 +181,7 @@ export default function ProjectColumn (props) {
 								/>}
             </DialogContent>
             <DialogActions>
+              
               <Button onClick={handleColumnActions}>
                 {dialogContent.confirmLabel}
               </Button>
@@ -194,9 +195,9 @@ export default function ProjectColumn (props) {
               <List
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                isdraggingover={snapshot.isdraggingover}
+                isdraggingover={snapshot.isDraggingOver}
                 sx={{
-                  backgroundColor: snapshot.isdraggingover
+                  backgroundColor: snapshot.isDraggingOver
 										? 'skyblue'
 										: 'inherit',
                   transition: 'background-color 1s ease'
