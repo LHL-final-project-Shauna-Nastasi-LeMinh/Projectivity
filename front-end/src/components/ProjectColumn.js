@@ -105,7 +105,6 @@ export default function ProjectColumn (props) {
   useEffect(
 		() => {
   setTickets(column.Tickets)
-  console.log(column.Tickets)
 },
 		[column]
 	)

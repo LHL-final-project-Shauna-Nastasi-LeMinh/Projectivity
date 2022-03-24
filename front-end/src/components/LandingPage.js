@@ -40,10 +40,6 @@ export default function DashboardProject (props) {
   const [dashboard, setDashboard] = useState()
 
   function loadForm (newData, mode) {
-    console.log(newData, mode)
-    console.log("AAAAAAAAAAAAAAAAAAAAa")
-    console.log(newData)
-    console.log("mode:"+mode)
     setData(newData)
     setViewMode(mode)
   }
