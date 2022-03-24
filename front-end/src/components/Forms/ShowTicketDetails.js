@@ -1,4 +1,5 @@
 import React from 'react';
+import { format } from "date-fns";
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -55,16 +56,18 @@ export default function ShowTicketDetails(props) {
   const ticketDetails = tickets.filter(ticket => ticket.id === ticketId)[0]
 
   const handleClose = () => {
-   
+    console.log(tickets)
     setDialogOpen(false);
   };
 
   return (
-    <div>
+    
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={dialogOpen}
+        fullWidth
+        maxWidth ='md'
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           {ticketDetails.title}
@@ -73,7 +76,7 @@ export default function ShowTicketDetails(props) {
           <List
             sx={{
               width: '100%',
-             
+              
               bgcolor: 'background.paper',
             }}
           >
@@ -81,17 +84,69 @@ export default function ShowTicketDetails(props) {
              
               <ListItemText primary="Description:" secondary={ticketDetails.description} />
             </ListItem>
-            <Divider variant="inset" component="li" />
+
+            {/* <Divider component="li" />
 
             <ListItem>
              
-              <ListItemText primary="Created at:" secondary={ticketDetails.created_at} />
-            </ListItem>
-          </List>
+              <ListItemText primary="Created at:" secondary={format(ticketDetails.created_at, "MMMM Do, YYYY")} />
+            </ListItem> */}
+          
 
+          <Divider component="li" />
+
+          {ticketDetails.severity && (
+            <>
+            <Divider component="li" />
+
+            <ListItem>
+             
+              <ListItemText primary="Severity:" secondary={ticketDetails.severity} />
+            </ListItem>
+          
+          </>
+          )}
+
+          {ticketDetails.priority && (
+            <>
+            <Divider component="li" />
+
+            <ListItem>
+             
+              <ListItemText primary="Priority:" secondary={ticketDetails.priority} />
+            </ListItem>
+          
+          </>
+          )}
+
+          {ticketDetails.type && (
+            <>
+            <Divider component="li" />
+
+            <ListItem>
+             
+              <ListItemText primary="Type:" secondary={ticketDetails.type} />
+            </ListItem>
+          
+          </>
+          )}
+
+          {ticketDetails.milestone && (
+            <>
+            <Divider component="li" />
+
+            <ListItem>
+             
+              <ListItemText primary="Milestone:" secondary={ticketDetails.milestone} />
+            </ListItem>
+          
+          </>
+          )}
+
+          </List>
         </DialogContent>
   
       </BootstrapDialog>
-    </div>
+    
   );
 }
