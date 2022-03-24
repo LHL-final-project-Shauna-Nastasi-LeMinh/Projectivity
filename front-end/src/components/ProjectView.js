@@ -7,6 +7,7 @@ import SearchPane from './SearchPane'
 import NewProjectForm from './Forms/NewProjectForm'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import axios from 'axios'
+import { MANAGER_LEVEL} from './constants/AccessLevel'
 
 export default function ProjectView (props) {
   const {
@@ -22,11 +23,13 @@ export default function ProjectView (props) {
     setCurrentTicket
 	} = props
   const [columns, setColumns] = useState([])
+  const [resetSearchPane, setResetSearchPane] = useState(0);
 
   useEffect(
 		() => {
   if (currentProject) {
     setColumns(currentProject.Columns)
+    setResetSearchPane(prev => prev + 1);
   }
 },
 		[currentProject]
@@ -188,8 +191,10 @@ export default function ProjectView (props) {
     const PRIORITY = "PRIORITY"
     const TYPE = "TYPE"
     const MILESTONE = "MILESTONE"
+    const ALL_TICKETS = "ALL_TICKETS"
 
-    const allColumns = JSON.parse(JSON.stringify(columns));
+    if (!currentProject) return;
+    const allColumns = JSON.parse(JSON.stringify(currentProject.Columns));
     
     allColumns.forEach(column => {
       const tickets = column.Tickets.filter(ticket => {
@@ -198,6 +203,12 @@ export default function ProjectView (props) {
         let matchType = true;
         let matchMilestone = true;
         let matchDescOrTitle = true;
+        // filter tickets for an owner
+        if (user.access_level != MANAGER_LEVEL && criteria[ALL_TICKETS] === false) {
+            if (ticket.owner_id != user.id) {
+              return false;
+            }
+        }
 
         if (criteria[DESC] !== "") {
           matchDescOrTitle = ticket.title.toLowerCase().includes(criteria[DESC].toLowerCase()) 
@@ -245,7 +256,7 @@ export default function ProjectView (props) {
 
   return (
     <>
-      <SearchPane searchFilter={searchFilter}/>
+      <SearchPane searchFilter={searchFilter} resetSearchPane={resetSearchPane} user={user}/>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='all-column' direction='horizontal' type='column'>
           {provided =>
@@ -256,10 +267,12 @@ export default function ProjectView (props) {
               ref={provided.innerRef}
             >
               {generatedColumns}
-              <ProjectColumnNew
+              {user.access_level == MANAGER_LEVEL &&
+              (<ProjectColumnNew
                 createNewColumn={createNewColumn}
                 columnsCount={columns.length}
               />
+              )}
               {provided.placeholder}
             </Box>}
         </Droppable>

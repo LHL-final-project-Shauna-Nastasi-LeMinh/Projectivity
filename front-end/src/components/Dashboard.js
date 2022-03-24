@@ -11,6 +11,7 @@ import {
 	DELETE_PROJECT_FORM,
 	PROJECT_VIEW
 } from './constants/Modes'
+import { MANAGER_LEVEL} from './constants/AccessLevel'
 
 export default function Dashboard (props) {
   const {
@@ -108,13 +109,15 @@ export default function Dashboard (props) {
 		>
       <List component='nav' aria-label='main mailbox folders'>
         {projects}
-        <ListItemButton value='Create New Project'>
+        {user.access_level == MANAGER_LEVEL &&
+        (<ListItemButton value='Create New Project'>
           <ListItemIcon />
           <ListItemText
             primary='Create New Project'
             onClick={() => setOpen(NEW_PROJECT_FORM)}
 					/>
         </ListItemButton>
+        )}
       </List>
     </Box>
   )

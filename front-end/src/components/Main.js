@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper'
 import Modal from '@mui/material/Modal'
 import NewProjectForm from './Forms/NewProjectForm'
 import NewTicketForm from './Forms/NewTicketForm'
+import { HR_LEVEL } from './constants/AccessLevel'
 
 export default function Main (props) {
   const [viewMode, setViewMode] = useState(PROJECT_VIEW)
@@ -37,7 +38,7 @@ export default function Main (props) {
 
   return (
     <Paper>
-      {mode === ABOUT_VIEW && <AboutPage />}
+      {mode === ABOUT_VIEW && <AboutPage user={user}/>}
       {modals.loginForm &&
 				!user &&
 				<LoginForm
@@ -47,7 +48,7 @@ export default function Main (props) {
   closeModals={closeModals}
 				/>}
       {modals.registerForm === REGISTER_FORM &&
-				!user &&
+				user && user.access_level == HR_LEVEL &&
 				<RegistrationForm
   setUser={setUser}
   setCookie={setCookie}
@@ -62,7 +63,8 @@ export default function Main (props) {
         closeModals={closeModals}
 				/>}
       {modals.newTicketForm && <NewTicketForm closeModals={closeModals} />}
-      {user &&
+
+      {user && user.access_level != HR_LEVEL &&
       <LandingPage
         mode={mode}
         setMode={setMode}

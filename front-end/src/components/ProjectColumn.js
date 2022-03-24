@@ -23,6 +23,7 @@ import { ADD_TICKET } from './constants/Modes'
 import NewTicketForm from './Forms/NewTicketForm'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
+import { MANAGER_LEVEL} from './constants/AccessLevel'
 
 const Transition = forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
@@ -119,8 +120,9 @@ export default function ProjectColumn (props) {
     setNewColumnName(event.target.value)
   }
 
+  
   return (
-    <Draggable draggableId={column.name} index={colIndex}>
+    <Draggable draggableId={column.name} index={colIndex} isDragDisabled={user.access_level != MANAGER_LEVEL} >
       {provided =>
         <Box
           sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
@@ -131,7 +133,8 @@ export default function ProjectColumn (props) {
           <ListItem sx={{ padding: '0.1rem' }}>
             <ListItemButton>
               <ListItemText primary={column.name} />
-              <IconButton
+              {user.access_level == MANAGER_LEVEL &&
+              (<IconButton
                 id='fade-button'
                 aria-controls={openIconMenu ? 'fade-menu' : undefined}
                 aria-haspopup='true'
@@ -140,6 +143,7 @@ export default function ProjectColumn (props) {
 							>
                 <MoreHorizIcon />
               </IconButton>
+              )}
               <Menu
                 id='fade-menu'
                 MenuListProps={{
@@ -207,7 +211,7 @@ export default function ProjectColumn (props) {
                 }}
 							>
                 <ColumnTickets tickets={tickets} setViewMode={setViewMode} setOpen={setOpen} currentTicket={currentTicket} open={open}
-              setCurrentTicket={setCurrentTicket} setTickets={setTickets}/>
+              setCurrentTicket={setCurrentTicket} setTickets={setTickets} user={user}/>
                 {provided.placeholder}
               </List>}
           </Droppable>
@@ -234,9 +238,8 @@ export default function ProjectColumn (props) {
   )
 }
 
-// React.memo(function ColumnTickets(props)
 const ColumnTickets = React.memo(function ColumnTickets (props) {
-  const { tickets, setViewMode, setOpen, currentTicket, setCurrentTicket, setTickets, open} = props
+  const { tickets, setViewMode, setOpen, currentTicket, setCurrentTicket, setTickets, open, user} = props
   return tickets.map((ticket, index) => {
     return (
       <Draggable
@@ -261,6 +264,7 @@ const ColumnTickets = React.memo(function ColumnTickets (props) {
               setCurrentTicket={setCurrentTicket}
               tickets={tickets}
               setTickets={setTickets}
+              user={user}
 						/>
           </div>}
       </Draggable>

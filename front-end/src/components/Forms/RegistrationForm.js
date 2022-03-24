@@ -50,13 +50,11 @@ export default function RegistrationForm (props) {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + '/roles')
 			.then(result => {
-  const roles_names = result.data.map(role => role.name)
-
-  const newMenu = roles_names.map(role => {
-    <MenuItem value={role.name}>
-      {role.name}
-    </MenuItem>
-  })
+        const newMenu = result.data.map(role => 
+          <MenuItem value={role.id}>
+            {role.name}
+          </MenuItem>
+        )
 
   setDropdown(newMenu)
   setRoles(result.data)
@@ -119,7 +117,7 @@ export default function RegistrationForm (props) {
             <HowToReg color='secondary' fontSize='large' />
           </Typography>
           <Typography variant='h4' align='center'>
-						Sign Up
+						Add Employee
 					</Typography>
         </Box>
 
@@ -198,6 +196,7 @@ export default function RegistrationForm (props) {
               defaultValue={values.roleInput}
               onChange={handleChange('roleInput')}
               required
+              value={3}
 						>
               {dropdown}
             </Select>
@@ -221,7 +220,7 @@ export default function RegistrationForm (props) {
             variant='contained'
             onClick={register}
 					>
-						Sign Up
+						Add Employee
 					</Button>
           <Button
             sx={{ mx: 2, width: '100%' }}

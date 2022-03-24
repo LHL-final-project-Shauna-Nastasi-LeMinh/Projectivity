@@ -17,6 +17,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import Typography from '@mui/material/Typography'
+import { HR_LEVEL } from './constants/AccessLevel'
 
 const page_strings = ['About', 'Login', 'Register']
 const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM]
@@ -108,13 +109,7 @@ export default function NavbarMenu (props) {
 					>
 						Login
 					</Button>
-        <Button
-          key='register'
-          sx={{ color: 'white', display: 'block' }}
-          onClick={openModals('registerForm')}
-					>
-						Register
-					</Button>
+        
       </ButtonGroup>}
       {user &&
       <Box>
@@ -135,11 +130,21 @@ export default function NavbarMenu (props) {
               {email}
             </Typography>
           </Box>
+          {user && user.access_level == HR_LEVEL &&
+          <Button
+            key='register'
+            sx={{ color: 'white', display: 'block' }}
+            onClick={openModals('registerForm')}
+            >
+						Add Employee
+					</Button>
+          } 
           <Tooltip title='Open settings'>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
             </IconButton>
           </Tooltip>
+          
         </Box>
 
         <Menu

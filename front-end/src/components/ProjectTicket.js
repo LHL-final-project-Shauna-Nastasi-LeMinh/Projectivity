@@ -12,9 +12,10 @@ import RemoveTicket from './Forms/RemoveTicket'
 import ShowTicketDetails from './Forms/ShowTicketDetails'
 
 import { SHOW_TICKET_DETAILS, EDIT_TICKET, REMOVE_TICKET } from './constants/Modes'
+import { MANAGER_LEVEL} from './constants/AccessLevel'
 
 export default function ProjectTicket (props) {
-  const { title, value, ticketId, setViewMode, setOpen, setCurrentTicket, tickets, setTickets} = props
+  const { title, value, ticketId, setViewMode, setOpen, setCurrentTicket, tickets, setTickets, user} = props
   const [checked, setChecked] = React.useState([1])
   const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -109,7 +110,7 @@ export default function ProjectTicket (props) {
           setDialogOpen={setDialogOpen}
           
 					/>}
-          {dialogOpen === REMOVE_TICKET &&
+          {dialogOpen === REMOVE_TICKET && 
           <RemoveTicket
           tickets={tickets}
           setTickets={setTickets}
@@ -132,7 +133,9 @@ export default function ProjectTicket (props) {
           Details
           </MenuItem>
         <MenuItem id="edit" onClick={handleDialogOpening}>Edit</MenuItem>
-        <MenuItem  id="remove" onClick={evt =>handleDialogOpening(evt)}>Remove</MenuItem>
+        {user.access_level == MANAGER_LEVEL &&
+          <MenuItem  id="remove" onClick={evt =>handleDialogOpening(evt)}>Remove</MenuItem>
+        }
       </Menu>
       </div>
 
