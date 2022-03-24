@@ -78,7 +78,11 @@ export default function NewTicketForm (props) {
         title: values.title,
         description: values.description,
         created_by: user.id,
-        column_id: currentColumn
+        column_id: currentColumn,
+        severity: values.severity,
+        priority: values.priority,
+        type: values.type,
+        milestone: values.milestone
       })
 			.then((res) => {
       
