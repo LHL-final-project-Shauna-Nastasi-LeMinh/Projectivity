@@ -12,53 +12,32 @@ import {
 import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
-export default function RegistrationForm (props) {
+export default function EditColumnForm (props) {
   const {
+		setViewMode,
 		user,
+		modals,
+		openModals,
+		closeModals,
+		dashboardProjects,
 		setDashboardProjects,
 		setProjects,
+		currentProject,
+		setCurrentProject,
 		columns,
-		setColumns,
-		modals,
-		closeModals,
-    allEmployees
+		editColumn,
+		selectedColumn
 	} = props
   const [values, setValues] = useState({
     message: '',
-    name: undefined,
-    description: undefined
+    name: undefined
   })
 
   const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-
-  function createNewProject () {
-    axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', {
-  name: values.name,
-  description: values.description,
-  employee_id: user.id
-})
-			.then(res => {
-  axios
-					.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
-					.then(res => {
-  const data = res.data.map(
-							project_assignment => project_assignment.Project
-						)
-  setDashboardProjects(data)
-						// setProjects(data)
-  closeModals('newProjectForm')
-})
-					.catch(err => {
-  console.log(err)
-})
-})
-			.catch(function (error) {
-  console.log(error.message)
-  setValues({ ...values, message: 'Form invalid' })
-})
+    setValues({
+      ...values,
+      [prop]: event.target.value
+    })
   }
 
   const style = {
@@ -72,10 +51,34 @@ export default function RegistrationForm (props) {
     boxShadow: 24
   }
 
+  {
+    selectedColumn !== undefined &&
+			console.log(
+				'#### SELECTED COLUMN',
+				selectedColumn.id,
+				selectedColumn.name
+			)
+  }
+
+  function edit () {
+    console.log('####TEST', selectedColumn)
+    if (selectedColumn !== undefined) {
+      closeModals('editColumnForm')
+      editColumn(selectedColumn.id, values.name)
+      console.log('####TEST', selectedColumn.name, selectedColumn.id)
+    }
+  }
+
+  {
+    selectedColumn !== undefined &&
+			console.log('######selectedColumn', selectedColumn)
+  }
+  console.log('######selectedColumn OUTSIDE', selectedColumn)
+
   return (
     <Modal
-      open={modals.newProjectForm}
-      onClose={() => closeModals('newProjectForm')}
+      open={modals.editColumnForm}
+      onClose={() => closeModals('editColumnForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -88,19 +91,24 @@ export default function RegistrationForm (props) {
           }}
 				>
           <Typography variant='h4' align='center'>
-            <AddBox color='secondary' fontSize='large' />
+						Edit A Column
+						<AddBox color='secondary' fontSize='large' />
           </Typography>
-          <Typography variant='h4' align='center'>
-						Create A New Column
-					</Typography>
         </Box>
-
         <Divider />
-
-        <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            width: '100%',
+            backgroundColor: 'background.default'
+          }}
+				>
           <TextField
-            sx={{ m: 2, width: '100%' }}
-            label='Project Title'
+            sx={{
+              width: '100%',
+              m: 2
+            }}
+            label='New Column Name'
             value={values.name}
             type='text'
             onChange={handleChange('name')}
@@ -109,9 +117,7 @@ export default function RegistrationForm (props) {
             required
 					/>
         </Box>
-
         <Divider />
-
         <Box
           sx={{
             display: 'flex',
@@ -121,20 +127,26 @@ export default function RegistrationForm (props) {
           }}
 				>
           <Button
-            sx={{ mx: 2, width: '50%' }}
+            sx={{
+              mx: 2,
+              width: '100%'
+            }}
             color='success'
             size='large'
             variant='contained'
-            onClick={() => createNewProject()}
+            onClick={() => edit()}
 					>
-						Create Ticket
+						Edit
 					</Button>
           <Button
-            sx={{ mx: 2, width: '50%' }}
+            sx={{
+              mx: 2,
+              width: '100%'
+            }}
             color='secondary'
             size='large'
             variant='contained'
-            onClick={() => closeModals('newProjectForm')}
+            onClick={() => closeModals('editColumnForm')}
 					>
 						Cancel
 					</Button>

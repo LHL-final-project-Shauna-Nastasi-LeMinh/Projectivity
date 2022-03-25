@@ -1,17 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 import Box from '@mui/material/Box'
+import ListItem from '@mui/material/ListItem'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
+import { styled, useTheme, makeStyles, withStyles } from '@mui/material/styles'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import DashboardItem from './DashboardItem'
-import {
-	NEW_PROJECT_FORM,
-	DELETE_PROJECT_FORM,
-	PROJECT_VIEW
-} from './constants/Modes'
-import { MANAGER_LEVEL} from './constants/AccessLevel'
+import DeleteProjectForm from './Forms/DeleteProjectForm'
+import NewProjectForm from './Forms/NewProjectForm'
+import EditProjectForm from './Forms/EditProjectForm'
+import { MANAGER_LEVEL } from './constants/AccessLevel'
+import MuiDrawer from '@mui/material/Drawer'
+import MuiAppBar from '@mui/material/AppBar'
+import { theme } from './Theme'
+import { ThemeProvider } from '@mui/material/styles'
 
 export default function Dashboard (props) {
   const {
@@ -23,28 +27,94 @@ export default function Dashboard (props) {
 		currentProject,
 		setCurrentProject,
 		loadForm,
-		open,
-		setOpen
+		modals,
+		openModals,
+		closeModals,
+    allEmployees
 	} = props
 
+  const [openDrawer, setOpenDrawer] = useState(false)
   const [projects, setProjects] = useState()
   const [dashboardProjects, setDashboardProjects] = useState()
+  const [selectedIndex, setSelectedIndex] = useState()
+
   const stateRef = useRef()
   stateRef.current = dashboardProjects
 
-  function purgeNullStates (states) {
-    const results = []
-
-    if (stateRef.current) {
-      for (const state of states) {
-        if (state !== null) {
-          results.push(state)
-        }
-      }
-    }
-
-    return results
+  const handleDrawerOpen = () => {
+    setOpenDrawer(true)
   }
+
+  const handleDrawerClose = () => {
+    setOpenDrawer(false)
+  }
+
+  const drawerWidth = 240
+
+  const openedMixin = theme => ({
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    overflowX: 'hidden'
+  })
+
+  const closedMixin = theme => ({
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    overflowX: 'hidden',
+    width: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(${theme.spacing(8)} + 1px)`
+    }
+  })
+
+  const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+		// necessary for content to be below app bar
+    ...theme.mixins.toolbar
+  }))
+
+  const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: prop => prop !== 'openDrawer'
+  })(({ theme, openDrawer }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    ...(openDrawer && {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen
+      })
+    })
+  }))
+
+  const Drawer = styled(MuiDrawer, {
+    shouldForwardProp: prop => prop !== 'openDrawer'
+  })(({ theme, openDrawer }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(openDrawer && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme)
+    }),
+    ...(!openDrawer && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme)
+    })
+  }))
 
   let index = 0
 
@@ -61,7 +131,6 @@ export default function Dashboard (props) {
   setCurrentProject(prev => {
     return { ...stateRef.current[index], Columns: res.data }
   })
-  setViewMode(PROJECT_VIEW)
 })
     }
   }
@@ -70,10 +139,11 @@ export default function Dashboard (props) {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
 			.then(res => {
-  setDashboardProjects(
-					res.data.map(project_assignment => project_assignment.Project)
+  const data = res.data.map(
+					project_assignment => project_assignment.Project
 				)
-  purgeNullStates(stateRef.current)
+  setDashboardProjects(data)
+  selectProject(0)
   setProjects(
 					stateRef.current.map(project =>
   <DashboardItem
@@ -91,35 +161,73 @@ export default function Dashboard (props) {
 						/>
 					)
 				)
-  selectProject(0)
 })
 			.catch(err => {
   console.log(err)
 })
   }, [])
 
+  const Offset = styled('div')(({ theme }) => theme.mixins.toolbar)
+
   return (
-    <Box
+    <Drawer
+      variant='permanent'
       sx={{
-        position: 'fixed',
-        left: 0,
-        top: '4rem',
-        width: '100%',
-        maxWidth: 360
+        width: 'fit-content',
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: {
+          width: 'fit-content',
+          boxSizing: 'border-box'
+        }
       }}
 		>
-      <List component='nav' aria-label='main mailbox folders'>
-        {projects}
-        {user.access_level == MANAGER_LEVEL &&
-        (<ListItemButton value='Create New Project'>
-          <ListItemIcon />
-          <ListItemText
-            primary='Create New Project'
-            onClick={() => setOpen(NEW_PROJECT_FORM)}
-					/>
-        </ListItemButton>
-        )}
-      </List>
-    </Box>
+      {modals.deleteProjectForm &&
+      <DeleteProjectForm
+        currentProject={currentProject}
+        setCurrentProject={setCurrentProject}
+        setViewMode={setViewMode}
+        modals={modals}
+        closeModals={closeModals}
+        dashboardProjects={dashboardProjects}
+        setDashboardProjects={setDashboardProjects}
+				/>}
+      {modals.newProjectForm &&
+      <NewProjectForm
+        user={user}
+        setViewMode={setViewMode}
+        modals={modals}
+        closeModals={closeModals}
+        setProjects={setProjects}
+        dashboardProjects={dashboardProjects}
+        setDashboardProjects={setDashboardProjects}
+        allEmployees={allEmployees}
+				/>}
+      {modals.editProjectForm &&
+      <EditProjectForm
+        user={user}
+        setViewMode={setViewMode}
+        modals={modals}
+        closeModals={closeModals}
+        setProjects={setProjects}
+        dashboardProjects={dashboardProjects}
+        setDashboardProjects={setDashboardProjects}
+				/>}
+      <Offset />
+      <Box sx={{ overflow: 'auto' }}>
+        <ThemeProvider theme={theme}>
+          <List theme={theme} component='nav' aria-label='main mailbox folders'>
+            {projects}
+            {user.access_level == MANAGER_LEVEL &&
+            <ListItemButton value='Create New Project'>
+              <ListItemIcon />
+              <ListItemText
+                primary='Create New Project'
+                onClick={() => openModals('newProjectForm')}
+								/>
+            </ListItemButton>}
+          </List>
+        </ThemeProvider>
+      </Box>
+    </Drawer>
   )
 }

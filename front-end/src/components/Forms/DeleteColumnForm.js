@@ -12,58 +12,33 @@ import {
 import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
-export default function DeleteProjectForm (props) {
+export default function DeleteColumnForm (props) {
   const {
-		currentProject,
-		setCurrentProject,
-		data,
 		setViewMode,
 		user,
-		setUser,
-		setCookie,
-		open,
-		setOpen,
 		modals,
 		openModals,
 		closeModals,
-		setRefresh,
 		dashboardProjects,
-		setDashboardProjects
+		setDashboardProjects,
+		setProjects,
+		currentProject,
+		setCurrentProject,
+		columns,
+		deleteColumn,
+		selectedColumn,
+		setSelectedColumn
 	} = props
   const [values, setValues] = useState({
     message: '',
     confirm: undefined
   })
 
-  const filteredProjects = dashboardProjects.filter(project => {
-    if (project.id !== currentProject.id) {
-      return project
-    }
-  })
-
   const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-
-  const delete_confirmed = event => {
-    if (values.confirm === 'DELETE') {
-      axios
-				.delete(
-					process.env.REACT_APP_BACKEND_URL +
-						`/projects/${currentProject.id}/delete`,
-        {
-          project_id: currentProject.id
-        }
-				)
-				.then(res => {
-  setDashboardProjects(filteredProjects)
-  closeModals('deleteProjectForm')
-})
-				.catch(function (error) {
-  console.log(error.message)
-  setValues({ ...values, message: 'Form invalid' })
-})
-    }
+    setValues({
+      ...values,
+      [prop]: event.target.value
+    })
   }
 
   const style = {
@@ -79,8 +54,8 @@ export default function DeleteProjectForm (props) {
 
   return (
     <Modal
-      open={modals.deleteProjectForm}
-      onClose={() => closeModals('deleteProjectForm')}
+      open={modals.deleteColumnForm}
+      onClose={() => closeModals('deleteColumnForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -93,11 +68,9 @@ export default function DeleteProjectForm (props) {
           }}
 				>
           <Typography variant='h4' align='center'>
-            <AddBox color='secondary' fontSize='large' />
+						Delete A Column
+						<AddBox color='secondary' fontSize='large' />
           </Typography>
-          <Typography variant='h4' align='center'>
-						Delete A Project
-					</Typography>
         </Box>
 
         <Divider />
@@ -128,20 +101,30 @@ export default function DeleteProjectForm (props) {
           }}
 				>
           <Button
-            sx={{ mx: 2, width: '100%' }}
+            sx={{
+              mx: 2,
+              width: '100%'
+            }}
             color='error'
             size='large'
             variant='contained'
-            onClick={() => delete_confirmed()}
+            onClick={() => {
+              if (values.confirm === 'DELETE') {
+                deleteColumn(selectedColumn.id)
+              }
+            }}
 					>
 						Delete
 					</Button>
           <Button
-            sx={{ mx: 2, width: '100%' }}
+            sx={{
+              mx: 2,
+              width: '100%'
+            }}
             color='secondary'
             size='large'
             variant='contained'
-            onClick={() => closeModals('deleteProjectForm')}
+            onClick={() => closeModals('deleteColumnForm')}
 					>
 						Cancel
 					</Button>

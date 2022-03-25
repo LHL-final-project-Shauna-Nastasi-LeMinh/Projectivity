@@ -38,8 +38,8 @@ function LinkTab (props) {
 
 export default function NavbarMenu (props) {
   const {
-		mode,
-		setMode,
+		viewMode,
+		setViewMode,
 		user,
 		setUser,
 		cookies,
@@ -62,7 +62,7 @@ export default function NavbarMenu (props) {
 				.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
 				.then(res => {
   setUser(null)
-  setMode(LANDING_VIEW)
+  setViewMode(false)
   removeCookie('user')
 })
 				.catch(err => {
@@ -75,7 +75,7 @@ export default function NavbarMenu (props) {
     }
 
     console.log('string is:', string)
-    setMode(newMode)
+    setViewMode(newMode)
     setAnchorElUser(null)
   }
 
@@ -97,19 +97,18 @@ export default function NavbarMenu (props) {
 				>
         <Button
           key='about'
-          onClick={() => setMode(ABOUT_VIEW)}
+          onClick={() => setViewMode(false)}
           sx={{ color: 'white', display: 'block' }}
 					>
 						About
 					</Button>
         <Button
           key='login'
-          onClick={openModals('loginForm')}
+          onClick={() => openModals('loginForm')}
           sx={{ color: 'white', display: 'block' }}
 					>
 						Login
 					</Button>
-        
       </ButtonGroup>}
       {user &&
       <Box>
@@ -130,21 +129,20 @@ export default function NavbarMenu (props) {
               {email}
             </Typography>
           </Box>
-          {user && user.access_level == HR_LEVEL &&
-          <Button
-            key='register'
-            sx={{ color: 'white', display: 'block' }}
-            onClick={openModals('registerForm')}
-            >
-						Add Employee
-					</Button>
-          } 
+          {user &&
+							user.access_level == HR_LEVEL &&
+							<Button
+  key='register'
+  sx={{ color: 'white', display: 'block' }}
+  onClick={() => openModals('registerForm')}
+							>
+								Add Employee
+							</Button>}
           <Tooltip title='Open settings'>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
             </IconButton>
           </Tooltip>
-          
         </Box>
 
         <Menu
