@@ -36,7 +36,9 @@ const App = () => {
     newProjectForm: false,
     newTicketForm: false,
     newColumnForm: false,
+    editColumnForm: false,
     deleteProjectForm: false,
+    deleteColumnForm: false,
     deleteTicketForm: false
   })
 

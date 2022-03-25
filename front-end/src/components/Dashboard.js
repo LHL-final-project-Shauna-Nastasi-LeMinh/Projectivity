@@ -80,6 +80,7 @@ export default function Dashboard (props) {
 				)
   setDashboardProjects(data)
   setProjects(data)
+  selectProject(0)
 })
 			.catch(err => {
   console.log(err)

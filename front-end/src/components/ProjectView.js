@@ -1,25 +1,32 @@
 import * as React from 'react'
 import { useEffect, useState } from 'react'
 import ProjectColumn from './ProjectColumn'
-import ProjectColumnNew from './Forms/ProjectColumnNew'
+import ProjectColumnNew from './ProjectColumnNew'
 import Box from '@mui/material/Box'
 import SearchPane from './SearchPane'
-import NewProjectForm from './Forms/NewProjectForm'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import axios from 'axios'
+import NewColumnForm from './Forms/NewColumnForm'
+import DeleteColumnForm from './Forms/DeleteColumnForm'
+import EditColumnForm from './Forms/EditColumnForm'
+import { modalClasses } from '@mui/material';
 
 export default function ProjectView (props) {
   const {
 		user,
     currentColumn,
 		currentProject,
+    setCurrentProject,
 		mode,
 		setViewMode,
 		setCurrentColumn,
 		open,
 		setOpen,
     currentTicket, 
-    setCurrentTicket
+    setCurrentTicket,
+    modals,
+    openModals,
+    closeModals
 	} = props
   const [columns, setColumns] = useState([])
 
@@ -152,7 +159,7 @@ export default function ProjectView (props) {
   }
 
   const deleteColumnFromProjectView = function (columnId) {
-    console.log(columnId)
+    closeModals('deleteColumnForm')
     axios
 			.delete(process.env.REACT_APP_BACKEND_URL + `/columns/${columnId}`)
 			.then(res => {
@@ -166,6 +173,7 @@ export default function ProjectView (props) {
   }
 
   const changeColumnFromProjectView = function (columnId, newName) {
+    closeModals('editColumnForm')
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/columns/updateName', {
   name: newName,
@@ -238,14 +246,19 @@ export default function ProjectView (props) {
       colIndex={colIndex}
       open={open}
       setOpen={setOpen}
+      modals={modals}
+      openModals={openModals}
+      closeModals={closeModals}
       deleteColumnFromProjectView={deleteColumnFromProjectView}
       changeColumnFromProjectView={changeColumnFromProjectView}
+      createNewColumn={createNewColumn}
 		/>
 	)
 
   return (
     <>
       <SearchPane searchFilter={searchFilter}/>
+      
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='all-column' direction='horizontal' type='column'>
           {provided =>
@@ -259,6 +272,7 @@ export default function ProjectView (props) {
               <ProjectColumnNew
                 createNewColumn={createNewColumn}
                 columnsCount={columns.length}
+                openModals={openModals}
               />
               {provided.placeholder}
             </Box>}

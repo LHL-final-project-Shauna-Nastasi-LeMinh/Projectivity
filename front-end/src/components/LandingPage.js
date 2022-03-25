@@ -91,6 +91,7 @@ export default function DashboardProject (props) {
           user={user}
           userProjects={userProjects}
           currentProject={currentProject}
+          setCurrentProject={setCurrentProject}
           setViewMode={setViewMode}
           setCurrentColumn={setCurrentColumn}
           open={open}
@@ -98,6 +99,9 @@ export default function DashboardProject (props) {
           currentTicket={currentTicket}
           setCurrentTicket={setCurrentTicket}
           currentColumn={currentColumn}
+          modals={modals}
+          closeModals={closeModals}
+          openModals={openModals}
 					/>}
       </Container>
     </Container>

@@ -16,14 +16,14 @@ import AddSharpIcon from '@mui/icons-material/AddSharp'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
-import { NEW_COLUMN_FORM } from '../constants/Modes'
+import { NEW_COLUMN_FORM } from './constants/Modes'
 
 const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 
 export default function ProjectColumnNew (props) {
-  const { createNewColumn, columnsCount } = props
+  const { createNewColumn, columnsCount, openModals } = props
   const [open, setOpen] = useState(false)
   const [newColumnName, setNewColumnName] = useState('')
 
@@ -39,11 +39,7 @@ export default function ProjectColumnNew (props) {
   }
 
   return (
-    <Draggable
-      draggableId={`newColumn`}
-      index={columnsCount}
-      isDragDisabled
-		>
+    <Draggable draggableId={`newColumn`} index={columnsCount} isDragDisabled>
       {provided =>
         <Box
           sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
@@ -52,7 +48,7 @@ export default function ProjectColumnNew (props) {
           ref={provided.innerRef}
 				>
           <ListItem sx={{ padding: '0.1rem' }}>
-            <ListItemButton onClick={() => setOpen(NEW_COLUMN_FORM)}>
+            <ListItemButton onClick={() => openModals('newColumnForm')}>
               <ListItemText primary='New Column' />
               <AddCircleIcon fontSize='large' />
             </ListItemButton>

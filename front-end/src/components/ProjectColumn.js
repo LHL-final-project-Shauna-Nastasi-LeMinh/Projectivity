@@ -23,6 +23,9 @@ import { NEW_TICKET_FORM } from './constants/Modes'
 import NewTicketForm from './Forms/NewTicketForm'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
+import NewColumnForm from './Forms/NewColumnForm'
+import EditColumnForm from './Forms/EditColumnForm'
+import DeleteColumnForm from './Forms/DeleteColumnForm'
 
 const Transition = forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
@@ -40,8 +43,12 @@ export default function ProjectColumn (props) {
 		setOpen,
 		deleteColumnFromProjectView,
 		changeColumnFromProjectView,
+		createNewColumn,
 		currentTicket,
-		setCurrentTicket
+		setCurrentTicket,
+		modals,
+		openModals,
+		closeModals
 	} = props
 
   const [tickets, setTickets] = useState([])
@@ -129,6 +136,26 @@ export default function ProjectColumn (props) {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
 				>
+          {modals.newColumnForm &&
+          <NewColumnForm
+            closeModals={closeModals}
+            modals={modals}
+            createNewColumn={createNewColumn}
+						/>}
+          {modals.deleteColumnForm &&
+          <DeleteColumnForm
+            deleteColumn={deleteColumnFromProjectView}
+            modals={modals}
+            closeModals={closeModals}
+            column={column}
+						/>}
+          {modals.editColumnForm &&
+          <EditColumnForm
+            editColumn={changeColumnFromProjectView}
+            modals={modals}
+            closeModals={closeModals}
+            column={column}
+						/>}
           <ListItem sx={{ padding: '0.1rem' }}>
             <ListItemButton>
               <ListItemText primary={column.name} />
@@ -151,10 +178,22 @@ export default function ProjectColumn (props) {
                 onClose={closeIconMenu}
                 TransitionComponent={Fade}
 							>
-                <MenuItem onClick={openNewColumnNameDialog}>
+                <MenuItem
+                  onClick={() => {
+                    openModals('editColumnForm')
+                    closeIconMenu()
+                  }}
+								>
 									Change Name
 								</MenuItem>
-                <MenuItem onClick={openDeleteDialog}>Delete</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    openModals('deleteColumnForm')
+                    closeIconMenu()
+                  }}
+								>
+									Delete
+								</MenuItem>
               </Menu>
             </ListItemButton>
           </ListItem>
