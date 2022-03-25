@@ -37,9 +37,7 @@ export default function Dashboard (props) {
   const [projects, setProjects] = useState()
   const [dashboardProjects, setDashboardProjects] = useState()
   const [selectedIndex, setSelectedIndex] = useState()
-
-  const stateRef = useRef()
-  stateRef.current = dashboardProjects
+  const drawerWidth = 'fit-content'
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true)
@@ -48,8 +46,6 @@ export default function Dashboard (props) {
   const handleDrawerClose = () => {
     setOpenDrawer(false)
   }
-
-  const drawerWidth = 240
 
   const openedMixin = theme => ({
     width: drawerWidth,
@@ -119,18 +115,20 @@ export default function Dashboard (props) {
   let index = 0
 
   function selectProject (index) {
-    if (stateRef.current[index]) {
+    if (dashboardProjects[index]) {
       axios
 				.get(
 					process.env.REACT_APP_BACKEND_URL +
 						'/projects/' +
-						stateRef.current[index].id +
+						dashboardProjects[index].id +
 						'/columns'
 				)
 				.then(res => {
+  console.log('#### THEN', dashboardProjects[index])
   setCurrentProject(prev => {
-    return { ...stateRef.current[index], Columns: res.data }
+    return { ...dashboardProjects[index], Columns: res.data }
   })
+  setDashboardProjects([...dashboardProjects])
 })
     }
   }
@@ -143,24 +141,7 @@ export default function Dashboard (props) {
 					project_assignment => project_assignment.Project
 				)
   setDashboardProjects(data)
-  selectProject(0)
-  setProjects(
-					stateRef.current.map(project =>
-  <DashboardItem
-    key={project.id}
-    value={project.name}
-    listIndex={index++}
-    currentProject={currentProject}
-    dashItemProject={project}
-    setCurrentProject={setCurrentProject}
-    selectProject={selectProject}
-    viewMode={viewMode}
-    setViewMode={setViewMode}
-    loadForm={loadForm}
-    user={user}
-						/>
-					)
-				)
+				// selectProject(0)
 })
 			.catch(err => {
   console.log(err)
@@ -169,15 +150,17 @@ export default function Dashboard (props) {
 
   const Offset = styled('div')(({ theme }) => theme.mixins.toolbar)
 
+  console.log('#### BEFORE', dashboardProjects)
+
   return (
     <ThemeProvider theme={theme}>
       <Drawer
         variant='permanent'
         sx={{
-          width: 'fit-content',
+          width: drawerWidth,
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
-            width: 'fit-content',
+            width: drawerWidth,
             boxSizing: 'border-box'
           }
         }}
@@ -215,7 +198,24 @@ export default function Dashboard (props) {
         <Offset />
         <Box sx={{ overflow: 'auto' }}>
           <List component='nav' aria-label='main mailbox folders'>
-            {projects}
+            {dashboardProjects &&
+							dashboardProjects.map(project =>
+  <DashboardItem
+    key={project.id}
+    value={project.name}
+    listIndex={index++}
+    currentProject={currentProject}
+    dashItemProject={project}
+    setCurrentProject={setCurrentProject}
+    selectProject={selectProject}
+    viewMode={viewMode}
+    setViewMode={setViewMode}
+    loadForm={loadForm}
+    user={user}
+    selectedIndex={selectedIndex}
+    setSelectedIndex={setSelectedIndex}
+								/>
+							)}
             {user.access_level == MANAGER_LEVEL &&
             <ListItemButton value='Create New Project'>
               <ListItemIcon />

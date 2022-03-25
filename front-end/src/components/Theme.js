@@ -44,30 +44,40 @@ export const theme = createTheme({
     MuiList: {
       styleOverrides: {
         root: {
-          backgroundColor: colors.primary.main,
-          color: colors.background.default
+          backgroundColor: colors.primary.main
         }
       }
     },
     MuiListItem: {
+      root: {
+        color: colors.background.default,
+        '&:hover': {
+          backgroundColor: colors.secondary.main
+        },
+        '&.Mui-selected': {
+          backgroundColor: colors.secondary.main
+        }
+      },
+      styleOverrides: {}
+    },
+    MuiListItemButton: {
       styleOverrides: {
         root: {
+          color: colors.background.default,
           '&:hover': {
-            backgroundColor: colors.primary.light
+            backgroundColor: colors.secondary.main
           },
           '&.Mui-selected': {
-            backgroundColor: colors.secondary.main
+            backgroundColor: colors.secondary.light
           }
         }
       }
     },
-    MuiListItemButton: {
-      root: {
-        backgroundColor: colors.primary.main,
-        color: colors.background.default
-      },
+    MuiListItemText: {
       styleOverrides: {
-        root: {}
+        root: {
+          color: colors.background.default
+        }
       }
     }
   }

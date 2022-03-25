@@ -41,10 +41,12 @@ export default function DashboardItem (props) {
 		user,
 		modals,
 		openModals,
-		closeModals
+		closeModals,
+		selectedIndex,
+		setSelectedIndex
 	} = props
   const [anchorEl, setAnchorEl] = useState(null)
-  const [selectedIndex, setSelectedIndex] = useState()
+  console.log('### DASH ITEM', currentProject)
 
   const open = Boolean(anchorEl)
   const handleClick = event => {
@@ -54,66 +56,62 @@ export default function DashboardItem (props) {
     setAnchorEl(null)
   }
 
-  const handleListItemClick = (event, index, project_id) => {
+  const handleListItemClick = (event, index, project) => {
+    selectProject(project.id)
     setSelectedIndex(index)
-    selectProject(project_id)
+    console.log('### selectedIndex', selectedIndex)
   }
 
   return (
-    <ListItem>
-      <ListItemButton
-        sx={{ color: 'primary.main' }}
-        selected={selectedIndex === listIndex}
+    <ListItemButton
+      selected={selectedIndex === listIndex}
+      onClick={event => handleListItemClick(event, listIndex, dashItemProject)}
+		>
+      <ListItemIcon />
+      <FolderIcon />
+      <ListItemText
+        key={key}
+        primary={value}
         onClick={event =>
 					handleListItemClick(event, listIndex, dashItemProject)}
+			/>
+      <Button
+        id='demo-positioned-button'
+        aria-controls={open ? 'demo-positioned-menu' : undefined}
+        aria-haspopup='true'
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
 			>
-        <ListItemIcon />
-        <FolderIcon />
-        <ListItemText
-          key={key}
-          primary={value}
-          onClick={event =>
-						handleListItemClick(event, listIndex, dashItemProject)}
-				/>
-
-        <Button
-          id='demo-positioned-button'
-          aria-controls={open ? 'demo-positioned-menu' : undefined}
-          aria-haspopup='true'
-          aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}
-				>
-          <MoreHorizIcon fontSize='small' />
-        </Button>
-        <Menu
-          id='demo-positioned-menu'
-          aria-labelledby='demo-positioned-button'
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'left'
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left'
-          }}
-				>
-          <MenuItem onClick={() => openModals('editProjectForm')}>
-            <ListItemIcon>
-              <EditIcon fontSize='small' />
-            </ListItemIcon>
-						Edit Project
-					</MenuItem>
-          <MenuItem onClick={() => openModals('deleteProjectForm')}>
-            <ListItemIcon>
-              <DeleteIcon fontSize='small' />
-            </ListItemIcon>
-						Delete Project
-					</MenuItem>
-        </Menu>
-      </ListItemButton>
-    </ListItem>
+        <MoreHorizIcon fontSize='small' />
+      </Button>
+      <Menu
+        id='demo-positioned-menu'
+        aria-labelledby='demo-positioned-button'
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left'
+        }}
+			>
+        <MenuItem onClick={() => openModals('editProjectForm')}>
+          <ListItemIcon>
+            <EditIcon fontSize='small' />
+          </ListItemIcon>
+					Edit Project
+				</MenuItem>
+        <MenuItem onClick={() => openModals('deleteProjectForm')}>
+          <ListItemIcon>
+            <DeleteIcon fontSize='small' />
+          </ListItemIcon>
+					Delete Project
+				</MenuItem>
+      </Menu>
+    </ListItemButton>
   )
 }
