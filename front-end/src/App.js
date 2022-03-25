@@ -24,13 +24,15 @@ import Paper from '@mui/material/Paper'
 import NewProjectForm from './components/Forms/NewProjectForm'
 import NewTicketForm from './components/Forms/NewTicketForm'
 import { HR_LEVEL } from './components/constants/AccessLevel'
+import HRPage from './components/HRPage'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import NavbarMenu from './components/NavbarMenu'
 import Dashboard from './components/Dashboard'
 import { styled } from '@mui/system'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
+import { theme } from './components/Theme'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -66,44 +68,6 @@ const App = () => {
     console.log('close modals', prop, modals)
     setModals({ ...modals, [prop]: false })
   }
-
-  const theme = createTheme({
-    palette: {
-      type: 'light',
-      primary: {
-        main: '#3D405B'
-      },
-      secondary: {
-        main: '#E07A5F'
-      },
-      error: {
-        main: '#AE2012'
-      },
-      warning: {
-        main: '#EE9B00'
-      },
-      success: {
-        main: '#17c3b2'
-      },
-      info: {
-        main: '#81B29A'
-      },
-      background: {
-        default: '#FEF9EF'
-      },
-      divider: '#E07A5F'
-    },
-
-    components: {
-			// Name of the component ⚛️
-      MuiButtonBase: {
-        defaultProps: {
-					// The default props to change
-          disableRipple: true // No more ripple, on the whole application 💣!
-        }
-      }
-    }
-  })
 
   const Offset = styled('div')(({ theme }) => theme.mixins.toolbar)
 
@@ -179,6 +143,7 @@ const App = () => {
           closeModals={closeModals}
           allEmployees={allEmployees}
 					/>}
+        {user !== null && user.access_level == HR_LEVEL && <HRPage />}
         {user === null && <AboutPage user={user} />}
         {user !== null &&
 					user.access_level != HR_LEVEL &&

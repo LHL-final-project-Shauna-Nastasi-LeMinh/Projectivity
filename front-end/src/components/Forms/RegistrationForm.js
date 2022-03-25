@@ -16,6 +16,7 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function RegistrationForm (props) {
+  const DEFAULT_DEV_ROLE = 3;
   const { setViewMode, setUser, setCookie, modals, closeModals } = props
 
   const [roles, setRoles] = useState([])
@@ -27,7 +28,7 @@ export default function RegistrationForm (props) {
     phone: null,
     email: null,
     password: null,
-    roleInput: 'Manager',
+    roleInput: DEFAULT_DEV_ROLE,
     showPassword: false
   })
 
@@ -66,6 +67,7 @@ export default function RegistrationForm (props) {
   }, [])
 
   const register = event => {
+    closeModals('registerForm')
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/register', {
   first_name: values.firstName,
@@ -76,10 +78,7 @@ export default function RegistrationForm (props) {
   role_id: values.roleInput
 })
 			.then(res => {
-  setUser(res.data)
-  setCookie('user', res.data, {
-    path: '/'
-  })
+        console.log("Employee added to system")
   setViewMode(true)
 })
 			.catch(function (error) {

@@ -14,48 +14,52 @@ import {
 	Select
 } from '@mui/material'
 import { AddBox } from '@mui/icons-material'
+import EditIcon from '@mui/icons-material/Edit';
+
+import { ADD_TICKET, EDIT_TICKET } from '../constants/Modes'
 
 export default function NewTicketForm (props) {
-  const {
-		user,
-		currentColumn,
-		dialogOpen,
-		setDialogOpen,
-		tickets,
-		setTickets
-	} = props
+  const { user, currentColumn, dialogOpen, setDialogOpen, tickets, setTickets, onsubmitMsg, title, currentTicket } = props
 
-	// state to keep ticket details
+  console.log(currentTicket)
+  // state to keep ticket details
   const [ticketDetails, setTicketDetails] = useState({
     severities: [],
     priorities: [],
     types: [],
     milestones: []
-  })
+  });
 
-	// fetch available tikets details from db such as tickets type/priority etc.
-  useEffect(
-		() =>
-			Promise.all([
-  axios.get(process.env.REACT_APP_BACKEND_URL + '/severities'),
-  axios.get(process.env.REACT_APP_BACKEND_URL + '/priorities'),
-  axios.get(process.env.REACT_APP_BACKEND_URL + '/types'),
-  axios.get(process.env.REACT_APP_BACKEND_URL + '/milestones')
-])
-				.then(res => {
-  console.log('get details', res)
-  setTicketDetails({
-    severities: res[0].data,
-    priorities: res[1].data,
-    types: res[2].data,
-    milestones: res[3].data
-  })
-})
-				.catch(function (error) {
-  console.log(error.message)
-}),
-		[]
-	)
+  let ticket = {}
+  if (currentTicket !== undefined) {
+    ticket = tickets.filter(t=> t.id === currentTicket)[0]
+  }
+  
+  // console.log(ticket)
+ // fetch available tikets details from db such as tickets type/priority etc.
+  useEffect (() =>
+    Promise.all([
+      axios.get(process.env.REACT_APP_BACKEND_URL + '/severities'),
+      axios.get(process.env.REACT_APP_BACKEND_URL + '/priorities'),
+      axios.get(process.env.REACT_APP_BACKEND_URL + '/types'),
+      axios.get(process.env.REACT_APP_BACKEND_URL + '/milestones')
+    ])
+    .then((res) => {
+     
+      setTicketDetails({ severities: res[0].data, priorities: res[1].data, types: res[2].data, milestones: res[3].data });
+      
+    })
+      .catch(function (error) {
+      console.log(error.message)
+      }), 
+      []
+  )
+ 
+    //   // map over each ticket detail to create a list for dropdown menu
+    // const severitiesMenu = ticketDetails.severities.map(severity => <MenuItem key={severity.id} value={severity.name}>{severity.name}</MenuItem>)
+    // const prioritiesMenu = ticketDetails.priorities.map(priority => <MenuItem key={priority.id} value={priority.name}>{priority.name}</MenuItem>)
+    // const typesMenu = ticketDetails.types.map(type => <MenuItem key={type.id} value={type.name}>{type.name}</MenuItem>)
+    // const milestonesMenu = ticketDetails.milestones.map(milestone => <MenuItem key={milestone.id} value={milestone.name}>{milestone.name}</MenuItem>)
 
 	// map over each ticket detail to create a list for dropdown menu
   const severitiesMenu = ticketDetails.severities.map(severity =>
@@ -83,10 +87,10 @@ export default function NewTicketForm (props) {
     message: '',
     title: undefined,
     description: undefined,
-    severity: '',
-    priority: '',
-    type: '',
-    milestone: ''
+    severity: undefined,
+    priority: undefined,
+    type: undefined,
+    milestone: undefined
   })
 
   const handleChange = prop => event => {
@@ -94,6 +98,7 @@ export default function NewTicketForm (props) {
   }
 
   const onAdd = event => {
+   
 		// add new ticket to db
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
@@ -114,11 +119,47 @@ export default function NewTicketForm (props) {
   setDialogOpen(false)
 })
 			.catch(function (error) {
-  console.log(error.message)
-  setValues({ ...values, message: 'Form invalid' })
-})
+        console.log(error.message)
+        setValues({ ...values, message: 'Form invalid' })
+  })
   }
-  console.log(values.priority)
+
+
+ 
+ 
+  const onEdit = () => {
+
+    // update ticket to db
+    axios
+			.post(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticket.id}`, {
+        id: ticket.id,
+        title: values.title,
+        description: values.description,
+        severity: values.severity,
+        priority: values.priority,
+        type: values.type,
+        milestone: values.milestone
+      })
+			.then((res) => {
+      
+        console.log("updated new ticket", res.data)
+        
+        const updatedTicket = res.data[0]
+        console.log("Ticket", updatedTicket)
+        // console.log("updated new ticket", updatedTicket)
+        const updatedTickets = tickets.filter(ticket => ticket.id !== currentTicket)
+        console.log("Tickets",updatedTickets)
+        setTickets([...updatedTickets, updatedTicket])
+        console.log(tickets)
+        setDialogOpen(false)
+})
+			.catch(function (error) {
+        console.log(error.message)
+        setValues({ ...values, message: 'Form invalid' })
+})
+  
+  }
+  
   const style = {
     position: 'absolute',
     top: '50%',
@@ -146,10 +187,12 @@ export default function NewTicketForm (props) {
           }}
 				>
           <Typography variant='h4' align='center'>
-            <AddBox color='secondary' fontSize='large' />
+            {dialogOpen === ADD_TICKET && <AddBox color='secondary' fontSize='large' />}
+            {dialogOpen === EDIT_TICKET && <EditIcon color='secondary' fontSize='large' />}
+            
           </Typography>
           <Typography variant='h4' align='center'>
-						Create A New Ticket
+						{title}
 					</Typography>
         </Box>
 
@@ -165,7 +208,8 @@ export default function NewTicketForm (props) {
               onChange={handleChange('title')}
               helperText={values.title === '' && 'Required field'}
               error={values.title === ''}
-              required
+              required={dialogOpen === ADD_TICKET ? true : false }
+              defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.title}` : ""}
 						/>
             <TextField
               sx={{ m: 2 }}
@@ -175,7 +219,8 @@ export default function NewTicketForm (props) {
               onChange={handleChange('description')}
               helperText={values.description === '' && 'Required field'}
               error={values.description === ''}
-              required
+              defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.description}` : ""}
+              required={dialogOpen === ADD_TICKET ? true : "" }
 						/>
           </Box>
           <Box>
@@ -187,7 +232,9 @@ export default function NewTicketForm (props) {
                 id='Priority'
                 value={values.priority}
                 onChange={handleChange('priority')}
-							>
+                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.priority}` : ""}
+              >
+                
                 {prioritiesMenu}
               </Select>
             </FormControl>
@@ -202,10 +249,25 @@ export default function NewTicketForm (props) {
                 id='Severity'
                 value={values.severity}
                 onChange={handleChange('severity')}
-							>
+                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.severity}` : ""}
+              >
+                
                 {severitiesMenu}
               </Select>
             </FormControl>
+
+             {/* <TextField
+                sx={{ m: 2 }}
+                id="outlined-select-severity"
+                select
+                label="Severity"
+                value={values.severity}
+                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.severity}` : ''}
+                onChange={handleChange('severity')}
+                
+              >
+                {severitiesMenu}
+            </TextField> */}
 
             <FormControl sx={{ m: 1, minWidth: 150 }}>
               <InputLabel id='TypeLabel'>Type</InputLabel>
@@ -215,11 +277,10 @@ export default function NewTicketForm (props) {
                 id='Type'
                 value={values.type}
                 onChange={handleChange('type')}
-							>
-                <MenuItem value=''>
-                  <em>&nbsp</em>
-                </MenuItem>
-                {typesMenu}
+                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.type}` : ""}
+              >
+                <MenuItem value=""><em></em></MenuItem>
+               {typesMenu}
               </Select>
             </FormControl>
 
@@ -231,7 +292,9 @@ export default function NewTicketForm (props) {
                 id='Milestone'
                 value={values.milestone}
                 onChange={handleChange('milestone')}
-							>
+                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.milestone}` : ""}
+              >
+                
                 {milestonesMenu}
               </Select>
             </FormControl>
@@ -253,9 +316,9 @@ export default function NewTicketForm (props) {
             color='success'
             size='large'
             variant='contained'
-            onClick={onAdd}
+            onClick={dialogOpen === ADD_TICKET ? onAdd : onEdit}
 					>
-						Create Ticket
+						{onsubmitMsg}
 					</Button>
           <Button
             sx={{ mx: 2, width: '100%' }}

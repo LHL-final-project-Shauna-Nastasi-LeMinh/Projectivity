@@ -81,18 +81,21 @@ module.exports = sequelizeModels => {
     }
   })
 
-  router.put('/:ticket_id', async (req, res) => {
+  router.post('/:ticket_id', async (req, res) => {
     try {
-      const {ticket_id, title, description} = req.body
-      Tickets.update(
-        {title, description},
+      const {id, title, description, severity, priority, type, milestone} = req.body
+      await Tickets.update(
+        {title, description, severity, priority, type, milestone},
         {
         where: {
-          id: ticket_id
+          id: id
         }
       })
+      const updatedTicket = await Tickets.findAll({
+        where: { id: id } })
+      console.log("backend", updatedTicket)
 
-      return res.json('success!')
+      return res.json(updatedTicket)
     } catch (err) {
       console.log(err)
       return res.status(500).json(err)

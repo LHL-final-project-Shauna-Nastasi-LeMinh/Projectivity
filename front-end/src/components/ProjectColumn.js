@@ -19,7 +19,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { NEW_TICKET_FORM } from './constants/Modes'
+import { ADD_TICKET } from './constants/Modes'
 import NewTicketForm from './Forms/NewTicketForm'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
@@ -121,7 +121,7 @@ export default function ProjectColumn (props) {
   const createNewTicket = () => {
     console.log('clicked create new ticket')
     setCurrentColumn(column.id)
-    setOpen(NEW_TICKET_FORM)
+    setDialogOpen(ADD_TICKET)
 		// setDialogOpen(NEW_TICKET_FORM)
     console.log('ticket', dialogOpen)
   }
@@ -276,6 +276,7 @@ export default function ProjectColumn (props) {
                   setCurrentTicket={setCurrentTicket}
                   setTickets={setTickets}
                   user={user}
+                  currentColumn={currentColumn}
 								/>
                 {provided.placeholder}
               </List>}
@@ -288,16 +289,19 @@ export default function ProjectColumn (props) {
 							/>
             </ListItemButton>
           </ListItem>
-          {/* move opening of create new ticket from landing page */}
-          {open === NEW_TICKET_FORM &&
-          <NewTicketForm
-            user={user}
-            currentColumn={currentColumn}
-            tickets={tickets}
-            setTickets={setTickets}
-            dialogOpen={dialogOpen}
-            setDialogOpen={setDialogOpen}
-						/>}
+{/* move opening of create new ticket from landing page */}
+      {dialogOpen === ADD_TICKET &&
+        <NewTicketForm
+          user={user}
+          currentColumn={currentColumn}
+          tickets={tickets}
+          setTickets={setTickets}
+          dialogOpen={dialogOpen}
+          setDialogOpen={setDialogOpen}
+          title = "Create A New Ticket"
+          onsubmitMsg="Create Ticket"
+					/>}
+          
         </Box>}
     </Draggable>
   )
@@ -312,7 +316,8 @@ const ColumnTickets = React.memo(function ColumnTickets (props) {
 		setCurrentTicket,
 		setTickets,
 		open,
-		user
+		user,
+    currentColumn
 	} = props
   return tickets.map((ticket, index) => {
     return (
@@ -339,6 +344,7 @@ const ColumnTickets = React.memo(function ColumnTickets (props) {
               tickets={tickets}
               setTickets={setTickets}
               user={user}
+              currentColumn={currentColumn}
 						/>
           </div>}
       </Draggable>
