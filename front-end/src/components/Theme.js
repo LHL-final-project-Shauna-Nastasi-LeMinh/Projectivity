@@ -39,46 +39,46 @@ const colors = {
 }
 
 export const theme = createTheme({
-  palette: colors,
-  components: {
-    MuiList: {
-      styleOverrides: {
-        root: {
-          backgroundColor: colors.primary.main
-        }
-      }
-    },
-    MuiListItem: {
-      root: {
-        color: colors.background.default,
-        '&:hover': {
-          backgroundColor: colors.secondary.main
-        },
-        '&.Mui-selected': {
-          backgroundColor: colors.secondary.main
-        }
-      },
-      styleOverrides: {}
-    },
-    MuiListItemButton: {
-      styleOverrides: {
-        root: {
-          color: colors.background.default,
-          '&:hover': {
-            backgroundColor: colors.secondary.main
-          },
-          '&.Mui-selected': {
-            backgroundColor: colors.secondary.light
-          }
-        }
-      }
-    },
-    MuiListItemText: {
-      styleOverrides: {
-        root: {
-          color: colors.background.default
-        }
-      }
-    }
-  }
+  palette: colors
+	// components: {
+	//   MuiList: {
+	//     styleOverrides: {
+	//       root: {
+	//         backgroundColor: colors.primary.main
+	//       }
+	//     }
+	//   },
+	//   MuiListItem: {
+	//     root: {
+	//       color: colors.background.default,
+	//       '&:hover': {
+	//         backgroundColor: colors.secondary.main
+	//       },
+	//       '&.Mui-selected': {
+	//         backgroundColor: colors.secondary.main
+	//       }
+	//     },
+	//     styleOverrides: {}
+	//   },
+	//   MuiListItemButton: {
+	//     styleOverrides: {
+	//       root: {
+	//         color: colors.background.default,
+	//         '&:hover': {
+	//           backgroundColor: colors.secondary.main
+	//         },
+	//         '&.Mui-selected': {
+	//           backgroundColor: colors.secondary.light
+	//         }
+	//       }
+	//     }
+	//   },
+	//   MuiListItemText: {
+	//     styleOverrides: {
+	//       root: {
+	//         color: colors.background.default
+	//       }
+	//     }
+	//   }
+	// }
 })
