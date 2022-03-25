@@ -76,29 +76,29 @@ export default function Dashboard (props) {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
 			.then(res => {
-  setDashboardProjects(
-					res.data.map(project_assignment => project_assignment.Project)
+  const data = res.data.map(
+					project_assignment => project_assignment.Project
 				)
-  purgeNullStates(stateRef.current)
-  const data = stateRef.current.map(project =>
-    <DashboardItem
-      key={project.id}
-      value={project.name}
-      listIndex={index++}
-      currentProject={currentProject}
-      dashItemProject={project}
-      setCurrentProject={setCurrentProject}
-      selectProject={selectProject}
-      viewMode={viewMode}
-      setViewMode={setViewMode}
-      loadForm={loadForm}
-      user={user}
-					/>
-				)
-  setProjects(data)
+
   setDashboardProjects(data)
   setProjects(data)
   selectProject(0)
+
+				// const data = stateRef.current.map(project =>
+				// 	<DashboardItem
+				// 		key={project.id}
+				// 		value={project.name}
+				// 		listIndex={index++}
+				// 		currentProject={currentProject}
+				// 		dashItemProject={project}
+				// 		setCurrentProject={setCurrentProject}
+				// 		selectProject={selectProject}
+				// 		viewMode={viewMode}
+				// 		setViewMode={setViewMode}
+				// 		loadForm={loadForm}
+				// 		user={user}
+				// 	/>
+				// );
 })
 			.catch(err => {
   console.log(err)
