@@ -214,23 +214,17 @@ export default function Dashboard (props) {
 					/>}
         <Offset />
         <Box sx={{ overflow: 'auto' }}>
-          <ThemeProvider theme={theme}>
-            <List
-              theme={theme}
-              component='nav'
-              aria-label='main mailbox folders'
-						>
-              {projects}
-              {user.access_level == MANAGER_LEVEL &&
-              <ListItemButton value='Create New Project'>
-                <ListItemIcon />
-                <ListItemText
+          <List component='nav' aria-label='main mailbox folders'>
+            {projects}
+            {user.access_level == MANAGER_LEVEL &&
+            <ListItemButton value='Create New Project'>
+              <ListItemIcon />
+              <ListItemText
                 primary='Create New Project'
                 onClick={() => openModals('newProjectForm')}
-									/>
-              </ListItemButton>}
-            </List>
-          </ThemeProvider>
+								/>
+            </ListItemButton>}
+          </List>
         </Box>
       </Drawer>
     </ThemeProvider>

@@ -1,59 +1,73 @@
 import { createTheme } from '@mui/material/styles'
 
-export const theme = createTheme({
-  palette: {
-    type: 'light',
-    primary: {
-      main: '#3D405B'
-    },
-    secondary: {
-      main: '#E07A5F'
-    },
-    error: {
-      main: '#AE2012'
-    },
-    warning: {
-      main: '#EE9B00'
-    },
-    success: {
-      main: '#17c3b2'
-    },
-    info: {
-      main: '#81B29A'
-    },
-    background: {
-      default: '#FEF9EF'
-    },
-    divider: '#E07A5F'
+const colors = {
+  type: 'light',
+  primary: {
+    main: '#3D405B',
+    light: '#63667B',
+    dark: '#2A2C3F'
   },
+  secondary: {
+    main: '#E07A5F',
+    light: '#E6947F',
+    dark: '#9C5542'
+  },
+  error: {
+    main: '#AE2012',
+    light: '#BE4C41',
+    dark: '#79160C'
+  },
+  warning: {
+    main: '#EE9B00',
+    light: '#F1AF33',
+    dark: '#A66C00'
+  },
+  success: {
+    main: '#17c3b2',
+    light: '#45CFC1',
+    dark: '#10887C'
+  },
+  info: {
+    main: '#81B29A',
+    light: '#9AC1AE',
+    dark: '#5A7C6B'
+  },
+  background: {
+    default: '#FEF9EF'
+  },
+  divider: '#E07A5F'
+}
+
+export const theme = createTheme({
+  palette: colors,
   components: {
-    MuiListItemButton: {
+    MuiList: {
       styleOverrides: {
         root: {
-          backgroundColor: '#3D405B',
-          color: '#FEF9EF',
-          '&:hover': {
-            backgroundColor: '#AAAAAA',
-            color: '#123109'
-          },
-          '&:selected': {
-            backgroundColor: '#123109',
-            color: '#AAAAAA'
-          }
+          backgroundColor: colors.primary.main,
+          color: colors.background.default
         }
       }
     },
     MuiListItem: {
       styleOverrides: {
         root: {
-          width: '100%',
-          backgroundColor: '#3D405B',
-          color: '#FEF9EF'
-        },
-        '&:hover': {
-          backgroundColor: '#AAAAAA',
-          color: '#123109'
+          '&:hover': {
+            backgroundColor: colors.primary.light
+          },
+          '&.Mui-selected': {
+            backgroundColor: colors.secondary.main
+          }
         }
+      }
+    },
+    MuiListItemButton: {
+      root: {
+        backgroundColor: colors.primary.main,
+        color: colors.background.default
+      },
+      styleOverrides: {
+        root: {}
       }
     }
   }
