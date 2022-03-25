@@ -167,6 +167,8 @@ export default function Dashboard (props) {
 })
   }, [])
 
+  const Offset = styled('div')(({ theme }) => theme.mixins.toolbar)
+
   return (
     <Drawer
       variant='permanent'
