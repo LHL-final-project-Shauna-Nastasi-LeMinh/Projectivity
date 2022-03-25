@@ -26,7 +26,8 @@ export default function DeleteColumnForm (props) {
 		setCurrentProject,
 		columns,
 		deleteColumn,
-		column
+		selectedColumn,
+		setSelectedColumn
 	} = props
   const [values, setValues] = useState({
     message: '',
@@ -108,9 +109,8 @@ export default function DeleteColumnForm (props) {
             size='large'
             variant='contained'
             onClick={() => {
-              console.log(values.confirm)
               if (values.confirm === 'DELETE') {
-                deleteColumn(column.id)
+                deleteColumn(selectedColumn.id)
               }
             }}
 					>
