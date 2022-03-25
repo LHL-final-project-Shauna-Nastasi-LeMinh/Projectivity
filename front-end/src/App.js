@@ -42,6 +42,7 @@ const App = () => {
   const [refresh, setRefresh] = useState(false)
   const [data, setData] = useState()
   const [dashboard, setDashboard] = useState()
+  const [allEmployees, setAllEmployees] = useState()
 
 	// MODAL STATE
   const [modals, setModals] = useState({
@@ -117,6 +118,7 @@ const App = () => {
           modals={modals}
           closeModals={closeModals}
           setRefresh={setRefresh}
+          setAllEmployees={setAllEmployees}
 					/>}
         {modals.registerForm &&
         <RegistrationForm
@@ -175,6 +177,7 @@ const App = () => {
           modals={modals}
           openModals={openModals}
           closeModals={closeModals}
+          allEmployees={allEmployees}
 					/>}
         {user === null && <AboutPage user={user} />}
         {user !== null &&

@@ -20,7 +20,8 @@ export default function RegistrationForm (props) {
 		columns,
 		setColumns,
 		modals,
-		closeModals
+		closeModals,
+    allEmployees
 	} = props
   const [values, setValues] = useState({
     message: '',
