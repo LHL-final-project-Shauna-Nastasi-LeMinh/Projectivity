@@ -10,14 +10,16 @@ import IconButton from '@mui/material/IconButton';
 import Fade from '@mui/material/Fade';
 import RemoveTicket from './Forms/RemoveTicket'
 import ShowTicketDetails from './Forms/ShowTicketDetails'
+import NewTicketForm from './Forms/NewTicketForm'
 
-import { SHOW_TICKET_DETAILS, EDIT_TICKET, REMOVE_TICKET } from './constants/Modes'
+import { SHOW_TICKET_DETAILS, EDIT_TICKET, REMOVE_TICKET, ADD_TICKET } from './constants/Modes'
 import { MANAGER_LEVEL} from './constants/AccessLevel'
 
 export default function ProjectTicket (props) {
-  const { title, value, ticketId, setViewMode, setOpen, setCurrentTicket, tickets, setTickets, user} = props
+  const { title, value, ticketId, setViewMode, setOpen, tickets, setTickets, user, currentColumn} = props
   const [checked, setChecked] = React.useState([1])
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [currentTicket, setCurrentTicket] = useState()
 
   // handle opening and closing of MoreVertIcon
   const [anchorEl, setAnchorEl] = useState(null);
@@ -35,7 +37,8 @@ export default function ProjectTicket (props) {
     console.log(evt.target.id)
 
     if (evt.target.id === 'edit') {
-      setOpen(EDIT_TICKET)
+      setDialogOpen(EDIT_TICKET)
+      setCurrentTicket(ticketId)
     }
 
     if (evt.target.id === 'details') {
@@ -69,14 +72,6 @@ export default function ProjectTicket (props) {
     setChecked(newChecked)
   }
 
-  const clickHandler = function () {
-    console.log(ticketId)
-    if (!ticketId) {
-			// CREATE NEW TICKET GOES HERE
-    } else {
-			// VIEW / UPDATE TICKET DETAILS GOES HERE
-    }
-  }
 
   return (
     <ListItem sx={{ padding: '0.1rem' }}>
@@ -118,7 +113,25 @@ export default function ProjectTicket (props) {
           dialogOpen={dialogOpen}
           setDialogOpen={setDialogOpen}
           
+          
 					/>}
+
+          {dialogOpen === EDIT_TICKET &&
+        <NewTicketForm
+          user={user}
+          currentColumn={currentColumn}
+          tickets={tickets}
+          setTickets={setTickets}
+          dialogOpen={dialogOpen}
+          ticketId={ticketId}
+          setDialogOpen={setDialogOpen}
+          title = "Edit Ticket"
+          onsubmitMsg="Edit Ticket"
+          currentTicket={currentTicket}
+          
+        
+					/>}
+          
         <Menu
         id="fade-menu"
         MenuListProps={{

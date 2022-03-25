@@ -211,7 +211,7 @@ export default function ProjectColumn (props) {
                 }}
 							>
                 <ColumnTickets tickets={tickets} setViewMode={setViewMode} setOpen={setOpen} currentTicket={currentTicket} open={open}
-              setCurrentTicket={setCurrentTicket} setTickets={setTickets} user={user}/>
+              setCurrentTicket={setCurrentTicket} setTickets={setTickets} user={user} currentColumn={currentColumn}/>
                 {provided.placeholder}
               </List>}
           </Droppable>
@@ -224,7 +224,7 @@ export default function ProjectColumn (props) {
             </ListItemButton>
           </ListItem>
 {/* move opening of create new ticket from landing page */}
-          {dialogOpen === ADD_TICKET &&
+      {dialogOpen === ADD_TICKET &&
         <NewTicketForm
           user={user}
           currentColumn={currentColumn}
@@ -232,14 +232,17 @@ export default function ProjectColumn (props) {
           setTickets={setTickets}
           dialogOpen={dialogOpen}
           setDialogOpen={setDialogOpen}
+          title = "Create A New Ticket"
+          onsubmitMsg="Create Ticket"
 					/>}
+          
         </Box>}
     </Draggable>
   )
 }
 
 const ColumnTickets = React.memo(function ColumnTickets (props) {
-  const { tickets, setViewMode, setOpen, currentTicket, setCurrentTicket, setTickets, open, user} = props
+  const { tickets, setViewMode, setOpen, currentTicket, setCurrentTicket, setTickets, open, user, currentColumn} = props
   return tickets.map((ticket, index) => {
     return (
       <Draggable
@@ -265,6 +268,7 @@ const ColumnTickets = React.memo(function ColumnTickets (props) {
               tickets={tickets}
               setTickets={setTickets}
               user={user}
+              currentColumn={currentColumn}
 						/>
           </div>}
       </Draggable>
