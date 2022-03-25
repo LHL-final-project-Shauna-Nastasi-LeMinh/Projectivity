@@ -14,9 +14,3 @@ export default function AboutPage (props) {
     </Container>
   )
 }
-
-// {user !== null && user.access_level == HR_LEVEL && <HRPage />}
-{
-	/* {(user === null || (user && user.access_level != HR_LEVEL)) &&
-      <h2>Welcome to the LHL Final Project!</h2>} */
-}
