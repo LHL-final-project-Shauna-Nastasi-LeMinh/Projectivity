@@ -31,6 +31,7 @@ export default function ProjectView (props) {
 	} = props
   const [columns, setColumns] = useState([])
   const [resetSearchPane, setResetSearchPane] = useState(0);
+  const [selectedColumn, setSelectedColumn] = useState()
 
   useEffect(
 		() => {
@@ -188,6 +189,7 @@ export default function ProjectView (props) {
 			.catch(function (error) {
   console.log(error.message)
 })
+
     const updatedColumn = columns.filter(column => column.id === columnId)[0]
     updatedColumn.name = newName
     setColumns([...columns])
@@ -263,6 +265,8 @@ export default function ProjectView (props) {
       deleteColumnFromProjectView={deleteColumnFromProjectView}
       changeColumnFromProjectView={changeColumnFromProjectView}
       createNewColumn={createNewColumn}
+      selectedColumn={selectedColumn}
+      setSelectedColumn={setSelectedColumn}
 		/>
 	)
 

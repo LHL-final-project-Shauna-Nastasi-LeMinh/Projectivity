@@ -1,4 +1,4 @@
-import React, { useEffect, useState, forwardRef } from 'react'
+import React, { useEffect, useState, forwardRef, useRef } from 'react'
 import axios from 'axios'
 import ProjectTicket from './ProjectTicket'
 import Box from '@mui/material/Box'
@@ -49,7 +49,9 @@ export default function ProjectColumn (props) {
 		setCurrentTicket,
 		modals,
 		openModals,
-		closeModals
+		closeModals,
+		selectedColumn,
+		setSelectedColumn
 	} = props
 
   const [tickets, setTickets] = useState([])
@@ -128,6 +130,8 @@ export default function ProjectColumn (props) {
     setNewColumnName(event.target.value)
   }
 
+  console.log('##### PROJECT COLUMN', selectedColumn)
+
   return (
     <Draggable
       draggableId={column.name}
@@ -152,14 +156,14 @@ export default function ProjectColumn (props) {
             deleteColumn={deleteColumnFromProjectView}
             modals={modals}
             closeModals={closeModals}
-            column={column}
+            selectedColumn={selectedColumn}
 						/>}
           {modals.editColumnForm &&
           <EditColumnForm
             editColumn={changeColumnFromProjectView}
             modals={modals}
             closeModals={closeModals}
-            column={column}
+            selectedColumn={selectedColumn}
 						/>}
           {modals.newTicketForm &&
           <NewTicketForm
@@ -169,7 +173,13 @@ export default function ProjectColumn (props) {
             modals={modals}
             closeModals={closeModals}
 						/>}
-          <ListItem sx={{ padding: '0.1rem' }}>
+          <ListItem
+            sx={{ padding: '0.1rem' }}
+            onClick={() => {
+              console.log('###### CLICK COLUMN', column.name, column.id)
+              setSelectedColumn(column)
+            }}
+					>
             <ListItemButton>
               <ListItemText primary={column.name} />
               {user.access_level == MANAGER_LEVEL &&
@@ -194,17 +204,17 @@ export default function ProjectColumn (props) {
 							>
                 <MenuItem
                   onClick={() => {
-                    openModals('editColumnForm')
-                    closeIconMenu()
-                  }}
+                  openModals('editColumnForm')
+                  closeIconMenu()
+                }}
 								>
 									Change Name
 								</MenuItem>
                 <MenuItem
                   onClick={() => {
-                    openModals('deleteColumnForm')
-                    closeIconMenu()
-                  }}
+                  openModals('deleteColumnForm')
+                  closeIconMenu()
+                }}
 								>
 									Delete
 								</MenuItem>

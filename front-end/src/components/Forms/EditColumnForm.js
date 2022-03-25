@@ -12,7 +12,7 @@ import {
 import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
-export default function RegistrationForm (props) {
+export default function EditColumnForm (props) {
   const {
 		setViewMode,
 		user,
@@ -26,7 +26,7 @@ export default function RegistrationForm (props) {
 		setCurrentProject,
 		columns,
 		editColumn,
-		column
+		selectedColumn
 	} = props
   const [values, setValues] = useState({
     message: '',
@@ -50,6 +50,30 @@ export default function RegistrationForm (props) {
     backgroundColor: 'primary.main',
     boxShadow: 24
   }
+
+  {
+    selectedColumn !== undefined &&
+			console.log(
+				'#### SELECTED COLUMN',
+				selectedColumn.id,
+				selectedColumn.name
+			)
+  }
+
+  function edit () {
+    console.log('####TEST', selectedColumn)
+    if (selectedColumn !== undefined) {
+      closeModals('editColumnForm')
+      editColumn(selectedColumn.id, values.name)
+      console.log('####TEST', selectedColumn.name, selectedColumn.id)
+    }
+  }
+
+  {
+    selectedColumn !== undefined &&
+			console.log('######selectedColumn', selectedColumn)
+  }
+  console.log('######selectedColumn OUTSIDE', selectedColumn)
 
   return (
     <Modal
@@ -110,10 +134,7 @@ export default function RegistrationForm (props) {
             color='success'
             size='large'
             variant='contained'
-            onClick={() => {
-              closeModals('editColumnForm')
-              editColumn(column.id, values.name)
-            }}
+            onClick={() => edit()}
 					>
 						Edit
 					</Button>

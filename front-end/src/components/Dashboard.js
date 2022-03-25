@@ -216,10 +216,10 @@ export default function Dashboard (props) {
     <Drawer
       variant='permanent'
       sx={{
-        width: drawerWidth,
+        width: 'fit-content',
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
-          width: drawerWidth,
+          width: 'fit-content',
           boxSizing: 'border-box'
         }
       }}

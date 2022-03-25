@@ -12,7 +12,7 @@ import {
 import { AddBox } from '@mui/icons-material'
 import { PROJECT_VIEW } from '../constants/Modes'
 
-export default function RegistrationForm (props) {
+export default function DeleteColumnForm (props) {
   const {
 		setViewMode,
 		user,
