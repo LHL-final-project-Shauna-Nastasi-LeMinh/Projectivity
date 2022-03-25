@@ -15,17 +15,30 @@ import { PROJECT_VIEW } from '../constants/Modes'
 export default function DeleteProjectForm (props) {
   const {
 		currentProject,
+		setCurrentProject,
 		data,
 		setViewMode,
 		user,
 		setUser,
 		setCookie,
 		open,
-		setOpen
+		setOpen,
+		modals,
+		openModals,
+		closeModals,
+		setRefresh,
+		dashboardProjects,
+		setDashboardProjects
 	} = props
   const [values, setValues] = useState({
     message: '',
     confirm: undefined
+  })
+
+  const filteredProjects = dashboardProjects.filter(project => {
+    if (project.id !== currentProject.id) {
+      return project
+    }
   })
 
   const handleChange = prop => event => {
@@ -36,13 +49,15 @@ export default function DeleteProjectForm (props) {
     if (values.confirm === 'DELETE') {
       axios
 				.delete(
-					process.env.REACT_APP_BACKEND_URL + `/projects/${data.id}/delete`,
+					process.env.REACT_APP_BACKEND_URL +
+						`/projects/${currentProject.id}/delete`,
         {
-          project_id: data.id
+          project_id: currentProject.id
         }
 				)
 				.then(res => {
-  setOpen(false)
+  setDashboardProjects(filteredProjects)
+  closeModals('deleteProjectForm')
 })
 				.catch(function (error) {
   console.log(error.message)
@@ -64,8 +79,8 @@ export default function DeleteProjectForm (props) {
 
   return (
     <Modal
-      open={open.deleteProjectForm}
-      onClose={() => setOpen(false)}
+      open={modals.deleteProjectForm}
+      onClose={() => closeModals('deleteProjectForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -81,32 +96,22 @@ export default function DeleteProjectForm (props) {
             <AddBox color='secondary' fontSize='large' />
           </Typography>
           <Typography variant='h4' align='center'>
-						Create A New Ticket
+						Delete A Project
 					</Typography>
         </Box>
 
         <Divider />
 
         <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', width: '100%' }}>
             <TextField
               sx={{ m: 2 }}
-              label='Project Title'
-              value={values.name}
+              label='Type DELETE to confirm'
+              value={values.confirm}
               type='text'
-              onChange={handleChange('name')}
-              helperText={values.name === '' && 'Required field'}
-              error={values.name === ''}
-              required
-						/>
-            <TextField
-              sx={{ m: 2 }}
-              label='Ticket Details'
-              value={values.description}
-              type='text'
-              onChange={handleChange('description')}
-              helperText={values.description === '' && 'Required field'}
-              error={values.description === ''}
+              onChange={handleChange('confirm')}
+              helperText={values.confirm === '' && 'Required field'}
+              error={values.confirm === ''}
               required
 						/>
           </Box>
@@ -124,19 +129,19 @@ export default function DeleteProjectForm (props) {
 				>
           <Button
             sx={{ mx: 2, width: '100%' }}
-            color='success'
+            color='error'
             size='large'
             variant='contained'
-            onClick={delete_confirmed}
+            onClick={() => delete_confirmed()}
 					>
-						Create Ticket
+						Delete
 					</Button>
           <Button
             sx={{ mx: 2, width: '100%' }}
             color='secondary'
             size='large'
             variant='contained'
-            onClick={() => setOpen(false)}
+            onClick={() => closeModals('deleteProjectForm')}
 					>
 						Cancel
 					</Button>

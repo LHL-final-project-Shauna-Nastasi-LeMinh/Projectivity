@@ -104,12 +104,18 @@ export default function NavbarMenu (props) {
 					</Button>
         <Button
           key='login'
-          onClick={openModals('loginForm')}
+          onClick={() => openModals('loginForm')}
           sx={{ color: 'white', display: 'block' }}
 					>
 						Login
 					</Button>
-        
+        <Button
+          keyw='register'
+          sx={{ color: 'white', display: 'block' }}
+          onClick={() => openModals('registerForm')}
+					>
+						Register
+					</Button>
       </ButtonGroup>}
       {user &&
       <Box>
@@ -130,21 +136,20 @@ export default function NavbarMenu (props) {
               {email}
             </Typography>
           </Box>
-          {user && user.access_level == HR_LEVEL &&
-          <Button
-            key='register'
-            sx={{ color: 'white', display: 'block' }}
-            onClick={openModals('registerForm')}
-            >
-						Add Employee
-					</Button>
-          } 
+          {user &&
+							user.access_level == HR_LEVEL &&
+							<Button
+  key='register'
+  sx={{ color: 'white', display: 'block' }}
+  onClick={openModals('registerForm')}
+							>
+								Add Employee
+							</Button>}
           <Tooltip title='Open settings'>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
             </IconButton>
           </Tooltip>
-          
         </Box>
 
         <Menu

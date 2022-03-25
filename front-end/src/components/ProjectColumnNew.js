@@ -12,8 +12,8 @@ import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
-import AddSharpIcon from '@mui/icons-material/AddSharp';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddSharpIcon from '@mui/icons-material/AddSharp'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
 import { NEW_COLUMN_FORM } from './constants/Modes'
@@ -23,7 +23,7 @@ const Transition = React.forwardRef(function Transition (props, ref) {
 })
 
 export default function ProjectColumnNew (props) {
-  const { createNewColumn, columnsCount } = props
+  const { createNewColumn, columnsCount, openModals } = props
   const [open, setOpen] = useState(false)
   const [newColumnName, setNewColumnName] = useState('')
 
@@ -39,38 +39,39 @@ export default function ProjectColumnNew (props) {
   }
 
   return (
-    <Draggable draggableId={`newColumn`} index={columnsCount} isDragDisabled={true}>
-    {provided =>
-      <Box sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
-        {...provided.draggableProps}
-        {...provided.dragHandleProps}
-        ref={provided.innerRef}
-      >
-      <ListItem sx={{ padding: '0.1rem' }}>
-        <ListItemButton onClick={() => setOpen(NEW_COLUMN_FORM)} >
-            <ListItemText primary='New Column' />
-            <AddCircleIcon fontSize='large'/>
-        </ListItemButton>
-      </ListItem>
-      <Divider />
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin='dense'
-            id='name'
-            label='New Column Name'
-            fullWidth
-            variant='outlined'
-            onChange={setTextValue}
-					/>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={create}>Create</Button>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
-    </Box>}
+    <Draggable draggableId={`newColumn`} index={columnsCount} isDragDisabled>
+      {provided =>
+        <Box
+          sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+				>
+          <ListItem sx={{ padding: '0.1rem' }}>
+            <ListItemButton onClick={() => openModals('newColumnForm')}>
+              <ListItemText primary='New Column' />
+              <AddCircleIcon fontSize='large' />
+            </ListItemButton>
+          </ListItem>
+          <Divider />
+          <Dialog open={open} onClose={() => setOpen(false)}>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin='dense'
+                id='name'
+                label='New Column Name'
+                fullWidth
+                variant='outlined'
+                onChange={setTextValue}
+							/>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={create}>Create</Button>
+              <Button onClick={() => setOpen(false)}>Cancel</Button>
+            </DialogActions>
+          </Dialog>
+        </Box>}
     </Draggable>
   )
 }

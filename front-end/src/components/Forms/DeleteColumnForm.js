@@ -14,50 +14,30 @@ import { PROJECT_VIEW } from '../constants/Modes'
 
 export default function RegistrationForm (props) {
   const {
+		setViewMode,
 		user,
+		modals,
+		openModals,
+		closeModals,
+		dashboardProjects,
 		setDashboardProjects,
 		setProjects,
+		currentProject,
+		setCurrentProject,
 		columns,
-		setColumns,
-		modals,
-		closeModals
+		deleteColumn,
+		column
 	} = props
   const [values, setValues] = useState({
     message: '',
-    name: undefined,
-    description: undefined
+    confirm: undefined
   })
 
   const handleChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-
-  function createNewProject () {
-    axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', {
-  name: values.name,
-  description: values.description,
-  employee_id: user.id
-})
-			.then(res => {
-  axios
-					.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
-					.then(res => {
-  const data = res.data.map(
-							project_assignment => project_assignment.Project
-						)
-  setDashboardProjects(data)
-  setProjects(data)
-  closeModals('newProjectForm')
-})
-					.catch(err => {
-  console.log(err)
-})
-})
-			.catch(function (error) {
-  console.log(error.message)
-  setValues({ ...values, message: 'Form invalid' })
-})
+    setValues({
+      ...values,
+      [prop]: event.target.value
+    })
   }
 
   const style = {
@@ -73,8 +53,8 @@ export default function RegistrationForm (props) {
 
   return (
     <Modal
-      open={modals.newProjectForm}
-      onClose={() => closeModals('newProjectForm')}
+      open={modals.deleteColumnForm}
+      onClose={() => closeModals('deleteColumnForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -87,26 +67,26 @@ export default function RegistrationForm (props) {
           }}
 				>
           <Typography variant='h4' align='center'>
-            <AddBox color='secondary' fontSize='large' />
+						Delete A Column
+						<AddBox color='secondary' fontSize='large' />
           </Typography>
-          <Typography variant='h4' align='center'>
-						Create A New Column
-					</Typography>
         </Box>
 
         <Divider />
 
         <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
-          <TextField
-            sx={{ m: 2, width: '100%' }}
-            label='Project Title'
-            value={values.name}
-            type='text'
-            onChange={handleChange('name')}
-            helperText={values.name === '' && 'Required field'}
-            error={values.name === ''}
-            required
-					/>
+          <Box sx={{ display: 'flex', width: '100%' }}>
+            <TextField
+              sx={{ m: 2 }}
+              label='Type DELETE to confirm'
+              value={values.confirm}
+              type='text'
+              onChange={handleChange('confirm')}
+              helperText={values.confirm === '' && 'Required field'}
+              error={values.confirm === ''}
+              required
+						/>
+          </Box>
         </Box>
 
         <Divider />
@@ -120,20 +100,31 @@ export default function RegistrationForm (props) {
           }}
 				>
           <Button
-            sx={{ mx: 2, width: '50%' }}
-            color='success'
+            sx={{
+              mx: 2,
+              width: '100%'
+            }}
+            color='error'
             size='large'
             variant='contained'
-            onClick={() => createNewProject()}
+            onClick={() => {
+              console.log(values.confirm)
+              if (values.confirm === 'DELETE') {
+                deleteColumn(column.id)
+              }
+            }}
 					>
-						Create Ticket
+						Delete
 					</Button>
           <Button
-            sx={{ mx: 2, width: '50%' }}
+            sx={{
+              mx: 2,
+              width: '100%'
+            }}
             color='secondary'
             size='large'
             variant='contained'
-            onClick={() => closeModals('newProjectForm')}
+            onClick={() => closeModals('deleteColumnForm')}
 					>
 						Cancel
 					</Button>

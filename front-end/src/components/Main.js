@@ -20,6 +20,9 @@ import { HR_LEVEL } from './constants/AccessLevel'
 
 export default function Main (props) {
   const [viewMode, setViewMode] = useState(PROJECT_VIEW)
+  const [refresh, setRefresh] = useState(false)
+
+  console.log(refresh)
 
   const {
 		mode,
@@ -46,6 +49,7 @@ export default function Main (props) {
   setCookie={setCookie}
   modals={modals}
   closeModals={closeModals}
+  setRefresh={setRefresh}
 				/>}
       {modals.registerForm === REGISTER_FORM &&
 				user && user.access_level == HR_LEVEL &&
@@ -54,6 +58,7 @@ export default function Main (props) {
   setCookie={setCookie}
   modals={modals}
   closeModals={closeModals}
+  setRefresh={setRefresh}
 				/>}
       {modals.newProjectForm &&
       <NewProjectForm
@@ -61,6 +66,7 @@ export default function Main (props) {
         setViewMode={setViewMode}
         modals={modals}
         closeModals={closeModals}
+        setRefresh={setRefresh}
 				/>}
       {modals.newTicketForm && <NewTicketForm closeModals={closeModals} />}
 
@@ -76,6 +82,11 @@ export default function Main (props) {
         setCurrentColumn={setCurrentColumn}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        modals={modals}
+        openModals={openModals}
+        closeModals={closeModals}
+        refresh={refresh}
+        setRefresh={setRefresh}
 				/>}
     </Paper>
   )

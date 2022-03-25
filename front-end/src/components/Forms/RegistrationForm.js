@@ -101,7 +101,7 @@ export default function RegistrationForm (props) {
   return (
     <Modal
       open={modals.registerForm}
-      onClose={closeModals('registerForm')}
+      onClose={() => closeModals('registerForm')}
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -227,7 +227,7 @@ export default function RegistrationForm (props) {
             color='secondary'
             size='large'
             variant='contained'
-            onClick={closeModals('registerForm')}
+            onClick={() => closeModals('registerForm')}
 					>
 						Cancel
 					</Button>

@@ -6,12 +6,14 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import DashboardItem from './DashboardItem'
+import DeleteProjectForm from './Forms/DeleteProjectForm'
+import NewProjectForm from './Forms/NewProjectForm'
 import {
 	NEW_PROJECT_FORM,
 	DELETE_PROJECT_FORM,
 	PROJECT_VIEW
 } from './constants/Modes'
-import { MANAGER_LEVEL} from './constants/AccessLevel'
+import { MANAGER_LEVEL } from './constants/AccessLevel'
 
 export default function Dashboard (props) {
   const {
@@ -24,11 +26,15 @@ export default function Dashboard (props) {
 		setCurrentProject,
 		loadForm,
 		open,
-		setOpen
+		setOpen,
+		modals,
+		openModals,
+		closeModals
 	} = props
 
   const [projects, setProjects] = useState()
   const [dashboardProjects, setDashboardProjects] = useState()
+  console.log('######', dashboardProjects)
   const stateRef = useRef()
   stateRef.current = dashboardProjects
 
@@ -74,29 +80,52 @@ export default function Dashboard (props) {
 					res.data.map(project_assignment => project_assignment.Project)
 				)
   purgeNullStates(stateRef.current)
-  setProjects(
-					stateRef.current.map(project =>
-  <DashboardItem
-    key={project.id}
-    value={project.name}
-    listIndex={index++}
-    currentProject={currentProject}
-    dashItemProject={project}
-    setCurrentProject={setCurrentProject}
-    selectProject={selectProject}
-    viewMode={viewMode}
-    setViewMode={setViewMode}
-    loadForm={loadForm}
-    user={user}
-						/>
-					)
+  const data = stateRef.current.map(project =>
+    <DashboardItem
+      key={project.id}
+      value={project.name}
+      listIndex={index++}
+      currentProject={currentProject}
+      dashItemProject={project}
+      setCurrentProject={setCurrentProject}
+      selectProject={selectProject}
+      viewMode={viewMode}
+      setViewMode={setViewMode}
+      loadForm={loadForm}
+      user={user}
+					/>
 				)
+  setProjects(data)
+  setDashboardProjects(data)
+  setProjects(data)
   selectProject(0)
 })
 			.catch(err => {
   console.log(err)
 })
   }, [])
+
+  const generateDashbord = function () {
+    const data = dashboardProjects.map(project =>
+      <DashboardItem
+        key={project.id}
+        value={project.name}
+        listIndex={index++}
+        currentProject={currentProject}
+        dashItemProject={project}
+        setCurrentProject={setCurrentProject}
+        selectProject={selectProject}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+        loadForm={loadForm}
+        modals={modals}
+        openModals={openModals}
+        closeModals={closeModals}
+			/>
+		)
+
+    return data
+  }
 
   return (
     <Box
@@ -108,18 +137,41 @@ export default function Dashboard (props) {
         maxWidth: 360
       }}
 		>
+      {modals.deleteProjectForm &&
+      <DeleteProjectForm
+        currentProject={currentProject}
+        setCurrentProject={setCurrentProject}
+        setViewMode={setViewMode}
+        modals={modals}
+        closeModals={closeModals}
+        dashboardProjects={dashboardProjects}
+        setDashboardProjects={setDashboardProjects}
+				/>}
+      {modals.newProjectForm &&
+      <NewProjectForm
+        user={user}
+        setViewMode={setViewMode}
+        modals={modals}
+        closeModals={closeModals}
+        setProjects={setProjects}
+        dashboardProjects={dashboardProjects}
+        setDashboardProjects={setDashboardProjects}
+				/>}
       <List component='nav' aria-label='main mailbox folders'>
         {projects}
+        {dashboardProjects !== undefined && generateDashbord()}
         {user.access_level == MANAGER_LEVEL &&
-        (<ListItemButton value='Create New Project'>
+        <ListItemButton value='Create New Project'>
           <ListItemIcon />
           <ListItemText
             primary='Create New Project'
-            onClick={() => setOpen(NEW_PROJECT_FORM)}
-					/>
-        </ListItemButton>
-        )}
+            onClick={() => openModals('newProjectForm')}
+						/>
+        </ListItemButton>}
       </List>
     </Box>
   )
+}
+{
+	// dashboardProjects !== undefined && selectProject(0)
 }

@@ -19,11 +19,14 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { ADD_TICKET } from './constants/Modes'
+import { NEW_TICKET_FORM } from './constants/Modes'
 import NewTicketForm from './Forms/NewTicketForm'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
-import { MANAGER_LEVEL} from './constants/AccessLevel'
+import { MANAGER_LEVEL } from './constants/AccessLevel'
+import NewColumnForm from './Forms/NewColumnForm'
+import EditColumnForm from './Forms/EditColumnForm'
+import DeleteColumnForm from './Forms/DeleteColumnForm'
 
 const Transition = forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
@@ -34,15 +37,19 @@ export default function ProjectColumn (props) {
 		user,
 		column,
 		setViewMode,
-    currentColumn,
+		currentColumn,
 		setCurrentColumn,
 		colIndex,
 		open,
 		setOpen,
 		deleteColumnFromProjectView,
 		changeColumnFromProjectView,
-    currentTicket, 
-    setCurrentTicket
+		createNewColumn,
+		currentTicket,
+		setCurrentTicket,
+		modals,
+		openModals,
+		closeModals
 	} = props
 
   const [tickets, setTickets] = useState([])
@@ -110,19 +117,23 @@ export default function ProjectColumn (props) {
 	)
 
   const createNewTicket = () => {
-    console.log("clicked create new ticket")
+    console.log('clicked create new ticket')
     setCurrentColumn(column.id)
-    setDialogOpen(ADD_TICKET)
-    console.log("ticket", dialogOpen)
+    setOpen(NEW_TICKET_FORM)
+		// setDialogOpen(NEW_TICKET_FORM)
+    console.log('ticket', dialogOpen)
   }
 
   const setTextValue = function (event) {
     setNewColumnName(event.target.value)
   }
 
-  
   return (
-    <Draggable draggableId={column.name} index={colIndex} isDragDisabled={user.access_level != MANAGER_LEVEL} >
+    <Draggable
+      draggableId={column.name}
+      index={colIndex}
+      isDragDisabled={user.access_level != MANAGER_LEVEL}
+		>
       {provided =>
         <Box
           sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
@@ -130,20 +141,39 @@ export default function ProjectColumn (props) {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
 				>
+          {modals.newColumnForm &&
+          <NewColumnForm
+            closeModals={closeModals}
+            modals={modals}
+            createNewColumn={createNewColumn}
+						/>}
+          {modals.deleteColumnForm &&
+          <DeleteColumnForm
+            deleteColumn={deleteColumnFromProjectView}
+            modals={modals}
+            closeModals={closeModals}
+            column={column}
+						/>}
+          {modals.editColumnForm &&
+          <EditColumnForm
+            editColumn={changeColumnFromProjectView}
+            modals={modals}
+            closeModals={closeModals}
+            column={column}
+						/>}
           <ListItem sx={{ padding: '0.1rem' }}>
             <ListItemButton>
               <ListItemText primary={column.name} />
               {user.access_level == MANAGER_LEVEL &&
-              (<IconButton
+              <IconButton
                 id='fade-button'
                 aria-controls={openIconMenu ? 'fade-menu' : undefined}
                 aria-haspopup='true'
                 aria-expanded={openIconMenu ? 'true' : undefined}
                 onClick={menuIconClick}
-							>
+								>
                 <MoreHorizIcon />
-              </IconButton>
-              )}
+              </IconButton>}
               <Menu
                 id='fade-menu'
                 MenuListProps={{
@@ -154,10 +184,22 @@ export default function ProjectColumn (props) {
                 onClose={closeIconMenu}
                 TransitionComponent={Fade}
 							>
-                <MenuItem onClick={openNewColumnNameDialog}>
+                <MenuItem
+                  onClick={() => {
+                    openModals('editColumnForm')
+                    closeIconMenu()
+                  }}
+								>
 									Change Name
 								</MenuItem>
-                <MenuItem onClick={openDeleteDialog}>Delete</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    openModals('deleteColumnForm')
+                    closeIconMenu()
+                  }}
+								>
+									Delete
+								</MenuItem>
               </Menu>
             </ListItemButton>
           </ListItem>
@@ -188,7 +230,6 @@ export default function ProjectColumn (props) {
 								/>}
             </DialogContent>
             <DialogActions>
-              
               <Button onClick={handleColumnActions}>
                 {dialogContent.confirmLabel}
               </Button>
@@ -210,36 +251,53 @@ export default function ProjectColumn (props) {
                   transition: 'background-color 1s ease'
                 }}
 							>
-                <ColumnTickets tickets={tickets} setViewMode={setViewMode} setOpen={setOpen} currentTicket={currentTicket} open={open}
-              setCurrentTicket={setCurrentTicket} setTickets={setTickets} user={user}/>
+                <ColumnTickets
+                  tickets={tickets}
+                  setViewMode={setViewMode}
+                  setOpen={setOpen}
+                  currentTicket={currentTicket}
+                  open={open}
+                  setCurrentTicket={setCurrentTicket}
+                  setTickets={setTickets}
+                  user={user}
+								/>
                 {provided.placeholder}
               </List>}
           </Droppable>
           <ListItem sx={{ padding: '0.1rem' }}>
-            <ListItemButton >
+            <ListItemButton>
               <ListItemText
                 primary='Create New Ticket'
                 onClick={() => createNewTicket()}
 							/>
             </ListItemButton>
           </ListItem>
-{/* move opening of create new ticket from landing page */}
-          {dialogOpen === ADD_TICKET &&
-        <NewTicketForm
-          user={user}
-          currentColumn={currentColumn}
-          tickets={tickets}
-          setTickets={setTickets}
-          dialogOpen={dialogOpen}
-          setDialogOpen={setDialogOpen}
-					/>}
+          {/* move opening of create new ticket from landing page */}
+          {open === NEW_TICKET_FORM &&
+          <NewTicketForm
+            user={user}
+            currentColumn={currentColumn}
+            tickets={tickets}
+            setTickets={setTickets}
+            dialogOpen={dialogOpen}
+            setDialogOpen={setDialogOpen}
+						/>}
         </Box>}
     </Draggable>
   )
 }
 
 const ColumnTickets = React.memo(function ColumnTickets (props) {
-  const { tickets, setViewMode, setOpen, currentTicket, setCurrentTicket, setTickets, open, user} = props
+  const {
+		tickets,
+		setViewMode,
+		setOpen,
+		currentTicket,
+		setCurrentTicket,
+		setTickets,
+		open,
+		user
+	} = props
   return tickets.map((ticket, index) => {
     return (
       <Draggable
