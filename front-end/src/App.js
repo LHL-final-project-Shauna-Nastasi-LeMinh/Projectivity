@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import { ThemeProvider } from '@mui/material/styles'
-import { theme } from './Theme'
 import {
 	LANDING_VIEW,
 	LOGIN_FORM,
@@ -32,6 +30,7 @@ import Typography from '@mui/material/Typography'
 import NavbarMenu from './components/NavbarMenu'
 import Dashboard from './components/Dashboard'
 import { styled } from '@mui/system'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -66,6 +65,44 @@ const App = () => {
     console.log('close modals', prop, modals)
     setModals({ ...modals, [prop]: false })
   }
+
+  const theme = createTheme({
+    palette: {
+      type: 'light',
+      primary: {
+        main: '#3D405B'
+      },
+      secondary: {
+        main: '#E07A5F'
+      },
+      error: {
+        main: '#AE2012'
+      },
+      warning: {
+        main: '#EE9B00'
+      },
+      success: {
+        main: '#17c3b2'
+      },
+      info: {
+        main: '#81B29A'
+      },
+      background: {
+        default: '#FEF9EF'
+      },
+      divider: '#E07A5F'
+    },
+
+    components: {
+			// Name of the component ⚛️
+      MuiButtonBase: {
+        defaultProps: {
+					// The default props to change
+          disableRipple: true // No more ripple, on the whole application 💣!
+        }
+      }
+    }
+  })
 
   const Offset = styled('div')(({ theme }) => theme.mixins.toolbar)
 

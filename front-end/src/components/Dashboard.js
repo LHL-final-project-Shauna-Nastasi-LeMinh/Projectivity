@@ -1,33 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 import Box from '@mui/material/Box'
+import ListItem from '@mui/material/ListItem'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
+import { styled, useTheme, makeStyles, withStyles } from '@mui/material/styles'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import DashboardItem from './DashboardItem'
 import DeleteProjectForm from './Forms/DeleteProjectForm'
 import NewProjectForm from './Forms/NewProjectForm'
 import EditProjectForm from './Forms/EditProjectForm'
-import {
-	NEW_PROJECT_FORM,
-	DELETE_PROJECT_FORM,
-	PROJECT_VIEW
-} from './constants/Modes'
 import { MANAGER_LEVEL } from './constants/AccessLevel'
-import { styled, useTheme } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import CssBaseline from '@mui/material/CssBaseline'
-import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ChevronRightIcon from '@mui/icons-material/ChevronRight'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
+import { theme } from './Theme'
+import { ThemeProvider } from '@mui/material/styles'
 
 export default function Dashboard (props) {
   const {
@@ -47,6 +35,8 @@ export default function Dashboard (props) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const [projects, setProjects] = useState()
   const [dashboardProjects, setDashboardProjects] = useState()
+  const [selectedIndex, setSelectedIndex] = useState()
+
   const stateRef = useRef()
   stateRef.current = dashboardProjects
 
@@ -125,20 +115,6 @@ export default function Dashboard (props) {
     })
   }))
 
-	// function purgeNullStates (states) {
-	//   const results = []
-
-	//   if (stateRef.current) {
-	//     for (const state of states) {
-	//       if (state !== null) {
-	//         results.push(state)
-	//       }
-	//     }
-	//   }
-
-	//   return results
-	// }
-
   let index = 0
 
   function selectProject (index) {
@@ -168,21 +144,23 @@ export default function Dashboard (props) {
   setDashboardProjects(data)
   selectProject(0)
 
-				setProjects(stateRef.current.map(project => 
-					<DashboardItem
-						key={project.id}
-						value={project.name}
-						listIndex={index++}
-						currentProject={currentProject}
-						dashItemProject={project}
-						setCurrentProject={setCurrentProject}
-						selectProject={selectProject}
-						viewMode={viewMode}
-						setViewMode={setViewMode}
-						loadForm={loadForm}
-						user={user}
-					/>
-				))
+  setProjects(
+					stateRef.current.map(project =>
+  <DashboardItem
+    key={project.id}
+    value={project.name}
+    listIndex={index++}
+    currentProject={currentProject}
+    dashItemProject={project}
+    setCurrentProject={setCurrentProject}
+    selectProject={selectProject}
+    viewMode={viewMode}
+    setViewMode={setViewMode}
+    loadForm={loadForm}
+    user={user}
+						/>
+					)
+				)
 })
 			.catch(err => {
   console.log(err)
@@ -231,28 +209,22 @@ export default function Dashboard (props) {
         dashboardProjects={dashboardProjects}
         setDashboardProjects={setDashboardProjects}
 				/>}
+      <Offset />
       <Box sx={{ overflow: 'auto' }}>
-        <List component='nav' aria-label='main mailbox folders'>
-          {projects}
-          {user.access_level == MANAGER_LEVEL &&
-          <ListItemButton value='Create New Project'>
-            <ListItemIcon />
-            <ListItemText
-              primary='Create New Project'
-              onClick={() => openModals('newProjectForm')}
-							/>
-          </ListItemButton>}
-        </List>
+        <ThemeProvider theme={theme}>
+          <List theme={theme} component='nav' aria-label='main mailbox folders'>
+            {projects}
+            {user.access_level == MANAGER_LEVEL &&
+            <ListItemButton value='Create New Project'>
+              <ListItemIcon />
+              <ListItemText
+                primary='Create New Project'
+                onClick={() => openModals('newProjectForm')}
+								/>
+            </ListItemButton>}
+          </List>
+        </ThemeProvider>
       </Box>
     </Drawer>
   )
-}
-{
-	/* <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Clipped drawer
-          </Typography>
-        </Toolbar>
-      </AppBar> */
 }
