@@ -6,38 +6,38 @@ import Box from '@mui/material/Box'
 import SearchPane from './SearchPane'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import axios from 'axios'
-import { MANAGER_LEVEL} from './constants/AccessLevel'
+import { MANAGER_LEVEL } from './constants/AccessLevel'
 import NewColumnForm from './Forms/NewColumnForm'
 import DeleteColumnForm from './Forms/DeleteColumnForm'
 import EditColumnForm from './Forms/EditColumnForm'
-import { modalClasses } from '@mui/material';
+import { modalClasses } from '@mui/material'
 
 export default function ProjectView (props) {
   const {
 		user,
-    currentColumn,
+		currentColumn,
 		currentProject,
-    setCurrentProject,
+		setCurrentProject,
 		mode,
 		setViewMode,
 		setCurrentColumn,
 		open,
 		setOpen,
-    currentTicket, 
-    setCurrentTicket,
-    modals,
-    openModals,
-    closeModals
+		currentTicket,
+		setCurrentTicket,
+		modals,
+		openModals,
+		closeModals
 	} = props
   const [columns, setColumns] = useState([])
-  const [resetSearchPane, setResetSearchPane] = useState(0);
+  const [resetSearchPane, setResetSearchPane] = useState(0)
   const [selectedColumn, setSelectedColumn] = useState()
 
   useEffect(
 		() => {
   if (currentProject) {
     setColumns(currentProject.Columns)
-    setResetSearchPane(prev => prev + 1);
+    setResetSearchPane(prev => prev + 1)
   }
 },
 		[currentProject]
@@ -59,30 +59,34 @@ export default function ProjectView (props) {
       const newColumns = JSON.parse(JSON.stringify(columns)) // deep clone
       const [movingColumn] = newColumns.splice(source.index, 1)
       newColumns.splice(destination.index, 0, movingColumn)
-      console.log("source:")
+      console.log('source:')
       console.log(source)
-      console.log("destination:")
+      console.log('destination:')
       console.log(destination)
       setColumns(newColumns)
-      
-      // persist new columns ordering into db
+
+			// persist new columns ordering into db
       const orderingObject = {}
       newColumns.forEach((col, index) => {
-        orderingObject[col.id] = index;
+        orderingObject[col.id] = index
       })
-        
-      axios.post(process.env.REACT_APP_BACKEND_URL + '/columns/reodering', 
-        JSON.stringify(orderingObject), 
-        { headers: {
-          'Content-Type': 'application/json'
+
+      axios
+				.post(
+					process.env.REACT_APP_BACKEND_URL + '/columns/reodering',
+					JSON.stringify(orderingObject),
+        {
+          headers: {
+            'Content-Type': 'application/json'
           }
-        })
-        .then(res => {
-          console.log(res.data)
-        })
-        .catch(function (error) {
-          console.log(error.message)
-        })
+        }
+				)
+				.then(res => {
+  console.log(res.data)
+})
+				.catch(function (error) {
+  console.log(error.message)
+})
     } else if (type === 'ticket') {
 			// moving ticket
       if (destination.droppableId === source.droppableId) {
@@ -131,15 +135,15 @@ export default function ProjectView (props) {
 				// persist new column id to the ticket details in db
         axios
 					.post(process.env.REACT_APP_BACKEND_URL + '/tickets/updateColumn', {
-            ticketId: movingTicket.id,
-            newColumnId: destColumn.id
-          })
-                    .then(res => {
-            console.log(res.data)
-          })
-                    .catch(function (error) {
-            console.log(error.message)
-          })
+  ticketId: movingTicket.id,
+  newColumnId: destColumn.id
+})
+					.then(res => {
+  console.log(res.data)
+})
+					.catch(function (error) {
+  console.log(error.message)
+})
       }
 			// update state to retain moving position
       setColumns(prev => [...prev])
@@ -149,17 +153,17 @@ export default function ProjectView (props) {
   const createNewColumn = function (newColumnName) {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/columns/new', {
-        name: newColumnName,
-        project_id: currentProject.id
-      })
-            .then(res => {
-        console.log(res.data)
-        const newColumn = { ...res.data, Tickets: [] }
-        setColumns([...columns, newColumn])
-      })
-            .catch(function (error) {
-        console.log(error.message)
-      })
+  name: newColumnName,
+  project_id: currentProject.id
+})
+			.then(res => {
+  console.log(res.data)
+  const newColumn = { ...res.data, Tickets: [] }
+  setColumns([...columns, newColumn])
+})
+			.catch(function (error) {
+  console.log(error.message)
+})
   }
 
   const deleteColumnFromProjectView = function (columnId) {
@@ -195,53 +199,65 @@ export default function ProjectView (props) {
     setColumns([...columns])
   }
 
-  const searchFilter = function(criteria) {
-    const DESC = "DESC"
-    const SEVERITY = "SEVERITY"
-    const PRIORITY = "PRIORITY"
-    const TYPE = "TYPE"
-    const MILESTONE = "MILESTONE"
-    const ALL_TICKETS = "ALL_TICKETS"
+  const searchFilter = function (criteria) {
+    const DESC = 'DESC'
+    const SEVERITY = 'SEVERITY'
+    const PRIORITY = 'PRIORITY'
+    const TYPE = 'TYPE'
+    const MILESTONE = 'MILESTONE'
+    const ALL_TICKETS = 'ALL_TICKETS'
 
-    if (!currentProject) return;
-    const allColumns = JSON.parse(JSON.stringify(currentProject.Columns));
-    
+    if (!currentProject) return
+    const allColumns = JSON.parse(JSON.stringify(currentProject.Columns))
+
     allColumns.forEach(column => {
       const tickets = column.Tickets.filter(ticket => {
-        let matchSeverity = true;
-        let matchPriority = true;
-        let matchType = true;
-        let matchMilestone = true;
-        let matchDescOrTitle = true;
-        // filter tickets for an owner
-        if (user.access_level != MANAGER_LEVEL && criteria[ALL_TICKETS] === false) {
-            if (ticket.owner_id != user.id) {
-              return false;
-            }
+        let matchSeverity = true
+        let matchPriority = true
+        let matchType = true
+        let matchMilestone = true
+        let matchDescOrTitle = true
+				// filter tickets for an owner
+        if (
+					user.access_level != MANAGER_LEVEL &&
+					criteria[ALL_TICKETS] === false
+				) {
+          if (ticket.owner_id != user.id) {
+            return false
+          }
         }
 
-        if (criteria[DESC] !== "") {
-          matchDescOrTitle = ticket.title.toLowerCase().includes(criteria[DESC].toLowerCase()) 
-            || ticket.description.toLowerCase().includes(criteria[DESC].toLowerCase())
+        if (criteria[DESC] !== '') {
+          matchDescOrTitle =
+						ticket.title.toLowerCase().includes(criteria[DESC].toLowerCase()) ||
+						ticket.description
+							.toLowerCase()
+							.includes(criteria[DESC].toLowerCase())
         }
-        if (criteria[SEVERITY] !== "All") {
-          matchSeverity = (ticket.severity === criteria[SEVERITY]);
+        if (criteria[SEVERITY] !== 'All') {
+          matchSeverity = ticket.severity === criteria[SEVERITY]
         }
-        if (criteria[PRIORITY] !== "All") {
-          matchPriority = (ticket.priority === criteria[PRIORITY]);
+        if (criteria[PRIORITY] !== 'All') {
+          matchPriority = ticket.priority === criteria[PRIORITY]
         }
-        if (criteria[TYPE] !== "All") {
-          matchType = (ticket.type === criteria[TYPE]);
+        if (criteria[TYPE] !== 'All') {
+          matchType = ticket.type === criteria[TYPE]
         }
-        if (criteria[MILESTONE] !== "All") {
-          matchMilestone = (ticket.milestone === criteria[MILESTONE]);
+        if (criteria[MILESTONE] !== 'All') {
+          matchMilestone = ticket.milestone === criteria[MILESTONE]
         }
-        return matchSeverity && matchPriority && matchType && matchMilestone && matchDescOrTitle;
+        return (
+					matchSeverity &&
+					matchPriority &&
+					matchType &&
+					matchMilestone &&
+					matchDescOrTitle
+        )
       })
-      column.Tickets = tickets;
+      column.Tickets = tickets
     })
-    
-    setColumns([...allColumns]);
+
+    setColumns([...allColumns])
   }
 
   const generatedColumns = columns.map((column, colIndex) =>
@@ -254,7 +270,7 @@ export default function ProjectView (props) {
       setViewMode={setViewMode}
       currentColumn={currentColumn}
       setCurrentColumn={setCurrentColumn}
-      currentTicket={currentTicket} 
+      currentTicket={currentTicket}
       setCurrentTicket={setCurrentTicket}
       colIndex={colIndex}
       open={open}
@@ -272,28 +288,36 @@ export default function ProjectView (props) {
 
   return (
     <>
-      <SearchPane searchFilter={searchFilter} resetSearchPane={resetSearchPane} user={user}/>
+      <SearchPane
+        searchFilter={searchFilter}
+        resetSearchPane={resetSearchPane}
+        user={user}
+			/>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='all-column' direction='horizontal' type='column'>
+        <Droppable
+          droppableId='all-column'
+          direction='horizontal'
+          type='column'
+				>
           {provided =>
             <Box
               disablePadding
               sx={{ display: 'flex' }}
               {...provided.droppableProps}
               ref={provided.innerRef}
-            >
+						>
               {generatedColumns}
               {user.access_level == MANAGER_LEVEL &&
-              (<ProjectColumnNew
-                createNewColumn={createNewColumn}
-                columnsCount={columns.length}
-                openModals={openModals}
-              />
-              )}
+      <ProjectColumnNew
+        createNewColumn={createNewColumn}
+        columnsCount={columns.length}
+        openModals={openModals}
+				/>}
               {provided.placeholder}
             </Box>}
         </Droppable>
       </DragDropContext>
+      
     </>
   )
 }
