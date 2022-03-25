@@ -161,6 +161,14 @@ export default function ProjectColumn (props) {
             closeModals={closeModals}
             column={column}
 						/>}
+          {modals.newTicketForm &&
+          <NewTicketForm
+            user={user}
+            currentColumn={currentColumn}
+            setViewMode={setViewMode}
+            modals={modals}
+            closeModals={closeModals}
+						/>}
           <ListItem sx={{ padding: '0.1rem' }}>
             <ListItemButton>
               <ListItemText primary={column.name} />

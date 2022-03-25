@@ -20,7 +20,7 @@ import {
 } from './components/constants/Modes'
 import LoginForm from './components/Forms/LoginForm'
 import RegistrationForm from './components/Forms/RegistrationForm'
-import LandingPage from './components/LandingPage'
+import ProjectView from './components/ProjectView'
 import AboutPage from './components/AboutPage'
 import Paper from '@mui/material/Paper'
 import NewProjectForm from './components/Forms/NewProjectForm'
@@ -41,6 +41,8 @@ const App = () => {
   const [currentColumn, setCurrentColumn] = useState('')
   const [viewMode, setViewMode] = useState(false)
   const [refresh, setRefresh] = useState(false)
+  const [data, setData] = useState()
+  const [dashboard, setDashboard] = useState()
 
 	// MODAL STATE
   const [modals, setModals] = useState({
@@ -70,105 +72,89 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Container className='App'>
-        <Paper>
-          {!viewMode && <AboutPage user={user} />}
-          {modals.loginForm &&
-						!user &&
-						<LoginForm
-  setViewMode={setViewMode}
-  setUser={setUser}
-  setCookie={setCookie}
-  modals={modals}
-  closeModals={closeModals}
-  setRefresh={setRefresh}
-						/>}
-          {modals.registerForm === REGISTER_FORM &&
-						user &&
-						user.access_level == HR_LEVEL &&
-						<RegistrationForm
-  setViewMode={setViewMode}
-  setUser={setUser}
-  setCookie={setCookie}
-  modals={modals}
-  closeModals={closeModals}
-  setRefresh={setRefresh}
-						/>}
-          {modals.newProjectForm &&
-          <NewProjectForm
-            user={user}
-            setViewMode={setViewMode}
-            modals={modals}
-            closeModals={closeModals}
-            setRefresh={setRefresh}
-						/>}
-          {modals.newTicketForm && <NewTicketForm closeModals={closeModals} />}
-          <AppBar
-            position='fixed'
-            sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}
-					>
-            <Toolbar>
-              <Typography
-                variant='h6'
-                noWrap
-                component='div'
-                sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}
-							>
-								PRODUCTIVITY MANAGER APP
-							</Typography>
-              <NavbarMenu
-                viewMode={viewMode}
-                setViewMode={setViewMode}
-                user={user}
-                setUser={setUser}
-                cookies={cookies}
-                removeCookie={removeCookie}
-                modals={modals}
-                openModals={openModals}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-							/>
-            </Toolbar>
-          </AppBar>
-          <Offset />
-          {user !== null &&
-						viewMode &&
-						<Dashboard
-  viewMode={viewMode}
-  setViewMode={setViewMode}
+        {modals.loginForm &&
+        <LoginForm
+          setViewMode={setViewMode}
+          setUser={setUser}
+          setCookie={setCookie}
+          modals={modals}
+          closeModals={closeModals}
+          setRefresh={setRefresh}
+					/>}
+        {modals.registerForm &&
+        <RegistrationForm
+          setViewMode={setViewMode}
+          setUser={setUser}
+          setCookie={setCookie}
+          modals={modals}
+          closeModals={closeModals}
+          setRefresh={setRefresh}
+					/>}
+
+        <AppBar
+          position='fixed'
+          sx={{ zIndex: theme => theme.zIndex.drawer + 1 }}
+				>
+          <Toolbar>
+            <Typography
+              variant='h6'
+              noWrap
+              component='div'
+              sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}
+						>
+							PRODUCTIVITY MANAGER APP
+						</Typography>
+            <NavbarMenu
+              viewMode={viewMode}
+              setViewMode={setViewMode}
+              user={user}
+              setUser={setUser}
+              cookies={cookies}
+              removeCookie={removeCookie}
+              modals={modals}
+              openModals={openModals}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+						/>
+          </Toolbar>
+        </AppBar>
+        <Offset />
+        {user !== null &&
+        <Dashboard
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          user={user}
+          setUser={setUser}
+						// userProjects={userProjects}
+						// setUserProjects={setUserProjects}
+          currentProject={currentProject}
+          setCurrentProject={setCurrentProject}
+						// data={data}
+						// loadForm={loadForm}
+						// open={open}
+						// setOpen={setOpen}
+          modals={modals}
+          openModals={openModals}
+          closeModals={closeModals}
+					/>}
+        {user === null && <AboutPage user={user} />}
+        {user !== null &&
+					user.access_level != HR_LEVEL &&
+					<ProjectView
   user={user}
-  setUser={setUser}
-							// userProjects={userProjects}
-							// setUserProjects={setUserProjects}
   currentProject={currentProject}
   setCurrentProject={setCurrentProject}
-							// data={data}
-							// loadForm={loadForm}
-							// open={open}
-							// setOpen={setOpen}
-  modals={modals}
-  openModals={openModals}
-  closeModals={closeModals}
-						/>}
-          {user &&
-						user.access_level != HR_LEVEL &&
-						<LandingPage
-  user={user}
-  setUser={setUser}
-  currentProject={currentProject}
-  setCurrentProject={setCurrentProject}
-  currentColumn={currentColumn}
+  setViewMode={setViewMode}
   setCurrentColumn={setCurrentColumn}
-  viewMode={viewMode}
-  setViewMode={setViewMode}
+  currentTicket={currentTicket}
+  setCurrentTicket={setCurrentTicket}
+  currentColumn={currentColumn}
   modals={modals}
-  openModals={openModals}
   closeModals={closeModals}
-  refresh={refresh}
-  setRefresh={setRefresh}
-						/>}
-        </Paper>
+  openModals={openModals}
+					/>}
       </Container>
     </ThemeProvider>
   )
