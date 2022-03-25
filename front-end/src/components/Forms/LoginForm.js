@@ -14,7 +14,7 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function LoginForm (props) {
-  const { setUser, setCookie, modals, closeModals } = props
+  const { setViewMode, setUser, setCookie, modals, closeModals } = props
   const [values, setValues] = useState({
     message: '',
     email: null,
@@ -49,6 +49,7 @@ export default function LoginForm (props) {
   setCookie('user', res.data, {
     path: '/'
   })
+  setViewMode(true)
 })
 			.catch(function (error) {
   console.log(error.message)

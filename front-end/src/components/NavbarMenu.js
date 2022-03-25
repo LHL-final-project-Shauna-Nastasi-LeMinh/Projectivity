@@ -38,8 +38,8 @@ function LinkTab (props) {
 
 export default function NavbarMenu (props) {
   const {
-		mode,
-		setMode,
+		viewMode,
+		setViewMode,
 		user,
 		setUser,
 		cookies,
@@ -62,7 +62,7 @@ export default function NavbarMenu (props) {
 				.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
 				.then(res => {
   setUser(null)
-  setMode(LANDING_VIEW)
+  setViewMode(false)
   removeCookie('user')
 })
 				.catch(err => {
@@ -75,7 +75,7 @@ export default function NavbarMenu (props) {
     }
 
     console.log('string is:', string)
-    setMode(newMode)
+    setViewMode(newMode)
     setAnchorElUser(null)
   }
 
@@ -97,7 +97,7 @@ export default function NavbarMenu (props) {
 				>
         <Button
           key='about'
-          onClick={() => setMode(ABOUT_VIEW)}
+          onClick={() => setViewMode(false)}
           sx={{ color: 'white', display: 'block' }}
 					>
 						About

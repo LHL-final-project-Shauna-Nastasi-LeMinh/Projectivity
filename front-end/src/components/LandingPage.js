@@ -45,35 +45,8 @@ export default function DashboardProject (props) {
   const [data, setData] = useState()
   const [dashboard, setDashboard] = useState()
 
-  function loadForm (newData, mode) {
-    setData(newData)
-    setViewMode(mode)
-  }
-
   return (
     <Container>
-      {viewMode === PROJECT_VIEW &&
-      <Dashboard
-        mode={mode}
-        setMode={setMode}
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        user={user}
-        setUser={setUser}
-        userProjects={userProjects}
-        setUserProjects={setUserProjects}
-        currentProject={currentProject}
-        setCurrentProject={setCurrentProject}
-        data={data}
-        loadForm={loadForm}
-        open={open}
-        setOpen={setOpen}
-        modals={modals}
-        openModals={openModals}
-        closeModals={closeModals}
-        refresh={refresh}
-        setRefresh={setRefresh}
-				/>}
       <Container>
         {modals.newTicketForm &&
         <NewTicketForm
@@ -84,7 +57,6 @@ export default function DashboardProject (props) {
           closeModals={closeModals}
           setRefresh={setRefresh}
 					/>}
-
         {viewMode === PROJECT_VIEW &&
         <ProjectView
           user={user}

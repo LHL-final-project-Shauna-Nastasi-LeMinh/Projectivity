@@ -16,7 +16,7 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function RegistrationForm (props) {
-  const { setUser, setCookie, modals, closeModals } = props
+  const { setViewMode, setUser, setCookie, modals, closeModals } = props
 
   const [roles, setRoles] = useState([])
   const [role, setRole] = useState()
@@ -50,11 +50,11 @@ export default function RegistrationForm (props) {
     axios
 			.get(process.env.REACT_APP_BACKEND_URL + '/roles')
 			.then(result => {
-        const newMenu = result.data.map(role => 
-          <MenuItem value={role.id}>
-            {role.name}
-          </MenuItem>
-        )
+  const newMenu = result.data.map(role =>
+    <MenuItem value={role.id}>
+      {role.name}
+    </MenuItem>
+				)
 
   setDropdown(newMenu)
   setRoles(result.data)
@@ -80,6 +80,7 @@ export default function RegistrationForm (props) {
   setCookie('user', res.data, {
     path: '/'
   })
+  setViewMode(true)
 })
 			.catch(function (error) {
   console.log(error.message)
