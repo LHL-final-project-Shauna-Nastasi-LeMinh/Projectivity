@@ -50,8 +50,11 @@ export default function ProjectView (props) {
       cluster: process.env.REACT_APP_PUSHER_CLUSTER
     })
     const channel = pusher.subscribe(COLUMN_CHANNEL);
-    channel.bind(COLUMN_MOVE_EVENT, function (data) {
-      setColumns(data);
+    channel.bind(COLUMN_MOVE_EVENT, function (broadcastMsg) {
+      if (!currentProject) return;
+      if (broadcastMsg && broadcastMsg.project_id == currentProject.id) {
+        setColumns(broadcastMsg.columns);
+      }
     })
     return (()=>channel.unbind(COLUMN_MOVE_EVENT));
   }, [])
@@ -217,8 +220,8 @@ export default function ProjectView (props) {
     const ALL_TICKETS = 'ALL_TICKETS'
 
     if (!currentProject) return
-    const allColumns = JSON.parse(JSON.stringify(currentProject.Columns))
-
+    const allColumns = JSON.parse(JSON.stringify(currentProject.Columns));
+    
     allColumns.forEach(column => {
       const tickets = column.Tickets.filter(ticket => {
         let matchSeverity = true
@@ -267,6 +270,7 @@ export default function ProjectView (props) {
     })
 
     setColumns([...allColumns])
+    
   }
 
   const generatedColumns = columns.map((column, colIndex) =>
