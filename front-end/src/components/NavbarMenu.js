@@ -109,13 +109,6 @@ export default function NavbarMenu (props) {
 					>
 						Login
 					</Button>
-        <Button
-          keyw='register'
-          sx={{ color: 'white', display: 'block' }}
-          onClick={() => openModals('registerForm')}
-					>
-						Register
-					</Button>
       </ButtonGroup>}
       {user &&
       <Box>
@@ -141,7 +134,7 @@ export default function NavbarMenu (props) {
 							<Button
   key='register'
   sx={{ color: 'white', display: 'block' }}
-  onClick={openModals('registerForm')}
+  onClick={() => openModals('registerForm')}
 							>
 								Add Employee
 							</Button>}

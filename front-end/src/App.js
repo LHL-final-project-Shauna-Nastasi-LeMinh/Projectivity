@@ -24,6 +24,7 @@ import Paper from '@mui/material/Paper'
 import NewProjectForm from './components/Forms/NewProjectForm'
 import NewTicketForm from './components/Forms/NewTicketForm'
 import { HR_LEVEL } from './components/constants/AccessLevel'
+import HRPage from './components/HRPage'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
@@ -142,6 +143,7 @@ const App = () => {
           closeModals={closeModals}
           allEmployees={allEmployees}
 					/>}
+        {user !== null && user.access_level == HR_LEVEL && <HRPage />}
         {user === null && <AboutPage user={user} />}
         {user !== null &&
 					user.access_level != HR_LEVEL &&
