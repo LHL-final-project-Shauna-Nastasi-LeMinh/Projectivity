@@ -130,8 +130,6 @@ export default function ProjectColumn (props) {
     setNewColumnName(event.target.value)
   }
 
-  console.log('##### PROJECT COLUMN', selectedColumn)
-
   return (
     <Draggable
       draggableId={column.name}

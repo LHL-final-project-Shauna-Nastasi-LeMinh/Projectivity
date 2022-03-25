@@ -166,51 +166,28 @@ export default function Dashboard (props) {
 					project_assignment => project_assignment.Project
 				)
   setDashboardProjects(data)
-				// setProjects(data)
   selectProject(0)
 
-				// const data = stateRef.current.map(project =>
-				// 	<DashboardItem
-				// 		key={project.id}
-				// 		value={project.name}
-				// 		listIndex={index++}
-				// 		currentProject={currentProject}
-				// 		dashItemProject={project}
-				// 		setCurrentProject={setCurrentProject}
-				// 		selectProject={selectProject}
-				// 		viewMode={viewMode}
-				// 		setViewMode={setViewMode}
-				// 		loadForm={loadForm}
-				// 		user={user}
-				// 	/>
-				// );
+				setProjects(stateRef.current.map(project => 
+					<DashboardItem
+						key={project.id}
+						value={project.name}
+						listIndex={index++}
+						currentProject={currentProject}
+						dashItemProject={project}
+						setCurrentProject={setCurrentProject}
+						selectProject={selectProject}
+						viewMode={viewMode}
+						setViewMode={setViewMode}
+						loadForm={loadForm}
+						user={user}
+					/>
+				))
 })
 			.catch(err => {
   console.log(err)
 })
   }, [])
-
-  const generateDashbord = function () {
-    const data = dashboardProjects.map(project =>
-      <DashboardItem
-        key={project.id}
-        value={project.name}
-        listIndex={index++}
-        currentProject={currentProject}
-        dashItemProject={project}
-        setCurrentProject={setCurrentProject}
-        selectProject={selectProject}
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        loadForm={loadForm}
-        modals={modals}
-        openModals={openModals}
-        closeModals={closeModals}
-			/>
-		)
-
-    return data
-  }
 
   return (
     <Drawer
@@ -257,7 +234,6 @@ export default function Dashboard (props) {
       <Box sx={{ overflow: 'auto' }}>
         <List component='nav' aria-label='main mailbox folders'>
           {projects}
-          {dashboardProjects !== undefined && generateDashbord()}
           {user.access_level == MANAGER_LEVEL &&
           <ListItemButton value='Create New Project'>
             <ListItemIcon />
