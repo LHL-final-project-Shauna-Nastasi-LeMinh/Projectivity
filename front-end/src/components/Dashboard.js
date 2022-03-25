@@ -14,8 +14,8 @@ import EditProjectForm from './Forms/EditProjectForm'
 import { MANAGER_LEVEL } from './constants/AccessLevel'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar from '@mui/material/AppBar'
-import { theme } from './Theme'
 import { ThemeProvider } from '@mui/material/styles'
+import { theme } from './Theme'
 
 export default function Dashboard (props) {
   const {
@@ -170,63 +170,69 @@ export default function Dashboard (props) {
   const Offset = styled('div')(({ theme }) => theme.mixins.toolbar)
 
   return (
-    <Drawer
-      variant='permanent'
-      sx={{
-        width: 'fit-content',
-        flexShrink: 0,
-        [`& .MuiDrawer-paper`]: {
+    <ThemeProvider theme={theme}>
+      <Drawer
+        variant='permanent'
+        sx={{
           width: 'fit-content',
-          boxSizing: 'border-box'
-        }
-      }}
-		>
-      {modals.deleteProjectForm &&
-      <DeleteProjectForm
-        currentProject={currentProject}
-        setCurrentProject={setCurrentProject}
-        setViewMode={setViewMode}
-        modals={modals}
-        closeModals={closeModals}
-        dashboardProjects={dashboardProjects}
-        setDashboardProjects={setDashboardProjects}
-				/>}
-      {modals.newProjectForm &&
-      <NewProjectForm
-        user={user}
-        setViewMode={setViewMode}
-        modals={modals}
-        closeModals={closeModals}
-        setProjects={setProjects}
-        dashboardProjects={dashboardProjects}
-        setDashboardProjects={setDashboardProjects}
-				/>}
-      {modals.editProjectForm &&
-      <EditProjectForm
-        user={user}
-        setViewMode={setViewMode}
-        modals={modals}
-        closeModals={closeModals}
-        setProjects={setProjects}
-        dashboardProjects={dashboardProjects}
-        setDashboardProjects={setDashboardProjects}
-				/>}
-      <Offset />
-      <Box sx={{ overflow: 'auto' }}>
-        <ThemeProvider theme={theme}>
-          <List theme={theme} component='nav' aria-label='main mailbox folders'>
-            {projects}
-            {user.access_level == MANAGER_LEVEL &&
-            <ListItemButton value='Create New Project'>
-              <ListItemIcon />
-              <ListItemText
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: {
+            width: 'fit-content',
+            boxSizing: 'border-box'
+          }
+        }}
+			>
+        {modals.deleteProjectForm &&
+        <DeleteProjectForm
+          currentProject={currentProject}
+          setCurrentProject={setCurrentProject}
+          setViewMode={setViewMode}
+          modals={modals}
+          closeModals={closeModals}
+          dashboardProjects={dashboardProjects}
+          setDashboardProjects={setDashboardProjects}
+					/>}
+        {modals.newProjectForm &&
+        <NewProjectForm
+          user={user}
+          setViewMode={setViewMode}
+          modals={modals}
+          closeModals={closeModals}
+          setProjects={setProjects}
+          dashboardProjects={dashboardProjects}
+          setDashboardProjects={setDashboardProjects}
+					/>}
+        {modals.editProjectForm &&
+        <EditProjectForm
+          user={user}
+          setViewMode={setViewMode}
+          modals={modals}
+          closeModals={closeModals}
+          setProjects={setProjects}
+          dashboardProjects={dashboardProjects}
+          setDashboardProjects={setDashboardProjects}
+					/>}
+        <Offset />
+        <Box sx={{ overflow: 'auto' }}>
+          <ThemeProvider theme={theme}>
+            <List
+              theme={theme}
+              component='nav'
+              aria-label='main mailbox folders'
+						>
+              {projects}
+              {user.access_level == MANAGER_LEVEL &&
+              <ListItemButton value='Create New Project'>
+                <ListItemIcon />
+                <ListItemText
                 primary='Create New Project'
                 onClick={() => openModals('newProjectForm')}
-								/>
-            </ListItemButton>}
-          </List>
-        </ThemeProvider>
-      </Box>
-    </Drawer>
+									/>
+              </ListItemButton>}
+            </List>
+          </ThemeProvider>
+        </Box>
+      </Drawer>
+    </ThemeProvider>
   )
 }
