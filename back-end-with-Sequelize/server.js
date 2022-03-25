@@ -27,6 +27,7 @@ const pusher = new Pusher({
 // All routes (controller) goes here
 const usersRoutes = require('./routes/users')
 const accessControlRoutes = require('./routes/accessControl')
+const employeeRoutes = require('./routes/employees')
 const roleRoutes = require('./routes/roles')
 const projectRoutes = require('./routes/projects')
 const ticketRoutes = require('./routes/tickets')
@@ -56,6 +57,8 @@ app.use('/priorities', priorityRoutes(sequelizeModels))
 app.use('/types', typeRoutes(sequelizeModels))
 app.use('/builds', buildRoutes(sequelizeModels))
 app.use('/milestones', milestoneRoutes(sequelizeModels))
+app.use('/employees', employeeRoutes(sequelizeModels))
+
 // app.use('/getGenericData', getGenericData(sequelizeModels))
 // app.use('/getUserData', getUserData(sequelizeModels))
 

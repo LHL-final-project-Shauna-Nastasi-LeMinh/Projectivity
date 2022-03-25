@@ -29,7 +29,8 @@ export default function Dashboard (props) {
 		loadForm,
 		modals,
 		openModals,
-		closeModals
+		closeModals,
+		allEmployees
 	} = props
 
   const [openDrawer, setOpenDrawer] = useState(false)
@@ -143,7 +144,6 @@ export default function Dashboard (props) {
 				)
   setDashboardProjects(data)
   selectProject(0)
-
   setProjects(
 					stateRef.current.map(project =>
   <DashboardItem

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { HR_LEVEL, MANAGER_LEVEL } from '../constants/AccessLevel'
 import {
 	Button,
 	Modal,
@@ -14,7 +15,7 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function LoginForm (props) {
-  const { setViewMode, setUser, setCookie, modals, closeModals } = props
+  const { setViewMode, setUser, setCookie, modals, closeModals, setAllEmployees } = props
   const [values, setValues] = useState({
     message: '',
     email: null,
@@ -40,17 +41,25 @@ export default function LoginForm (props) {
   const login = event => {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/login', {
-  email: values.email,
-  password: values.password
-})
-			.then(res => {
-  closeModals('loginForm')
-  setUser(res.data)
-  setCookie('user', res.data, {
-    path: '/'
-  })
-  setViewMode(true)
-})
+      email: values.email,
+      password: values.password
+    })
+      .then(result => {
+        const loadedUser = result.data;
+        closeModals('loginForm')
+        setUser(loadedUser)
+        setCookie('user', loadedUser, {
+          path: '/'})
+        setViewMode(true)
+        console.log(loadedUser)
+        if (loadedUser.access_level == HR_LEVEL || loadedUser.access_level == MANAGER_LEVEL) {
+          axios
+            .get(process.env.REACT_APP_BACKEND_URL + '/employees/withoutHR')
+            .then(res => {
+              setAllEmployees(res.data);
+            })
+        }
+    })
 			.catch(function (error) {
   console.log(error.message)
   setValues({ ...values, message: 'Form invalid' })
