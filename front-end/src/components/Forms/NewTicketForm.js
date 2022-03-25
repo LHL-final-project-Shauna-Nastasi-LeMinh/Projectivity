@@ -216,7 +216,7 @@ export default function NewTicketForm (props) {
                 id="Priority"
                 value={values.priority}
                 onChange={handleChange('priority')}
-                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.priority}` : false}
+                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.priority}` : ""}
               >
                 
                 {prioritiesMenu}
@@ -231,10 +231,9 @@ export default function NewTicketForm (props) {
                 labelId="SeverityLabel"
                 label="Severity"
                 id="Severity"
-                // value={dialogOpen === EDIT_TICKET ? values.severity = ticket.severity || values.severity : values.severity}
                 value={values.severity}
                 onChange={handleChange('severity')}
-                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.severity}` : false}
+                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.severity}` : ""}
               >
                 
                 {severitiesMenu}
@@ -262,7 +261,7 @@ export default function NewTicketForm (props) {
                 id="Type"
                 value={values.type}
                 onChange={handleChange('type')}
-                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.type}` : false}
+                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.type}` : ""}
               >
                 <MenuItem value=""><em></em></MenuItem>
                {typesMenu}
@@ -277,7 +276,7 @@ export default function NewTicketForm (props) {
                 id="Milestone"
                 value={values.milestone}
                 onChange={handleChange('milestone')}
-                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.milestone}` : false}
+                defaultValue={dialogOpen === EDIT_TICKET ? `${ticket.milestone}` : ""}
               >
                 
                 {milestonesMenu}
