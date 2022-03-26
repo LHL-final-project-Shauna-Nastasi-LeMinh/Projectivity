@@ -7,6 +7,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
+import { Box, Chip } from '@mui/material'
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Fade from '@mui/material/Fade';
 import RemoveTicket from './Forms/RemoveTicket'
 import ShowTicketDetails from './Forms/ShowTicketDetails'
@@ -14,9 +16,10 @@ import NewTicketForm from './Forms/NewTicketForm'
 
 import { SHOW_TICKET_DETAILS, EDIT_TICKET, REMOVE_TICKET, ADD_TICKET } from './constants/Modes'
 import { MANAGER_LEVEL} from './constants/AccessLevel'
+import { BlockRounded } from '@mui/icons-material'
 
 export default function ProjectTicket (props) {
-  const { title, value, ticketId, setViewMode, setOpen, tickets, setTickets, user, currentColumn} = props
+  const { title, value, ticketId, setViewMode, setOpen, tickets, setTickets, user, currentColumn, ticket} = props
   const [checked, setChecked] = React.useState([1])
   const [dialogOpen, setDialogOpen] = useState(false)
   const [currentTicket, setCurrentTicket] = useState()
@@ -74,22 +77,42 @@ export default function ProjectTicket (props) {
 
 
   return (
-    <ListItem sx={{ padding: '0.1rem' }}>
+    
+    <ListItem sx={{  display: "block"}}>
+  
+        <Chip
+          pl="2"
+          label={ticket.priority}
+          color="warning"
+          size="small"
+        ></Chip>
+        
       <ListItemButton
         sx={{
           backgroundColor: props.isDragging ? 'lightgreen' : 'white',
-          transition: 'background-color 1s ease'
+          transition: 'background-color 1s ease',
+          px: '0',
+          display:"flex", justifyContent:"space-between", alignItems:"center"
         }}
         
 			>
-        <ListItemText primary={title} />
-        <div>
+        
+
+       
+          <div>
+        <ListItemText primary={title} sx={{ fontSize: 'small'}}/>
+        </div>
+        
+        
+        <div style={{ display: "inherit"}}>
+        <IconButton sx={{px:"0"}}><PersonAddIcon sx={{ fontSize: 'small'}}/></IconButton >
         <IconButton
           id="fade-button"
           aria-controls={openMenu ? 'fade-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={openMenu ? 'true' : undefined}
           onClick={handleClick}
+          sx={{px:"0", ml:"1"}}
         >  
           <MoreVertIcon />
 
@@ -151,8 +174,10 @@ export default function ProjectTicket (props) {
         }
       </Menu>
       </div>
+      
 
       </ListItemButton>
     </ListItem>
+  
   )
 }

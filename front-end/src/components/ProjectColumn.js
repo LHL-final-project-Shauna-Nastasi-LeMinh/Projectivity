@@ -327,12 +327,14 @@ const ColumnTickets = React.memo(function ColumnTickets (props) {
         index={index}
 			>
         {(provided, snapshot) =>
-          <div
+          <Box
+            sx={{marginBottom: 1, border: 1, borderRadius: 8, borderColor: 'grey.500', bgcolor: 'secondary'}}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
 					>
             <ProjectTicket
+              ticket={ticket}
               title={ticket.title}
               ticketId={ticket.id}
               isDragging={snapshot.isDragging}
@@ -345,8 +347,9 @@ const ColumnTickets = React.memo(function ColumnTickets (props) {
               setTickets={setTickets}
               user={user}
               currentColumn={currentColumn}
+              
 						/>
-          </div>}
+          </Box>}
       </Draggable>
     )
   })
