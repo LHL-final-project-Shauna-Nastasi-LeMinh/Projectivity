@@ -368,7 +368,8 @@ export default function NewTicketForm(props) {
 						variant="contained"
 						onClick={() => (editTicket ? onEdit() : onAdd())}
 					>
-						Create
+						{title === "Edit Ticket" && 'Edit'}
+						{title === "Create A New Ticket" && 'Create'}
 					</Button>
 					<Button
 						sx={{ mx: 2, width: '100%' }}

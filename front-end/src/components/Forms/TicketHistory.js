@@ -81,15 +81,15 @@ export default function TicketHistory(props) {
             console.log(res.data);
             const generatedHistory = res.data.map(record => 
               <>
-              <Divider component="li" />
-              <ListItem key={record.id}>
-                {record.event !== 'CREATED' &&
-                  <ListItemText secondary={record.updater + events[record.event] + ' from ' + record.source_value + ' to ' + record.dest_value + ' at ' + record.updatedAt.substring(0,10)} />
-                }
-                {record.event == 'CREATED' &&
-                  <ListItemText secondary={record.updater + ' created ticket on ' + record.updatedAt.substring(0,10)} />
-                }
-              </ListItem>
+                <Divider component="li" />
+                <ListItem key={record.id}>
+                  {record.event !== 'CREATED' &&
+                    <ListItemText secondary={record.updater + events[record.event] + ' from ' + record.source_value + ' to ' + record.dest_value + ' at ' + record.updatedAt.substring(0,10)} />
+                  }
+                  {record.event == 'CREATED' &&
+                    <ListItemText secondary={record.updater + ' created ticket on ' + record.updatedAt.substring(0,10)} />
+                  }
+                </ListItem>
               </>
             )
             
