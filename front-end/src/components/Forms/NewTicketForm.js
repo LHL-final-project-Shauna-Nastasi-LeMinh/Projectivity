@@ -17,6 +17,7 @@ import { AddBox } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 
 import { ADD_TICKET, EDIT_TICKET } from '../constants/Modes';
+import ProjectColumn from '../ProjectColumn';
 
 export default function NewTicketForm(props) {
 	const {
@@ -33,7 +34,8 @@ export default function NewTicketForm(props) {
 		currentProject,
 		userData,
 		setUserData,
-		editTicket
+		editTicket,
+		setColumns
 	} = props;
 
 	console.log(currentTicket);
@@ -117,20 +119,6 @@ export default function NewTicketForm(props) {
 	};
 
 	const onAdd = (event) => {
-		const newTicket = {
-			title: values.title,
-			description: values.description,
-			created_by: user.id,
-			column_id: currentColumn,
-			severity: values.severity,
-			priority: values.priority,
-			type: values.type,
-			milestone: values.milestone,
-			creator_name: user.first_name + ' ' + user.last_name
-		};
-
-		currentProject.Columns[currentColumn - 1].Tickets.push(newTicket);
-
 		// add new ticket to db
 		axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
@@ -150,6 +138,18 @@ export default function NewTicketForm(props) {
 				const newTicket = { ...res.data };
 				setTickets([...tickets, newTicket]);
 				setDialogOpen(false);
+
+				console.log('### NEW TICKET', newTicket);
+
+				currentProject.Columns.map((column) => {
+					if (column.id === currentColumn) {
+						console.log('### COLUMN', column);
+						column.Tickets.push(newTicket);
+					}
+				});
+				setColumns(currentProject.Columns);
+
+				console.log('### AFTER', currentProject.Columns, userData);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -172,16 +172,13 @@ export default function NewTicketForm(props) {
 		currentProject.Columns.map((currColumn) => {
 			currColumn.Tickets.map((currTicket, index) => {
 				if (currTicket.id === ticket.id) {
+					console.log('### INDEX', index, editTicket);
 					currColumn.Tickets.splice(index, 1, editTicket);
-					currTicket = console.log(
-						'### CURR TICKET',
-						currColumn.Tickets,
-						index,
-						ticket
-					);
 				}
 			});
 		});
+
+		console.log('### CURR TICKET', currentProject.Columns);
 
 		// update ticket to db
 		axios

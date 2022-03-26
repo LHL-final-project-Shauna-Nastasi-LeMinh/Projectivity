@@ -34,6 +34,7 @@ export default function ProjectTicket(props) {
 		setTickets,
 		user,
 		currentColumn,
+		setCurrentColumn,
 		currentProject,
 		userData,
 		setUserData,
@@ -135,6 +136,9 @@ export default function ProjectTicket(props) {
 							ticketId={ticketId}
 							dialogOpen={dialogOpen}
 							setDialogOpen={setDialogOpen}
+							currentProject={currentProject}
+							userData={userData}
+							setCurrentColumn={setCurrentColumn}
 						/>
 					)}
 

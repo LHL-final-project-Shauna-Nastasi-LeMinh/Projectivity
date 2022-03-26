@@ -147,19 +147,6 @@ export default function ProjectView(props) {
 				columns[sourceColumnIndex] = newSourceColumn;
 				columns[destColumnIndex] = newDestColumn;
 
-				userData.map((project) => {
-					if (project.id === currentProject.id) {
-						project.Columns[sourceColumnIndex].Tickets.splice(source.index, 1);
-						project.Columns[destColumnIndex].Tickets.splice(
-							destination.index,
-							0,
-							movingTicket
-						);
-					}
-				});
-
-				setUserData(userData);
-
 				// persist new column id to the ticket details in db
 				axios
 					.put(
@@ -173,6 +160,17 @@ export default function ProjectView(props) {
 					)
 					.then((res) => {
 						console.log(res.data);
+						currentProject.Columns[sourceColumnIndex].Tickets.splice(
+							source.index,
+							1
+						);
+						currentProject.Columns[destColumnIndex].Tickets.splice(
+							destination.index,
+							0,
+							movingTicket
+						);
+
+						setCurrentColumn(currentProject.Columns);
 					})
 					.catch(function (error) {
 						console.log(error.message);
@@ -193,6 +191,10 @@ export default function ProjectView(props) {
 				console.log(res.data);
 				const newColumn = { ...res.data, Tickets: [] };
 				setColumns([...columns, newColumn]);
+
+				currentProject.Columns.push(res.data);
+				currentProject.Columns[currentProject.Columns.length - 1].Tickets = [];
+				setCurrentColumn(currentProject.Columns);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -207,6 +209,13 @@ export default function ProjectView(props) {
 				console.log(res.data);
 				const newColumns = columns.filter((column) => column.id !== columnId);
 				setColumns([...newColumns]);
+
+				currentProject.Columns.map((column, index) => {
+					if (column.id === columnId) {
+						currentProject.Columns.splice(index, 1);
+					}
+				});
+				setCurrentColumn(currentProject.Columns);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -215,6 +224,7 @@ export default function ProjectView(props) {
 
 	const changeColumnFromProjectView = function (columnId, newName) {
 		closeModals('editColumnForm');
+
 		axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/columns/updateName', {
 				name: newName,
@@ -222,6 +232,12 @@ export default function ProjectView(props) {
 			})
 			.then((res) => {
 				console.log(res.data);
+				currentProject.Columns.map((column) => {
+					if (column.id === columnId) {
+						column.name = newName;
+					}
+				});
+				setCurrentColumn(currentProject.Columns);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -342,6 +358,7 @@ export default function ProjectView(props) {
 										currentProject={currentProject}
 										userData={userData}
 										setUserData={setUserData}
+										setColumns={setColumns}
 									/>
 								))}
 							{user.access_level == MANAGER_LEVEL && columns !== undefined && (
