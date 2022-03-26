@@ -40,6 +40,7 @@ export default function Dashboard(props) {
 	const [openDrawer, setOpenDrawer] = useState(false);
 	const [projects, setProjects] = useState();
 	const [selectedIndex, setSelectedIndex] = useState(0);
+	const [modalProject, setModalProject] = useState();
 	const drawerWidth = 'fit-content';
 
 	useEffect(() => {
@@ -139,6 +140,12 @@ export default function Dashboard(props) {
 		// }
 	}
 
+	function selectModal(modal_name, project) {
+		console.log('selectModal', modal_name, project);
+		setModalProject(project);
+		openModals(modal_name);
+	}
+
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (
@@ -165,6 +172,7 @@ export default function Dashboard(props) {
 						setDashboardProjects={setDashboardProjects}
 						userData={userData}
 						setSelectedIndex={setSelectedIndex}
+						modalProject={modalProject}
 					/>
 				)}
 				{userData && modals.newProjectForm && (
@@ -196,6 +204,7 @@ export default function Dashboard(props) {
 						userData={userData}
 						setUserData={setUserData}
 						currentProject={currentProject}
+						modalProject={modalProject}
 					/>
 				)}
 				<Offset />
@@ -221,6 +230,7 @@ export default function Dashboard(props) {
 									modals={modals}
 									openModals={openModals}
 									closeModals={closeModals}
+									selectModal={selectModal}
 								/>
 							))}
 						{user.access_level == MANAGER_LEVEL && (

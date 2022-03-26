@@ -27,7 +27,8 @@ export default function RegistrationForm(props) {
 		columns,
 		editColumn,
 		column,
-		userData
+		userData,
+		modalProject
 	} = props;
 	const [values, setValues] = useState({
 		message: '',
@@ -113,7 +114,7 @@ export default function RegistrationForm(props) {
 						variant="contained"
 						onClick={() => {
 							closeModals('editProjectForm');
-							currentProject.name = values.name;
+							modalProject.name = values.name;
 						}}
 					>
 						Edit
