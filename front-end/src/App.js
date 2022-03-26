@@ -60,7 +60,6 @@ const App = () => {
 		if (user !== null && !sentRequest) {
 			setSentRequest(true);
 
-			console.log('### GETTING DATA');
 			axios
 				.get(
 					process.env.REACT_APP_BACKEND_URL + `/projects/user_data/${user.id}`
@@ -76,13 +75,6 @@ const App = () => {
 				});
 		}
 
-		console.log(
-			'#### DATA',
-			userColumns,
-			userTickets,
-			userProjects,
-			!startBuild
-		);
 		if (
 			userColumns !== undefined &&
 			userTickets !== undefined &&
@@ -90,7 +82,6 @@ const App = () => {
 			!startBuild
 		) {
 			setStartBuild(true);
-			console.log('### STARTING BUILD');
 			const newUserData = userProjects;
 
 			newUserData.map((project) => {
@@ -247,6 +238,8 @@ const App = () => {
 							modals={modals}
 							closeModals={closeModals}
 							openModals={openModals}
+							userData={userData}
+							setUserData={setUserData}
 						/>
 					)}
 			</Container>

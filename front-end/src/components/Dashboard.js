@@ -42,17 +42,6 @@ export default function Dashboard(props) {
 	const drawerWidth = 'fit-content';
 
 	useEffect(() => {
-		// console.log('inside dashboard', dashboardProjects);
-		// axios
-		// 	.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
-		// 	.then((res) => {
-		// 		// get all projects and only columns for first project for initial display
-		// 		setDashboardProjects(res.data);
-		// 	})
-		// 	.catch((err) => {
-		// 		console.log(err);
-		// 	});
-
 		selectProject(0);
 	}, []);
 
@@ -132,7 +121,6 @@ export default function Dashboard(props) {
 	let index = 0;
 
 	function selectProject(index) {
-		console.log('### SELECT PROJECT', userData[index]);
 		setCurrentProject(userData[index]);
 		// if (dashboardProjects[index]) {
 		// 	axios

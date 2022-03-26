@@ -29,7 +29,9 @@ export default function ProjectView(props) {
 		setCurrentTicket,
 		modals,
 		openModals,
-		closeModals
+		closeModals,
+		userData,
+		setUserData
 	} = props;
 	const [columns, setColumns] = useState([]);
 	const [resetSearchPane, setResetSearchPane] = useState(0);
@@ -42,20 +44,20 @@ export default function ProjectView(props) {
 		}
 	}, [currentProject]);
 
-  // PLEASE DO NOT REMOVE THIS . FROM LE
-  // useEffect(() => {
-  //   const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
-  //     cluster: process.env.REACT_APP_PUSHER_CLUSTER
-  //   })
-  //   const channel = pusher.subscribe(COLUMN_CHANNEL);
-  //   channel.bind(COLUMN_MOVE_EVENT, function (broadcastMsg) {
-  //     if (!currentProject) return;
-  //     if (broadcastMsg && broadcastMsg.project_id == currentProject.id) {
-  //       setColumns(broadcastMsg.columns);
-  //     }
-  //   })
-  //   return (()=>channel.unbind(COLUMN_MOVE_EVENT));
-  // }, [])
+	// PLEASE DO NOT REMOVE THIS . FROM LE
+	// useEffect(() => {
+	//   const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+	//     cluster: process.env.REACT_APP_PUSHER_CLUSTER
+	//   })
+	//   const channel = pusher.subscribe(COLUMN_CHANNEL);
+	//   channel.bind(COLUMN_MOVE_EVENT, function (broadcastMsg) {
+	//     if (!currentProject) return;
+	//     if (broadcastMsg && broadcastMsg.project_id == currentProject.id) {
+	//       setColumns(broadcastMsg.columns);
+	//     }
+	//   })
+	//   return (()=>channel.unbind(COLUMN_MOVE_EVENT));
+	// }, [])
 
 	function onDragEnd(result, provided) {
 		const { source, destination, type } = result;
@@ -145,16 +147,33 @@ export default function ProjectView(props) {
 				columns[sourceColumnIndex] = newSourceColumn;
 				columns[destColumnIndex] = newDestColumn;
 
+				userData.map((project) => {
+					if (project.id === currentProject.id) {
+						project.Columns[sourceColumnIndex].Tickets.splice(source.index, 1);
+						project.Columns[destColumnIndex].Tickets.splice(
+							destination.index,
+							0,
+							movingTicket
+						);
+					}
+				});
+
+				setUserData(userData);
+
 				// persist new column id to the ticket details in db
-        axios
-					.put(process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}/updateColumn`, {
-            ticketId: movingTicket.id,
-            newColumnId: destColumn.id,
-            updater_name: user.first_name + " " + user.last_name
-          })
-                    .then(res => {
-            console.log(res.data)
-          })
+				axios
+					.put(
+						process.env.REACT_APP_BACKEND_URL +
+							`/tickets/${movingTicket.id}/updateColumn`,
+						{
+							ticketId: movingTicket.id,
+							newColumnId: destColumn.id,
+							updater_name: user.first_name + ' ' + user.last_name
+						}
+					)
+					.then((res) => {
+						console.log(res.data);
+					})
 					.catch(function (error) {
 						console.log(error.message);
 					});
@@ -222,8 +241,8 @@ export default function ProjectView(props) {
 		const ALL_TICKETS = 'ALL_TICKETS';
 
 		if (!currentProject) return;
-    if (!currentProject.Columns) return;
-    console.log(currentProject);
+		if (!currentProject.Columns) return;
+		console.log(currentProject);
 		const allColumns = JSON.parse(JSON.stringify(currentProject.Columns));
 
 		allColumns.forEach((column) => {
