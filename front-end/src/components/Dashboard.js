@@ -188,6 +188,9 @@ export default function Dashboard(props) {
 						setProjects={setProjects}
 						dashboardProjects={dashboardProjects}
 						setDashboardProjects={setDashboardProjects}
+						userData={userData}
+						setUserData={setUserData}
+						currentProject={currentProject}
 					/>
 				)}
 				<Offset />
@@ -210,6 +213,9 @@ export default function Dashboard(props) {
 									selectedIndex={selectedIndex}
 									setSelectedIndex={setSelectedIndex}
 									userData={userData}
+									modals={modals}
+									openModals={openModals}
+									closeModals={closeModals}
 								/>
 							))}
 						{user.access_level == MANAGER_LEVEL && (
