@@ -7,13 +7,14 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
-import { Box, Chip } from '@mui/material'
+import { Box, Chip, Typography, Popover } from '@mui/material'
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Fade from '@mui/material/Fade';
 import RemoveTicket from './Forms/RemoveTicket'
 import ShowTicketDetails from './Forms/ShowTicketDetails'
 import NewTicketForm from './Forms/NewTicketForm'
 import TicketHistory from './Forms/TicketHistory';
+import AssignTicket from './Forms/AssignTicket';
 import { BlockRounded } from '@mui/icons-material'
 
 
@@ -22,7 +23,8 @@ import {
 	EDIT_TICKET,
 	REMOVE_TICKET,
 	ADD_TICKET,
-	TICKET_HISTORY
+	TICKET_HISTORY,
+
 } from './constants/Modes';
 import { MANAGER_LEVEL } from './constants/AccessLevel';
 import { modalClasses } from '@mui/material';
@@ -56,6 +58,8 @@ export default function ProjectTicket (props) {
 
   // handle opening and closing of MoreVertIcon
   const [anchorEl, setAnchorEl] = useState(null);
+	const [anchorPop, setAnchorPop] = useState(null);
+	const openPop = Boolean(anchorPop);
   const openMenu = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,8 +70,21 @@ export default function ProjectTicket (props) {
     setAnchorEl(null)
   }
 
+	// for popover
+	const id = openPop ? 'simple-popover' : undefined;
+
+	const openPopover = (event) => {
+		setAnchorPop(event.currentTarget);
+	}
+
+	const closePopover = () => {
+		setAnchorPop(false);
+	}
+
+
 	const handleDialogOpening = (evt) => {
 		console.log(evt.target.id);
+		console.log(evt.currentTarget)
 
 		if (evt.target.id === 'edit') {
 			// openModals('newTicketForm');
@@ -95,8 +112,7 @@ export default function ProjectTicket (props) {
 	};
 
 
-	//
-
+	
 	const handleToggle = (value) => () => {
 		const currentIndex = checked.indexOf(value);
 		const newChecked = [...checked];
@@ -164,7 +180,35 @@ export default function ProjectTicket (props) {
         
         
         <div style={{ display: "inherit"}}>
-        <IconButton sx={{px:"0"}}><PersonAddIcon sx={{ fontSize: 'small'}}/></IconButton >
+        <IconButton 
+					sx={{px:"0"}}
+					aria-describedby={id} 
+					variant="contained"
+					onClick={openPopover}
+				>
+					<PersonAddIcon 
+					sx={{ fontSize: 'small'}}
+					
+					/>
+					</IconButton >
+
+					<Popover
+				    id={id}
+				    open={anchorPop}
+				    anchorEl={anchorPop}
+				    onClose={closePopover}
+				    anchorOrigin={{
+				    vertical: 'bottom',
+				    horizontal: 'right',
+				  }}
+				>
+				  <Typography sx={{ p: 2 }}>
+						<AssignTicket/>
+					</Typography>
+				</Popover>
+
+
+
         <IconButton
           id="fade-button"
           aria-controls={openMenu ? 'fade-menu' : undefined}
