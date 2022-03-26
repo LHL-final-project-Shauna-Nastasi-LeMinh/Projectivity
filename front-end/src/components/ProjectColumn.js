@@ -259,7 +259,7 @@ export default function ProjectColumn(props) {
 								isdraggingover={snapshot.isDraggingOver}
 								sx={{
 									backgroundColor: snapshot.isDraggingOver
-										? 'skyblue'
+										? 'rgba(240, 240, 240, .7)'
 										: 'inherit',
 									transition: 'background-color 1s ease'
 								}}
@@ -344,7 +344,16 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 			>
         {(provided, snapshot) =>
           <Box
-            sx={{marginBottom: 1, border: 1, borderRadius: 8, borderColor: 'grey.500', bgcolor: 'secondary'}}
+            sx={{
+							marginBottom: 1, 
+							border: 1, 
+							borderRadius: 8, 
+							borderColor: 'grey.500', 
+							bgcolor: 'secondary', 
+							backgroundColor: snapshot.isDragging ? 'rgba(240, 240, 240, .5)' : 'white', transition: 'background-color 1s ease',
+							
+						}}
+
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}

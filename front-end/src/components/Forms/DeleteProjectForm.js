@@ -30,7 +30,8 @@ export default function DeleteProjectForm(props) {
 		dashboardProjects,
 		setDashboardProjects,
 		userData,
-		setSelectedIndex
+		setSelectedIndex,
+		modalProject
 	} = props;
 	const [values, setValues] = useState({
 		message: '',
@@ -52,25 +53,27 @@ export default function DeleteProjectForm(props) {
 			axios
 				.delete(
 					process.env.REACT_APP_BACKEND_URL +
-						`/projects/${currentProject.id}/delete`,
+						`/projects/${modalProject.id}/delete`,
 					{
-						project_id: currentProject.id
+						project_id: modalProject.id
 					}
 				)
 				.then((res) => {
 					// setDashboardProjects(filteredProjects);
 
 					const projectIndex = userData.findIndex(
-						(project) => project.id === currentProject.id
+						(project) => project.id === modalProject.id
 					);
 
 					userData.splice(projectIndex, 1);
-					if (projectIndex === userData.length) {
-						setCurrentProject(userData[projectIndex - 1]);
-						setSelectedIndex(projectIndex - 1);
-					} else {
-						setCurrentProject(userData[projectIndex]);
-						setSelectedIndex(projectIndex);
+					if (currentProject === modalProject) {
+						if (projectIndex === userData.length) {
+							setCurrentProject(userData[projectIndex - 1]);
+							setSelectedIndex(projectIndex - 1);
+						} else {
+							setCurrentProject(userData[projectIndex]);
+							setSelectedIndex(projectIndex);
+						}
 					}
 
 					
