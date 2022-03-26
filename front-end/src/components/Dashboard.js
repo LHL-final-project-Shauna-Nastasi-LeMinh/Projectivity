@@ -163,6 +163,8 @@ export default function Dashboard(props) {
 						closeModals={closeModals}
 						dashboardProjects={dashboardProjects}
 						setDashboardProjects={setDashboardProjects}
+						userData={userData}
+						setSelectedIndex={setSelectedIndex}
 					/>
 				)}
 				{userData && modals.newProjectForm && (
@@ -177,6 +179,8 @@ export default function Dashboard(props) {
 						userData={userData}
 						setUserData={setUserData}
 						currentProject={currentProject}
+						setCurrentProject={setCurrentProject}
+						setSelectedIndex={setSelectedIndex}
 					/>
 				)}
 				{userData && modals.editProjectForm && (

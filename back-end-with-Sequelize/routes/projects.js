@@ -114,18 +114,18 @@ module.exports = (sequelizeModels) => {
         assignment_date,
       });
 
-      await Columns.create({
-        name: "Open",
-        project_id,
-      });
-      await Columns.create({
-        name: "In Progress",
-        project_id,
-      });
-      await Columns.create({
-        name: "Closed",
-        project_id,
-      });
+      // await Columns.create({
+      //   name: "Open",
+      //   project_id,
+      // });
+      // await Columns.create({
+      //   name: "In Progress",
+      //   project_id,
+      // });
+      // await Columns.create({
+      //   name: "Closed",
+      //   project_id,
+      // });
 
       return res.json("success!");
     } catch (err) {

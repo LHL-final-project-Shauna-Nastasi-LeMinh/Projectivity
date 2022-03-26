@@ -114,7 +114,6 @@ export default function RegistrationForm(props) {
 						onClick={() => {
 							closeModals('editProjectForm');
 							currentProject.name = values.name;
-							console.log('### CURR', currentProject, userData, values.name);
 						}}
 					>
 						Edit
