@@ -136,6 +136,7 @@ export default function ProjectColumn(props) {
 			draggableId={column.name}
 			index={colIndex}
 			isDragDisabled={user.access_level != MANAGER_LEVEL}
+			onClick={() => setCurrentColumn(column)}
 		>
 			{(provided) => (
 				<Box
@@ -358,6 +359,8 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 							currentColumn={currentColumn}
 							editTicket={editTicket}
 							setEditTicket={setEditTicket}
+							currentProject={currentProject}
+							userData={userData}
 						/>
 					</div>
 				)}

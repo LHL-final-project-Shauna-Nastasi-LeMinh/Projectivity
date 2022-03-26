@@ -117,7 +117,20 @@ export default function NewTicketForm(props) {
 	};
 
 	const onAdd = (event) => {
-		// console.log('### ON ADD', currentProject.Columns);
+		const newTicket = {
+			title: values.title,
+			description: values.description,
+			created_by: user.id,
+			column_id: currentColumn,
+			severity: values.severity,
+			priority: values.priority,
+			type: values.type,
+			milestone: values.milestone,
+			creator_name: user.first_name + ' ' + user.last_name
+		};
+
+		currentProject.Columns[currentColumn - 1].Tickets.push(newTicket);
+
 		// add new ticket to db
 		axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {
@@ -145,6 +158,31 @@ export default function NewTicketForm(props) {
 	};
 
 	const onEdit = () => {
+		const editTicket = {
+			id: ticket.id,
+			title: values.title,
+			description: values.description,
+			severity: values.severity,
+			priority: values.priority,
+			type: values.type,
+			milestone: values.milestone,
+			updater_name: user.first_name + ' ' + user.last_name
+		};
+
+		currentProject.Columns.map((currColumn) => {
+			currColumn.Tickets.map((currTicket, index) => {
+				if (currTicket.id === ticket.id) {
+					currColumn.Tickets.splice(index, 1, editTicket);
+					currTicket = console.log(
+						'### CURR TICKET',
+						currColumn.Tickets,
+						index,
+						ticket
+					);
+				}
+			});
+		});
+
 		// update ticket to db
 		axios
 			.post(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticket.id}`, {
