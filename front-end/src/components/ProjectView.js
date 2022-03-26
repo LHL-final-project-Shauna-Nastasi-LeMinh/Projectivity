@@ -160,15 +160,9 @@ export default function ProjectView(props) {
 					)
 					.then((res) => {
 						console.log(res.data);
-						currentProject.Columns[sourceColumnIndex].Tickets.splice(
-							source.index,
-							1
-						);
-						currentProject.Columns[destColumnIndex].Tickets.splice(
-							destination.index,
-							0,
-							movingTicket
-						);
+						currentProject.Columns[sourceColumnIndex] = newSourceColumn;
+						currentProject.Columns[destColumnIndex] = newDestColumn;
+						console.log('### AFTER', currentProject);
 
 						setCurrentColumn(currentProject.Columns);
 					})
@@ -258,7 +252,6 @@ export default function ProjectView(props) {
 
 		if (!currentProject) return;
 		if (!currentProject.Columns) return;
-		console.log(currentProject);
 		const allColumns = JSON.parse(JSON.stringify(currentProject.Columns));
 
 		allColumns.forEach((column) => {
