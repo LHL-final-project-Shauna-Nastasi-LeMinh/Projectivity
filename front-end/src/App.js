@@ -55,8 +55,6 @@ const App = () => {
 	const [userData, setUserData] = useState();
 
 	useEffect(() => {
-		console.log('sentRequest', sentRequest, user !== null);
-
 		if (user !== null && !sentRequest) {
 			setSentRequest(true);
 
@@ -65,7 +63,6 @@ const App = () => {
 					process.env.REACT_APP_BACKEND_URL + `/projects/user_data/${user.id}`
 				)
 				.then((res) => {
-					console.log('### RES.DATA', res.data);
 					setUserColumns(res.data.userColumns);
 					setUserTickets(res.data.userTickets);
 					setUserProjects(res.data.userProjects);
@@ -130,12 +127,12 @@ const App = () => {
 	});
 
 	function openModals(prop) {
-		console.log('open modals', prop, modals);
+		// console.log('open modals', prop, modals);
 		setModals({ ...modals, [prop]: true });
 	}
 
 	function closeModals(prop) {
-		console.log('close modals', prop, modals);
+		// console.log('close modals', prop, modals);
 		setModals({ ...modals, [prop]: false });
 	}
 

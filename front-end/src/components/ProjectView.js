@@ -339,6 +339,9 @@ export default function ProjectView(props) {
 										createNewColumn={createNewColumn}
 										selectedColumn={selectedColumn}
 										setSelectedColumn={setSelectedColumn}
+										currentProject={currentProject}
+										userData={userData}
+										setUserData={setUserData}
 									/>
 								))}
 							{user.access_level == MANAGER_LEVEL && columns !== undefined && (
