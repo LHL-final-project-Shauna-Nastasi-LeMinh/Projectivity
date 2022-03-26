@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsTo(models.Ticket, { foreignKey: "ticket_id", targetKey: "id"})
     }
+
+    static 
   }
   History.init({
     ticket_id: DataTypes.STRING,

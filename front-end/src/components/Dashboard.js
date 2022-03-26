@@ -177,6 +177,7 @@ export default function Dashboard(props) {
 						userData={userData}
 						setUserData={setUserData}
 						currentProject={currentProject}
+						allEmployees={allEmployees}
 					/>
 				)}
 				{userData && modals.editProjectForm && (

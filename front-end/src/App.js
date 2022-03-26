@@ -238,6 +238,7 @@ const App = () => {
 							openModals={openModals}
 							userData={userData}
 							setUserData={setUserData}
+							allEmployees={allEmployees}
 						/>
 					)}
 			</Container>
