@@ -114,18 +114,18 @@ module.exports = (sequelizeModels) => {
       assignmentBulkCreateObject.push({employee_id, project_id, assignment_date})
       await Project_Assignments.bulkCreate(assignmentBulkCreateObject)
 
-      await Columns.create({
-        name: "Open",
-        project_id,
-      });
-      await Columns.create({
-        name: "In Progress",
-        project_id,
-      });
-      await Columns.create({
-        name: "Closed",
-        project_id,
-      });
+      // await Columns.create({
+      //   name: "Open",
+      //   project_id,
+      // });
+      // await Columns.create({
+      //   name: "In Progress",
+      //   project_id,
+      // });
+      // await Columns.create({
+      //   name: "Closed",
+      //   project_id,
+      // });
 
       return res.json("success!");
 

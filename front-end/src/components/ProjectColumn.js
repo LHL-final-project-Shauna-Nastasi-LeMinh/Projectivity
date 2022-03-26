@@ -342,34 +342,36 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 				draggableId={'ticket_' + ticket.id}
 				index={index}
 			>
-				{(provided, snapshot) => (
-					<div
-						{...provided.draggableProps}
-						{...provided.dragHandleProps}
-						ref={provided.innerRef}
+        {(provided, snapshot) =>
+          <Box
+            sx={{marginBottom: 1, border: 1, borderRadius: 8, borderColor: 'grey.500', bgcolor: 'secondary'}}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
 					>
-						<ProjectTicket
-							title={ticket.title}
-							ticketId={ticket.id}
-							isDragging={snapshot.isDragging}
-							setViewMode={setViewMode}
-							open={open}
-							setOpen={setOpen}
-							currentTicket={currentTicket}
-							setCurrentTicket={setCurrentTicket}
-							tickets={tickets}
-							setTickets={setTickets}
-							user={user}
-							currentColumn={currentColumn}
+            <ProjectTicket
+              ticket={ticket}
+              title={ticket.title}
+              ticketId={ticket.id}
+              isDragging={snapshot.isDragging}
+              setViewMode={setViewMode}
+              open={open}
+              setOpen={setOpen}
+              currentTicket={currentTicket}
+              setCurrentTicket={setCurrentTicket}
+              tickets={tickets}
+              setTickets={setTickets}
+              user={user}
+              currentColumn={currentColumn}
 							setCurrentColumn={setCurrentColumn}
 							editTicket={editTicket}
 							setEditTicket={setEditTicket}
 							currentProject={currentProject}
 							userData={userData}
+              
 						/>
-					</div>
-				)}
-			</Draggable>
-		);
-	});
-});
+          </Box>}
+      </Draggable>
+    )
+  })
+})

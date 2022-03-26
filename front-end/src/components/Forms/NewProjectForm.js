@@ -33,7 +33,9 @@ export default function NewProjectForm(props) {
 		allEmployees,
 		userData,
 		setUserData,
-		currentProject
+		currentProject,
+		setCurrentProject,
+		setSelectedIndex
 	} = props;
 	const [values, setValues] = useState({
 		message: '',
@@ -92,9 +94,10 @@ export default function NewProjectForm(props) {
 										column.Tickets = [];
 									}
 								});
-								console.log(newProject);
 								userData.push(newProject);
 								setUserData(userData);
+								setCurrentProject(userData[userData.length - 1]);
+								setSelectedIndex(userData.length - 1);
 								closeModals('newProjectForm');
 
 								
