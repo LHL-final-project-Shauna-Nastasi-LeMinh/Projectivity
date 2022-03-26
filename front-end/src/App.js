@@ -72,12 +72,18 @@ const App = () => {
 				});
 		}
 
+		if (user) {
+			console.log('### USER', user.access_level, startBuild);
+		}
+
 		if (
+			user !== null &&
+			userProjects !== undefined &&
 			userColumns !== undefined &&
 			userTickets !== undefined &&
-			userProjects !== undefined &&
 			!startBuild
 		) {
+			console.log('GETTING USER DATA');
 			setStartBuild(true);
 			const newUserData = userProjects;
 
@@ -108,6 +114,8 @@ const App = () => {
 					});
 				});
 			});
+
+			console.log('### USER DATA', newUserData);
 
 			setUserData(newUserData);
 		}
@@ -185,6 +193,7 @@ const App = () => {
 							removeCookie={removeCookie}
 							modals={modals}
 							openModals={openModals}
+							setStartBuild={setStartBuild}
 							anchorOrigin={{
 								vertical: 'top',
 								horizontal: 'right'

@@ -35,7 +35,14 @@ const colors = {
 	background: {
 		default: '#FEF9EF'
 	},
-	divider: '#E07A5F'
+	divider: '#E07A5F',
+	level: {
+		1: '#118ab2',
+		2: '#17c3b2',
+		3: '#ffb703',
+		4: '#F3722C',
+		5: '#F94144'
+	}
 };
 
 export const theme = createTheme({
