@@ -1,8 +1,8 @@
-import * as React from 'react'
-import { useState } from 'react'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
+import * as React from 'react';
+import { useState } from 'react';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,16 +13,46 @@ import Fade from '@mui/material/Fade';
 import RemoveTicket from './Forms/RemoveTicket'
 import ShowTicketDetails from './Forms/ShowTicketDetails'
 import NewTicketForm from './Forms/NewTicketForm'
-
-import { SHOW_TICKET_DETAILS, EDIT_TICKET, REMOVE_TICKET, ADD_TICKET } from './constants/Modes'
-import { MANAGER_LEVEL} from './constants/AccessLevel'
+import TicketHistory from './Forms/TicketHistory';
 import { BlockRounded } from '@mui/icons-material'
 
+
+import {
+	SHOW_TICKET_DETAILS,
+	EDIT_TICKET,
+	REMOVE_TICKET,
+	ADD_TICKET,
+	TICKET_HISTORY
+} from './constants/Modes';
+import { MANAGER_LEVEL } from './constants/AccessLevel';
+import { modalClasses } from '@mui/material';
+
 export default function ProjectTicket (props) {
-  const { title, value, ticketId, setViewMode, setOpen, tickets, setTickets, user, currentColumn, ticket} = props
+  
+		const {
+			title,
+			value,
+			ticketId,
+			setViewMode,
+			setOpen,
+			tickets,
+			setTickets,
+			user,
+			currentColumn,
+			ticket,
+			setCurrentColumn,
+			currentProject,
+			userData,
+			setUserData,
+			editTicket,
+			setEditTicket
+		} = props;
+
+
   const [checked, setChecked] = React.useState([1])
   const [dialogOpen, setDialogOpen] = useState(false)
   const [currentTicket, setCurrentTicket] = useState()
+
 
   // handle opening and closing of MoreVertIcon
   const [anchorEl, setAnchorEl] = useState(null);
@@ -36,47 +66,53 @@ export default function ProjectTicket (props) {
     setAnchorEl(null)
   }
 
-  const handleDialogOpening = (evt) => {
-    console.log(evt.target.id)
+	const handleDialogOpening = (evt) => {
+		console.log(evt.target.id);
 
-    if (evt.target.id === 'edit') {
-      setDialogOpen(EDIT_TICKET)
-      setCurrentTicket(ticketId)
-    }
+		if (evt.target.id === 'edit') {
+			// openModals('newTicketForm');
+			setEditTicket(true);
+			setDialogOpen(EDIT_TICKET);
+			setCurrentTicket(ticketId);
+		}
 
-    if (evt.target.id === 'details') {
-      setDialogOpen(SHOW_TICKET_DETAILS)
-      console.log(dialogOpen)
-    }
+		if (evt.target.id === 'details') {
+			setDialogOpen(SHOW_TICKET_DETAILS);
+			console.log(dialogOpen);
+		}
 
-    if (evt.target.id === 'remove') {
-      setDialogOpen(REMOVE_TICKET)
-      console.log(dialogOpen)
-    
-    }
+		if (evt.target.id === 'remove') {
+			setDialogOpen(REMOVE_TICKET);
+			console.log(dialogOpen);
+		}
 
-    closeMenu()
+		if (evt.target.id === 'history') {
+			setDialogOpen(TICKET_HISTORY);
+			console.log(dialogOpen);
+		}
 
-    
-  };
+		closeMenu();
+	};
+
 
 	//
 
-  const handleToggle = value => () => {
-    const currentIndex = checked.indexOf(value)
-    const newChecked = [...checked]
+	const handleToggle = (value) => () => {
+		const currentIndex = checked.indexOf(value);
+		const newChecked = [...checked];
 
-    if (currentIndex === -1) {
-      newChecked.push(value)
-    } else {
-      newChecked.splice(currentIndex, 1)
-    }
+		if (currentIndex === -1) {
+			newChecked.push(value);
+		} else {
+			newChecked.splice(currentIndex, 1);
+		}
 
-    setChecked(newChecked)
-  }
-
+		setChecked(newChecked);
+	};
 
   return (
+
+		
     
     <ListItem sx={{  display: "block"}}>
   
@@ -135,6 +171,9 @@ export default function ProjectTicket (props) {
           ticketId={ticketId}
           dialogOpen={dialogOpen}
           setDialogOpen={setDialogOpen}
+					currentProject={currentProject}
+					userData={userData}
+					setCurrentColumn={setCurrentColumn}
           
           
 					/>}
@@ -151,9 +190,23 @@ export default function ProjectTicket (props) {
           title = "Edit Ticket"
           onsubmitMsg="Edit Ticket"
           currentTicket={currentTicket}
+					currentProject={currentProject}
+					userData={userData}
+					setUserData={setUserData}
+					editTicket={editTicket}
           
         
 					/>}
+
+					{dialogOpen === TICKET_HISTORY && (
+						<TicketHistory
+							tickets={tickets}
+							setTickets={setTickets}
+							ticketId={ticketId}
+							dialogOpen={dialogOpen}
+							setDialogOpen={setDialogOpen}
+						/>
+					)}
           
         <Menu
         id="fade-menu"
@@ -172,6 +225,9 @@ export default function ProjectTicket (props) {
         {user.access_level == MANAGER_LEVEL &&
           <MenuItem  id="remove" onClick={evt =>handleDialogOpening(evt)}>Remove</MenuItem>
         }
+				<MenuItem id="history" onClick={handleDialogOpening}>
+							History
+						</MenuItem>
       </Menu>
       </div>
       

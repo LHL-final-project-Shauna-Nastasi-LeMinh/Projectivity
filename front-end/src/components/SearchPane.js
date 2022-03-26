@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -24,7 +24,7 @@ export default function SearchPane (props) {
   const [types, setTypes] = useState([]);
   const [milestones, setMilestones] = useState([]);
    
-  const [criteria, setCriteria] = useState({ALL_TICKETS: true, DESC:"abc", SEVERITY: "All", PRIORITY: "All", TYPE: "All", MILESTONE: "All"});
+  const [criteria, setCriteria] = useState({ALL_TICKETS: true, DESC:"", SEVERITY: "All", PRIORITY: "All", TYPE: "All", MILESTONE: "All"});
   const [searchInput, setSearchInput] = useState();
 
   const delayedInput = useDebounce(searchInput, 500);
