@@ -11,6 +11,8 @@ import NewColumnForm from './Forms/NewColumnForm';
 import DeleteColumnForm from './Forms/DeleteColumnForm';
 import EditColumnForm from './Forms/EditColumnForm';
 import { modalClasses } from '@mui/material';
+import { COLUMN_CHANNEL, COLUMN_MOVE_EVENT } from './constants/PusherChannels';
+import Pusher from 'pusher-js';
 
 export default function ProjectView(props) {
 	const {
@@ -40,6 +42,20 @@ export default function ProjectView(props) {
 		}
 	}, [currentProject]);
 
+	useEffect(() => {
+		const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+			cluster: process.env.REACT_APP_PUSHER_CLUSTER
+		});
+		const channel = pusher.subscribe(COLUMN_CHANNEL);
+		channel.bind(COLUMN_MOVE_EVENT, function (broadcastMsg) {
+			if (!currentProject) return;
+			if (broadcastMsg && broadcastMsg.project_id == currentProject.id) {
+				setColumns(broadcastMsg.columns);
+			}
+		});
+		return () => channel.unbind(COLUMN_MOVE_EVENT);
+	}, []);
+
 	function onDragEnd(result, provided) {
 		const { source, destination, type } = result;
 		if (!destination) return;
@@ -56,10 +72,6 @@ export default function ProjectView(props) {
 			const newColumns = JSON.parse(JSON.stringify(columns)); // deep clone
 			const [movingColumn] = newColumns.splice(source.index, 1);
 			newColumns.splice(destination.index, 0, movingColumn);
-			console.log('source:');
-			console.log(source);
-			console.log('destination:');
-			console.log(destination);
 			setColumns(newColumns);
 
 			// persist new columns ordering into db
@@ -67,11 +79,14 @@ export default function ProjectView(props) {
 			newColumns.forEach((col, index) => {
 				orderingObject[col.id] = index;
 			});
-
+			const params = {
+				project_id: currentProject.id,
+				ordering: orderingObject
+			};
 			axios
 				.post(
 					process.env.REACT_APP_BACKEND_URL + '/columns/reodering',
-					JSON.stringify(orderingObject),
+					JSON.stringify(params),
 					{
 						headers: {
 							'Content-Type': 'application/json'
