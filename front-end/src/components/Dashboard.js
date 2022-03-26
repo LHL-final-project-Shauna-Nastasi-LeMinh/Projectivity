@@ -45,13 +45,8 @@ export default function Dashboard(props) {
 		axios
 			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
 			.then((res) => {
-				const data = res.data.map(
-					(project_assignment) => project_assignment.Project
-				);
-        console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-        console.log(data);
-				setDashboardProjects(data);
-				console.log('###### BEFORE', data[0]);
+        // get all projects and only columns for first project for initial display
+        setDashboardProjects(res.data);
 			})
 			.catch((err) => {
 				console.log(err);
