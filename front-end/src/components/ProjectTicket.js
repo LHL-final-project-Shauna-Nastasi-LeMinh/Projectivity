@@ -110,18 +110,42 @@ export default function ProjectTicket (props) {
 		setChecked(newChecked);
 	};
 
+	const choosePriorityColor = (priority) => {
+		let color = '';
+		switch(priority) {
+			case 'Urgent':
+				color = '#f72d2d'
+				break;
+			case 'Essential':
+				color = '#d45917'
+				break;
+			case 'Valuable':
+				color = '#ebc310'
+				break;
+			case 'Discretionary':
+				color = '#92d417'
+				break;
+			default:
+				color= 'grey'
+		}
+		return color;
+	}
+
   return (
 
 		
     
     <ListItem sx={{  display: "block"}}>
-  
-        <Chip
+				{ticket.priority &&
+					<Chip
           pl="2"
           label={ticket.priority}
-          color="warning"
+         
+					style={{backgroundColor: choosePriorityColor(ticket.priority), fontWeight:'700'}}
           size="small"
-        ></Chip>
+        />
+				}
+        
         
       <ListItemButton
         sx={{
