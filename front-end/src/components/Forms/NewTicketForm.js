@@ -139,17 +139,12 @@ export default function NewTicketForm(props) {
 				setTickets([...tickets, newTicket]);
 				setDialogOpen(false);
 
-				console.log('### NEW TICKET', newTicket);
-
 				currentProject.Columns.map((column) => {
 					if (column.id === currentColumn) {
-						console.log('### COLUMN', column);
 						column.Tickets.push(newTicket);
 					}
 				});
 				setColumns(currentProject.Columns);
-
-				console.log('### AFTER', currentProject.Columns, userData);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -354,8 +349,8 @@ export default function NewTicketForm(props) {
 						variant="contained"
 						onClick={() => (editTicket ? onEdit() : onAdd())}
 					>
-						{title === "Edit Ticket" && 'Edit'}
-						{title === "Create A New Ticket" && 'Create'}
+						{title === 'Edit Ticket' && 'Edit'}
+						{title === 'Create A New Ticket' && 'Create'}
 					</Button>
 					<Button
 						sx={{ mx: 2, width: '100%' }}

@@ -162,8 +162,6 @@ export default function ProjectView(props) {
 						console.log(res.data);
 						currentProject.Columns[sourceColumnIndex] = newSourceColumn;
 						currentProject.Columns[destColumnIndex] = newDestColumn;
-						console.log('### AFTER', currentProject);
-
 						setCurrentColumn(currentProject.Columns);
 					})
 					.catch(function (error) {

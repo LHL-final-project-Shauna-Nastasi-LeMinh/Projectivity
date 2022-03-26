@@ -48,8 +48,6 @@ export default function RemoveTicket(props) {
 					});
 				});
 
-				console.log('### AFTER', currentProject);
-
 				setDialogOpen(false);
 			})
 			.catch(function (error) {
