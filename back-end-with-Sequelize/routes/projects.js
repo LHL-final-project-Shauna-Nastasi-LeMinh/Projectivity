@@ -7,6 +7,7 @@ module.exports = (sequelizeModels) => {
   Columns = sequelizeModels.Column;
   Projects = sequelizeModels.Project;
   Tickets = sequelizeModels.Ticket;
+  History = sequelizeModels.History;
 
   router.get("/user_data/:employee_id", async (req, res) => {
     try {
@@ -20,6 +21,7 @@ module.exports = (sequelizeModels) => {
       });
       const allColumns = await Columns.findAll();
       const allTickets = await Tickets.findAll();
+      const allHistories = await History.findAll();
 
       const userProjects = project_assignments.map((data) => {
         return data.Project.dataValues;

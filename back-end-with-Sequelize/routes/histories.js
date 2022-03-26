@@ -5,10 +5,13 @@ module.exports = (sequelizeModels, pusher) => {
 
   History = sequelizeModels.History;
 
-  router.get('/', async(req, res) => {
+  router.get('/:ticket_id', async(req, res) => {
     try {
-      const types = await History.findAll()
-      return res.json( types );
+      const ticketHistories = await History.findAll({
+        where: { ticket_id: req.params.ticket_id },
+        order: [["createdAt", "ASC"]],
+      })
+      return res.json( ticketHistories );
     } catch(err) {
       console.log(err);
       return res.status(500).json(err);

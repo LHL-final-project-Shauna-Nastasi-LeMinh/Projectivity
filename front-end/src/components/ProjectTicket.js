@@ -11,12 +11,14 @@ import Fade from '@mui/material/Fade';
 import RemoveTicket from './Forms/RemoveTicket';
 import ShowTicketDetails from './Forms/ShowTicketDetails';
 import NewTicketForm from './Forms/NewTicketForm';
+import TicketHistory from './Forms/TicketHistory';
 
 import {
 	SHOW_TICKET_DETAILS,
 	EDIT_TICKET,
 	REMOVE_TICKET,
-	ADD_TICKET
+	ADD_TICKET,
+	TICKET_HISTORY
 } from './constants/Modes';
 import { MANAGER_LEVEL } from './constants/AccessLevel';
 import { modalClasses } from '@mui/material';
@@ -70,6 +72,11 @@ export default function ProjectTicket(props) {
 
 		if (evt.target.id === 'remove') {
 			setDialogOpen(REMOVE_TICKET);
+			console.log(dialogOpen);
+		}
+
+		if (evt.target.id === 'history') {
+			setDialogOpen(TICKET_HISTORY);
 			console.log(dialogOpen);
 		}
 
@@ -150,6 +157,16 @@ export default function ProjectTicket(props) {
 						/>
 					)}
 
+					{dialogOpen === TICKET_HISTORY && (
+						<TicketHistory
+							tickets={tickets}
+							setTickets={setTickets}
+							ticketId={ticketId}
+							dialogOpen={dialogOpen}
+							setDialogOpen={setDialogOpen}
+						/>
+					)}
+
 					<Menu
 						id="fade-menu"
 						MenuListProps={{
@@ -171,6 +188,9 @@ export default function ProjectTicket(props) {
 								Remove
 							</MenuItem>
 						)}
+						<MenuItem id="history" onClick={handleDialogOpening}>
+							History
+						</MenuItem>
 					</Menu>
 				</div>
 			</ListItemButton>
