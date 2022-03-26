@@ -54,7 +54,8 @@ export default function ProjectColumn(props) {
 		setSelectedColumn,
 		currentProject,
 		userData,
-		setUserData
+		setUserData,
+		setColumns
 	} = props;
 
 	const [tickets, setTickets] = useState([]);
@@ -273,6 +274,7 @@ export default function ProjectColumn(props) {
 									setTickets={setTickets}
 									user={user}
 									currentColumn={currentColumn}
+									setCurrentColumn={setCurrentColumn}
 									currentProject={currentProject}
 									userData={userData}
 									setUserData={setUserData}
@@ -306,6 +308,7 @@ export default function ProjectColumn(props) {
 							userData={userData}
 							setUserData={setUserData}
 							editTicket={editTicket}
+							setColumns={setColumns}
 						/>
 					)}
 				</Box>
@@ -325,6 +328,7 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 		open,
 		user,
 		currentColumn,
+		setCurrentColumn,
 		currentProject,
 		userData,
 		setUserData,
@@ -357,6 +361,7 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 							setTickets={setTickets}
 							user={user}
 							currentColumn={currentColumn}
+							setCurrentColumn={setCurrentColumn}
 							editTicket={editTicket}
 							setEditTicket={setEditTicket}
 							currentProject={currentProject}

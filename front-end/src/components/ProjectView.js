@@ -147,21 +147,6 @@ export default function ProjectView(props) {
 				columns[sourceColumnIndex] = newSourceColumn;
 				columns[destColumnIndex] = newDestColumn;
 
-				userData.map((project) => {
-					if (project.id === currentProject.id) {
-						project.Columns[sourceColumnIndex].Tickets.splice(source.index, 1);
-						project.Columns[destColumnIndex].Tickets.splice(
-							destination.index,
-							0,
-							movingTicket
-						);
-					}
-				});
-
-				console.log('#### MOVING TICKET', movingTicket);
-
-				setUserData(userData);
-
 				// persist new column id to the ticket details in db
 				axios
 					.put(
@@ -175,6 +160,17 @@ export default function ProjectView(props) {
 					)
 					.then((res) => {
 						console.log(res.data);
+						currentProject.Columns[sourceColumnIndex].Tickets.splice(
+							source.index,
+							1
+						);
+						currentProject.Columns[destColumnIndex].Tickets.splice(
+							destination.index,
+							0,
+							movingTicket
+						);
+
+						setCurrentColumn(currentProject.Columns);
 					})
 					.catch(function (error) {
 						console.log(error.message);
@@ -362,6 +358,7 @@ export default function ProjectView(props) {
 										currentProject={currentProject}
 										userData={userData}
 										setUserData={setUserData}
+										setColumns={setColumns}
 									/>
 								))}
 							{user.access_level == MANAGER_LEVEL && columns !== undefined && (
