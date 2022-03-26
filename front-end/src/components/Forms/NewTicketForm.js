@@ -17,6 +17,7 @@ import { AddBox } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 
 import { ADD_TICKET, EDIT_TICKET } from '../constants/Modes';
+import ProjectColumn from '../ProjectColumn';
 
 export default function NewTicketForm(props) {
 	const {
@@ -129,7 +130,11 @@ export default function NewTicketForm(props) {
 			creator_name: user.first_name + ' ' + user.last_name
 		};
 
-		currentProject.Columns[currentColumn - 1].Tickets.push(newTicket);
+		currentProject.Columns.map((column) => {
+			if (column.id === currentColumn) {
+				column.Tickets.push(newTicket);
+			}
+		});
 
 		// add new ticket to db
 		axios

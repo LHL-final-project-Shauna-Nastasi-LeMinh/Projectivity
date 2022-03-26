@@ -158,6 +158,8 @@ export default function ProjectView(props) {
 					}
 				});
 
+				console.log('#### MOVING TICKET', movingTicket);
+
 				setUserData(userData);
 
 				// persist new column id to the ticket details in db
@@ -193,6 +195,10 @@ export default function ProjectView(props) {
 				console.log(res.data);
 				const newColumn = { ...res.data, Tickets: [] };
 				setColumns([...columns, newColumn]);
+
+				currentProject.Columns.push(res.data);
+				currentProject.Columns[currentProject.Columns.length - 1].Tickets = [];
+				setCurrentColumn(currentProject.Columns);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -207,6 +213,13 @@ export default function ProjectView(props) {
 				console.log(res.data);
 				const newColumns = columns.filter((column) => column.id !== columnId);
 				setColumns([...newColumns]);
+
+				currentProject.Columns.map((column, index) => {
+					if (column.id === columnId) {
+						currentProject.Columns.splice(index, 1);
+					}
+				});
+				setCurrentColumn(currentProject.Columns);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -215,6 +228,7 @@ export default function ProjectView(props) {
 
 	const changeColumnFromProjectView = function (columnId, newName) {
 		closeModals('editColumnForm');
+
 		axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/columns/updateName', {
 				name: newName,
@@ -222,6 +236,12 @@ export default function ProjectView(props) {
 			})
 			.then((res) => {
 				console.log(res.data);
+				currentProject.Columns.map((column) => {
+					if (column.id === columnId) {
+						column.name = newName;
+					}
+				});
+				setCurrentColumn(currentProject.Columns);
 			})
 			.catch(function (error) {
 				console.log(error.message);
