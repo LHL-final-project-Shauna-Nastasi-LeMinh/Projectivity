@@ -47,9 +47,11 @@ const App = () => {
 	const [dashboard, setDashboard] = useState();
 	const [allEmployees, setAllEmployees] = useState();
 	const [dashboardProjects, setDashboardProjects] = useState();
+	const [userProjects, setUserProjects] = useState();
 	const [userColumns, setUserColumns] = useState();
 	const [userTickets, setUserTickets] = useState();
 	const [sentRequest, setSentRequest] = useState(false);
+	const [startBuild, setStartBuild] = useState(false);
 	const [userData, setUserData] = useState();
 
 	useEffect(() => {
@@ -60,23 +62,66 @@ const App = () => {
 
 			console.log('### GETTING DATA');
 			axios
-				.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
+				.get(
+					process.env.REACT_APP_BACKEND_URL + `/projects/user_data/${user.id}`
+				)
 				.then((res) => {
-					setUserData(res.data);
+					console.log('### RES.DATA', res.data);
+					setUserColumns(res.data.userColumns);
+					setUserTickets(res.data.userTickets);
+					setUserProjects(res.data.userProjects);
 				})
 				.catch(function (error) {
 					console.log(error.message);
 				});
 		}
 
-		if (userData !== undefined) {
-			console.log('###  USER DATA', userData);
-			setUserColumns(userData.userColumns);
-			setUserTickets(userData.userTickets);
-			setDashboardProjects(userData.userProjects);
-			console.log('###  USER DATA', userColumns);
-			console.log('###  USER DATA', userTickets);
-			console.log('###  USER DATA', dashboardProjects);
+		console.log(
+			'#### DATA',
+			userColumns,
+			userTickets,
+			userProjects,
+			!startBuild
+		);
+		if (
+			userColumns !== undefined &&
+			userTickets !== undefined &&
+			userProjects !== undefined &&
+			!startBuild
+		) {
+			setStartBuild(true);
+			console.log('### STARTING BUILD');
+			const newUserData = userProjects;
+
+			newUserData.map((project) => {
+				userColumns.map((column) => {
+					if (!project.Columns) {
+						project.Columns = [];
+					}
+					if (column.project_id === project.id) {
+						if (!project.Columns.includes(column)) {
+							project.Columns.push(column);
+						}
+					}
+				});
+			});
+
+			newUserData.map((project) => {
+				project.Columns.map((column) => {
+					userTickets.map((ticket) => {
+						if (!column.Tickets) {
+							column.Tickets = [];
+						}
+						if (ticket.column_id === column.id) {
+							if (!column.Tickets.includes(ticket)) {
+								column.Tickets.push(ticket);
+							}
+						}
+					});
+				});
+			});
+
+			setUserData(newUserData);
 		}
 	});
 
@@ -160,7 +205,7 @@ const App = () => {
 					</Toolbar>
 				</AppBar>
 				<Offset />
-				{user !== null && (
+				{user !== null && userData !== undefined && (
 					<Dashboard
 						viewMode={viewMode}
 						setViewMode={setViewMode}
@@ -172,6 +217,7 @@ const App = () => {
 						setCurrentProject={setCurrentProject}
 						dashboardProjects={dashboardProjects}
 						setDashboardProjects={setDashboardProjects}
+						userData={userData}
 						// data={data}
 						// loadForm={loadForm}
 						// open={open}
@@ -182,23 +228,27 @@ const App = () => {
 						allEmployees={allEmployees}
 					/>
 				)}
-				{user !== null && user.access_level == HR_LEVEL && <HRPage />}
+				{user !== null &&
+					user.access_level == HR_LEVEL &&
+					userData !== undefined && <HRPage />}
 				{user === null && <AboutPage user={user} />}
-				{user !== null && user.access_level != HR_LEVEL && (
-					<ProjectView
-						user={user}
-						currentProject={currentProject}
-						setCurrentProject={setCurrentProject}
-						setViewMode={setViewMode}
-						setCurrentColumn={setCurrentColumn}
-						currentTicket={currentTicket}
-						setCurrentTicket={setCurrentTicket}
-						currentColumn={currentColumn}
-						modals={modals}
-						closeModals={closeModals}
-						openModals={openModals}
-					/>
-				)}
+				{user !== null &&
+					user.access_level != HR_LEVEL &&
+					userData !== undefined && (
+						<ProjectView
+							user={user}
+							currentProject={currentProject}
+							setCurrentProject={setCurrentProject}
+							setViewMode={setViewMode}
+							setCurrentColumn={setCurrentColumn}
+							currentTicket={currentTicket}
+							setCurrentTicket={setCurrentTicket}
+							currentColumn={currentColumn}
+							modals={modals}
+							closeModals={closeModals}
+							openModals={openModals}
+						/>
+					)}
 			</Container>
 		</ThemeProvider>
 	);

@@ -32,25 +32,28 @@ export default function Dashboard(props) {
 		closeModals,
 		allEmployees,
 		dashboardProjects,
-		setDashboardProjects
+		setDashboardProjects,
+		userData
 	} = props;
 
 	const [openDrawer, setOpenDrawer] = useState(false);
 	const [projects, setProjects] = useState();
-	const [selectedIndex, setSelectedIndex] = useState();
+	const [selectedIndex, setSelectedIndex] = useState(0);
 	const drawerWidth = 'fit-content';
 
 	useEffect(() => {
-		console.log('inside dashboard', dashboardProjects);
-		axios
-			.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
-			.then((res) => {
-        // get all projects and only columns for first project for initial display
-        setDashboardProjects(res.data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		// console.log('inside dashboard', dashboardProjects);
+		// axios
+		// 	.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
+		// 	.then((res) => {
+		// 		// get all projects and only columns for first project for initial display
+		// 		setDashboardProjects(res.data);
+		// 	})
+		// 	.catch((err) => {
+		// 		console.log(err);
+		// 	});
+
+		selectProject(0);
 	}, []);
 
 	const handleDrawerOpen = () => {
@@ -129,21 +132,22 @@ export default function Dashboard(props) {
 	let index = 0;
 
 	function selectProject(index) {
-
-		if (dashboardProjects[index]) {
-			axios
-				.get(
-					process.env.REACT_APP_BACKEND_URL +
-						'/projects/' +
-						dashboardProjects[index].id +
-						'/columns'
-				)
-				.then((res) => {
-					setCurrentProject((prev) => {
-						return { ...dashboardProjects[index], Columns: res.data };
-					});
-				});
-		}
+		console.log('### SELECT PROJECT', userData[index]);
+		setCurrentProject(userData[index]);
+		// if (dashboardProjects[index]) {
+		// 	axios
+		// 		.get(
+		// 			process.env.REACT_APP_BACKEND_URL +
+		// 				'/projects/' +
+		// 				dashboardProjects[index].id +
+		// 				'/columns'
+		// 		)
+		// 		.then((res) => {
+		// 			setCurrentProject((prev) => {
+		// 				return { ...dashboardProjects[index], Columns: res.data };
+		// 			});
+		// 		});
+		// }
 	}
 
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -197,10 +201,8 @@ export default function Dashboard(props) {
 				<Offset />
 				<Box sx={{ overflow: 'auto' }}>
 					<List component="nav" aria-label="main mailbox folders">
-						{dashboardProjects && setCurrentProject(dashboardProjects[0])}
-						{dashboardProjects && console.log('### CURRENT', currentProject)}
-						{dashboardProjects &&
-							dashboardProjects.map((project) => (
+						{userData &&
+							userData.map((project) => (
 								<DashboardItem
 									key={project.id}
 									value={project.name}
