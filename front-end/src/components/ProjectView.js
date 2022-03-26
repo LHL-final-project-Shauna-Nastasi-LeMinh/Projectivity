@@ -13,6 +13,8 @@ import EditColumnForm from './Forms/EditColumnForm';
 import { modalClasses } from '@mui/material';
 import { COLUMN_CHANNEL, COLUMN_MOVE_EVENT } from './constants/PusherChannels';
 import Pusher from 'pusher-js';
+import { projectViewTheme } from './Theme';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
 
 export default function ProjectView(props) {
 	const {
@@ -303,7 +305,7 @@ export default function ProjectView(props) {
 	};
 
 	return (
-		<>
+		<ThemeProvider theme={projectViewTheme}>
 			<SearchPane
 				searchFilter={searchFilter}
 				resetSearchPane={resetSearchPane}
@@ -364,6 +366,6 @@ export default function ProjectView(props) {
 					)}
 				</Droppable>
 			</DragDropContext>
-		</>
+		</ThemeProvider>
 	);
 }

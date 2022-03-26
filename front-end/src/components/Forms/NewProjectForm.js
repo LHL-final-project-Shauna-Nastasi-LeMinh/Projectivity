@@ -12,7 +12,15 @@ import {
 import { AddBox, CircleNotifications } from '@mui/icons-material';
 import { PROJECT_VIEW } from '../constants/Modes';
 
-export default function RegistrationForm(props) {
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import ListItemText from '@mui/material/ListItemText';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+
+export default function NewProjectForm(props) {
 	const {
 		user,
 		dashboardProjects,
@@ -25,25 +33,42 @@ export default function RegistrationForm(props) {
 		allEmployees,
 		userData,
 		setUserData,
-		currentProject
+		currentProject,
+		setCurrentProject,
+		setSelectedIndex
 	} = props;
 	const [values, setValues] = useState({
 		message: '',
 		name: undefined,
 		description: undefined
 	});
+  const [assignees, setAssignees] = useState([]);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
 	};
 
+	function buildEmployeeList() {
+		const mappedEmployees = {};
+		allEmployees.forEach(employee => {
+			const fullname = employee.first_name + ' ' + employee.last_name;
+			mappedEmployees[fullname] = employee.id;
+		})
+		return mappedEmployees;
+	}
 	function createNewProject() {
+		
+		//assign employee to the project 
+		const mappedEmployees = buildEmployeeList();
+		const assigneeIds = assignees.map(fullname => mappedEmployees[fullname]);
+		const params = {assigneeIds, name: values.name, description: values.description, employee_id: user.id}
 		axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', {
-				name: values.name,
-				description: values.description,
-				employee_id: user.id
-			})
+			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', JSON.stringify(params),
+				{
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
 			.then((res) => {
 				axios
 					.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
@@ -69,10 +94,14 @@ export default function RegistrationForm(props) {
 										column.Tickets = [];
 									}
 								});
-								console.log(newProject);
 								userData.push(newProject);
 								setUserData(userData);
+								setCurrentProject(userData[userData.length - 1]);
+								setSelectedIndex(userData.length - 1);
 								closeModals('newProjectForm');
+
+								
+								
 							})
 							.catch(function (error) {
 								console.log(error.message);
@@ -99,6 +128,40 @@ export default function RegistrationForm(props) {
 		boxShadow: 24
 	};
 
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+  const names = [
+    'Oliver Hansen',
+    'Van Henry',
+    'April Tucker',
+    'Ralph Hubbard',
+    'Omar Alexander',
+    'Carlos Abbott',
+    'Miriam Wagner',
+    'Bradley Wilkerson',
+    'Virginia Andrews',
+    'Kelly Snyder',
+  ];
+	 
+	 console.log("AAAAAAAAAAAAAAAAAAA")
+	 console.log(allEmployees)
+  const handleSelectChange = (event) => {
+    const {target: { value },} = event;
+    setAssignees(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
 	return (
 		<Modal
 			open={modals.newProjectForm}
@@ -118,7 +181,7 @@ export default function RegistrationForm(props) {
 						<AddBox color="secondary" fontSize="large" />
 					</Typography>
 					<Typography variant="h4" align="center">
-						Create A New Column
+						Create A New Project
 					</Typography>
 				</Box>
 
@@ -126,7 +189,7 @@ export default function RegistrationForm(props) {
 
 				<Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
 					<TextField
-						sx={{ m: 2, width: '100%' }}
+						sx={{ m: 2, width: '90%' }}
 						label="Project Title"
 						value={values.name}
 						type="text"
@@ -135,6 +198,32 @@ export default function RegistrationForm(props) {
 						error={values.name === ''}
 						required
 					/>
+				</Box>
+
+        <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
+          <FormControl sx={{ m: 2, width: '90%' }}>
+            <InputLabel id="demo-multiple-checkbox-label">Employees</InputLabel>
+            <Select 
+              sx={{color: 'primary.main'}}
+              labelId="demo-multiple-checkbox-label"
+              id="demo-multiple-checkbox"
+              multiple
+              value={assignees}
+              onChange={handleSelectChange}
+              input={<OutlinedInput label="Employees" />}
+              renderValue={(selected) => selected.join(', ')}
+              MenuProps={MenuProps}
+            >
+              {allEmployees.map((employee) => (
+                <MenuItem key={employee.id} value={employee.first_name + ' ' + employee.last_name}>
+                  <Checkbox checked={assignees.indexOf(employee.first_name + ' ' + employee.last_name) > -1} 
+										value={employee.id}
+									/>
+                  <ListItemText primary={employee.first_name + ' ' + employee.last_name} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 				</Box>
 
 				<Divider />
@@ -154,7 +243,7 @@ export default function RegistrationForm(props) {
 						variant="contained"
 						onClick={() => createNewProject()}
 					>
-						Create Ticket
+						Create
 					</Button>
 					<Button
 						sx={{ mx: 2, width: '50%' }}

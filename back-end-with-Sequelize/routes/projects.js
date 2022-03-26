@@ -99,7 +99,7 @@ module.exports = (sequelizeModels) => {
 
   router.post("/new", async (req, res) => {
     try {
-      const { name, description, employee_id } = req.body;
+      const { name, description, employee_id, assigneeIds } = req.body;
       const project = await Projects.create({
         name,
         description,
@@ -108,26 +108,28 @@ module.exports = (sequelizeModels) => {
       const project_id = project.dataValues.id;
       const assignment_date = Date.now();
 
-      const project_assignment = await Project_Assignments.create({
-        employee_id,
-        project_id,
-        assignment_date,
-      });
+      assignmentBulkCreateObject = assigneeIds.map(assigneeId => {
+        return {employee_id: assigneeId, project_id, assignment_date}
+      })
+      assignmentBulkCreateObject.push({employee_id, project_id, assignment_date})
+      await Project_Assignments.bulkCreate(assignmentBulkCreateObject)
 
-      await Columns.create({
-        name: "Open",
-        project_id,
-      });
-      await Columns.create({
-        name: "In Progress",
-        project_id,
-      });
-      await Columns.create({
-        name: "Closed",
-        project_id,
-      });
+      // await Columns.create({
+      //   name: "Open",
+      //   project_id,
+      // });
+      // await Columns.create({
+      //   name: "In Progress",
+      //   project_id,
+      // });
+      // await Columns.create({
+      //   name: "Closed",
+      //   project_id,
+      // });
 
       return res.json("success!");
+
+
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);

@@ -44,7 +44,8 @@ export default function DashboardItem(props) {
 		closeModals,
 		selectedIndex,
 		setSelectedIndex,
-		userData
+		userData,
+		selectModal
 	} = props;
 	const [anchorEl, setAnchorEl] = useState(null);
 
@@ -66,9 +67,9 @@ export default function DashboardItem(props) {
 	return (
 		<ListItemButton
 			selected={selectedIndex === listIndex}
-			onClick={(event) =>
-				handleListItemClick(event, listIndex, dashItemProject)
-			}
+			// onClick={(event) =>
+			// 	handleListItemClick(event, listIndex, dashItemProject)
+			// }
 		>
 			<ListItemIcon />
 			<FolderIcon />
@@ -103,13 +104,17 @@ export default function DashboardItem(props) {
 					horizontal: 'left'
 				}}
 			>
-				<MenuItem onClick={() => openModals('editProjectForm')}>
+				<MenuItem
+					onClick={() => selectModal('editProjectForm', dashItemProject)}
+				>
 					<ListItemIcon>
 						<EditIcon fontSize="small" />
 					</ListItemIcon>
 					Edit Project
 				</MenuItem>
-				<MenuItem onClick={() => openModals('deleteProjectForm')}>
+				<MenuItem
+					onClick={() => selectModal('deleteProjectForm', dashItemProject)}
+				>
 					<ListItemIcon>
 						<DeleteIcon fontSize="small" />
 					</ListItemIcon>
