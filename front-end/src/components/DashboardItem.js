@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -46,7 +46,6 @@ export default function DashboardItem (props) {
 		setSelectedIndex
 	} = props
   const [anchorEl, setAnchorEl] = useState(null)
-  console.log('### DASH ITEM', currentProject)
 
   const open = Boolean(anchorEl)
   const handleClick = event => {
@@ -59,7 +58,6 @@ export default function DashboardItem (props) {
   const handleListItemClick = (event, index, project) => {
     selectProject(project.id)
     setSelectedIndex(index)
-    console.log('### selectedIndex', selectedIndex)
   }
 
   return (
@@ -76,13 +74,13 @@ export default function DashboardItem (props) {
 					handleListItemClick(event, listIndex, dashItemProject)}
 			/>
       <Button
+        onClick={handleClick}
         id='demo-positioned-button'
         aria-controls={open ? 'demo-positioned-menu' : undefined}
         aria-haspopup='true'
         aria-expanded={open ? 'true' : undefined}
-        onClick={handleClick}
 			>
-        <MoreHorizIcon fontSize='small' />
+        <MoreHorizIcon fontSize='small' color='info' />
       </Button>
       <Menu
         id='demo-positioned-menu'
