@@ -88,6 +88,7 @@ export default function DashboardItem(props) {
 			>
 				<MoreHorizIcon fontSize="small" color="info" />
 			</Button>
+			{selectedIndex === listIndex &&
 			<Menu
 				id="demo-positioned-menu"
 				aria-labelledby="demo-positioned-button"
@@ -116,6 +117,7 @@ export default function DashboardItem(props) {
 					Delete Project
 				</MenuItem>
 			</Menu>
+			}
 		</ListItemButton>
 	);
 }

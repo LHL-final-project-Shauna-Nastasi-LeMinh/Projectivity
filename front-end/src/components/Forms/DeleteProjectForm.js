@@ -73,12 +73,13 @@ export default function DeleteProjectForm(props) {
 						setSelectedIndex(projectIndex);
 					}
 
-					closeModals('deleteProjectForm');
+					
 				})
 				.catch(function (error) {
 					console.log(error.message);
 					setValues({ ...values, message: 'Form invalid' });
 				});
+			closeModals('deleteProjectForm');
 		}
 	};
 
