@@ -48,6 +48,8 @@ export default function Dashboard(props) {
 				const data = res.data.map(
 					(project_assignment) => project_assignment.Project
 				);
+        console.log("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+        console.log(data);
 				setDashboardProjects(data);
 				console.log('###### BEFORE', data[0]);
 			})
@@ -132,6 +134,7 @@ export default function Dashboard(props) {
 	let index = 0;
 
 	function selectProject(index) {
+
 		if (dashboardProjects[index]) {
 			axios
 				.get(

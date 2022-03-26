@@ -56,7 +56,7 @@ export default function DashboardItem (props) {
   }
 
   const handleListItemClick = (event, index, project) => {
-    selectProject(project.id)
+    selectProject(index)
     setSelectedIndex(index)
   }
 

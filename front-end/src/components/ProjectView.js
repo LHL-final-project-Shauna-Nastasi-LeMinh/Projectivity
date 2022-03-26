@@ -36,7 +36,7 @@ export default function ProjectView(props) {
 	const [selectedColumn, setSelectedColumn] = useState();
 
 	useEffect(() => {
-		if (currentProject) {
+		if (currentProject && currentProject.Columns) {
 			setColumns(currentProject.Columns);
 			setResetSearchPane((prev) => prev + 1);
 		}
@@ -222,6 +222,8 @@ export default function ProjectView(props) {
 		const ALL_TICKETS = 'ALL_TICKETS';
 
 		if (!currentProject) return;
+    if (!currentProject.Columns) return;
+    console.log(currentProject);
 		const allColumns = JSON.parse(JSON.stringify(currentProject.Columns));
 
 		allColumns.forEach((column) => {

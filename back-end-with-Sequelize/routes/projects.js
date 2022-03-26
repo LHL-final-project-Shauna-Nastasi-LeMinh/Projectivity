@@ -34,7 +34,8 @@ module.exports = (sequelizeModels) => {
           return data.dataValues;
         }
       });
-
+      console.log("AAAAAAAAAAAAAAAAAAAAAA");
+      console.log("userColumns:"+userColumns);
       const userColumnIds = userColumns.map((data) => {
         return data.id;
       });
@@ -94,6 +95,23 @@ module.exports = (sequelizeModels) => {
       return res.status(500).json(err);
     }
   });
+
+  router.get('/:project_id/columns/', async (req, res) => {
+    try {
+      const columns = await Columns.findAll({
+        where: { project_id: req.params.project_id },
+        include: [
+          {
+            model: sequelizeModels.Ticket
+          }
+        ],
+        order: [['ordering_index', 'ASC']]
+      })
+      return res.json(columns)
+    } catch (err) {
+      console.log(err)
+    }
+  })
 
   router.delete("/:project_id/delete", async (req, res) => {
     try {
