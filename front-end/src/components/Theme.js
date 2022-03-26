@@ -43,7 +43,6 @@ export const theme = createTheme({
 });
 
 export const dashboardTheme = createTheme({
-	palette: colors,
 	components: {
 		MuiDrawer: {
 			styleOverrides: {
@@ -88,4 +87,52 @@ export const dashboardTheme = createTheme({
 			}
 		}
 	}
+});
+
+export const projectViewTheme = createTheme({
+	// components: {
+	// 	MuiDrawer: {
+	// 		styleOverrides: {
+	// 			paper: {
+	// 				backgroundColor: colors.primary.main
+	// 			}
+	// 		}
+	// 	},
+	// 	MuiListItem: {
+	// 		root: {
+	// 			color: colors.primary.main,
+	// 			backgroundColor: colors.primary.main,
+	// 			'&:hover': {
+	// 				backgroundColor: colors.secondary.main
+	// 			},
+	// 			'&.Mui-selected': {
+	// 				backgroundColor: colors.secondary.main
+	// 			}
+	// 		},
+	// 		styleOverrides: {}
+	// 	},
+	// 	MuiListItemButton: {
+	// 		styleOverrides: {
+	// 			root: {
+	// 				color: colors.primary,
+	// 				'&:hover': {
+	// 					backgroundColor: colors.secondary.light
+	// 				},
+	// 				'&.Mui-selected': {
+	// 					backgroundColor: colors.secondary.main,
+	// 					'&:hover': {
+	// 						backgroundColor: colors.secondary.light
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	},
+	// 	MuiListItemText: {
+	// 		styleOverrides: {
+	// 			root: {
+	// 				color: colors.background.default
+	// 			}
+	// 		}
+	// 	}
+	// }
 });
