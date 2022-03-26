@@ -33,7 +33,8 @@ export default function Dashboard(props) {
 		allEmployees,
 		dashboardProjects,
 		setDashboardProjects,
-		userData
+		userData,
+		setUserData
 	} = props;
 
 	const [openDrawer, setOpenDrawer] = useState(false);
@@ -153,7 +154,7 @@ export default function Dashboard(props) {
 					}
 				}}
 			>
-				{modals.deleteProjectForm && (
+				{userData && modals.deleteProjectForm && (
 					<DeleteProjectForm
 						currentProject={currentProject}
 						setCurrentProject={setCurrentProject}
@@ -164,7 +165,7 @@ export default function Dashboard(props) {
 						setDashboardProjects={setDashboardProjects}
 					/>
 				)}
-				{modals.newProjectForm && (
+				{userData && modals.newProjectForm && (
 					<NewProjectForm
 						user={user}
 						setViewMode={setViewMode}
@@ -173,9 +174,12 @@ export default function Dashboard(props) {
 						setProjects={setProjects}
 						dashboardProjects={dashboardProjects}
 						setDashboardProjects={setDashboardProjects}
+						userData={userData}
+						setUserData={setUserData}
+						currentProject={currentProject}
 					/>
 				)}
-				{modals.editProjectForm && (
+				{userData && modals.editProjectForm && (
 					<EditProjectForm
 						user={user}
 						setViewMode={setViewMode}
@@ -205,6 +209,7 @@ export default function Dashboard(props) {
 									user={user}
 									selectedIndex={selectedIndex}
 									setSelectedIndex={setSelectedIndex}
+									userData={userData}
 								/>
 							))}
 						{user.access_level == MANAGER_LEVEL && (

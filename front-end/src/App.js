@@ -193,7 +193,7 @@ const App = () => {
 					</Toolbar>
 				</AppBar>
 				<Offset />
-				{user !== null && userData !== undefined && (
+				{user !== null && userData && (
 					<Dashboard
 						viewMode={viewMode}
 						setViewMode={setViewMode}
@@ -206,6 +206,7 @@ const App = () => {
 						dashboardProjects={dashboardProjects}
 						setDashboardProjects={setDashboardProjects}
 						userData={userData}
+						setUserData={setUserData}
 						// data={data}
 						// loadForm={loadForm}
 						// open={open}
