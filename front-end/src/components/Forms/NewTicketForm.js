@@ -158,28 +158,6 @@ export default function NewTicketForm(props) {
 	};
 
 	const onEdit = () => {
-		const editTicket = {
-			id: ticket.id,
-			title: values.title,
-			description: values.description,
-			severity: values.severity,
-			priority: values.priority,
-			type: values.type,
-			milestone: values.milestone,
-			updater_name: user.first_name + ' ' + user.last_name
-		};
-
-		currentProject.Columns.map((currColumn) => {
-			currColumn.Tickets.map((currTicket, index) => {
-				if (currTicket.id === ticket.id) {
-					console.log('### INDEX', index, editTicket);
-					currColumn.Tickets.splice(index, 1, editTicket);
-				}
-			});
-		});
-
-		console.log('### CURR TICKET', currentProject.Columns);
-
 		// update ticket to db
 		axios
 			.post(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticket.id}`, {
@@ -205,6 +183,14 @@ export default function NewTicketForm(props) {
 				setTickets([...updatedTickets, updatedTicket]);
 				console.log(tickets);
 				setDialogOpen(false);
+
+				currentProject.Columns.map((currColumn) => {
+					currColumn.Tickets.map((currTicket, index) => {
+						if (currTicket.id === ticket.id) {
+							currColumn.Tickets.splice(index, 1, updatedTicket);
+						}
+					});
+				});
 			})
 			.catch(function (error) {
 				console.log(error.message);
