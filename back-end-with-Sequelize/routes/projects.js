@@ -112,7 +112,6 @@ module.exports = (sequelizeModels) => {
       const assignees = project_assignments.map(
         (assignment) => assignment.dataValues.Employee.dataValues
       );
-      console.log(assignees)
       return res.json(assignees);
     } catch (err) {
       console.log(err);
@@ -130,12 +129,15 @@ module.exports = (sequelizeModels) => {
 
       const project_id = project.dataValues.id;
       const assignment_date = Date.now();
-
+      const creatorInTheList = false;
       assignmentBulkCreateObject = assigneeIds.map(assigneeId => {
+        if (assigneeId === employee_id) {
+          creatorInTheList = true;
+        }
         return {employee_id: assigneeId, project_id, assignment_date}
       })
       // if project creator is not in the assignee list, add him in
-      if (!assignmentBulkCreateObject.find(assignment => assignment[employee_id] === employee_id)) {
+      if (!creatorInTheList) {
         assignmentBulkCreateObject.unshift({employee_id, project_id, assignment_date})
       }
       await Project_Assignments.bulkCreate(assignmentBulkCreateObject)
@@ -164,14 +166,15 @@ module.exports = (sequelizeModels) => {
         },
       });
       const assignment_date = Date.now()
+      let creatorInTheList = false;
       assignmentBulkCreateObject = assigneeIds.map(assigneeId => {
+        if (assigneeId === employee_id) {
+          creatorInTheList = true;
+        }
         return {employee_id: assigneeId, project_id, assignment_date}
       })
       // if project creator is not in the assignee list, add him in
-      console.log("assignmentBulkCreateObject:"+ assignmentBulkCreateObject);
-      console.log("employee_id:"+ employee_id);
-      console.log(assignmentBulkCreateObject.find(assignment => assignment[employee_id] === employee_id))
-      if (!assignmentBulkCreateObject.find(assignment => assignment[employee_id] === employee_id)) {
+      if (!creatorInTheList) {
         assignmentBulkCreateObject.unshift({employee_id, project_id, assignment_date})
       }
       await Project_Assignments.bulkCreate(assignmentBulkCreateObject)
