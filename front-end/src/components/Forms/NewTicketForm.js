@@ -109,7 +109,8 @@ export default function NewTicketForm (props) {
   severity: values.severity,
   priority: values.priority,
   type: values.type,
-  milestone: values.milestone
+  milestone: values.milestone,
+  creator_name: user.first_name + " " + user.last_name,
 })
 			.then(res => {
   console.log('created new ticket', res.data)
@@ -138,7 +139,8 @@ export default function NewTicketForm (props) {
         severity: values.severity,
         priority: values.priority,
         type: values.type,
-        milestone: values.milestone
+        milestone: values.milestone,
+        updater_name: user.first_name + " " + user.last_name
       })
 			.then((res) => {
       

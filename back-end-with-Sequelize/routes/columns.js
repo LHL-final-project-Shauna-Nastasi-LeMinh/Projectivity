@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const addHistoryEvent = require('./helper/historyHelper')
 const COLUMN_CHANNEL = "Column_Channel"
 const COLUMN_MOVE_EVENT = "Column_Move_Event"
 

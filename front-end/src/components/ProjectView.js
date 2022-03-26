@@ -45,19 +45,20 @@ export default function ProjectView (props) {
 		[currentProject]
 	)
 
-  useEffect(() => {
-    const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
-      cluster: process.env.REACT_APP_PUSHER_CLUSTER
-    })
-    const channel = pusher.subscribe(COLUMN_CHANNEL);
-    channel.bind(COLUMN_MOVE_EVENT, function (broadcastMsg) {
-      if (!currentProject) return;
-      if (broadcastMsg && broadcastMsg.project_id == currentProject.id) {
-        setColumns(broadcastMsg.columns);
-      }
-    })
-    return (()=>channel.unbind(COLUMN_MOVE_EVENT));
-  }, [])
+  // PLEASE DO NOT REMOVE THIS . FROM LE
+  // useEffect(() => {
+  //   const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+  //     cluster: process.env.REACT_APP_PUSHER_CLUSTER
+  //   })
+  //   const channel = pusher.subscribe(COLUMN_CHANNEL);
+  //   channel.bind(COLUMN_MOVE_EVENT, function (broadcastMsg) {
+  //     if (!currentProject) return;
+  //     if (broadcastMsg && broadcastMsg.project_id == currentProject.id) {
+  //       setColumns(broadcastMsg.columns);
+  //     }
+  //   })
+  //   return (()=>channel.unbind(COLUMN_MOVE_EVENT));
+  // }, [])
 
   function onDragEnd (result, provided) {
     const { source, destination, type } = result
@@ -146,9 +147,10 @@ export default function ProjectView (props) {
 
 				// persist new column id to the ticket details in db
         axios
-					.post(process.env.REACT_APP_BACKEND_URL + '/tickets/updateColumn', {
+					.put(process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}/updateColumn`, {
   ticketId: movingTicket.id,
-  newColumnId: destColumn.id
+  newColumnId: destColumn.id,
+  updater_name: user.first_name + " " + user.last_name
 })
 					.then(res => {
   console.log(res.data)
