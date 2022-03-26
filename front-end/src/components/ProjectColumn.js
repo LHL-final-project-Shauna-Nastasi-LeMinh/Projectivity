@@ -27,6 +27,7 @@ import { MANAGER_LEVEL } from './constants/AccessLevel';
 import NewColumnForm from './Forms/NewColumnForm';
 import EditColumnForm from './Forms/EditColumnForm';
 import DeleteColumnForm from './Forms/DeleteColumnForm';
+import Bin from './Bin'
 
 const Transition = forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;

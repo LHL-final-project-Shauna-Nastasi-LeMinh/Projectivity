@@ -17,6 +17,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import { Draggable } from 'react-beautiful-dnd'
 import Slide from '@mui/material/Slide'
 import { NEW_COLUMN_FORM } from './constants/Modes'
+import Bin from './Bin'
 
 const Transition = React.forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />

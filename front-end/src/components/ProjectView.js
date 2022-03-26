@@ -15,6 +15,7 @@ import { COLUMN_CHANNEL, COLUMN_MOVE_EVENT } from './constants/PusherChannels';
 import Pusher from 'pusher-js';
 import { projectViewTheme } from './Theme';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import Bin from './Bin'
 
 export default function ProjectView(props) {
 	const {
@@ -63,6 +64,9 @@ export default function ProjectView(props) {
 
 	function onDragEnd(result, provided) {
 		const { source, destination, type } = result;
+		console.log("TYPE:"+type);
+		console.log(source);
+		console.log(destination);
 		if (!destination) return;
 		if (!destination.droppableId) return;
 		if (
@@ -105,8 +109,31 @@ export default function ProjectView(props) {
 					console.log(error.message);
 				});
 		} else if (type === 'ticket') {
-			// moving ticket
-			if (destination.droppableId === source.droppableId) {
+			// move to recycle bin
+			if (destination.droppableId === 'ticket_bin') {
+				let column;
+				let columnIndex;
+				for (let i = 0; i < columns.length; i++) {
+					if (columns[i].name === source.droppableId) {
+						column = columns[i];
+						columnIndex = i;
+					}
+				}
+				const newTickets = JSON.parse(JSON.stringify(column.Tickets)); // deep clone
+				const [movingTicket] = newTickets.splice(source.index, 1);
+				const newColumn = { ...column, Tickets: newTickets };
+				columns[columnIndex] = newColumn;
+				axios
+					.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`)
+					.then((res) => {
+						console.log("Ticket removed successfully")
+					})
+					.catch(function (error) {
+						console.log(error.message);
+					});
+			}
+			// moving ticket in the same column
+			else if (destination.droppableId === source.droppableId) {
 				let column;
 				let columnIndex;
 				for (let i = 0; i < columns.length; i++) {
@@ -120,6 +147,7 @@ export default function ProjectView(props) {
 				newTickets.splice(destination.index, 0, movingTicket);
 				const newColumn = { ...column, Tickets: newTickets };
 				columns[columnIndex] = newColumn;
+			// moving ticket to other column
 			} else {
 				let sourceColumn;
 				let sourceColumnIndex;
@@ -173,6 +201,7 @@ export default function ProjectView(props) {
 			// update state to retain moving position
 			setColumns((prev) => [...prev]);
 		}
+
 	}
 
 	const createNewColumn = function (newColumnName) {
@@ -354,6 +383,7 @@ export default function ProjectView(props) {
 										setColumns={setColumns}
 									/>
 								))}
+																
 							{user.access_level == MANAGER_LEVEL && columns !== undefined && (
 								<ProjectColumnNew
 									createNewColumn={createNewColumn}
@@ -365,6 +395,7 @@ export default function ProjectView(props) {
 						</Box>
 					)}
 				</Droppable>
+				<Bin/>
 			</DragDropContext>
 		</ThemeProvider>
 	);
