@@ -149,8 +149,7 @@ export default function ProjectTicket (props) {
         
       <ListItemButton
         sx={{
-          backgroundColor: props.isDragging ? 'lightgreen' : 'white',
-          transition: 'background-color 1s ease',
+          
           px: '0',
           display:"flex", justifyContent:"space-between", alignItems:"center"
         }}
