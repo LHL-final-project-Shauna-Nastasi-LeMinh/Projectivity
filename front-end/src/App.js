@@ -38,18 +38,18 @@ import { theme } from './components/Theme';
 const App = () => {
 	const [user, setUser] = useState(null);
 	const [cookies, setCookie, removeCookie] = useCookies(['user']);
-	const [currentProject, setCurrentProject] = useState();
-	const [currentTicket, setCurrentTicket] = useState();
-	const [currentColumn, setCurrentColumn] = useState('');
+	const [currentProject, setCurrentProject] = useState(null);
+	const [currentTicket, setCurrentTicket] = useState(null);
+	const [currentColumn, setCurrentColumn] = useState(null);
 	const [viewMode, setViewMode] = useState(false);
 	const [refresh, setRefresh] = useState(false);
 	const [data, setData] = useState();
 	const [dashboard, setDashboard] = useState();
 	const [allEmployees, setAllEmployees] = useState();
-	const [dashboardProjects, setDashboardProjects] = useState();
-	const [userProjects, setUserProjects] = useState();
-	const [userColumns, setUserColumns] = useState();
-	const [userTickets, setUserTickets] = useState();
+	const [dashboardProjects, setDashboardProjects] = useState(null);
+	const [userProjects, setUserProjects] = useState(null);
+	const [userColumns, setUserColumns] = useState(null);
+	const [userTickets, setUserTickets] = useState(null);
 	const [sentRequest, setSentRequest] = useState(false);
 	const [startBuild, setStartBuild] = useState(false);
 	const [userData, setUserData] = useState();
@@ -73,9 +73,9 @@ const App = () => {
 		}
 
 		if (
-			userColumns !== undefined &&
-			userTickets !== undefined &&
-			userProjects !== undefined &&
+			userColumns !== null &&
+			userTickets !== null &&
+			userProjects !== null &&
 			!startBuild
 		) {
 			setStartBuild(true);
@@ -112,6 +112,26 @@ const App = () => {
 			setUserData(newUserData);
 		}
 	});
+
+	function clearUserData() {
+		console.log('### CLEARING USER DATA');
+		// reset user data
+		setUser(null);
+
+		// reset request and build
+		setStartBuild(false);
+		setSentRequest(false);
+
+		// clear stored data
+		setUserData(null);
+		setUserProjects(null);
+		setUserColumns(null);
+		setUserTickets(null);
+		setCurrentTicket(null);
+		setCurrentColumn(null);
+		setCurrentProject(null);
+		setDashboardProjects(null);
+	}
 
 	// MODAL STATE
 	const [modals, setModals] = useState({
@@ -186,6 +206,7 @@ const App = () => {
 							removeCookie={removeCookie}
 							modals={modals}
 							openModals={openModals}
+							clearUserData={clearUserData}
 							anchorOrigin={{
 								vertical: 'top',
 								horizontal: 'right'
