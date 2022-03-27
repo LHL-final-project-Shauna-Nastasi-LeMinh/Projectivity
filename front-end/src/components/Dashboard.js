@@ -16,6 +16,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import { ThemeProvider } from '@mui/material/styles';
 import { dashboardTheme } from './Theme';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default function Dashboard(props) {
 	const {
@@ -41,7 +42,6 @@ export default function Dashboard(props) {
 	const [projects, setProjects] = useState();
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [modalProject, setModalProject] = useState();
-	const drawerWidth = 'fit-content';
 
 	useEffect(() => {
 		selectProject(0);
@@ -146,6 +146,7 @@ export default function Dashboard(props) {
 		openModals(modal_name);
 	}
 
+	const drawerWidth = '15rem';
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (
@@ -154,7 +155,6 @@ export default function Dashboard(props) {
 				variant="permanent"
 				sx={{
 					width: drawerWidth,
-					flexShrink: 0,
 					[`& .MuiDrawer-paper`]: {
 						width: drawerWidth,
 						boxSizing: 'border-box'
@@ -236,7 +236,6 @@ export default function Dashboard(props) {
 							))}
 						{user.access_level == MANAGER_LEVEL && (
 							<ListItemButton value="Create New Project">
-								<ListItemIcon />
 								<ListItemText
 									primary="Create New Project"
 									onClick={() => openModals('newProjectForm')}

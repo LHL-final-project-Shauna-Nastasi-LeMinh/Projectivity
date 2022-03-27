@@ -10,12 +10,11 @@ import { MANAGER_LEVEL } from './constants/AccessLevel';
 import NewColumnForm from './Forms/NewColumnForm';
 import DeleteColumnForm from './Forms/DeleteColumnForm';
 import EditColumnForm from './Forms/EditColumnForm';
-import { modalClasses } from '@mui/material';
+import { modalClasses, Paper } from '@mui/material';
 import { COLUMN_CHANNEL, COLUMN_MOVE_EVENT } from './constants/PusherChannels';
 import Pusher from 'pusher-js';
-import { projectViewTheme } from './Theme';
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import Bin from './Bin'
+import Bin from './Bin';
+import Container from '@mui/material/Container';
 
 export default function ProjectView(props) {
 	const {
@@ -121,9 +120,11 @@ export default function ProjectView(props) {
 				const newColumn = { ...column, Tickets: newTickets };
 				columns[columnIndex] = newColumn;
 				axios
-					.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`)
+					.delete(
+						process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`
+					)
 					.then((res) => {
-						console.log("Ticket removed successfully")
+						console.log('Ticket removed successfully');
 					})
 					.catch(function (error) {
 						console.log(error.message);
@@ -144,7 +145,7 @@ export default function ProjectView(props) {
 				newTickets.splice(destination.index, 0, movingTicket);
 				const newColumn = { ...column, Tickets: newTickets };
 				columns[columnIndex] = newColumn;
-			// moving ticket to other column
+				// moving ticket to other column
 			} else {
 				let sourceColumn;
 				let sourceColumnIndex;
@@ -198,16 +199,14 @@ export default function ProjectView(props) {
 			// update state to retain moving position
 			setColumns((prev) => [...prev]);
 		}
-
 	}
 
 	const onDragStart = (e) => {
-		const type = e.type
+		const type = e.type;
 		if (type === 'ticket') {
-			
-			console.log("TYPE:"+type);
+			console.log('TYPE:' + type);
 		}
-	}
+	};
 
 	const createNewColumn = function (newColumnName) {
 		axios
@@ -339,7 +338,7 @@ export default function ProjectView(props) {
 	};
 
 	return (
-		<ThemeProvider theme={projectViewTheme}>
+		<Container>
 			<SearchPane
 				searchFilter={searchFilter}
 				resetSearchPane={resetSearchPane}
@@ -388,7 +387,7 @@ export default function ProjectView(props) {
 										setColumns={setColumns}
 									/>
 								))}
-																
+
 							{user.access_level == MANAGER_LEVEL && columns !== undefined && (
 								<ProjectColumnNew
 									createNewColumn={createNewColumn}
@@ -400,8 +399,8 @@ export default function ProjectView(props) {
 						</Box>
 					)}
 				</Droppable>
-				<Bin/>
+				<Bin />
 			</DragDropContext>
-		</ThemeProvider>
+		</Container>
 	);
 }

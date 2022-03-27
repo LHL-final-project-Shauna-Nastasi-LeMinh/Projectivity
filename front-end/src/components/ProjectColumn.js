@@ -27,7 +27,7 @@ import { MANAGER_LEVEL } from './constants/AccessLevel';
 import NewColumnForm from './Forms/NewColumnForm';
 import EditColumnForm from './Forms/EditColumnForm';
 import DeleteColumnForm from './Forms/DeleteColumnForm';
-import Bin from './Bin'
+import Bin from './Bin';
 
 const Transition = forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
@@ -142,7 +142,11 @@ export default function ProjectColumn(props) {
 		>
 			{(provided) => (
 				<Box
-					sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
+					sx={{
+						width: '20rem',
+						mx: '1rem',
+						backgroundColor: 'background.default'
+					}}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
@@ -343,45 +347,48 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 				draggableId={'ticket_' + ticket.id}
 				index={index}
 			>
-        {(provided, snapshot) =>
-          <Box
-            sx={{
-							marginBottom: 1, 
-							border: 1, 
-							borderRadius: 8, 
-							borderColor: 'grey.500', 
-							bgcolor: 'secondary', 
-							backgroundColor: snapshot.isDragging ? 'rgba(240, 240, 240, .5)' : 'white', transition: 'background-color 1s ease',
-							
+				{(provided, snapshot) => (
+					<Box
+						sx={{
+							display: 'block',
+							marginBottom: 1,
+							borderColor: 'primary.light',
+							transition: 'background-color 0.25s ease',
+							'&:hover': {
+								backgroundColor: 'primary.light'
+							},
+							marginBottom: 1,
+							backgroundColor: snapshot.isDragging
+								? 'secondary.light'
+								: 'primary.main'
 						}}
-
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
+						{...provided.draggableProps}
+						{...provided.dragHandleProps}
+						ref={provided.innerRef}
 					>
-            <ProjectTicket
-              ticket={ticket}
-              title={ticket.title}
-              ticketId={ticket.id}
-              isDragging={snapshot.isDragging}
-              setViewMode={setViewMode}
-              open={open}
-              setOpen={setOpen}
-              currentTicket={currentTicket}
-              setCurrentTicket={setCurrentTicket}
-              tickets={tickets}
-              setTickets={setTickets}
-              user={user}
-              currentColumn={currentColumn}
+						<ProjectTicket
+							ticket={ticket}
+							title={ticket.title}
+							ticketId={ticket.id}
+							isDragging={snapshot.isDragging}
+							setViewMode={setViewMode}
+							open={open}
+							setOpen={setOpen}
+							currentTicket={currentTicket}
+							setCurrentTicket={setCurrentTicket}
+							tickets={tickets}
+							setTickets={setTickets}
+							user={user}
+							currentColumn={currentColumn}
 							setCurrentColumn={setCurrentColumn}
 							editTicket={editTicket}
 							setEditTicket={setEditTicket}
 							currentProject={currentProject}
 							userData={userData}
-              
 						/>
-          </Box>}
-      </Draggable>
-    )
-  })
-})
+					</Box>
+				)}
+			</Draggable>
+		);
+	});
+});
