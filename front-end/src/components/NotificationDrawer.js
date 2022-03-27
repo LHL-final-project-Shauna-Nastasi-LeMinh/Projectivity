@@ -28,8 +28,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Drawer from '@mui/material/Drawer';
 import { styled } from '@mui/system';
-import { createStyles } from '@mui/material';
-import { drawerClasses } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import { Slide } from '@mui/material';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import { theme } from './Theme';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -42,8 +45,6 @@ export default function NotificationDrawer(props) {
 		toggleDrawer
 	} = props;
 
-	const containerRef = useRef();
-
 	const temp_notifications = [
 		'A new ticket has been added',
 		'A new column has been added',
@@ -52,32 +53,81 @@ export default function NotificationDrawer(props) {
 	];
 
 	return (
-		<Box
-			anchor="top"
-			role="presentation"
-			onOpen={toggleDrawer(true)}
-			onClose={toggleDrawer(false)}
-			onKeyDown={toggleDrawer(false)}
+		<Accordion
+			expanded={notifyOpen}
+			onChange={toggleDrawer}
+			hidden={!notifyOpen}
+			TransitionComponent={Slide}
+			sx={{
+				position: 'fixed',
+				top: '4rem',
+				right: '6rem',
+				zIndex: (theme) => theme.zIndex.appBar + 1,
+				width: '25rem',
+				backgroundColor: '#FFFFFF',
+				border: `1px solid ${theme.palette.secondary.main}`,
+				color: 'primary.main'
+			}}
 		>
-			{notifyOpen && (
-				<Drawer
-					anchor="top"
-					open={notifyOpen}
-					onOpen={toggleDrawer(true)}
-					onClose={toggleDrawer(false)}
-					hideBackdrop={true}
+			<AccordionDetails
+				sx={{
+					height: '1rem',
+					zIndex: 2,
+					bgcolor: 'primary.main',
+					borderBottom: `1px solid ${theme.palette.secondary.main}`,
+					'&:last-child': {
+						borderBottom: 'none'
+					}
+				}}
+			>
+				<Typography
+					fontSize="medium"
+					sx={{
+						color: 'background.default'
+					}}
 				>
-					<List>
-						{temp_notifications.map((text) => {
-							return (
-								<ListItem>
-									<ListItemText primary={text} />
-								</ListItem>
-							);
-						})}
-					</List>
-				</Drawer>
-			)}
-		</Box>
+					Your Notifications:
+				</Typography>
+			</AccordionDetails>
+			{notifyOpen &&
+				temp_notifications.map((text, index) => {
+					return (
+						<AccordionDetails
+							sx={{
+								height: '1rem',
+								zIndex: 2,
+								color: 'primary.main',
+								backgroundColor: '#FFFFFF',
+								bgcolor: '#FFFFFF',
+								borderBottom: `1px solid ${theme.palette.secondary.main}`,
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								},
+								'&:last-child': {
+									borderBottom: 'none'
+								}
+							}}
+						>
+							<Typography
+								fontSize="medium"
+								sx={{
+									color: 'primary.main'
+								}}
+							>
+								{text}
+							</Typography>
+							<Button
+								sx={{
+									position: 'absolute',
+									top: `${42 * index + 44}px`,
+									right: '0'
+								}}
+							>
+								<ClearIcon fontSize="small" />
+							</Button>
+						</AccordionDetails>
+					);
+				})}
+		</Accordion>
 	);
 }
