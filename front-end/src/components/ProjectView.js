@@ -64,9 +64,6 @@ export default function ProjectView(props) {
 
 	function onDragEnd(result, provided) {
 		const { source, destination, type } = result;
-		console.log("TYPE:"+type);
-		console.log(source);
-		console.log(destination);
 		if (!destination) return;
 		if (!destination.droppableId) return;
 		if (
@@ -202,6 +199,14 @@ export default function ProjectView(props) {
 			setColumns((prev) => [...prev]);
 		}
 
+	}
+
+	const onDragStart = (e) => {
+		const type = e.type
+		if (type === 'ticket') {
+			
+			console.log("TYPE:"+type);
+		}
 	}
 
 	const createNewColumn = function (newColumnName) {
@@ -340,7 +345,7 @@ export default function ProjectView(props) {
 				resetSearchPane={resetSearchPane}
 				user={user}
 			/>
-			<DragDropContext onDragEnd={onDragEnd}>
+			<DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
 				<Droppable
 					droppableId="all-column"
 					direction="horizontal"
