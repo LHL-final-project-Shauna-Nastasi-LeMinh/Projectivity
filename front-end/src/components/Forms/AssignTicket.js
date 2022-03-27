@@ -6,7 +6,7 @@ import { FormControl, InputLabel, Select, MenuItem, Button, Box, Typography } fr
 
 export default function AssignTicket(props) {
 
-  const {currentProject, ticketId, setAnchorPop} = props
+  const {currentProject, ticketId, setAnchorPop, setTickets, tickets} = props
 
   const [employees, setEmployees] = useState({
     all: []
@@ -54,10 +54,16 @@ export default function AssignTicket(props) {
 				owner_id: value
 			})
 			.then((res) => {
+        
+        const updatedTicket = res.data[0]
+
+        const updatedTickets = tickets.filter(
+					(ticket) => ticket.id !== updatedTicket.id
+				);
+
+				setTickets([...updatedTickets, updatedTicket]);
+
         setAnchorPop(false);
-        const updatedTicket = { ...res.data}
-        setTickets([...tickets, updatedTicket])
-				console.log('updated new ticket', res.data);
 			
 			})
 			.catch(function (error) {
