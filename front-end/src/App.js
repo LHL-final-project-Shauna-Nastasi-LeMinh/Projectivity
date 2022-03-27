@@ -158,8 +158,8 @@ const App = () => {
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (
-		<ThemeProvider theme={theme}>
-			<Container className="App">
+		<Container>
+			<ThemeProvider theme={theme}>
 				{modals.loginForm && (
 					<LoginForm
 						setViewMode={setViewMode}
@@ -179,7 +179,6 @@ const App = () => {
 						setRefresh={setRefresh}
 					/>
 				)}
-
 				<AppBar
 					position="fixed"
 					sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -256,8 +255,8 @@ const App = () => {
 							setUserData={setUserData}
 						/>
 					)}
-			</Container>
-		</ThemeProvider>
+			</ThemeProvider>
+		</Container>
 	);
 };
 

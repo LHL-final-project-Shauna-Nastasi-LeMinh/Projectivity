@@ -28,6 +28,7 @@ module.exports = {
         email: 'devA@gmail.com',
         password: 'password',
         phone: '9021111111',
+        avatar: '',
         role_id: 3,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -38,6 +39,7 @@ module.exports = {
         email: 'testerA@gmail.com',
         password: 'password',
         phone: '9021111111',
+        avatar: '',
         role_id: 4,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -48,7 +50,19 @@ module.exports = {
         email: 'HR@gmail.com',
         password: 'password',
         phone: '9021111111',
+        avatar: '',
         role_id: 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        first_name: 'Nastasi',
+        last_name: 'Davydov',
+        email: 'ge@gmail.com',
+        password: 'password',
+        phone: '666666666',
+        avatar: 'https://ca.slack-edge.com/T2G8TE2E5-U02SX82DQR4-fed59f9b552e-512',
+        role_id: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       },

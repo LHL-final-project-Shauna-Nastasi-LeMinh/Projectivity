@@ -40,8 +40,6 @@ module.exports = (sequelizeModels) => {
         }
       });
 
-      console.log("### USER COLUMNS", userColumns);
-
       const userColumnIds = userColumns.map((data) => {
         return data.id;
       });
