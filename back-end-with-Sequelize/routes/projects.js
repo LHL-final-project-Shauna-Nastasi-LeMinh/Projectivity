@@ -40,6 +40,8 @@ module.exports = (sequelizeModels) => {
         }
       });
 
+      console.log("### USER COLUMNS", userColumns);
+
       const userColumnIds = userColumns.map((data) => {
         return data.id;
       });
@@ -124,7 +126,7 @@ module.exports = (sequelizeModels) => {
 
   router.post("/new", async (req, res) => {
     try {
-      const { name, description, employee_id, assigneeIds } = req.body;
+      const { name, description, employee_id, assigneeIds, creator } = req.body;
       const project = await Projects.create({
         name,
         description,
@@ -151,7 +153,7 @@ module.exports = (sequelizeModels) => {
 
       // notification
       const notificationBulkCreateObject = assignmentBulkCreateObject.map(assignment => {
-        return {user_id: assignment.employee_id, message: "You have been assigned to project " + name, creator: employee_id}
+        return {user_id: assignment.employee_id, message: "You have been assigned to project " + name, creator}
       })
       await Notification.bulkCreate(notificationBulkCreateObject);
 
@@ -194,6 +196,12 @@ module.exports = (sequelizeModels) => {
         });
       }
       await Project_Assignments.bulkCreate(assignmentBulkCreateObject);
+
+      // notification
+      const notificationBulkCreateObject = assignmentBulkCreateObject.map(assignment => {
+        return {user_id: assignment.employee_id, message: "You have been assigned/re-assigned to project " + name, creator: employee_id}
+      })
+      await Notification.bulkCreate(notificationBulkCreateObject);
 
       return res.json("success!");
     } catch (err) {

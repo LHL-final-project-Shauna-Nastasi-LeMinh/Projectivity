@@ -62,7 +62,7 @@ export default function NewProjectForm(props) {
 		//assign employee to the project 
 		const mappedEmployees = buildEmployeeList();
 		const assigneeIds = assignees.map(fullname => mappedEmployees[fullname]);
-		const params = {assigneeIds, name: values.name, description: values.description, employee_id: user.id}
+		const params = {assigneeIds, name: values.name, description: values.description, employee_id: user.id, creator: user.first_name + ' ' + user.last_name}
 		axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', JSON.stringify(params),
 				{

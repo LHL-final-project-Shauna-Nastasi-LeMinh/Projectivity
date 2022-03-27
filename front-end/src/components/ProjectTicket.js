@@ -244,6 +244,8 @@ export default function ProjectTicket(props) {
 							setAnchorPop={setAnchorPop}
 							setTickets={setTickets}
 							tickets={tickets}
+							user={user}
+							title={title}
 						/>
 					</Typography>
 				</Popover>

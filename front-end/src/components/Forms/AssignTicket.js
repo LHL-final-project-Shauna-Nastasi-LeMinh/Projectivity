@@ -6,7 +6,7 @@ import { FormControl, InputLabel, Select, MenuItem, Button, Box, Typography } fr
 
 export default function AssignTicket(props) {
 
-  const {currentProject, ticketId, setAnchorPop, setTickets, tickets} = props
+  const {currentProject, ticketId, setAnchorPop, setTickets, tickets, user, title} = props
 
   const [employees, setEmployees] = useState({
     all: []
@@ -51,7 +51,9 @@ export default function AssignTicket(props) {
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticketId}`, {
 				id: ticketId,
-				owner_id: value
+				owner_id: value,
+        title,
+        updater_name: user.first_name + ' ' + user.last_name
 			})
 			.then((res) => {
         

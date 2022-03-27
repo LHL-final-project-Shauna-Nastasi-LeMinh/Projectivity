@@ -66,9 +66,6 @@ module.exports = (sequelizeModels, pusher) => {
       })
 
       addHistoryEvent(newTicket.id, "CREATED", null, null, creator_name)
-      addNotification(user_id, creator_name + "created ticket " + title + " and assigned to you", creator_name)
-
-      pusher.trigger(NOTIF_CHANNEL, NOTIF_NEW_EVENT, {notif_id: user_id});
 
       return res.json(newTicket);
     } catch (err) {
@@ -95,7 +92,7 @@ module.exports = (sequelizeModels, pusher) => {
 
   router.post('/:ticket_id', async (req, res) => {
     try {
-      const {id, title, description, severity, priority, type, milestone, updater_name} = req.body
+      const {id, title, description, severity, priority, type, milestone, owner_id, updater_name} = req.body
 
       console.log("TICKETS REQUEST",req.body)
       // get original ticket data before update, for history purpose
@@ -107,10 +104,11 @@ module.exports = (sequelizeModels, pusher) => {
       // actual update
 
       const params = Object.keys(req.body);
+      let ticket;
 
       for (let param of params) {
 
-          await Tickets.update(
+        ticket = await Tickets.update(
           {[param] : req.body[param]},
           {
           where: {
@@ -126,27 +124,65 @@ module.exports = (sequelizeModels, pusher) => {
       //     id: id
       //   }
       // })
-      const user_id = 2;// NOTIF: get this Ticket table
 
+      // Notification code
+      const exisitng_owner_id = oldTicketData.owner_id;
+      // if assigning to a new owner
+      if (owner_id ) {
+        await addNotification(owner_id, updater_name + " assigned ticket " + title + " to you", updater_name)
+        if (exisitng_owner_id) {
+          await addNotification(exisitng_owner_id, updater_name + " unassigned ticket " + title + " from you", updater_name)
+        }
+      }
+      // if not assigning, but there is exising owner
+      else if (exisitng_owner_id) {
+        if (title !== undefined && oldTicketData.title !== title) {
+          const notifMes = oldTicketData.title
+            ? `${updater_name} changed ticket title from ${oldTicketData.title} to ${title}`
+            : `${updater_name} changed ticket title to ${title}`
+          await addNotification(exisitng_owner_id, notifMes , updater_name)
+        }
+        if (severity !== undefined && oldTicketData.severity !== severity) {
+          const notifMes = oldTicketData.severity
+            ? `${updater_name} changed ticket severity from ${oldTicketData.severity} to ${severity}`
+            : `${updater_name} changed ticket severity to ${severity}`
+          await addNotification(exisitng_owner_id, notifMes, updater_name)
+        }
+        if (priority !== undefined && oldTicketData.priority !== priority) {
+          const notifMes = oldTicketData.priority
+            ? `${updater_name} changed ticket priority from ${oldTicketData.priority} to ${priority}`
+            : `${updater_name} changed ticket priority to ${priority}`
+          await addNotification(exisitng_owner_id, notifMes, updater_name)
+        }
+        if (type !== undefined && oldTicketData.type !== type) {
+          const notifMes = oldTicketData.type
+            ? `${updater_name} changed ticket type from ${oldTicketData.type} to ${type}`
+            : `${updater_name} changed ticket type to ${type}`
+          await addNotification(exisitng_owner_id, notifMes, updater_name)
+        }
+        if (milestone !== undefined && oldTicketData.milestone !== milestone) {
+          const notifMes = oldTicketData.milestone
+            ? `${updater_name} changed ticket milestone from ${oldTicketData.milestone} to ${milestone}`
+            : `${updater_name} changed ticket milestone to ${milestone}`
+          await addNotification(exisitng_owner_id, notifMes, updater_name)
+        }
+      }
+
+      // History code
       if (title !== undefined && oldTicketData.title !== title) {
         await addHistoryEvent(id, "TITLE CHANGE", oldTicketData.title, title, updater_name)
-        await addNotification(user_id, updater_name + " changed ticket title from " + oldTicketData.title + " to " + title, updater_name)
       }
       if (severity !== undefined && oldTicketData.severity !== severity) {
         await addHistoryEvent(id, "SEVERITY CHANGE", oldTicketData.severity, severity, updater_name)
-        await addNotification(user_id, updater_name + " changed severity for " + oldTicketData.title + " from " + oldTicketData.severity + " to " + severity, updater_name)
       }
       if (priority !== undefined && oldTicketData.priority !== priority) {
         await addHistoryEvent(id, "PRIORITY CHANGE", oldTicketData.priority, priority, updater_name)
-        await addNotification(user_id, updater_name + " changed priority for " + oldTicketData.title + " from " + oldTicketData.priority + " to " + priority, updater_name)
       }
       if (type !== undefined && oldTicketData.type !== type) {
         await addHistoryEvent(id, "TYPE CHANGE", oldTicketData.type, type, updater_name)
-        await addNotification(user_id, updater_name + " changed type for " + oldTicketData.title + " from " + oldTicketData.type + " to " + type, updater_name)
       }
       if (milestone !== undefined && oldTicketData.milestone !== milestone) {
         await addHistoryEvent(id, "MILESTONE CHANGE", oldTicketData.milestone, milestone, updater_name)
-        await addNotification(user_id, updater_name + " changed milestone for " + oldTicketData.title + " from " + oldTicketData.milestone + " to " + milestone, updater_name)
       }
 
       const updatedTicket = await Tickets.findAll({
