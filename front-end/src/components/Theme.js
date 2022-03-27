@@ -37,7 +37,17 @@ const colors = {
 };
 
 export const theme = createTheme({
-	palette: colors
+	palette: colors,
+	typography: {
+		fontFamily: 'Roboto, sans-serif'
+	}
+});
+
+export const logoTheme = createTheme({
+	palette: colors,
+	typography: {
+		fontFamily: 'Sriracha, cursive'
+	}
 });
 
 export const dashboardTheme = createTheme({

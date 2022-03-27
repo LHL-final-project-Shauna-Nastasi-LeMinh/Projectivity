@@ -24,7 +24,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       avatar: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       role_id: {
         type: Sequelize.INTEGER

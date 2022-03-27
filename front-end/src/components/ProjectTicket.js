@@ -161,6 +161,10 @@ export default function ProjectTicket(props) {
 
 	const employee = useEmployeesData(ticket.owner_id, tickets)
 
+	const isAvatar = () => {
+
+		return 
+	}
 
   return (
 	
@@ -176,22 +180,24 @@ export default function ProjectTicket(props) {
           size="small"
         />
 				}
-				{/* {Object.keys(employee).length !== 0 && ticket.owner_id && employee.avatar &&
-				  <Avatar 
-					sx={{ width: 24, height: 24 }}
-					size={100}
-  				backgroundColor='rgba(0,0,0,0)'
-					
-					alt="Remy Sharp" src="" /> && console.log(employee.avatar)
-					
-        } */}
-				{Object.keys(employee).length !== 0 && ticket.owner_id &&
+
+				{/* {!employee.avatar.length && Object.keys(employee).length !== 0 && ticket.owner_id &&
 				<Avatar 
-					sx={{ width: 24, height: 24 }}
+					sx={{ width: 26, height: 26, borderRadius: 1 }}
 					 >
 						 {`${employee.first_name[0]}${employee.last_name[0]}`}
 					 </Avatar>
 					
+        } */}
+
+				{Object.keys(employee).length !== 0 && ticket.owner_id && 
+				  <Avatar 
+					sx={{ width: 26, height: 26, borderRadius: 1}}
+					size={100}
+					alt='JON'
+					src={employee.avatar}>
+						<img alt={`${employee.first_name[0]}${employee.last_name[0]}`}></img>
+						</Avatar>
         }
 				</Stack>
         
