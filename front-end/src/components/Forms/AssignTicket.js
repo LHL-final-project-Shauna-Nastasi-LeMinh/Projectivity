@@ -57,12 +57,9 @@ export default function AssignTicket(props) {
         
         const updatedTicket = res.data[0]
 
-        console.log("UPDATET TICKET >>>",updatedTicket)
-
         const updatedTickets = tickets.filter(
 					(ticket) => ticket.id !== updatedTicket.id
 				);
-        console.log("UPDATET TICKETS >>>",updatedTickets)
 
 				setTickets([...updatedTickets, updatedTicket]);
 

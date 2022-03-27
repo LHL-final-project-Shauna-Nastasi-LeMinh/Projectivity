@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-export default function useEmployeesData(employeeId) {
+export default function useEmployeesData(employeeId, tickets) {
   const [employee, setEmployee] = useState({});
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function useEmployeesData(employeeId) {
       console.log(error.message)
       })
     }
-  }, []);
+  }, [tickets]);
 
 
   return employee;
