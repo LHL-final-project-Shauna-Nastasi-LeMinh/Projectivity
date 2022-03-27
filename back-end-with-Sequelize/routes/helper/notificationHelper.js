@@ -6,7 +6,8 @@ module.exports = async function addNotification (user_id, message, creator) {
     await Notification.create({
       user_id,
       message,
-      creator
+      creator,
+      unread: true
     })
   } catch(err) {
     console.log(err);

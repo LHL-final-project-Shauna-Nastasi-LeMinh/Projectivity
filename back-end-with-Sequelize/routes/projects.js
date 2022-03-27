@@ -12,10 +12,10 @@ module.exports = (sequelizeModels) => {
 
   router.get("/user_data/:employee_id", async (req, res) => {
     try {
-      console.log("INSIDE PROJECTS");
+      const id = req.params.employee_id;
 
       const project_assignments = await Project_Assignments.findAll({
-        where: { employee_id: req.params.employee_id },
+        where: { employee_id: id },
         include: {
           model: Projects,
         },
@@ -24,9 +24,17 @@ module.exports = (sequelizeModels) => {
       const allTickets = await Tickets.findAll();
       // const allHistories = await History.findAll();
 
-      const userProjects = project_assignments.map((data) => {
-        return data.Project.dataValues;
+      console.log("### ASSIGNMENTS", project_assignments);
+
+      const userProjects = [];
+
+      project_assignments.map((data) => {
+        if (data.dataValues.employee_id === Number(id)) {
+          userProjects.push(data.dataValues.Project.dataValues);
+        }
       });
+
+      // console.log("### USER PROJECTS", userProjects);
 
       const userProjectIds = userProjects.map((data) => {
         return data.id;
@@ -35,28 +43,44 @@ module.exports = (sequelizeModels) => {
       const userColumns = [];
 
       allColumns.map((data) => {
-        if (userProjectIds.includes(data.dataValues.project_id)) {
+        if (
+          userProjectIds.includes(data.dataValues.project_id) &&
+          !userColumns.includes(data.dataValues)
+        ) {
           userColumns.push(data.dataValues);
         }
       });
 
-      console.log("### USER COLUMNS", userColumns);
+      // console.log("### USER COLUMNS", userColumns);
 
       const userColumnIds = userColumns.map((data) => {
-        return data.id;
-      });
-
-      const userTickets = allTickets.map((data) => {
-        if (userColumnIds.includes(data.dataValues.column_id)) {
-          return data.dataValues;
+        if (data) {
+          return data.id;
         }
       });
+
+      // console.log("### USER COLUMNS", userColumnIds);
+
+      const userTickets = [];
+
+      allTickets.map((data) => {
+        if (
+          userColumnIds.includes(data.dataValues.column_id) &&
+          !userTickets.includes(data.dataValues)
+        ) {
+          userTickets.push(data.dataValues);
+        }
+      });
+
+      // console.log("### USER COLUMNS", userTickets);
 
       const userData = {
         userProjects: userProjects,
         userColumns: userColumns,
         userTickets: userTickets,
       };
+
+      // console.log("### USER DATA", userData);
 
       return res.json(userData);
     } catch (err) {
@@ -241,6 +265,9 @@ module.exports = (sequelizeModels) => {
           project_id: project_id,
         },
       });
+
+      const checkProjects = await Project_Assignments.findAll();
+      console.log("####", checkProjects);
 
       const columns_data = await Columns.findAll({
         where: {

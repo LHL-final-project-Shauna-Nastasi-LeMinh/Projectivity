@@ -18,5 +18,17 @@ module.exports = (sequelizeModels, pusher) => {
     }
   })
 
+  router.get('/:user_id/setUnreadAll', async(req, res) => {
+    try {
+      const notifications = await Notification.update(
+        {unread : false},
+        {where: { user_id: req.params.user_id }})
+      return res.json( notifications );
+    } catch(err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  })
+
   return router;
 };

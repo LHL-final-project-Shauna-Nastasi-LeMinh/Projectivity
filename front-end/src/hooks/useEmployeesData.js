@@ -1,11 +1,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 
-export default function useEmployeesData(employeeId) {
+export default function useEmployeesData(employeeId, tickets) {
   const [employee, setEmployee] = useState({});
 
   useEffect(() => {
-    if (employeeId !== undefined) {
+    if (employeeId) {
     axios.get(process.env.REACT_APP_BACKEND_URL + `/employees/${employeeId}`, {
      
     })
@@ -17,7 +17,7 @@ export default function useEmployeesData(employeeId) {
       console.log(error.message)
       })
     }
-  }, []);
+  }, [tickets]);
 
 
   return employee;

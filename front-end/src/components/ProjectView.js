@@ -284,7 +284,13 @@ export default function ProjectView(props) {
 		const newColumn = { ...column, Tickets: newTickets };
 		columns[columnIndex] = newColumn;
 		axios
-			.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`)
+			.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`,
+			{ data: 
+				{ owner_id: movingTicket.owner_id, 
+					title: movingTicket.title,
+					updater_name: user.first_name + ' ' + user.last_name
+				}
+			})
 			.then((res) => {
 				console.log('Ticket removed successfully');
 			})
@@ -435,6 +441,14 @@ export default function ProjectView(props) {
 					</Droppable>
 					<Bin />
 				</DragDropContext>
+				{modals.deleteTicketDragForm && (
+					<DeleteTicketDragForm
+						modals={modals}
+						closeModals={closeModals}
+						dragSource={dragSource}
+						deleteTicket={deleteTicketByDragDrop}
+					/>
+				)}
 			</ThemeProvider>
 		</Box>
 	);

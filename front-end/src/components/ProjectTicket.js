@@ -75,7 +75,7 @@ export default function ProjectTicket(props) {
 	const id = openPop ? 'simple-popover' : undefined;
 
 	const openPopover = (event) => {
-		console.log(ticketId)
+		setCurrentTicket(ticketId)
 		setAnchorPop(event.currentTarget);
 	}
 
@@ -159,10 +159,8 @@ export default function ProjectTicket(props) {
 	
 	
 
-	const employee = useEmployeesData(ticket.owner_id)
+	const employee = useEmployeesData(ticket.owner_id, tickets)
 
-
-	console.log("EMPLOYE>>>STATE>>>>>>", employee)
 
   return (
 	
@@ -289,6 +287,8 @@ export default function ProjectTicket(props) {
 					)}
 					{dialogOpen === REMOVE_TICKET && (
 						<RemoveTicket
+							user={user}
+							ticket={ticket}
 							tickets={tickets}
 							setTickets={setTickets}
 							ticketId={ticketId}

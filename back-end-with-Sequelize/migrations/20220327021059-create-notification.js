@@ -17,6 +17,9 @@ module.exports = {
       creator: {
         type: Sequelize.STRING
       },
+      unread: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

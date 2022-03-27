@@ -17,6 +17,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function RemoveTicket(props) {
 	const {
+		user,
+		ticket,
 		dialogOpen,
 		setDialogOpen,
 		ticketId,
@@ -29,8 +31,15 @@ export default function RemoveTicket(props) {
 	} = props;
 
 	const onConfirmDelete = () => {
+		console.log(ticket)
 		axios
-			.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticketId}`)
+			.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticketId}`, 
+			{ data: 
+				{ owner_id: ticket.owner_id, 
+					title: ticket.title,
+					updater_name: user.first_name + ' ' + user.last_name
+				}
+			})
 			.then((res) => {
 				const updatedTickets = tickets.filter(
 					(ticket) => ticket.id !== ticketId

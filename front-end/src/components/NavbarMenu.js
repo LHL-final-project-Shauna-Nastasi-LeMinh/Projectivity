@@ -20,23 +20,23 @@ import Typography from '@mui/material/Typography';
 import { HR_LEVEL } from './constants/AccessLevel';
 import { NOTIF_CHANNEL, NOTIF_NEW_EVENT } from './constants/PusherChannels';
 import Pusher from 'pusher-js';
+import { SettingsBluetoothOutlined } from '@mui/icons-material';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Drawer from '@mui/material/Drawer';
+import { styled } from '@mui/system';
+import NotificationDrawer from './NotificationDrawer';
 
 const page_strings = ['About', 'Login', 'Register'];
 const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const setting_views = [LANDING_VIEW, LANDING_VIEW, LANDING_VIEW, LANDING_VIEW];
-
-function LinkTab(props) {
-	return (
-		<Tab
-			component="a"
-			onClick={(event) => {
-				event.preventDefault();
-			}}
-			{...props}
-		/>
-	);
-}
 
 export default function NavbarMenu(props) {
 	const {
@@ -46,11 +46,19 @@ export default function NavbarMenu(props) {
 		setUser,
 		modals,
 		openModals,
-		clearUserData
+		setStartBuild,
+		clearUserData,
+		notifications,
+		setNotifications,
+		notifyOpen,
+		setNotifyOpen,
+		toggleDrawer,
+		unreadNotifLength,
+		setUnreadNotifLength
 	} = props;
 	const [email, setEmail] = useState(null);
-	const [anchorElNav, setAnchorElNav] = React.useState(null);
-	const [anchorElUser, setAnchorElUser] = React.useState(null);
+	const [anchorElNav, setAnchorElNav] = useState(null);
+	const [anchorElUser, setAnchorElUser] = useState(null);
 
 	const handleOpenUserMenu = (event) => {
 		setAnchorElUser(event.currentTarget);
@@ -58,6 +66,17 @@ export default function NavbarMenu(props) {
 
 	function handleMenuClick(string, newMode) {
 		if (string === 'Logout') {
+			// a axios call to clear cookie session in server side too
+			axios
+				.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
+				.then((res) => {
+					setUser(null);
+					setStartBuild(false);
+					setViewMode(false);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 			clearUserData();
 		}
 
@@ -73,108 +92,196 @@ export default function NavbarMenu(props) {
 	useEffect(() => {
 		if (user) {
 			setEmail(user.email);
+			updateNotifications();
+			
 		}
 	}, [user]);
 
-	// // WebSocket code start
-	// useEffect(() => {
-	//   const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
-	//     cluster: process.env.REACT_APP_PUSHER_CLUSTER
-	//   })
-	//   const channel = pusher.subscribe(NOTIF_CHANNEL);
-	//   channel.bind(NOTIF_NEW_EVENT, function (broadcastMsg) {
-	//     if (!broadcastMsg) return;
-	// 		if (!broadcastMsg.notif_id) return;
-	// 		if (broadcastMsg.notif_id === user.id) return;
-	//     // openDrawer and load Notif here
-	//   })
-	//   return (()=>channel.unbind(NOTIF_NEW_EVENT));
-	// }, [])
-	// // WebSocket code end
+	// WebSocket code start
+	useEffect(() => {
+	  const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+	    cluster: process.env.REACT_APP_PUSHER_CLUSTER
+	  })
+	  const channel = pusher.subscribe(NOTIF_CHANNEL);
+	  channel.bind(NOTIF_NEW_EVENT, function (notif_to_id) {
+	    if (!notif_to_id) return;
+			console.log("notif_to_id: " +notif_to_id )
+			console.log("user.id: " + user.id )
+			if (notif_to_id === user.id) return;
+			updateNotifications();
+		})
+	  return (()=>channel.unbind(NOTIF_NEW_EVENT));
+		
+	}, [])
+
+	const updateNotifications = function() {
+		axios
+				.get(process.env.REACT_APP_BACKEND_URL + `/notifications/${user.id}`)
+				.then((res) => {
+					if (res.data) {
+						setNotifications(res.data);
+						const length = res.data.filter(notif => notif.unread === true).length
+						setUnreadNotifLength(length === 0 ? null : length)
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+	}
+	// WebSocket code end
+	
+	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (
-		<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-			{!user && (
-				<ButtonGroup
-					orientiation={{ vertical: 'top', horizontal: 'right' }}
-					variant="text"
-				>
-					<Button
-						key="about"
-						onClick={() => setViewMode(false)}
-						sx={{ color: 'white', display: 'block' }}
-					>
-						About
-					</Button>
-					<Button
-						key="login"
-						onClick={() => openModals('loginForm')}
-						sx={{ color: 'white', display: 'block' }}
-					>
-						Login
-					</Button>
-				</ButtonGroup>
-			)}
-			{user && (
-				<Box>
+		<Box sx={{ flexGrow: 1 }}>
+			<AppBar
+				position="relative"
+				sx={{
+					zIndex: (theme) => theme.zIndex.drawer + 1,
+					width: '100%',
+					borderBottom: 1,
+					borderColor: 'secondary.main'
+				}}
+			>
+				<Toolbar sx={{ display: 'flex' }}>
 					<Box
 						sx={{
-							display: 'flex'
+							display: { xs: 'none', md: 'flex' }
 						}}
 					>
-						<Box
-							sx={{
-								display: 'flex',
-								flexDirection: 'column',
-								justifyContent: 'center',
-								mx: 1
-							}}
-						>
-							<Typography variant="h6">{email}</Typography>
-						</Box>
-						{user && user.access_level == HR_LEVEL && (
-							<Button
-								key="register"
-								sx={{ color: 'white', display: 'block' }}
-								onClick={() => openModals('registerForm')}
-							>
-								Add Employee
+						<Typography variant="h4" noWrap component="div">
+							SyncUp
+						</Typography>
+						<Typography variant="h8" noWrap component="div">
+							Synchronize your team!
+						</Typography>
+					</Box>
+					<Box
+						sx={{
+							display: { xs: 'none', md: 'flex' }
+						}}
+					>
+						{user && (
+							<Button onClick={toggleDrawer(!notifyOpen)}>
+								{notifications && notifications.length <= 0 && (
+									<NotificationsIcon
+										sx={{
+											position: 'absolute',
+											zIndex: 1,
+											color: 'background.default'
+										}}
+									/>
+								)}
+								{notifications && notifications.length > 0 && (
+									<div>
+										<NotificationsActiveIcon
+											fontSize="medium"
+											sx={{
+												color: 'background.default'
+											}}
+										/>
+										<Typography
+											sx={{
+												position: 'absolute',
+												left: '27px',
+												top: '8px',
+												zIndex: 1,
+												color: 'secondary.main'
+											}}
+										>
+											{unreadNotifLength}
+										</Typography>
+									</div>
+								)}
 							</Button>
 						)}
-						<Tooltip title="Open settings">
-							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-								<Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-							</IconButton>
-						</Tooltip>
-					</Box>
-
-					<Menu
-						sx={{ mt: '45px' }}
-						id="menu-appbar"
-						anchorEl={anchorElUser}
-						anchorOrigin={{
-							vertical: 'top',
-							horizontal: 'right'
-						}}
-						keepMounted
-						transformOrigin={{
-							vertical: 'top',
-							horizontal: 'right'
-						}}
-						open={Boolean(anchorElUser)}
-						onClose={() => setAnchorElUser(null)}
-					>
-						{settings.map((setting, index) => (
-							<MenuItem
-								key={setting}
-								onClick={() => handleMenuClick(setting, setting_views[index])}
+						{!user && (
+							<ButtonGroup
+								orientiation={{ vertical: 'top', horizontal: 'right' }}
+								variant="text"
 							>
-								<Typography textAlign="center">{setting}</Typography>
-							</MenuItem>
-						))}
-					</Menu>
-				</Box>
-			)}
+								<Button
+									key="about"
+									onClick={() => setViewMode(false)}
+									sx={{ color: 'white', display: 'block' }}
+								>
+									About
+								</Button>
+								<Button
+									key="login"
+									onClick={() => openModals('loginForm')}
+									sx={{ color: 'white', display: 'block' }}
+								>
+									Login
+								</Button>
+							</ButtonGroup>
+						)}
+						{user && (
+							<Box
+								sx={{
+									display: 'flex'
+								}}
+							>
+								<Box
+									sx={{
+										display: 'flex',
+										flexDirection: 'column',
+										justifyContent: 'center',
+										mx: 1
+									}}
+								>
+									<Typography variant="h6">{email}</Typography>
+								</Box>
+								{user && user.access_level == HR_LEVEL && (
+									<Button
+										key="register"
+										sx={{ color: 'white', display: 'block' }}
+										onClick={() => openModals('registerForm')}
+									>
+										Add Employee
+									</Button>
+								)}
+								<Tooltip title="Open settings">
+									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+										<Avatar
+											alt="Remy Sharp"
+											src="/static/images/avatar/2.jpg"
+										/>
+									</IconButton>
+								</Tooltip>
+
+								<Menu
+									sx={{ mt: '45px' }}
+									id="menu-appbar"
+									anchorEl={anchorElUser}
+									anchorOrigin={{
+										vertical: 'top',
+										horizontal: 'right'
+									}}
+									keepMounted
+									transformOrigin={{
+										vertical: 'top',
+										horizontal: 'right'
+									}}
+									open={Boolean(anchorElUser)}
+									onClose={() => setAnchorElUser(null)}
+								>
+									{settings.map((setting, index) => (
+										<MenuItem
+											key={setting}
+											onClick={() =>
+												handleMenuClick(setting, setting_views[index])
+											}
+										>
+											<Typography textAlign="center">{setting}</Typography>
+										</MenuItem>
+									))}
+								</Menu>
+							</Box>
+						)}
+					</Box>
+				</Toolbar>
+			</AppBar>
 		</Box>
 	);
 }
