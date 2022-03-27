@@ -42,8 +42,6 @@ export default function NavbarMenu(props) {
 		setViewMode,
 		user,
 		setUser,
-		cookies,
-		removeCookie,
 		modals,
 		openModals,
 		clearUserData
@@ -59,17 +57,6 @@ export default function NavbarMenu(props) {
 	function handleMenuClick(string, newMode) {
 		if (string === 'Logout') {
 			clearUserData();
-			// a axios call to clear cookie session in server side too
-			axios
-				.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
-				.then((res) => {
-					setUser(null);
-					setViewMode(false);
-					removeCookie('user');
-				})
-				.catch((err) => {
-					console.log(err);
-				});
 		}
 
 		if (string === 'Login' || string === 'Register') {

@@ -1,7 +1,6 @@
 import './App.css';
 import React, { useState, useEffect, componentDidUpdate } from 'react';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import {
@@ -37,7 +36,6 @@ import { theme } from './components/Theme';
 
 const App = () => {
 	const [user, setUser] = useState(null);
-	const [cookies, setCookie, removeCookie] = useCookies(['user']);
 	const [currentProject, setCurrentProject] = useState(null);
 	const [currentTicket, setCurrentTicket] = useState(null);
 	const [currentColumn, setCurrentColumn] = useState(null);
@@ -166,7 +164,6 @@ const App = () => {
 					<LoginForm
 						setViewMode={setViewMode}
 						setUser={setUser}
-						setCookie={setCookie}
 						modals={modals}
 						closeModals={closeModals}
 						setRefresh={setRefresh}
@@ -177,7 +174,6 @@ const App = () => {
 					<RegistrationForm
 						setViewMode={setViewMode}
 						setUser={setUser}
-						setCookie={setCookie}
 						modals={modals}
 						closeModals={closeModals}
 						setRefresh={setRefresh}
@@ -202,8 +198,6 @@ const App = () => {
 							setViewMode={setViewMode}
 							user={user}
 							setUser={setUser}
-							cookies={cookies}
-							removeCookie={removeCookie}
 							modals={modals}
 							openModals={openModals}
 							clearUserData={clearUserData}

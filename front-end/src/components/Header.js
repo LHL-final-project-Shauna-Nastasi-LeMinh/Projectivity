@@ -16,8 +16,6 @@
 // 		setMode,
 // 		user,
 // 		setUser,
-// 		cookies,
-// 		removeCookie,
 // 		modals,
 // 		openModals,
 // 		closeModals,
