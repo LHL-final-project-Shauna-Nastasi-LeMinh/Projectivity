@@ -20,17 +20,17 @@ const UserInput = () => {
 })
   }
 
-	// WebSocket code start - subscribe to Pusher channel
-  useEffect(() => {
-    const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
-      cluster: process.env.REACT_APP_PUSHER_CLUSTER
-    })
-    const channel = pusher.subscribe('USER_CHANNEL')
-    channel.bind('USER_SAVED_EVENT', function (data) {
-      setMessages(prev => [...prev, JSON.stringify(data.user)])
-    })
-  }, [])
-	// WebSocket code end
+	// // WebSocket code start - subscribe to Pusher channel
+  // useEffect(() => {
+  //   const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+  //     cluster: process.env.REACT_APP_PUSHER_CLUSTER
+  //   })
+  //   const channel = pusher.subscribe('USER_CHANNEL')
+  //   channel.bind('USER_SAVED_EVENT', function (data) {
+  //     setMessages(prev => [...prev, JSON.stringify(data.user)])
+  //   })
+  // }, [])
+	// // WebSocket code end
 
   return (
     <div>

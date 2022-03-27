@@ -14,3 +14,7 @@ export const COLUMN_MOVE_EVENT = "Column_Move_Event"
 export const TICKET_ADD_EVENT = "Ticket_Add_Event"
 export const TICKET_EDIT_EVENT = "Ticket_Edit_Event"
 export const TICKET_DELETE_EVENT = "Ticket_Delete_Event"
+
+export const NOTIF_CHANNEL = "Notif_Channel";
+export const NOTIF_NEW_EVENT = "Notif_New_Event";
+

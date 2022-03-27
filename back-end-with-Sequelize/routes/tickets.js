@@ -3,8 +3,11 @@ const column = require('../models/column')
 const users = require('./users')
 const router = express.Router()
 const addHistoryEvent = require('./helper/historyHelper')
+const addNotification = require('./helper/notificationHelper')
+const NOTIF_CHANNEL = "Notif_Channel";
+const NOTIF_NEW_EVENT = "Notif_New_Event";
 
-module.exports = sequelizeModels => {
+module.exports = (sequelizeModels, pusher) => {
   projectTickets = sequelizeModels.ProjectAssignment
   Ticket = sequelizeModels.Ticket
 
@@ -36,6 +39,8 @@ module.exports = sequelizeModels => {
   })
 
   router.post('/new', async (req, res) => {
+
+    const user_id = 2;// NOTIF: get this from actual data later when assign employee is done
     try {
       const {
         title,
@@ -61,6 +66,9 @@ module.exports = sequelizeModels => {
       })
 
       addHistoryEvent(newTicket.id, "CREATED", null, null, creator_name)
+      addNotification(user_id, creator_name + "created ticket " + title + " and assigned to you", creator_name)
+
+      pusher.trigger(NOTIF_CHANNEL, NOTIF_NEW_EVENT, {notif_id: user_id});
 
       return res.json(newTicket);
     } catch (err) {
@@ -118,21 +126,27 @@ module.exports = sequelizeModels => {
       //     id: id
       //   }
       // })
+      const user_id = 2;// NOTIF: get this Ticket table
 
       if (title !== undefined && oldTicketData.title !== title) {
         await addHistoryEvent(id, "TITLE CHANGE", oldTicketData.title, title, updater_name)
+        await addNotification(user_id, updater_name + " changed ticket title from " + oldTicketData.title + " to " + title, updater_name)
       }
       if (severity !== undefined && oldTicketData.severity !== severity) {
         await addHistoryEvent(id, "SEVERITY CHANGE", oldTicketData.severity, severity, updater_name)
+        await addNotification(user_id, updater_name + " changed severity for " + oldTicketData.title + " from " + oldTicketData.severity + " to " + severity, updater_name)
       }
       if (priority !== undefined && oldTicketData.priority !== priority) {
         await addHistoryEvent(id, "PRIORITY CHANGE", oldTicketData.priority, priority, updater_name)
+        await addNotification(user_id, updater_name + " changed priority for " + oldTicketData.title + " from " + oldTicketData.priority + " to " + priority, updater_name)
       }
       if (type !== undefined && oldTicketData.type !== type) {
         await addHistoryEvent(id, "TYPE CHANGE", oldTicketData.type, type, updater_name)
+        await addNotification(user_id, updater_name + " changed type for " + oldTicketData.title + " from " + oldTicketData.type + " to " + type, updater_name)
       }
       if (milestone !== undefined && oldTicketData.milestone !== milestone) {
         await addHistoryEvent(id, "MILESTONE CHANGE", oldTicketData.milestone, milestone, updater_name)
+        await addNotification(user_id, updater_name + " changed milestone for " + oldTicketData.title + " from " + oldTicketData.milestone + " to " + milestone, updater_name)
       }
 
       const updatedTicket = await Tickets.findAll({

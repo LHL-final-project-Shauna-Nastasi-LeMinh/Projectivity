@@ -114,7 +114,7 @@ export default function NewColumnForm (props) {
               createNewColumn(values.name)
             }}
 					>
-						Create Ticket
+						Create
 					</Button>
           <Button
             sx={{

@@ -18,6 +18,8 @@ import MenuItem from '@mui/material/MenuItem';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
 import { HR_LEVEL } from './constants/AccessLevel';
+import { NOTIF_CHANNEL, NOTIF_NEW_EVENT } from './constants/PusherChannels';
+import Pusher from 'pusher-js';
 
 const page_strings = ['About', 'Login', 'Register'];
 const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM];
@@ -73,6 +75,22 @@ export default function NavbarMenu(props) {
 			setEmail(user.email);
 		}
 	}, [user]);
+
+	// // WebSocket code start
+	// useEffect(() => {
+	//   const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+	//     cluster: process.env.REACT_APP_PUSHER_CLUSTER
+	//   })
+	//   const channel = pusher.subscribe(NOTIF_CHANNEL);
+	//   channel.bind(NOTIF_NEW_EVENT, function (broadcastMsg) {
+	//     if (!broadcastMsg) return;
+	// 		if (!broadcastMsg.notif_id) return;
+	// 		if (broadcastMsg.notif_id === user.id) return;
+	//     // openDrawer and load Notif here
+	//   })
+	//   return (()=>channel.unbind(NOTIF_NEW_EVENT));
+	// }, [])
+	// // WebSocket code end
 
 	return (
 		<Box sx={{ display: { xs: 'none', md: 'flex' } }}>
