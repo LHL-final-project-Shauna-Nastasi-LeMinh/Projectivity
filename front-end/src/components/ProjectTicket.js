@@ -7,7 +7,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
-import { Box, Chip, Typography, Popover } from '@mui/material'
+import { Box, Chip, Typography, Popover, Avatar, Stack } from '@mui/material'
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Fade from '@mui/material/Fade';
 import RemoveTicket from './Forms/RemoveTicket'
@@ -17,6 +17,8 @@ import TicketHistory from './Forms/TicketHistory';
 import AssignTicket from './Forms/AssignTicket';
 import { BlockRounded } from '@mui/icons-material'
 
+import useEmployeesData from "../hooks/useEmployeesData";
+import axios from 'axios'
 
 import {
 	SHOW_TICKET_DETAILS,
@@ -148,11 +150,20 @@ export default function ProjectTicket (props) {
 		return color;
 	}
 
+	
+	
+
+	const employee = useEmployeesData(ticket.owner_id)
+
+
+	console.log("EMPLOYE>>>STATE>>>>>>", employee)
+
   return (
 
 		
     
     <ListItem sx={{  display: "block"}}>
+			<Stack direction="row" spacing={1}>
 				{ticket.priority &&
 					<Chip
           pl="2"
@@ -162,6 +173,24 @@ export default function ProjectTicket (props) {
           size="small"
         />
 				}
+				{Object.keys(employee).length !== 0 && ticket.owner_id && employee.avatar &&
+				  <Avatar 
+					sx={{ width: 24, height: 24 }}
+					size={100}
+  				backgroundColor='rgba(0,0,0,0)'
+					
+					alt="Remy Sharp" src="https://ca.slack-edge.com/T2G8TE2E5-U02SX82DQR4-fed59f9b552e-512" /> && console.log(employee.avatar)
+					
+        }
+				{Object.keys(employee).length !== 0 && ticket.owner_id && !employee.avatar &&
+				<Avatar 
+					sx={{ width: 24, height: 24 }}
+					 >
+						 {`${employee.first_name[0]}${employee.last_name[0]}`}
+					 </Avatar>
+					
+        }
+				</Stack>
         
         
       <ListItemButton
@@ -208,6 +237,8 @@ export default function ProjectTicket (props) {
 							currentProject={currentProject}
 							ticketId={ticketId}
 							setAnchorPop={setAnchorPop}
+							setTickets={setTickets}
+							tickets={tickets}
 						/>
 					</Typography>
 				</Popover>
