@@ -17,8 +17,6 @@ import Bin from './Bin';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/private-theming';
 import { projectViewTheme } from './Theme';
-import ThemeProvider from '@mui/material/styles/ThemeProvider';
-import Bin from './Bin';
 import DeleteTicketDragForm from './Forms/DeleteTicketDragForm';
 
 export default function ProjectView(props) {
