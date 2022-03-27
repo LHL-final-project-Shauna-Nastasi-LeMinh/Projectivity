@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const addHistoryEvent = require("./helper/historyHelper");
-const COLUMN_CHANNEL = "Column_Channel";
-const COLUMN_MOVE_EVENT = "Column_Move_Event";
+// const COLUMN_CHANNEL = "Column_Channel";
+// const COLUMN_MOVE_EVENT = "Column_Move_Event";
 
 module.exports = (sequelizeModels, pusher) => {
   Column = sequelizeModels.Column;
@@ -84,19 +84,19 @@ module.exports = (sequelizeModels, pusher) => {
           { where: { id: columnId } }
         );
       }
-      // WebSocket broadcast
-      const columns = await Columns.findAll({
-        where: { project_id: project_id },
-        include: [
-          {
-            model: sequelizeModels.Ticket,
-          },
-        ],
-        order: [["ordering_index", "ASC"]],
-      });
-      const broadcastMsg = { project_id: project_id };
-      broadcastMsg.columns = columns;
-      pusher.trigger(COLUMN_CHANNEL, COLUMN_MOVE_EVENT, broadcastMsg);
+      // // WebSocket broadcast
+      // const columns = await Columns.findAll({
+      //   where: { project_id: project_id },
+      //   include: [
+      //     {
+      //       model: sequelizeModels.Ticket,
+      //     },
+      //   ],
+      //   order: [["ordering_index", "ASC"]],
+      // });
+      // const broadcastMsg = { project_id: project_id };
+      // broadcastMsg.columns = columns;
+      // pusher.trigger(COLUMN_CHANNEL, COLUMN_MOVE_EVENT, broadcastMsg);
       // End WebSocket
 
       return res.json({ message: "column reordered successfully" });

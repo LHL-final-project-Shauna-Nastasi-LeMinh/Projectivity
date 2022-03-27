@@ -269,8 +269,11 @@ export default function ProjectColumn(props) {
 								height: 'fit-content',
 								minHeight: '24rem',
 								maxHeight: '36rem',
-								backgroundColor: 'rgb(41, 50, 65, 0.1)',
+								backgroundColor: snapshot.isDraggingOver
+									? 'rgb(249, 65, 68, 0.1)'
+									: 'rgb(41, 50, 65, 0.1)',
 								transition: 'background-color 0.5s ease',
+
 								'&:hover': {
 									backgroundColor: 'rgb(249, 65, 68, 0.1)'
 								}
@@ -280,12 +283,8 @@ export default function ProjectColumn(props) {
 							isdraggingover={snapshot.isDraggingOver}
 						>
 							<List
-								
 								sx={{
-									backgroundColor: snapshot.isDraggingOver
-										? 'rgba(240, 240, 240, .7)'
-										: 'inherit',
-									transition: 'background-color 0.5s ease'
+									padding: '0.3em'
 								}}
 							>
 								<ColumnTickets

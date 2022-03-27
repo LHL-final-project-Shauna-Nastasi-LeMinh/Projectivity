@@ -90,13 +90,13 @@ export default function NotificationDrawer(props) {
 				</Typography>
 			</AccordionDetails>
 			{notifyOpen &&
-				temp_notifications.map((text, index) => {
+				notifications && notifications.map((notif, index) => {
 					return (
 						<AccordionDetails
 							sx={{
 								height: '1rem',
 								zIndex: 2,
-								color: 'primary.main',
+								color: notif.unread ? 'primary.main' : 'black',
 								backgroundColor: '#FFFFFF',
 								bgcolor: '#FFFFFF',
 								borderBottom: `1px solid ${theme.palette.secondary.main}`,
@@ -114,7 +114,7 @@ export default function NotificationDrawer(props) {
 									color: 'primary.main'
 								}}
 							>
-								{text}
+								{notif.message}
 							</Typography>
 							<Button
 								sx={{

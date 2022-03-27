@@ -277,6 +277,8 @@ export default function ProjectTicket(props) {
 							setAnchorPop={setAnchorPop}
 							setTickets={setTickets}
 							tickets={tickets}
+							user={user}
+							title={title}
 						/>
 					</Box>
 					
@@ -321,6 +323,8 @@ export default function ProjectTicket(props) {
 					)}
 					{dialogOpen === REMOVE_TICKET && (
 						<RemoveTicket
+							user={user}
+							ticket={ticket}
 							tickets={tickets}
 							setTickets={setTickets}
 							ticketId={ticketId}

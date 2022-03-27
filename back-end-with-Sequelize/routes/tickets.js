@@ -3,8 +3,11 @@ const column = require('../models/column')
 const users = require('./users')
 const router = express.Router()
 const addHistoryEvent = require('./helper/historyHelper')
+const addNotification = require('./helper/notificationHelper')
+const NOTIF_CHANNEL = "Notif_Channel";
+const NOTIF_NEW_EVENT = "Notif_New_Event";
 
-module.exports = sequelizeModels => {
+module.exports = (sequelizeModels, pusher) => {
   projectTickets = sequelizeModels.ProjectAssignment
   Ticket = sequelizeModels.Ticket
 
@@ -36,6 +39,8 @@ module.exports = sequelizeModels => {
   })
 
   router.post('/new', async (req, res) => {
+
+    const user_id = 2;// NOTIF: get this from actual data later when assign employee is done
     try {
       const {
         title,
@@ -72,12 +77,19 @@ module.exports = sequelizeModels => {
   router.delete('/:ticket_id', async (req, res) => {
     try {
       const ticket_id = req.params.ticket_id
+      const {owner_id, title, updater_name} = req.body
+
+      // actual delete
       Tickets.destroy({
         where: {
           id: ticket_id
         }
       })
-
+      if (owner_id) {
+        console.log("THERE IS OWNER ID: "+ owner_id)
+        await addNotification(owner_id, `Ticket ${title} was deleted and unassigned from you`, updater_name)
+        pusher.trigger(NOTIF_CHANNEL, NOTIF_NEW_EVENT, {notif_to_id: owner_id});
+      }
       return res.json('success!')
     } catch (err) {
       console.log(err)
@@ -87,7 +99,7 @@ module.exports = sequelizeModels => {
 
   router.post('/:ticket_id', async (req, res) => {
     try {
-      const {id, title, description, severity, priority, type, milestone, updater_name} = req.body
+      const {id, title, description, severity, priority, type, milestone, owner_id, updater_name} = req.body
 
       console.log("TICKETS REQUEST",req.body)
       // get original ticket data before update, for history purpose
@@ -99,10 +111,11 @@ module.exports = sequelizeModels => {
       // actual update
 
       const params = Object.keys(req.body);
+      let ticket;
 
       for (let param of params) {
 
-          await Tickets.update(
+        ticket = await Tickets.update(
           {[param] : req.body[param]},
           {
           where: {
@@ -119,6 +132,7 @@ module.exports = sequelizeModels => {
       //   }
       // })
 
+      // History code
       if (title !== undefined && oldTicketData.title !== title) {
         await addHistoryEvent(id, "TITLE CHANGE", oldTicketData.title, title, updater_name)
       }
@@ -138,6 +152,62 @@ module.exports = sequelizeModels => {
       const updatedTicket = await Tickets.findAll({
         where: { id: id } })
         console.log("Update Ticket",updatedTicket)
+
+
+      // Notification code
+      const exisiting_owner_id = oldTicketData.owner_id;
+      let notifMes;
+      // if assigning to exising owner
+      if (owner_id && exisiting_owner_id && owner_id === exisiting_owner_id) {
+        return res.json(updatedTicket)
+      }
+      // if assigning to new owner
+      if (owner_id ) {
+        await addNotification(owner_id, updater_name + " assigned ticket " + title + " to you", updater_name)
+        pusher.trigger(NOTIF_CHANNEL, NOTIF_NEW_EVENT, {notif_to_id: owner_id});
+        if (exisiting_owner_id) {
+          notifMes = updater_name + " unassigned ticket " + title + " from you";
+          await addNotification(exisiting_owner_id, notifMes, updater_name)
+        }
+      }
+      // if not assigning, but there is exising owner
+      else if (exisiting_owner_id) {
+        if (title !== undefined && oldTicketData.title !== title) {
+          notifMes = oldTicketData.title
+            ? `${updater_name} changed ticket title from ${oldTicketData.title} to ${title}`
+            : `${updater_name} changed ticket title to ${title}`
+          await addNotification(exisiting_owner_id, notifMes , updater_name)
+        }
+        if (severity !== undefined && oldTicketData.severity !== severity) {
+          notifMes = oldTicketData.severity
+            ? `${updater_name} changed ticket severity from ${oldTicketData.severity} to ${severity}`
+            : `${updater_name} changed ticket severity to ${severity}`
+          await addNotification(exisiting_owner_id, notifMes, updater_name)
+        }
+        if (priority !== undefined && oldTicketData.priority !== priority) {
+          notifMes = oldTicketData.priority
+            ? `${updater_name} changed ticket priority from ${oldTicketData.priority} to ${priority}`
+            : `${updater_name} changed ticket priority to ${priority}`
+          await addNotification(exisiting_owner_id, notifMes, updater_name)
+        }
+        if (type !== undefined && oldTicketData.type !== type) {
+          notifMes = oldTicketData.type
+            ? `${updater_name} changed ticket type from ${oldTicketData.type} to ${type}`
+            : `${updater_name} changed ticket type to ${type}`
+          await addNotification(exisiting_owner_id, notifMes, updater_name)
+        }
+        if (milestone !== undefined && oldTicketData.milestone !== milestone) {
+          notifMes = oldTicketData.milestone
+            ? `${updater_name} changed ticket milestone from ${oldTicketData.milestone} to ${milestone}`
+            : `${updater_name} changed ticket milestone to ${milestone}`
+          await addNotification(exisiting_owner_id, notifMes, updater_name)
+        }
+      }
+      if (notifMes) {
+        pusher.trigger(NOTIF_CHANNEL, NOTIF_NEW_EVENT, {notif_to_id: exisiting_owner_id});
+      }
+
+
       return res.json(updatedTicket)
     } catch (err) {
       console.log(err)

@@ -15,12 +15,14 @@ module.exports = {
       {
         user_id: 2,
         message: 'You have been added to the system',
+        unread: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         user_id: 3,
         message: 'You have been added to the system',
+        unread: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
