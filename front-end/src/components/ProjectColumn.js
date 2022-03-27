@@ -27,6 +27,8 @@ import { MANAGER_LEVEL } from './constants/AccessLevel';
 import NewColumnForm from './Forms/NewColumnForm';
 import EditColumnForm from './Forms/EditColumnForm';
 import DeleteColumnForm from './Forms/DeleteColumnForm';
+import Bin from './Bin';
+import AddIcon from '@mui/icons-material/Add';
 
 const Transition = forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
@@ -141,7 +143,11 @@ export default function ProjectColumn(props) {
 		>
 			{(provided) => (
 				<Box
-					sx={{ width: '20rem', mx: '1rem', backgroundColor: 'white' }}
+					sx={{
+						width: 'fit-content',
+						minWidth: '16rem',
+						mx: '1rem'
+					}}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
@@ -170,7 +176,13 @@ export default function ProjectColumn(props) {
 						/>
 					)}
 					<ListItem
-						sx={{ padding: '0.1rem' }}
+						sx={{
+							padding: '0.1rem',
+							transition: 'background-color 0.5s ease',
+							'&:hover': {
+								backgroundColor: 'secondary.light'
+							}
+						}}
 						onClick={() => {
 							setSelectedColumn(column);
 						}}
@@ -251,48 +263,72 @@ export default function ProjectColumn(props) {
 					</Dialog>
 					<Divider />
 
-					<Droppable droppableId={column.name} type="ticket">
-						{(provided, snapshot) => (
-							<List
-								{...provided.droppableProps}
-								ref={provided.innerRef}
-								isdraggingover={snapshot.isDraggingOver}
-								sx={{
-									backgroundColor: snapshot.isDraggingOver
-										? 'skyblue'
-										: 'inherit',
-									transition: 'background-color 1s ease'
-								}}
-							>
-								<ColumnTickets
-									tickets={tickets}
-									setViewMode={setViewMode}
-									setOpen={setOpen}
-									currentTicket={currentTicket}
-									open={open}
-									setCurrentTicket={setCurrentTicket}
-									setTickets={setTickets}
-									user={user}
-									currentColumn={currentColumn}
-									setCurrentColumn={setCurrentColumn}
-									currentProject={currentProject}
-									userData={userData}
-									setUserData={setUserData}
-									editTicket={editTicket}
-									setEditTicket={setEditTicket}
-								/>
-								{provided.placeholder}
-							</List>
-						)}
-					</Droppable>
-					<ListItem sx={{ padding: '0.1rem' }}>
-						<ListItemButton>
-							<ListItemText
-								primary="Create New Ticket"
-								onClick={() => createNewTicket()}
-							/>
-						</ListItemButton>
-					</ListItem>
+					<Box
+						sx={{
+							height: 'fit-content',
+							minHeight: '24rem',
+							maxHeight: '36rem',
+							backgroundColor: 'rgb(41, 50, 65, 0.1)',
+							transition: 'background-color 0.5s ease',
+							'&:hover': {
+								backgroundColor: 'rgb(249, 65, 68, 0.1)'
+							}
+						}}
+					>
+						<Droppable droppableId={column.name} type="ticket">
+							{(provided, snapshot) => (
+								<List
+									{...provided.droppableProps}
+									ref={provided.innerRef}
+									isdraggingover={snapshot.isDraggingOver}
+									sx={{
+										backgroundColor: snapshot.isDraggingOver
+											? 'rgba(240, 240, 240, .7)'
+											: 'inherit',
+										transition: 'background-color 0.5s ease'
+									}}
+								>
+									<ColumnTickets
+										tickets={tickets}
+										setViewMode={setViewMode}
+										setOpen={setOpen}
+										currentTicket={currentTicket}
+										open={open}
+										setCurrentTicket={setCurrentTicket}
+										setTickets={setTickets}
+										user={user}
+										currentColumn={currentColumn}
+										setCurrentColumn={setCurrentColumn}
+										currentProject={currentProject}
+										userData={userData}
+										setUserData={setUserData}
+										editTicket={editTicket}
+										setEditTicket={setEditTicket}
+									/>
+									{provided.placeholder}
+								</List>
+							)}
+						</Droppable>
+					</Box>
+
+					<Divider />
+					<Box
+						sx={{
+							color: 'primary.main',
+							transition: 'background-color 0.5s ease',
+							'&:hover': {
+								backgroundColor: 'secondary.light'
+							}
+						}}
+						onClick={() => createNewTicket()}
+					>
+						<ListItem>
+							<ListItemButton>
+								<ListItemText primary="Create New Ticket" fontSize="large" />
+								<AddIcon fontSize="large" />
+							</ListItemButton>
+						</ListItem>
+					</Box>
 					{/* move opening of create new ticket from landing page */}
 					{dialogOpen === ADD_TICKET && (
 						<NewTicketForm
@@ -342,36 +378,49 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 				draggableId={'ticket_' + ticket.id}
 				index={index}
 			>
-        {(provided, snapshot) =>
-          <Box
-            sx={{marginBottom: 1, border: 1, borderRadius: 8, borderColor: 'grey.500', bgcolor: 'secondary'}}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
+				{(provided, snapshot) => (
+					<Box
+						sx={{
+							display: 'block',
+							marginBottom: 1,
+							borderRadius: 4,
+							borderColor: 'primary.light',
+							transition: 'background-color 0.5s ease',
+							'&:hover': {
+								backgroundColor: 'secondary.light'
+							},
+							marginBottom: 1,
+							backgroundColor: snapshot.isDragging
+								? 'secondary.main'
+								: 'primary.main'
+						}}
+						{...provided.draggableProps}
+						{...provided.dragHandleProps}
+						ref={provided.innerRef}
 					>
-            <ProjectTicket
-              ticket={ticket}
-              title={ticket.title}
-              ticketId={ticket.id}
-              isDragging={snapshot.isDragging}
-              setViewMode={setViewMode}
-              open={open}
-              setOpen={setOpen}
-              currentTicket={currentTicket}
-              setCurrentTicket={setCurrentTicket}
-              tickets={tickets}
-              setTickets={setTickets}
-              user={user}
-              currentColumn={currentColumn}
+						<ProjectTicket
+							ticket={ticket}
+							title={ticket.title}
+							ticketId={ticket.id}
+							isDragging={snapshot.isDragging}
+							setViewMode={setViewMode}
+							open={open}
+							setOpen={setOpen}
+							currentTicket={currentTicket}
+							setCurrentTicket={setCurrentTicket}
+							tickets={tickets}
+							setTickets={setTickets}
+							user={user}
+							currentColumn={currentColumn}
 							setCurrentColumn={setCurrentColumn}
 							editTicket={editTicket}
 							setEditTicket={setEditTicket}
 							currentProject={currentProject}
 							userData={userData}
-              
 						/>
-          </Box>}
-      </Draggable>
-    )
-  })
-})
+					</Box>
+				)}
+			</Draggable>
+		);
+	});
+});

@@ -24,6 +24,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FolderIcon from '@mui/icons-material/Folder';
 import { theme } from './Theme';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default function DashboardItem(props) {
 	const {
@@ -48,47 +49,45 @@ export default function DashboardItem(props) {
 		selectModal
 	} = props;
 	const [anchorEl, setAnchorEl] = useState(null);
-
 	const open = Boolean(anchorEl);
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
+
+	function handleClick(target, event, index) {
+		console.log(target, open, anchorEl);
+		if (open === false) {
+			if (target === 'menu') {
+				setAnchorEl(event.currentTarget);
+				event.stopPropagation();
+			} else {
+				selectProject(index);
+				setSelectedIndex(index);
+			}
+		}
+	}
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
 
-	const handleListItemClick = (event, index, project) => {
-		selectProject(index);
-		setSelectedIndex(index);
-	};
-
-	// console.log('###', value, userData);
-
 	return (
 		<ListItemButton
 			selected={selectedIndex === listIndex}
-			// onClick={(event) =>
-			// 	handleListItemClick(event, listIndex, dashItemProject)
-			// }
+			onClick={(event) => {
+				handleClick('listItem', event, listIndex);
+			}}
 		>
-			<ListItemIcon />
-			<FolderIcon />
-			<ListItemText
-				key={key}
-				primary={value}
-				onClick={(event) =>
-					handleListItemClick(event, listIndex, dashItemProject)
-				}
-			/>
-			<Button
-				onClick={handleClick}
+			<FolderIcon sx={{ mx: 1, color: 'primary.light' }} />
+			<ListItemText key={key} primary={value} />
+			<IconButton
+				onClick={(event) => {
+					handleClick('menu', event, listIndex);
+				}}
 				id="demo-positioned-button"
 				aria-controls={open ? 'demo-positioned-menu' : undefined}
 				aria-haspopup="true"
 				aria-expanded={open ? 'true' : undefined}
 			>
-				<MoreHorizIcon fontSize="small" color="info" />
-			</Button>
+				<MenuIcon fontSize="medium" sx={{ color: 'background.default' }} />
+			</IconButton>
 			<Menu
 				id="demo-positioned-menu"
 				aria-labelledby="demo-positioned-button"
@@ -107,17 +106,13 @@ export default function DashboardItem(props) {
 				<MenuItem
 					onClick={() => selectModal('editProjectForm', dashItemProject)}
 				>
-					<ListItemIcon>
-						<EditIcon fontSize="small" />
-					</ListItemIcon>
+					<EditIcon fontSize="small" />
 					Edit Project
 				</MenuItem>
 				<MenuItem
 					onClick={() => selectModal('deleteProjectForm', dashItemProject)}
 				>
-					<ListItemIcon>
-						<DeleteIcon fontSize="small" />
-					</ListItemIcon>
+					<DeleteIcon fontSize="small" />
 					Delete Project
 				</MenuItem>
 			</Menu>

@@ -56,6 +56,7 @@ export default function NewProjectForm(props) {
 		})
 		return mappedEmployees;
 	}
+
 	function createNewProject() {
 		
 		//assign employee to the project 
@@ -98,10 +99,6 @@ export default function NewProjectForm(props) {
 								setUserData(userData);
 								setCurrentProject(userData[userData.length - 1]);
 								setSelectedIndex(userData.length - 1);
-								closeModals('newProjectForm');
-
-								
-								
 							})
 							.catch(function (error) {
 								console.log(error.message);
@@ -115,6 +112,7 @@ export default function NewProjectForm(props) {
 				console.log(error.message);
 				setValues({ ...values, message: 'Form invalid' });
 			});
+		closeModals('newProjectForm');
 	}
 
 	const style = {
@@ -139,21 +137,6 @@ export default function NewProjectForm(props) {
     },
   };
 
-  const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-  ];
-	 
-	 console.log("AAAAAAAAAAAAAAAAAAA")
-	 console.log(allEmployees)
   const handleSelectChange = (event) => {
     const {target: { value },} = event;
     setAssignees(

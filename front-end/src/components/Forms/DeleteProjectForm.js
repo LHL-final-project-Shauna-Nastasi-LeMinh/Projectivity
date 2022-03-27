@@ -20,7 +20,6 @@ export default function DeleteProjectForm(props) {
 		setViewMode,
 		user,
 		setUser,
-		setCookie,
 		open,
 		setOpen,
 		modals,
@@ -76,12 +75,13 @@ export default function DeleteProjectForm(props) {
 						}
 					}
 
-					closeModals('deleteProjectForm');
+					
 				})
 				.catch(function (error) {
 					console.log(error.message);
 					setValues({ ...values, message: 'Form invalid' });
 				});
+			closeModals('deleteProjectForm');
 		}
 	};
 

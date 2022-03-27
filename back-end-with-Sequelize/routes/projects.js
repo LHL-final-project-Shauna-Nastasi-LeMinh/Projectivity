@@ -21,7 +21,7 @@ module.exports = (sequelizeModels) => {
       });
       const allColumns = await Columns.findAll();
       const allTickets = await Tickets.findAll();
-      const allHistories = await History.findAll();
+      // const allHistories = await History.findAll();
 
       console.log("### ASSIGNMENTS", project_assignments);
 
@@ -125,6 +125,28 @@ module.exports = (sequelizeModels) => {
     }
   });
 
+  router.get("/:project_id/assignees", async (req, res) => {
+    try {
+      const project_assignments = await Project_Assignments.findAll({
+        where: { project_id: req.params.project_id },
+        include: [
+          {
+            model: sequelizeModels.Employee,
+          },
+        ],
+        order: [["id", "ASC"]],
+      });
+
+      const assignees = project_assignments.map(
+        (assignment) => assignment.dataValues.Employee.dataValues
+      );
+      return res.json(assignees);
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  });
+
   router.post("/new", async (req, res) => {
     try {
       const { name, description, employee_id, assigneeIds } = req.body;
@@ -135,29 +157,62 @@ module.exports = (sequelizeModels) => {
 
       const project_id = project.dataValues.id;
       const assignment_date = Date.now();
-
+      const creatorInTheList = false;
       assignmentBulkCreateObject = assigneeIds.map((assigneeId) => {
+        if (assigneeId === employee_id) {
+          creatorInTheList = true;
+        }
         return { employee_id: assigneeId, project_id, assignment_date };
       });
-      assignmentBulkCreateObject.push({
-        employee_id,
-        project_id,
-        assignment_date,
-      });
+      // if project creator is not in the assignee list, add him in
+      if (!creatorInTheList) {
+        assignmentBulkCreateObject.unshift({
+          employee_id,
+          project_id,
+          assignment_date,
+        });
+      }
       await Project_Assignments.bulkCreate(assignmentBulkCreateObject);
 
-      // await Columns.create({
-      //   name: "Open",
-      //   project_id,
-      // });
-      // await Columns.create({
-      //   name: "In Progress",
-      //   project_id,
-      // });
-      // await Columns.create({
-      //   name: "Closed",
-      //   project_id,
-      // });
+      return res.json("success!");
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  });
+
+  router.post("/:project_id/details", async (req, res) => {
+    try {
+      const { name, description, employee_id, assigneeIds } = req.body;
+      const project_id = req.params.project_id;
+
+      const project = await Projects.update(
+        { name, description },
+        { where: { id: project_id } }
+      );
+
+      await Project_Assignments.destroy({
+        where: {
+          project_id: project_id,
+        },
+      });
+      const assignment_date = Date.now();
+      let creatorInTheList = false;
+      assignmentBulkCreateObject = assigneeIds.map((assigneeId) => {
+        if (assigneeId === employee_id) {
+          creatorInTheList = true;
+        }
+        return { employee_id: assigneeId, project_id, assignment_date };
+      });
+      // if project creator is not in the assignee list, add him in
+      if (!creatorInTheList) {
+        assignmentBulkCreateObject.unshift({
+          employee_id,
+          project_id,
+          assignment_date,
+        });
+      }
+      await Project_Assignments.bulkCreate(assignmentBulkCreateObject);
 
       return res.json("success!");
     } catch (err) {
