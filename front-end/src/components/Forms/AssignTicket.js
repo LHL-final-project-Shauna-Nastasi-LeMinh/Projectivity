@@ -6,13 +6,13 @@ import { FormControl, InputLabel, Select, MenuItem, Button, Box, Typography } fr
 
 export default function AssignTicket(props) {
 
-  const {currentProject} = props
+  const {currentProject, ticketId, setAnchorPop} = props
 
   const [employees, setEmployees] = useState({
     all: []
   });
 
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState();
 
   const handleChange = (evt) => {
     setValue(evt.target.value)
@@ -44,6 +44,26 @@ export default function AssignTicket(props) {
 			{fullName}
 		</MenuItem>)
   });
+
+  //update db owner-id field of a specific ticket 
+  const assignTicket = () => {
+
+    axios
+			.post(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticketId}`, {
+				id: ticketId,
+				owner_id: value
+			})
+			.then((res) => {
+        setAnchorPop(false);
+        const updatedTicket = { ...res.data}
+        setTickets([...tickets, updatedTicket])
+				console.log('updated new ticket', res.data);
+			
+			})
+			.catch(function (error) {
+				console.log(error.message);
+			});
+  }
 
   const style = {
 	
@@ -90,7 +110,7 @@ export default function AssignTicket(props) {
 						color="success"
 						size="large"
 						variant="contained"
-						// onClick={() => (assign())}
+						onClick={() => assignTicket()}
 					> Assign
 					</Button>
           </Box>

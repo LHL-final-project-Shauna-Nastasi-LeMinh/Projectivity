@@ -89,6 +89,7 @@ module.exports = sequelizeModels => {
     try {
       const {id, title, description, severity, priority, type, milestone, updater_name} = req.body
 
+      console.log("TICKETS REQUEST",req.body)
       // get original ticket data before update, for history purpose
       const oldTicketDataRaw = await Ticket.findAll(
         { where: { id: id } }
@@ -96,13 +97,27 @@ module.exports = sequelizeModels => {
       const oldTicketData = JSON.parse(JSON.stringify(oldTicketDataRaw))[0];
 
       // actual update
-      await Tickets.update(
-        {title, description, severity, priority, type, milestone},
-        {
-        where: {
-          id: id
-        }
-      })
+
+      const params = Object.keys(req.body);
+
+      for (let param of params) {
+
+          await Tickets.update(
+          {[param] : req.body[param]},
+          {
+          where: {
+            id: req.body.id
+          }
+        })
+      }
+
+      // await Tickets.update(
+      //   {title, description, severity, priority, type, milestone},
+      //   {
+      //   where: {
+      //     id: id
+      //   }
+      // })
 
       if (title !== undefined && oldTicketData.title !== title) {
         await addHistoryEvent(id, "TITLE CHANGE", oldTicketData.title, title, updater_name)
@@ -122,7 +137,7 @@ module.exports = sequelizeModels => {
 
       const updatedTicket = await Tickets.findAll({
         where: { id: id } })
-
+        console.log("Update Ticket",updatedTicket)
       return res.json(updatedTicket)
     } catch (err) {
       console.log(err)
