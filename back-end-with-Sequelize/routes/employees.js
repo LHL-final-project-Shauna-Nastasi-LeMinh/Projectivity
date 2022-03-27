@@ -16,5 +16,19 @@ module.exports = (sequelizeModels, pusher) => {
     }
   })
 
+  router.get('/:employee_id', async(req, res) => {
+
+    const {employee_id} = req.params
+
+    try {
+
+      const employee = await Employee.findAll({where: {id: employee_id}})
+      return res.json( employee );
+    } catch(err) {
+      console.log("ERROR",err);
+      return res.status(500).json(err);
+    }
+  })
+
   return router;
 };
