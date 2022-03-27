@@ -18,6 +18,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { dashboardTheme } from './Theme';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 
 export default function Dashboard(props) {
 	const {
@@ -43,6 +44,7 @@ export default function Dashboard(props) {
 	const [projects, setProjects] = useState();
 	const [selectedIndex, setSelectedIndex] = useState(0);
 	const [modalProject, setModalProject] = useState();
+	const [open, setOpen] = React.useState(false);
 
 	useEffect(() => {
 		selectProject(0);
@@ -56,89 +58,10 @@ export default function Dashboard(props) {
 		setOpenDrawer(false);
 	};
 
-	const openedMixin = (theme) => ({
-		width: drawerWidth,
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen
-		}),
-		overflowX: 'hidden'
-	});
-
-	const closedMixin = (theme) => ({
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen
-		}),
-		overflowX: 'hidden',
-		width: `calc(${theme.spacing(7)} + 1px)`,
-		[theme.breakpoints.up('sm')]: {
-			width: `calc(${theme.spacing(8)} + 1px)`
-		}
-	});
-
-	const DrawerHeader = styled('div')(({ theme }) => ({
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'flex-end',
-		padding: theme.spacing(0, 1),
-		// necessary for content to be below app bar
-		...theme.mixins.toolbar
-	}));
-
-	const AppBar = styled(MuiAppBar, {
-		shouldForwardProp: (prop) => prop !== 'openDrawer'
-	})(({ theme, openDrawer }) => ({
-		zIndex: theme.zIndex.drawer + 1,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen
-		}),
-		...(openDrawer && {
-			marginLeft: drawerWidth,
-			width: `calc(100% - ${drawerWidth}px)`,
-			transition: theme.transitions.create(['width', 'margin'], {
-				easing: theme.transitions.easing.sharp,
-				duration: theme.transitions.duration.enteringScreen
-			})
-		})
-	}));
-
-	const Drawer = styled(MuiDrawer, {
-		shouldForwardProp: (prop) => prop !== 'openDrawer'
-	})(({ theme, openDrawer }) => ({
-		width: drawerWidth,
-		flexShrink: 0,
-		whiteSpace: 'nowrap',
-		boxSizing: 'border-box',
-		...(openDrawer && {
-			...openedMixin(theme),
-			'& .MuiDrawer-paper': openedMixin(theme)
-		}),
-		...(!openDrawer && {
-			...closedMixin(theme),
-			'& .MuiDrawer-paper': closedMixin(theme)
-		})
-	}));
-
 	let index = 0;
 
 	function selectProject(index) {
 		setCurrentProject(userData[index]);
-		// if (dashboardProjects[index]) {
-		// 	axios
-		// 		.get(
-		// 			process.env.REACT_APP_BACKEND_URL +
-		// 				'/projects/' +
-		// 				dashboardProjects[index].id +
-		// 				'/columns'
-		// 		)
-		// 		.then((res) => {
-		// 			setCurrentProject((prev) => {
-		// 				return { ...dashboardProjects[index], Columns: res.data };
-		// 			});
-		// 		});
-		// }
 	}
 
 	function selectModal(modal_name, project) {
@@ -146,9 +69,6 @@ export default function Dashboard(props) {
 		setModalProject(project);
 		openModals(modal_name);
 	}
-
-	const drawerWidth = '15rem';
-	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (
 		<ThemeProvider theme={dashboardTheme}>
@@ -212,6 +132,16 @@ export default function Dashboard(props) {
 				<Offset />
 				<Box sx={{ overflow: 'auto' }}>
 					<List component="nav" aria-label="main mailbox folders">
+						<MenuOpenIcon
+							color="inherit"
+							aria-label="open drawer"
+							onClick={handleDrawerOpen}
+							edge="start"
+							sx={{
+								marginRight: 5,
+								...(open && { display: 'none' })
+							}}
+						/>
 						{userData &&
 							userData.map((project) => (
 								<DashboardItem
@@ -253,3 +183,71 @@ export default function Dashboard(props) {
 		</ThemeProvider>
 	);
 }
+
+const drawerWidth = '15rem';
+const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+
+const openedMixin = (theme) => ({
+	width: drawerWidth,
+	transition: theme.transitions.create('width', {
+		easing: theme.transitions.easing.sharp,
+		duration: theme.transitions.duration.enteringScreen
+	}),
+	overflowX: 'hidden'
+});
+
+const closedMixin = (theme) => ({
+	transition: theme.transitions.create('width', {
+		easing: theme.transitions.easing.sharp,
+		duration: theme.transitions.duration.leavingScreen
+	}),
+	overflowX: 'hidden',
+	width: `calc(${theme.spacing(7)} + 1px)`,
+	[theme.breakpoints.up('sm')]: {
+		width: `calc(${theme.spacing(8)} + 1px)`
+	}
+});
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'flex-end',
+	padding: theme.spacing(0, 1),
+	// necessary for content to be below app bar
+	...theme.mixins.toolbar
+}));
+
+const AppBar = styled(MuiAppBar, {
+	shouldForwardProp: (prop) => prop !== 'openDrawer'
+})(({ theme, openDrawer }) => ({
+	zIndex: theme.zIndex.drawer + 1,
+	transition: theme.transitions.create(['width', 'margin'], {
+		easing: theme.transitions.easing.sharp,
+		duration: theme.transitions.duration.leavingScreen
+	}),
+	...(openDrawer && {
+		marginLeft: drawerWidth,
+		width: `calc(100% - ${drawerWidth}px)`,
+		transition: theme.transitions.create(['width', 'margin'], {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.enteringScreen
+		})
+	})
+}));
+
+const Drawer = styled(MuiDrawer, {
+	shouldForwardProp: (prop) => prop !== 'open'
+})(({ theme, open }) => ({
+	width: drawerWidth,
+	flexShrink: 0,
+	whiteSpace: 'nowrap',
+	boxSizing: 'border-box',
+	...(open && {
+		...openedMixin(theme),
+		'& .MuiDrawer-paper': openedMixin(theme)
+	}),
+	...(!open && {
+		...closedMixin(theme),
+		'& .MuiDrawer-paper': closedMixin(theme)
+	})
+}));
