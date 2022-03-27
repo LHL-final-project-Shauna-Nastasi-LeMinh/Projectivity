@@ -86,12 +86,17 @@ const App = () => {
 				});
 		}
 
+		if (user) {
+			console.log('### USER', user.access_level, startBuild);
+		}
+
 		if (
 			userColumns !== null &&
 			userTickets !== null &&
 			userProjects !== null &&
 			!startBuild
 		) {
+			console.log('GETTING USER DATA');
 			setStartBuild(true);
 			const newUserData = userProjects;
 
@@ -122,6 +127,8 @@ const App = () => {
 					});
 				});
 			});
+
+			console.log('### USER DATA', newUserData);
 
 			setUserData(newUserData);
 		}

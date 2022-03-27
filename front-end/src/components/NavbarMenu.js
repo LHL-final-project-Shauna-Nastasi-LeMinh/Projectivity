@@ -18,6 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
 import { HR_LEVEL } from './constants/AccessLevel';
+import { SettingsBluetoothOutlined } from '@mui/icons-material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -43,6 +44,7 @@ export default function NavbarMenu(props) {
 		setUser,
 		modals,
 		openModals,
+		setStartBuild,
 		clearUserData,
 		notifications,
 		setNotifications,
@@ -60,6 +62,17 @@ export default function NavbarMenu(props) {
 
 	function handleMenuClick(string, newMode) {
 		if (string === 'Logout') {
+			// a axios call to clear cookie session in server side too
+			axios
+				.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
+				.then((res) => {
+					setUser(null);
+					setStartBuild(false);
+					setViewMode(false);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 			clearUserData();
 		}
 
