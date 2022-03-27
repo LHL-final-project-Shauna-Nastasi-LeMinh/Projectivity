@@ -213,13 +213,6 @@ const App = () => {
 					}}
 				/>
 				<Offset />
-				<NotificationDrawer
-					notifications={notifications}
-					setNotifications={setNotifications}
-					notifyOpen={notifyOpen}
-					setNotifyOpen={setNotifyOpen}
-					toggleDrawer={toggleDrawer}
-				/>
 				{user !== null && userData && (
 					<Dashboard
 						viewMode={viewMode}

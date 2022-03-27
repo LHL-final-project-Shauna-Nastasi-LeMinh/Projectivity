@@ -30,6 +30,10 @@ import ListItemText from '@mui/material/ListItemText';
 import Drawer from '@mui/material/Drawer';
 import { styled } from '@mui/system';
 import NotificationDrawer from './NotificationDrawer';
+import Accordion from '@mui/material/Accordion';
+import { Slide } from '@mui/material';
+import { theme, logoTheme } from './Theme';
+import CircleIcon from '@mui/icons-material/Circle';
 
 const page_strings = ['About', 'Login', 'Register'];
 const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM];
@@ -102,34 +106,44 @@ export default function NavbarMenu(props) {
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (
-		<Box sx={{ flexGrow: 1 }}>
-			<AppBar
-				position="fixed"
-				sx={{
-					zIndex: (theme) => theme.zIndex.drawer + 1,
-					width: '100%',
-					borderBottom: 1,
-					borderColor: 'secondary.main'
-				}}
-			>
-				<Toolbar sx={{ display: 'flex' }}>
+		<AppBar
+			position="fixed"
+			sx={{
+				zIndex: (theme) => theme.zIndex.drawer + 1,
+				width: '100%',
+				borderBottom: 1,
+				borderColor: 'secondary.main'
+			}}
+		>
+			<Toolbar>
+				<Box
+					sx={{
+						display: 'flex',
+						height: 'fit-content',
+						justifyContent: 'space-between',
+						alignContent: 'center',
+						flexGrow: 1
+					}}
+				>
 					<Box
+						theme={logoTheme}
 						sx={{
-							display: { xs: 'none', md: 'flex' }
+							display: 'flex',
+							justifyContent: 'space-between',
+							alignContent: 'center',
+							mx: 1,
+							color: '#FFFFFF',
+							'&:hover': { color: 'secondary.light' }
 						}}
 					>
-						<Typography variant="h4" noWrap component="div">
+						<Typography variant="h4" sx={{ alignSelf: 'center', mx: 1 }}>
 							SyncUp
 						</Typography>
-						<Typography variant="h8" noWrap component="div">
-							Synchronize your team!
+						<Typography variant="h6" sx={{ alignSelf: 'center', mx: 1 }}>
+							Synchronize your team
 						</Typography>
 					</Box>
-					<Box
-						sx={{
-							display: { xs: 'none', md: 'flex' }
-						}}
-					>
+					<Box sx={{ display: 'flex' }}>
 						{user && (
 							<Button onClick={toggleDrawer}>
 								{temp_notifications.length <= 0 && (
@@ -142,116 +156,124 @@ export default function NavbarMenu(props) {
 									/>
 								)}
 								{temp_notifications.length > 0 && (
-									<div>
+									<Box sx={{ display: 'flex' }}>
 										<NotificationsActiveIcon
-											fontSize="medium"
+											fontSize="large"
 											sx={{
 												color: 'background.default'
+											}}
+										/>
+										<CircleIcon
+											sx={{
+												position: 'absolute',
+												height: '20px',
+												right: '10px',
+												top: '10px',
+												zIndex: 1,
+												color: 'secondary.main'
 											}}
 										/>
 										<Typography
 											sx={{
 												position: 'absolute',
-												left: '27px',
-												top: '8px',
+												fontSize: '12px',
+												right: '19px',
+												top: '11px',
 												zIndex: 1,
-												color: 'secondary.main'
+												color: '#FFFFFF'
 											}}
 										>
 											{temp_notifications.length}
 										</Typography>
-									</div>
+									</Box>
 								)}
+
+								<NotificationDrawer
+									notifications={notifications}
+									setNotifications={setNotifications}
+									notifyOpen={notifyOpen}
+									setNotifyOpen={setNotifyOpen}
+									toggleDrawer={toggleDrawer}
+								/>
 							</Button>
 						)}
-
-						{!user && (
-							<ButtonGroup
-								orientiation={{ vertical: 'top', horizontal: 'right' }}
-								variant="text"
-							>
-								<Button
-									key="about"
-									onClick={() => setViewMode(false)}
-									sx={{ color: 'white', display: 'block' }}
+						<Box sx={{ display: 'flex' }}>
+							{!user && (
+								<ButtonGroup
+									orientiation={{ vertical: 'top', horizontal: 'right' }}
+									variant="text"
 								>
-									About
-								</Button>
-								<Button
-									key="login"
-									onClick={() => openModals('loginForm')}
-									sx={{ color: 'white', display: 'block' }}
-								>
-									Login
-								</Button>
-							</ButtonGroup>
-						)}
-						{user && (
-							<Box
-								sx={{
-									display: 'flex'
-								}}
-							>
-								<Box
-									sx={{
-										display: 'flex',
-										flexDirection: 'column',
-										justifyContent: 'center',
-										mx: 1
-									}}
-								>
-									<Typography variant="h6">{email}</Typography>
-								</Box>
-								{user && user.access_level == HR_LEVEL && (
 									<Button
-										key="register"
+										key="about"
+										onClick={() => setViewMode(false)}
 										sx={{ color: 'white', display: 'block' }}
-										onClick={() => openModals('registerForm')}
 									>
-										Add Employee
+										About
 									</Button>
-								)}
-								<Tooltip title="Open settings">
-									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-										<Avatar
-											alt="Remy Sharp"
-											src="/static/images/avatar/2.jpg"
-										/>
-									</IconButton>
-								</Tooltip>
+									<Button
+										key="login"
+										onClick={() => openModals('loginForm')}
+										sx={{ color: 'white', display: 'block' }}
+									>
+										Login
+									</Button>
+								</ButtonGroup>
+							)}
 
-								<Menu
-									sx={{ mt: '45px' }}
-									id="menu-appbar"
-									anchorEl={anchorElUser}
-									anchorOrigin={{
-										vertical: 'top',
-										horizontal: 'right'
-									}}
-									keepMounted
-									transformOrigin={{
-										vertical: 'top',
-										horizontal: 'right'
-									}}
-									open={Boolean(anchorElUser)}
-									onClose={() => setAnchorElUser(null)}
-								>
-									{settings.map((setting, index) => (
-										<MenuItem
-											key={setting}
-											onClick={() =>
-												handleMenuClick(setting, setting_views[index])
-											}
+							{user && (
+								<Box sx={{ display: 'flex' }}>
+									<Typography variant="h6">{email}</Typography>
+									{user && user.access_level == HR_LEVEL && (
+										<Button
+											key="register"
+											sx={{ color: 'white', display: 'block' }}
+											onClick={() => openModals('registerForm')}
 										>
-											<Typography textAlign="center">{setting}</Typography>
-										</MenuItem>
-									))}
-								</Menu>
-							</Box>
-						)}
+											Add Employee
+										</Button>
+									)}
+									<Tooltip title="Open settings">
+										<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+											<Avatar
+												alt="Remy Sharp"
+												src="/static/images/avatar/2.jpg"
+											/>
+										</IconButton>
+									</Tooltip>
+
+									<Menu
+										sx={{ mt: '45px' }}
+										id="menu-appbar"
+										anchorEl={anchorElUser}
+										anchorOrigin={{
+											vertical: 'top',
+											horizontal: 'right'
+										}}
+										keepMounted
+										transformOrigin={{
+											vertical: 'top',
+											horizontal: 'right'
+										}}
+										open={Boolean(anchorElUser)}
+										onClose={() => setAnchorElUser(null)}
+									>
+										{settings.map((setting, index) => (
+											<MenuItem
+												key={setting}
+												onClick={() =>
+													handleMenuClick(setting, setting_views[index])
+												}
+											>
+												<Typography textAlign="center">{setting}</Typography>
+											</MenuItem>
+										))}
+									</Menu>
+								</Box>
+							)}
+						</Box>
 					</Box>
-				</Toolbar>
-			</AppBar>
-		</Box>
+				</Box>
+			</Toolbar>
+		</AppBar>
 	);
 }

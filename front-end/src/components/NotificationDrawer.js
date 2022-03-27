@@ -29,9 +29,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Drawer from '@mui/material/Drawer';
 import { styled } from '@mui/system';
 import Accordion from '@mui/material/Accordion';
+import { Slide } from '@mui/material';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import { theme } from './Theme';
-import { Slide } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -59,6 +59,9 @@ export default function NotificationDrawer(props) {
 			hidden={!notifyOpen}
 			TransitionComponent={Slide}
 			sx={{
+				position: 'fixed',
+				top: '4rem',
+				right: '6rem',
 				zIndex: (theme) => theme.zIndex.appBar + 1,
 				width: '25rem',
 				backgroundColor: '#FFFFFF',
@@ -127,20 +130,4 @@ export default function NotificationDrawer(props) {
 				})}
 		</Accordion>
 	);
-}
-
-{
-	/* <Drawer
-	anchor="top"
-	position="fixed"
-	open={notifyOpen}
-	onOpen={toggleDrawer(true)}
-	onClose={toggleDrawer(false)}
-	hideBackdrop={true}
->
-	<ListItem>
-		<ListItemText primary={text} />
-	</ListItem>
-	<List></List>
-</Drawer>; */
 }
