@@ -5,6 +5,7 @@ export default function useEmployeesData(employeeId) {
   const [employee, setEmployee] = useState({});
 
   useEffect(() => {
+    if (employeeId !== undefined) {
     axios.get(process.env.REACT_APP_BACKEND_URL + `/employees/${employeeId}`, {
      
     })
@@ -15,8 +16,9 @@ export default function useEmployeesData(employeeId) {
     .catch(function (error) {
       console.log(error.message)
       })
+    }
   }, []);
 
-  
+
   return employee;
 }
