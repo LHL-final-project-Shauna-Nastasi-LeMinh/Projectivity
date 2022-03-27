@@ -86,7 +86,6 @@ module.exports = (sequelizeModels, pusher) => {
         }
       })
       if (owner_id) {
-        console.log("THERE IS OWNER ID: "+ owner_id)
         await addNotification(owner_id, `Ticket ${title} was deleted and unassigned from you`, updater_name)
         pusher.trigger(NOTIF_CHANNEL, NOTIF_NEW_EVENT, {notif_to_id: owner_id});
       }
@@ -101,7 +100,6 @@ module.exports = (sequelizeModels, pusher) => {
     try {
       const {id, title, description, severity, priority, type, milestone, owner_id, updater_name} = req.body
 
-      console.log("TICKETS REQUEST",req.body)
       // get original ticket data before update, for history purpose
       const oldTicketDataRaw = await Ticket.findAll(
         { where: { id: id } }
@@ -131,8 +129,25 @@ module.exports = (sequelizeModels, pusher) => {
       //     id: id
       //   }
       // })
+      const exisiting_owner_id = oldTicketData.owner_id;
 
       // History code
+      if (owner_id !== undefined && exisiting_owner_id !== owner_id) {
+        let oldAssgineeName = null;
+        if (exisiting_owner_id) {
+          const oldAssignee = await Employee.findOne({
+            where: { id: exisiting_owner_id }
+          });
+          oldAssgineeName = `${oldAssignee.first_name} ${oldAssignee.last_name}`
+        }
+        const newAssignee = await Employee.findOne({
+          where: { id: owner_id }
+        });
+        await addHistoryEvent(id, "ASSIGNEE CHANGE",
+          `${oldAssgineeName}`,
+          `${newAssignee.first_name} ${newAssignee.last_name}`,
+          updater_name);
+      }
       if (title !== undefined && oldTicketData.title !== title) {
         await addHistoryEvent(id, "TITLE CHANGE", oldTicketData.title, title, updater_name)
       }
@@ -149,13 +164,12 @@ module.exports = (sequelizeModels, pusher) => {
         await addHistoryEvent(id, "MILESTONE CHANGE", oldTicketData.milestone, milestone, updater_name)
       }
 
+
       const updatedTicket = await Tickets.findAll({
         where: { id: id } })
-        console.log("Update Ticket",updatedTicket)
-
 
       // Notification code
-      const exisiting_owner_id = oldTicketData.owner_id;
+
       let notifMes;
       // if assigning to exising owner
       if (owner_id && exisiting_owner_id && owner_id === exisiting_owner_id) {

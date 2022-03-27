@@ -175,11 +175,11 @@ module.exports = (sequelizeModels) => {
       }
       await Project_Assignments.bulkCreate(assignmentBulkCreateObject);
 
-      // notification
-      const notificationBulkCreateObject = assignmentBulkCreateObject.map(assignment => {
-        return {user_id: assignment.employee_id, message: "You have been assigned to project " + name, creator}
-      })
-      await Notification.bulkCreate(notificationBulkCreateObject);
+      // // notification
+      // const notificationBulkCreateObject = assignmentBulkCreateObject.map(assignment => {
+      //   return {user_id: assignment.employee_id, message: "You have been assigned to project " + name, creator}
+      // })
+      // await Notification.bulkCreate(notificationBulkCreateObject);
 
       return res.json("success!");
     } catch (err) {
