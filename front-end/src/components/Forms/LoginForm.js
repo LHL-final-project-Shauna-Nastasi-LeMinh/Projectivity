@@ -15,7 +15,7 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function LoginForm (props) {
-  const { setViewMode, setUser, setCookie, modals, closeModals, setAllEmployees } = props
+  const { setViewMode, setUser, modals, closeModals, setAllEmployees } = props
   const [values, setValues] = useState({
     message: '',
     email: null,
@@ -48,8 +48,6 @@ export default function LoginForm (props) {
         const loadedUser = result.data;
         closeModals('loginForm')
         setUser(loadedUser)
-        setCookie('user', loadedUser, {
-          path: '/'})
         setViewMode(true)
         console.log(loadedUser)
         if (loadedUser.access_level == HR_LEVEL || loadedUser.access_level == MANAGER_LEVEL) {

@@ -1,7 +1,6 @@
 import './App.css';
 import React, { useState, useEffect, componentDidUpdate } from 'react';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import {
@@ -37,19 +36,18 @@ import { theme } from './components/Theme';
 
 const App = () => {
 	const [user, setUser] = useState(null);
-	const [cookies, setCookie, removeCookie] = useCookies(['user']);
-	const [currentProject, setCurrentProject] = useState();
-	const [currentTicket, setCurrentTicket] = useState();
-	const [currentColumn, setCurrentColumn] = useState('');
+	const [currentProject, setCurrentProject] = useState(null);
+	const [currentTicket, setCurrentTicket] = useState(null);
+	const [currentColumn, setCurrentColumn] = useState(null);
 	const [viewMode, setViewMode] = useState(false);
 	const [refresh, setRefresh] = useState(false);
 	const [data, setData] = useState();
 	const [dashboard, setDashboard] = useState();
 	const [allEmployees, setAllEmployees] = useState();
-	const [dashboardProjects, setDashboardProjects] = useState();
-	const [userProjects, setUserProjects] = useState();
-	const [userColumns, setUserColumns] = useState();
-	const [userTickets, setUserTickets] = useState();
+	const [dashboardProjects, setDashboardProjects] = useState(null);
+	const [userProjects, setUserProjects] = useState(null);
+	const [userColumns, setUserColumns] = useState(null);
+	const [userTickets, setUserTickets] = useState(null);
 	const [sentRequest, setSentRequest] = useState(false);
 	const [startBuild, setStartBuild] = useState(false);
 	const [userData, setUserData] = useState();
@@ -73,9 +71,9 @@ const App = () => {
 		}
 
 		if (
-			userColumns !== undefined &&
-			userTickets !== undefined &&
-			userProjects !== undefined &&
+			userColumns !== null &&
+			userTickets !== null &&
+			userProjects !== null &&
 			!startBuild
 		) {
 			setStartBuild(true);
@@ -113,6 +111,26 @@ const App = () => {
 		}
 	});
 
+	function clearUserData() {
+		console.log('### CLEARING USER DATA');
+		// reset user data
+		setUser(null);
+
+		// reset request and build
+		setStartBuild(false);
+		setSentRequest(false);
+
+		// clear stored data
+		setUserData(null);
+		setUserProjects(null);
+		setUserColumns(null);
+		setUserTickets(null);
+		setCurrentTicket(null);
+		setCurrentColumn(null);
+		setCurrentProject(null);
+		setDashboardProjects(null);
+	}
+
 	// MODAL STATE
 	const [modals, setModals] = useState({
 		loginForm: false,
@@ -123,7 +141,8 @@ const App = () => {
 		editColumnForm: false,
 		deleteProjectForm: false,
 		deleteColumnForm: false,
-		deleteTicketForm: false
+		deleteTicketForm: false,
+		deleteTicketDragForm: false,
 	});
 
 	function openModals(prop) {
@@ -139,13 +158,12 @@ const App = () => {
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (
-		<ThemeProvider theme={theme}>
-			<Container className="App">
+		<Container>
+			<ThemeProvider theme={theme}>
 				{modals.loginForm && (
 					<LoginForm
 						setViewMode={setViewMode}
 						setUser={setUser}
-						setCookie={setCookie}
 						modals={modals}
 						closeModals={closeModals}
 						setRefresh={setRefresh}
@@ -156,13 +174,11 @@ const App = () => {
 					<RegistrationForm
 						setViewMode={setViewMode}
 						setUser={setUser}
-						setCookie={setCookie}
 						modals={modals}
 						closeModals={closeModals}
 						setRefresh={setRefresh}
 					/>
 				)}
-
 				<AppBar
 					position="fixed"
 					sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -181,10 +197,9 @@ const App = () => {
 							setViewMode={setViewMode}
 							user={user}
 							setUser={setUser}
-							cookies={cookies}
-							removeCookie={removeCookie}
 							modals={modals}
 							openModals={openModals}
+							clearUserData={clearUserData}
 							anchorOrigin={{
 								vertical: 'top',
 								horizontal: 'right'
@@ -240,8 +255,8 @@ const App = () => {
 							setUserData={setUserData}
 						/>
 					)}
-			</Container>
-		</ThemeProvider>
+			</ThemeProvider>
+		</Container>
 	);
 };
 

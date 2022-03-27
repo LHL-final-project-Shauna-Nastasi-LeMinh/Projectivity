@@ -21,7 +21,7 @@ module.exports = (sequelizeModels) => {
       });
       const allColumns = await Columns.findAll();
       const allTickets = await Tickets.findAll();
-      const allHistories = await History.findAll();
+      // const allHistories = await History.findAll();
 
       const userProjects = project_assignments.map((data) => {
         return data.Project.dataValues;
@@ -31,9 +31,11 @@ module.exports = (sequelizeModels) => {
         return data.id;
       });
 
-      const userColumns = allColumns.map((data) => {
+      const userColumns = [];
+
+      allColumns.map((data) => {
         if (userProjectIds.includes(data.dataValues.project_id)) {
-          return data.dataValues;
+          userColumns.push(data.dataValues);
         }
       });
 
@@ -112,7 +114,6 @@ module.exports = (sequelizeModels) => {
       const assignees = project_assignments.map(
         (assignment) => assignment.dataValues.Employee.dataValues
       );
-      console.log(assignees)
       return res.json(assignees);
     } catch (err) {
       console.log(err);
@@ -130,18 +131,24 @@ module.exports = (sequelizeModels) => {
 
       const project_id = project.dataValues.id;
       const assignment_date = Date.now();
-
-      assignmentBulkCreateObject = assigneeIds.map(assigneeId => {
-        return {employee_id: assigneeId, project_id, assignment_date}
-      })
+      const creatorInTheList = false;
+      assignmentBulkCreateObject = assigneeIds.map((assigneeId) => {
+        if (assigneeId === employee_id) {
+          creatorInTheList = true;
+        }
+        return { employee_id: assigneeId, project_id, assignment_date };
+      });
       // if project creator is not in the assignee list, add him in
-      if (!assignmentBulkCreateObject.find(assignment => assignment[employee_id] === employee_id)) {
-        assignmentBulkCreateObject.unshift({employee_id, project_id, assignment_date})
+      if (!creatorInTheList) {
+        assignmentBulkCreateObject.unshift({
+          employee_id,
+          project_id,
+          assignment_date,
+        });
       }
-      await Project_Assignments.bulkCreate(assignmentBulkCreateObject)
+      await Project_Assignments.bulkCreate(assignmentBulkCreateObject);
 
       return res.json("success!");
-
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
@@ -151,7 +158,7 @@ module.exports = (sequelizeModels) => {
   router.post("/:project_id/details", async (req, res) => {
     try {
       const { name, description, employee_id, assigneeIds } = req.body;
-      const project_id = req.params.project_id
+      const project_id = req.params.project_id;
 
       const project = await Projects.update(
         { name, description },
@@ -163,21 +170,25 @@ module.exports = (sequelizeModels) => {
           project_id: project_id,
         },
       });
-      const assignment_date = Date.now()
-      assignmentBulkCreateObject = assigneeIds.map(assigneeId => {
-        return {employee_id: assigneeId, project_id, assignment_date}
-      })
+      const assignment_date = Date.now();
+      let creatorInTheList = false;
+      assignmentBulkCreateObject = assigneeIds.map((assigneeId) => {
+        if (assigneeId === employee_id) {
+          creatorInTheList = true;
+        }
+        return { employee_id: assigneeId, project_id, assignment_date };
+      });
       // if project creator is not in the assignee list, add him in
-      console.log("assignmentBulkCreateObject:"+ assignmentBulkCreateObject);
-      console.log("employee_id:"+ employee_id);
-      console.log(assignmentBulkCreateObject.find(assignment => assignment[employee_id] === employee_id))
-      if (!assignmentBulkCreateObject.find(assignment => assignment[employee_id] === employee_id)) {
-        assignmentBulkCreateObject.unshift({employee_id, project_id, assignment_date})
+      if (!creatorInTheList) {
+        assignmentBulkCreateObject.unshift({
+          employee_id,
+          project_id,
+          assignment_date,
+        });
       }
-      await Project_Assignments.bulkCreate(assignmentBulkCreateObject)
+      await Project_Assignments.bulkCreate(assignmentBulkCreateObject);
 
       return res.json("success!");
-
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);

@@ -20,7 +20,6 @@ export default function DeleteProjectForm(props) {
 		setViewMode,
 		user,
 		setUser,
-		setCookie,
 		open,
 		setOpen,
 		modals,

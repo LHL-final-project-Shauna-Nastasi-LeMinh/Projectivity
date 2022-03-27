@@ -29,7 +29,7 @@ export default function AssignTicket(props) {
           if (res && res.data) {
 						console.log("RESPONSE", res.data)
 						setEmployees({ all: res.data });
-            console.log("STATE", employees)
+           
           }
 				})
         .catch(function (error) {
@@ -57,9 +57,12 @@ export default function AssignTicket(props) {
         
         const updatedTicket = res.data[0]
 
+        console.log("UPDATET TICKET >>>",updatedTicket)
+
         const updatedTickets = tickets.filter(
 					(ticket) => ticket.id !== updatedTicket.id
 				);
+        console.log("UPDATET TICKETS >>>",updatedTickets)
 
 				setTickets([...updatedTickets, updatedTicket]);
 

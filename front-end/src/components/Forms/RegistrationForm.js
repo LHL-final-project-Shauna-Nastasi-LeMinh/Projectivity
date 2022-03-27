@@ -17,7 +17,7 @@ import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function RegistrationForm (props) {
   const DEFAULT_DEV_ROLE = 3;
-  const { setViewMode, setUser, setCookie, modals, closeModals } = props
+  const { setViewMode, setUser, modals, closeModals } = props
 
   const [roles, setRoles] = useState([])
   const [role, setRole] = useState()
