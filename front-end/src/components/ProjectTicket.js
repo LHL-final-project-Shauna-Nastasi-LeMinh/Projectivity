@@ -74,6 +74,7 @@ export default function ProjectTicket (props) {
 	const id = openPop ? 'simple-popover' : undefined;
 
 	const openPopover = (event) => {
+		console.log(ticketId)
 		setAnchorPop(event.currentTarget);
 	}
 
@@ -203,7 +204,11 @@ export default function ProjectTicket (props) {
 				  }}
 				>
 				  <Typography sx={{ p: 2 }}>
-						<AssignTicket/>
+						<AssignTicket
+							currentProject={currentProject}
+							ticketId={ticketId}
+							setAnchorPop={setAnchorPop}
+						/>
 					</Typography>
 				</Popover>
 
