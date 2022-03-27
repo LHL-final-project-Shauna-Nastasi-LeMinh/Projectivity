@@ -20,7 +20,7 @@ import AssignTicket from './Forms/AssignTicket';
 import useEmployeesData from "../hooks/useEmployeesData";
 
 import { BlockRounded } from '@mui/icons-material';
-import { palette } from '@mui/system';
+import { padding, palette, textAlign } from '@mui/system';
 
 import {
 	SHOW_TICKET_DETAILS,
@@ -236,12 +236,41 @@ export default function ProjectTicket(props) {
 				    open={anchorPop}
 				    anchorEl={anchorPop}
 				    onClose={closePopover}
+						sx={{pb:3}}
 				    anchorOrigin={{
 				    vertical: 'bottom',
 				    horizontal: 'right',
+						
 				  }}
 				>
-				  <Typography sx={{ p: 2 }}>
+				  
+						<Box
+						sx={{
+						border: 1,
+						borderColor: 'grey.500', 
+						backgroundColor: 'primary.main',
+						color: 'background.default',
+            mb: 2, 
+            p: 2,
+						textAlign: 'center',
+						display: 'flex',
+						flexDirection: 'column',
+						justifyContent: 'center'
+
+					}}
+				>
+					<Typography variant="p" align="center">
+					<PersonAddIcon 
+					 fontSize='small'
+						color="secondary"
+					
+					/>
+					</Typography>
+					<Typography variant="p" align="center">
+						Assign Ticket To An Employee
+					</Typography>
+				</Box>
+				<Box sx={{display: 'inline-flex', justifyContent:"center", pb: 3}}>
 						<AssignTicket
 							currentProject={currentProject}
 							ticketId={ticketId}
@@ -249,7 +278,8 @@ export default function ProjectTicket(props) {
 							setTickets={setTickets}
 							tickets={tickets}
 						/>
-					</Typography>
+					</Box>
+					
 				</Popover>
 
 

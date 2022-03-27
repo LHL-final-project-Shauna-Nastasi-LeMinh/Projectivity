@@ -81,11 +81,12 @@ export default function AssignTicket(props) {
   
   return (
     <>
-				<Box
+				{/* <Box
 					sx={{
 						backgroundColor: 'primary.main',
 						color: 'background.default',
-						m: 2
+            m: 0, 
+            p: 2
 					}}
 				>
 					<Typography variant="p" align="center">
@@ -94,9 +95,9 @@ export default function AssignTicket(props) {
 					<Typography variant="p" align="center">
 						Assign Ticket To An Employee
 					</Typography>
-				</Box>
+				</Box> */}
 
-      <Box sx={{display: 'inline-flex', justifyContent:"center"}}>
+      {/* <Box sx={{display: 'inline-flex', justifyContent:"center"}}> */}
         <FormControl sx={{ m: 1, minWidth: 300 }}>
         <InputLabel id="EmployeeLabel">Employees</InputLabel>
         <Select
@@ -119,7 +120,7 @@ export default function AssignTicket(props) {
 						onClick={() => assignTicket()}
 					> Assign
 					</Button>
-          </Box>
+          {/* </Box> */}
 				
   </>
   )
