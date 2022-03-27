@@ -16,7 +16,12 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function RegistrationForm (props) {
+<<<<<<< HEAD
   const { state } = props
+=======
+  const DEFAULT_DEV_ROLE = 3;
+  const { setViewMode, setUser, modals, closeModals } = props
+>>>>>>> feature/notification-drawer
 
   console.log('currentRoles', state.currentRoles)
 
@@ -29,7 +34,11 @@ export default function RegistrationForm (props) {
     phone: null,
     email: null,
     password: null,
+<<<<<<< HEAD
     roleInput: 1,
+=======
+    roleInput: DEFAULT_DEV_ROLE,
+>>>>>>> feature/notification-drawer
     showPassword: false
   })
 
@@ -48,6 +57,7 @@ export default function RegistrationForm (props) {
     event.preventDefault()
   }
 
+<<<<<<< HEAD
 	//   useEffect(() => {
 	//     axios
 	// 			.get(process.env.REACT_APP_BACKEND_URL + '/roles')
@@ -59,6 +69,17 @@ export default function RegistrationForm (props) {
 	//       {role.name}
 	//     </MenuItem>
 	//   })
+=======
+  useEffect(() => {
+    axios
+			.get(process.env.REACT_APP_BACKEND_URL + '/roles')
+			.then(result => {
+  const newMenu = result.data.map(role =>
+    <MenuItem value={role.id}>
+      {role.name}
+    </MenuItem>
+				)
+>>>>>>> feature/notification-drawer
 
 	//   setDropdown(newMenu)
 	//   setRoles(result.data)
@@ -70,7 +91,11 @@ export default function RegistrationForm (props) {
 	//   }, [])
 
   const register = event => {
+<<<<<<< HEAD
     console.log('trying to register')
+=======
+    closeModals('registerForm')
+>>>>>>> feature/notification-drawer
     axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/register', {
   first_name: values.firstName,
@@ -81,6 +106,7 @@ export default function RegistrationForm (props) {
   role_id: values.roleInput
 })
 			.then(res => {
+<<<<<<< HEAD
   console.log('register data', res.data)
   state.setStateTarget('currentUser', res.data)
   state.setStateTarget('currentCookies', res.data)
@@ -88,6 +114,10 @@ export default function RegistrationForm (props) {
 				// state.getUserData(res.data)
   state.closeModal('registerForm')
   state.setMode('projectView')
+=======
+        console.log("Employee added to system")
+  setViewMode(true)
+>>>>>>> feature/notification-drawer
 })
 			.catch(error => {
   console.log(error.message)
@@ -108,8 +138,13 @@ export default function RegistrationForm (props) {
 
   return (
     <Modal
+<<<<<<< HEAD
       open={state.modals.registerForm}
       onClose={() => state.closeModal('registerForm')}
+=======
+      open={modals.registerForm}
+      onClose={() => closeModals('registerForm')}
+>>>>>>> feature/notification-drawer
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -125,7 +160,7 @@ export default function RegistrationForm (props) {
             <HowToReg color='secondary' fontSize='large' />
           </Typography>
           <Typography variant='h4' align='center'>
-						Sign Up
+						Add Employee
 					</Typography>
         </Box>
 
@@ -204,6 +239,7 @@ export default function RegistrationForm (props) {
               defaultValue={values.roleInput}
               onChange={handleChange('roleInput')}
               required
+              value={3}
 						>
               {state.currentRoles !== null &&
 								state.currentRoles.map(role => {
@@ -234,14 +270,18 @@ export default function RegistrationForm (props) {
             variant='contained'
             onClick={register}
 					>
-						Sign Up
+						Add Employee
 					</Button>
           <Button
             sx={{ mx: 2, width: '100%' }}
             color='secondary'
             size='large'
             variant='contained'
+<<<<<<< HEAD
             onClick={() => state.closeModal('registerForm')}
+=======
+            onClick={() => closeModals('registerForm')}
+>>>>>>> feature/notification-drawer
 					>
 						Cancel
 					</Button>

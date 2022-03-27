@@ -1,5 +1,4 @@
-import React from 'react';
-// import { format } from "date-fns";
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -7,8 +6,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import {List, ListItem, Divider, ListItemText} from '@mui/material'
+import axios from 'axios';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -49,9 +48,10 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function ShowTicketDetails(props) {
+export default function TicketHistory(props) {
 
   const {dialogOpen, setDialogOpen, ticketId, tickets} = props
+  const[ticketHistories, setTicketHistories] = useState([])
 
   const ticketDetails = tickets.filter(ticket => ticket.id === ticketId)[0]
 
@@ -59,6 +59,47 @@ export default function ShowTicketDetails(props) {
     console.log(tickets)
     setDialogOpen(false);
   };
+
+  const events = {
+    'CREATED': " created ticket on ",
+    'STATUS CHANGE': ' changed STATUS',
+    'TITLE CHANGE': ' changed TITLE',
+    'SEVERITY CHANGE': ' changed SEVERITY',
+    'PRIORITY CHANGE': ' changed PRIORITY',
+    'TYPE CHANGE': ' changed TYPE',
+    'MILESTONE CHANGE': ' changed MILESTONE',
+  }
+
+  useEffect(() => {
+
+    axios
+				.get(
+					process.env.REACT_APP_BACKEND_URL + `/histories/${ticketId}`
+				)
+				.then((res) => {
+          if (res && res.data) {
+            console.log(res.data);
+            const generatedHistory = res.data.map(record => 
+              <>
+                <Divider component="li" />
+                <ListItem key={record.id}>
+                  {record.event !== 'CREATED' && record.source_value !== null &&
+                    <ListItemText secondary={record.updater + events[record.event] + ' from ' + record.source_value + ' to ' + record.dest_value + ' at ' + record.updatedAt.substring(0,10)} />
+                  }
+                  {record.event !== 'CREATED' && record.source_value == null &&
+                    <ListItemText secondary={record.updater + events[record.event] + ' to ' + record.dest_value + ' at ' + record.updatedAt.substring(0,10)} />
+                  }
+                  {record.event == 'CREATED' &&
+                    <ListItemText secondary={record.updater + ' created ticket on ' + record.updatedAt.substring(0,10)} />
+                  }
+                </ListItem>
+              </>
+            )
+            
+            setTicketHistories(generatedHistory);
+          }
+				});
+  }, [])
 
   return (
     
@@ -70,78 +111,18 @@ export default function ShowTicketDetails(props) {
         maxWidth ='md'
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+          {'History - '} 
           {ticketDetails.title}
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <List
             sx={{
               width: '100%',
-              
               bgcolor: 'background.paper',
             }}
           >
-            <ListItem>
-             
-              <ListItemText primary="Description:" secondary={ticketDetails.description} />
-            </ListItem>
-
-            {/* <Divider component="li" />
-
-            <ListItem>
-             
-              <ListItemText primary="Created at:" secondary={format(ticketDetails.created_at, "MMMM Do, YYYY")} />
-            </ListItem> */}
+            {ticketHistories}
           
-
-          <Divider component="li" />
-
-          {ticketDetails.severity && (
-            <>
-            <Divider component="li" />
-
-            <ListItem>
-             
-              <ListItemText primary="Severity:" secondary={ticketDetails.severity} />
-            </ListItem>
-          
-          </>
-          )}
-
-          {ticketDetails.priority && (
-            <>
-            <Divider component="li" />
-
-            <ListItem>
-             
-              <ListItemText primary="Priority:" secondary={ticketDetails.priority} />
-            </ListItem>
-          
-          </>
-          )}
-
-          {ticketDetails.type && (
-            <>
-            <Divider component="li" />
-
-            <ListItem>
-             
-              <ListItemText primary="Type:" secondary={ticketDetails.type} />
-            </ListItem>
-          
-          </>
-          )}
-
-          {ticketDetails.milestone && (
-            <>
-            <Divider component="li" />
-
-            <ListItem>
-             
-              <ListItemText primary="Milestone:" secondary={ticketDetails.milestone} />
-            </ListItem>
-          
-          </>
-          )}
 
           </List>
         </DialogContent>

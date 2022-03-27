@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { HR_LEVEL, MANAGER_LEVEL } from '../constants/AccessLevel'
 import {
 	Button,
 	Modal,
@@ -14,7 +15,11 @@ import {
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function LoginForm (props) {
+<<<<<<< HEAD
   const { setUser, setCookie, modals, closeModals, state } = props
+=======
+  const { setViewMode, setUser, modals, closeModals, setAllEmployees } = props
+>>>>>>> feature/notification-drawer
   const [values, setValues] = useState({
     message: '',
     email: null,
@@ -39,6 +44,7 @@ export default function LoginForm (props) {
     event.preventDefault()
   }
 
+<<<<<<< HEAD
   function login () {
     state.usersList.map(user => {
       if (user.email === values.email) {
@@ -52,6 +58,32 @@ export default function LoginForm (props) {
         }
       }
     })
+=======
+  const login = event => {
+    axios
+			.post(process.env.REACT_APP_BACKEND_URL + '/accessControl/login', {
+      email: values.email,
+      password: values.password
+    })
+      .then(result => {
+        const loadedUser = result.data;
+        closeModals('loginForm')
+        setUser(loadedUser)
+        setViewMode(true)
+        console.log(loadedUser)
+        if (loadedUser.access_level == HR_LEVEL || loadedUser.access_level == MANAGER_LEVEL) {
+          axios
+            .get(process.env.REACT_APP_BACKEND_URL + '/employees/withoutHR')
+            .then(res => {
+              setAllEmployees(res.data);
+            })
+        }
+    })
+			.catch(function (error) {
+  console.log(error.message)
+  setValues({ ...values, message: 'Form invalid' })
+})
+>>>>>>> feature/notification-drawer
   }
 
   const style = {
@@ -65,10 +97,16 @@ export default function LoginForm (props) {
     boxShadow: 24
   }
 
+  console.log(modals.loginForm)
   return (
     <Modal
+<<<<<<< HEAD
       open={state.modals.loginForm}
       onClose={() => state.closeModal('loginForm')}
+=======
+      open={modals.loginForm}
+      onClose={() => closeModals('loginForm')}
+>>>>>>> feature/notification-drawer
       aria-labelledby='modal-login-form'
       aria-describedby='modal-modal-login-form'
 		>
@@ -113,12 +151,12 @@ export default function LoginForm (props) {
               endadornment={
                 <InputAdornment position='end'>
                   <IconButton
-                    aria-label='toggle password visibility'
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
+                  aria-label='toggle password visibility'
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
 									>
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
+                  {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
                 </InputAdornment>
 							}
               required
@@ -150,7 +188,11 @@ export default function LoginForm (props) {
             color='secondary'
             size='large'
             variant='contained'
+<<<<<<< HEAD
             onClick={() => state.closeModal('loginForm')}
+=======
+            onClick={() => closeModals('loginForm')}
+>>>>>>> feature/notification-drawer
 					>
 						Cancel
 					</Button>

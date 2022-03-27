@@ -20,6 +20,7 @@ module.exports = {
         priority: 'Urgent',
         type: 'Usability',
         build: 'v12.22.5',
+        owner_id: 2,
         milestone: 'Customer Proposal',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -32,6 +33,7 @@ module.exports = {
         priority: 'Valuable',
         type: 'Functional',
         build: 'v17.5.0',
+        owner_id: 2,
         milestone: 'Customer Proposal',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -44,6 +46,7 @@ module.exports = {
         priority: 'Discretionary',
         type: 'Compatibility',
         build: 'v12.22.5',
+        owner_id: 2,
         milestone: 'Customer Proposal',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -56,6 +59,7 @@ module.exports = {
         priority: 'Urgent',
         type: 'Usability',
         build: 'v17.5.0',
+        owner_id: 2,
         milestone: 'Customer Proposal',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -68,6 +72,7 @@ module.exports = {
         priority: 'Urgent',
         type: 'Functional',
         build: 'v17.5.0',
+        owner_id: 3,
         milestone: 'Customer Proposal',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -80,6 +85,7 @@ module.exports = {
         priority: 'Urgent',
         type: 'Functional',
         build: 'v12.22.5',
+        owner_id: 3,
         milestone: 'Customer Proposal',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -92,6 +98,7 @@ module.exports = {
         priority: 'Discretionary',
         type: 'Usability',
         build: 'v17.5.0',
+        owner_id: 2,
         milestone: 'Official E2E Testing',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -104,6 +111,7 @@ module.exports = {
         priority: 'Urgent',
         type: 'Usability',
         build: 'v17.5.0',
+        owner_id: 2,
         milestone: 'Official E2E Testing',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -116,6 +124,7 @@ module.exports = {
         priority: 'Urgent',
         type: 'Security',
         build: 'v17.5.0',
+        owner_id: 3,
         milestone: 'Official E2E Testing',
         createdAt: new Date(),
         updatedAt: new Date()

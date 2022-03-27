@@ -1,12 +1,16 @@
 import React from 'react'
-import Dashboard from './Dashboard'
-import ProjectView from './ProjectView'
 import Container from '@mui/material/Container'
+import HRPage from './HRPage'
+import { HR_LEVEL } from './constants/AccessLevel'
+import Typography from '@mui/material/Typography'
 
 export default function AboutPage (props) {
+  const { user } = props
   return (
     <Container>
-      <h2>Welcome to the LHL Final Project!</h2>
+      <Typography variant='h4' align='center'>
+				Welcome to the LHL Final Project!
+			</Typography>
     </Container>
   )
 }
