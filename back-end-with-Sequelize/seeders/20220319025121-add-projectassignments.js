@@ -61,6 +61,13 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        employee_id: 4,
+        project_id: 1,
+        assignment_date: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ], {});
   },
 
