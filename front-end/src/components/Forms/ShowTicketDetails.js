@@ -1,5 +1,5 @@
 import React from 'react';
-// import { format } from "date-fns";
+import { format } from "date-fns";
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -8,7 +8,11 @@ import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import {List, ListItem, Divider, ListItemText} from '@mui/material'
+import {List, ListItem, Divider, ListItemText, Avatar, Chip} from '@mui/material'
+
+import useEmployeesData from '../../hooks/useEmployeesData';
+
+import { choosePriorityColor } from '../../helpers/colorHelper';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -24,7 +28,7 @@ const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props;
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2, backgroundColor: 'primary.main',  color: 'background.default'}} {...other}>
+    <DialogTitle sx={{ m: 0, p: 3, backgroundColor: 'primary.main',  color: 'background.default'}} {...other}>
       {children}
       {onClose ? (
         <IconButton
@@ -55,10 +59,16 @@ export default function ShowTicketDetails(props) {
 
   const ticketDetails = tickets.filter(ticket => ticket.id === ticketId)[0]
 
+  console.log("TICKETDETAILS???", ticketDetails)
+
   const handleClose = () => {
     console.log(tickets)
     setDialogOpen(false);
   };
+
+  const currentEmployee = useEmployeesData(ticketDetails.owner_id, tickets)
+
+  console.log("DATA CURR EMPLOYE TICKET>>", currentEmployee)
 
   return (
     
@@ -69,14 +79,27 @@ export default function ShowTicketDetails(props) {
         fullWidth
         maxWidth ='md'
       >
-        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {ticketDetails.title}
+        <BootstrapDialogTitle 
+          id="customized-dialog-title" 
+          onClose={handleClose}
+          sx={{display: "inline-flex", backgroundColor: 'primary.main', color: 'white'}}
+          >
+         
+          {`Ticket: ${ticketDetails.title}`}
+          {Object.keys(currentEmployee).length !== 0 && ticketDetails.owner_id && 
+				  <Avatar 
+					sx={{ width: 30, height: 30, borderRadius: 1, ml: 3}}
+					size={100}
+					alt='JON'
+					src={currentEmployee.avatar}>
+						<img alt={`${currentEmployee.first_name[0]}${currentEmployee.last_name[0]}`}></img>
+						</Avatar>
+        }
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <List
             sx={{
               width: '100%',
-              
               bgcolor: 'background.paper',
             }}
           >
@@ -85,15 +108,15 @@ export default function ShowTicketDetails(props) {
               <ListItemText primary="Description:" secondary={ticketDetails.description} />
             </ListItem>
 
-            {/* <Divider component="li" />
+            <Divider component="li" />
 
             <ListItem>
              
-              <ListItemText primary="Created at:" secondary={format(ticketDetails.created_at, "MMMM Do, YYYY")} />
-            </ListItem> */}
+              <ListItemText primary="Created at:" secondary={ticketDetails.createdAt.substring(0,10)} />
+            </ListItem>
           
 
-          <Divider component="li" />
+          {/* <Divider component="li" /> */}
 
           {ticketDetails.severity && (
             <>
@@ -106,6 +129,7 @@ export default function ShowTicketDetails(props) {
           
           </>
           )}
+          
 
           {ticketDetails.priority && (
             <>
@@ -113,7 +137,18 @@ export default function ShowTicketDetails(props) {
 
             <ListItem>
              
-              <ListItemText primary="Priority:" secondary={ticketDetails.priority} />
+              <ListItemText primary="Priority:" 
+              
+              secondary={
+                
+                <Chip
+                  pl="2"
+                  label={ticketDetails.priority}
+                
+			       		  style={{backgroundColor: choosePriorityColor(ticketDetails.priority), fontWeight:'700'}}
+                   size="small"
+               />
+                } />
             </ListItem>
           
           </>
@@ -138,6 +173,18 @@ export default function ShowTicketDetails(props) {
             <ListItem>
              
               <ListItemText primary="Milestone:" secondary={ticketDetails.milestone} />
+            </ListItem>
+          
+          </>
+          )}
+
+          {ticketDetails.owner_id && (
+            <>
+            <Divider component="li" />
+
+            <ListItem>
+             
+              <ListItemText primary="Assigned To:" secondary={`${currentEmployee.first_name} ${currentEmployee.last_name} - ${currentEmployee.email}`} />
             </ListItem>
           
           </>
