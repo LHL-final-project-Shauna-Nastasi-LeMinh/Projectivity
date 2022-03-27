@@ -192,6 +192,12 @@ export default function ProjectView(props) {
 			console.log("TYPE:"+type);
 		}
 	}
+	const onDragUpdate = (e) => {
+		const type = e.type
+		if (type === 'ticket' && e.destination && e.destination.droppableId === 'ticket_bin') {
+			// Code goes here for Drawer onHover
+		}
+	}
 
 	const createNewColumn = function (newColumnName) {
 		axios
@@ -354,7 +360,7 @@ export default function ProjectView(props) {
 				resetSearchPane={resetSearchPane}
 				user={user}
 			/>
-			<DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+			<DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart} onDragUpdate={onDragUpdate}>
 				<Droppable
 					droppableId="all-column"
 					direction="horizontal"
