@@ -262,55 +262,55 @@ export default function ProjectColumn(props) {
 						</DialogActions>
 					</Dialog>
 					<Divider />
-
-					<Box
-						sx={{
-							height: 'fit-content',
-							minHeight: '24rem',
-							maxHeight: '36rem',
-							backgroundColor: 'rgb(41, 50, 65, 0.1)',
-							transition: 'background-color 0.5s ease',
-							'&:hover': {
-								backgroundColor: 'rgb(249, 65, 68, 0.1)'
-							}
-						}}
-					>
-						<Droppable droppableId={column.name} type="ticket">
+					<Droppable droppableId={column.name} type="ticket">
 							{(provided, snapshot) => (
-								<List
-									{...provided.droppableProps}
-									ref={provided.innerRef}
-									isdraggingover={snapshot.isDraggingOver}
-									sx={{
-										backgroundColor: snapshot.isDraggingOver
-											? 'rgba(240, 240, 240, .7)'
-											: 'inherit',
-										transition: 'background-color 0.5s ease'
-									}}
-								>
-									<ColumnTickets
-										tickets={tickets}
-										setViewMode={setViewMode}
-										setOpen={setOpen}
-										currentTicket={currentTicket}
-										open={open}
-										setCurrentTicket={setCurrentTicket}
-										setTickets={setTickets}
-										user={user}
-										currentColumn={currentColumn}
-										setCurrentColumn={setCurrentColumn}
-										currentProject={currentProject}
-										userData={userData}
-										setUserData={setUserData}
-										editTicket={editTicket}
-										setEditTicket={setEditTicket}
-									/>
-									{provided.placeholder}
-								</List>
-							)}
-						</Droppable>
-					</Box>
-
+						<Box
+							sx={{
+								height: 'fit-content',
+								minHeight: '24rem',
+								maxHeight: '36rem',
+								backgroundColor: 'rgb(41, 50, 65, 0.1)',
+								transition: 'background-color 0.5s ease',
+								'&:hover': {
+									backgroundColor: 'rgb(249, 65, 68, 0.1)'
+								}
+							}}
+							{...provided.droppableProps}
+							ref={provided.innerRef}
+							isdraggingover={snapshot.isDraggingOver}
+						>
+							<List
+								
+								sx={{
+									backgroundColor: snapshot.isDraggingOver
+										? 'rgba(240, 240, 240, .7)'
+										: 'inherit',
+									transition: 'background-color 0.5s ease'
+								}}
+							>
+								<ColumnTickets
+									tickets={tickets}
+									setViewMode={setViewMode}
+									setOpen={setOpen}
+									currentTicket={currentTicket}
+									open={open}
+									setCurrentTicket={setCurrentTicket}
+									setTickets={setTickets}
+									user={user}
+									currentColumn={currentColumn}
+									setCurrentColumn={setCurrentColumn}
+									currentProject={currentProject}
+									userData={userData}
+									setUserData={setUserData}
+									editTicket={editTicket}
+									setEditTicket={setEditTicket}
+								/>
+								
+							</List>
+							{provided.placeholder}
+						</Box>
+						)}
+					</Droppable>
 					<Divider />
 					<Box
 						sx={{
