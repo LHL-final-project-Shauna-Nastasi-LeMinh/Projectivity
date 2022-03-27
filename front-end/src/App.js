@@ -56,16 +56,8 @@ const App = () => {
 	// an empty array to push notifications to
 	const [notifications, setNotifications] = useState([]);
 
-	const toggleDrawer = (open) => (event) => {
-		console.log('### CLICKED', open, event);
-		if (
-			event.type === 'keydown' &&
-			(event.key === 'Tab' || event.key === 'Shift')
-		) {
-			return;
-		}
-
-		setNotifyOpen(open);
+	const toggleDrawer = () => {
+		setNotifyOpen(notifyOpen ? false : true);
 	};
 
 	useEffect(() => {

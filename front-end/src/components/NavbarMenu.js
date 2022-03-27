@@ -53,7 +53,6 @@ export default function NavbarMenu(props) {
 		toggleDrawer
 	} = props;
 	const [email, setEmail] = useState(null);
-	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
 
 	const handleOpenUserMenu = (event) => {
@@ -105,7 +104,7 @@ export default function NavbarMenu(props) {
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar
-				position="relative"
+				position="fixed"
 				sx={{
 					zIndex: (theme) => theme.zIndex.drawer + 1,
 					width: '100%',
@@ -132,7 +131,7 @@ export default function NavbarMenu(props) {
 						}}
 					>
 						{user && (
-							<Button onClick={toggleDrawer(!notifyOpen)}>
+							<Button onClick={toggleDrawer}>
 								{temp_notifications.length <= 0 && (
 									<NotificationsIcon
 										sx={{
@@ -165,6 +164,7 @@ export default function NavbarMenu(props) {
 								)}
 							</Button>
 						)}
+
 						{!user && (
 							<ButtonGroup
 								orientiation={{ vertical: 'top', horizontal: 'right' }}
