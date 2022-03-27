@@ -17,6 +17,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import { ThemeProvider } from '@mui/material/styles';
 import { dashboardTheme } from './Theme';
 import MenuIcon from '@mui/icons-material/Menu';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function Dashboard(props) {
 	const {
@@ -239,6 +240,10 @@ export default function Dashboard(props) {
 								<ListItemText
 									primary="Create New Project"
 									onClick={() => openModals('newProjectForm')}
+								/>
+								<AddIcon
+									fontSize="large"
+									sx={{ color: 'background.default', mx: 1 }}
 								/>
 							</ListItemButton>
 						)}

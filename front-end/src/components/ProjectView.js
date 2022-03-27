@@ -15,6 +15,8 @@ import { COLUMN_CHANNEL, COLUMN_MOVE_EVENT } from './constants/PusherChannels';
 import Pusher from 'pusher-js';
 import Bin from './Bin';
 import Container from '@mui/material/Container';
+import { ThemeProvider } from '@mui/private-theming';
+import { projectViewTheme } from './Theme';
 
 export default function ProjectView(props) {
 	const {
@@ -338,69 +340,86 @@ export default function ProjectView(props) {
 	};
 
 	return (
-		<Container>
-			<SearchPane
-				searchFilter={searchFilter}
-				resetSearchPane={resetSearchPane}
-				user={user}
-			/>
-			<DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-				<Droppable
-					droppableId="all-column"
-					direction="horizontal"
-					type="column"
+		<Box
+			sx={{
+				position: 'absolute',
+				left: '16rem',
+				top: '4rem',
+				minWidth: 'min-content',
+				width: 'fit-content'
+			}}
+		>
+			<ThemeProvider theme={projectViewTheme}>
+				<Box
+					sx={{
+						width: '80rem'
+					}}
 				>
-					{(provided) => (
-						<Box
-							disablePadding
-							sx={{ display: 'flex' }}
-							{...provided.droppableProps}
-							ref={provided.innerRef}
-						>
-							{columns !== undefined &&
-								columns.map((column, colIndex) => (
-									<ProjectColumn
-										disablePadding
-										key={column.id}
-										user={user}
-										title={column.name}
-										column={column}
-										setViewMode={setViewMode}
-										currentColumn={currentColumn}
-										setCurrentColumn={setCurrentColumn}
-										currentTicket={currentTicket}
-										setCurrentTicket={setCurrentTicket}
-										colIndex={colIndex}
-										open={open}
-										setOpen={setOpen}
-										modals={modals}
-										openModals={openModals}
-										closeModals={closeModals}
-										deleteColumnFromProjectView={deleteColumnFromProjectView}
-										changeColumnFromProjectView={changeColumnFromProjectView}
-										createNewColumn={createNewColumn}
-										selectedColumn={selectedColumn}
-										setSelectedColumn={setSelectedColumn}
-										currentProject={currentProject}
-										userData={userData}
-										setUserData={setUserData}
-										setColumns={setColumns}
-									/>
-								))}
+					<SearchPane
+						searchFilter={searchFilter}
+						resetSearchPane={resetSearchPane}
+						user={user}
+					/>
+				</Box>
+				<DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+					<Droppable
+						droppableId="all-column"
+						direction="horizontal"
+						type="column"
+					>
+						{(provided) => (
+							<Box
+								disablePadding
+								sx={{ display: 'flex' }}
+								{...provided.droppableProps}
+								ref={provided.innerRef}
+							>
+								{columns !== undefined &&
+									columns.map((column, colIndex) => (
+										<ProjectColumn
+											disablePadding
+											key={column.id}
+											user={user}
+											title={column.name}
+											column={column}
+											setViewMode={setViewMode}
+											currentColumn={currentColumn}
+											setCurrentColumn={setCurrentColumn}
+											currentTicket={currentTicket}
+											setCurrentTicket={setCurrentTicket}
+											colIndex={colIndex}
+											open={open}
+											setOpen={setOpen}
+											modals={modals}
+											openModals={openModals}
+											closeModals={closeModals}
+											deleteColumnFromProjectView={deleteColumnFromProjectView}
+											changeColumnFromProjectView={changeColumnFromProjectView}
+											createNewColumn={createNewColumn}
+											selectedColumn={selectedColumn}
+											setSelectedColumn={setSelectedColumn}
+											currentProject={currentProject}
+											userData={userData}
+											setUserData={setUserData}
+											setColumns={setColumns}
+										/>
+									))}
 
-							{user.access_level == MANAGER_LEVEL && columns !== undefined && (
-								<ProjectColumnNew
-									createNewColumn={createNewColumn}
-									columnsCount={columns.length}
-									openModals={openModals}
-								/>
-							)}
-							{provided.placeholder}
-						</Box>
-					)}
-				</Droppable>
-				<Bin />
-			</DragDropContext>
-		</Container>
+								{user.access_level == MANAGER_LEVEL &&
+									columns !== undefined && (
+										<ProjectColumnNew
+											createNewColumn={createNewColumn}
+											columnsCount={columns.length}
+											openModals={openModals}
+										/>
+									)}
+								{provided.placeholder}
+							</Box>
+						)}
+					</Droppable>
+					<Bin />
+				</DragDropContext>
+			</ThemeProvider>
+		</Box>
 	);
 }

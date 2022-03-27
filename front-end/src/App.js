@@ -159,107 +159,109 @@ const App = () => {
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (
-		<ThemeProvider theme={theme}>
-			{modals.loginForm && (
-				<LoginForm
-					setViewMode={setViewMode}
-					setUser={setUser}
-					setCookie={setCookie}
-					modals={modals}
-					closeModals={closeModals}
-					setRefresh={setRefresh}
-					setAllEmployees={setAllEmployees}
-				/>
-			)}
-			{modals.registerForm && (
-				<RegistrationForm
-					setViewMode={setViewMode}
-					setUser={setUser}
-					setCookie={setCookie}
-					modals={modals}
-					closeModals={closeModals}
-					setRefresh={setRefresh}
-				/>
-			)}
-			<AppBar
-				position="fixed"
-				sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-			>
-				<Toolbar>
-					<Typography
-						variant="h6"
-						noWrap
-						component="div"
-						sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}
-					>
-						PRODUCTIVITY MANAGER APP
-					</Typography>
-					<NavbarMenu
+		<Container>
+			<ThemeProvider theme={theme}>
+				{modals.loginForm && (
+					<LoginForm
+						setViewMode={setViewMode}
+						setUser={setUser}
+						setCookie={setCookie}
+						modals={modals}
+						closeModals={closeModals}
+						setRefresh={setRefresh}
+						setAllEmployees={setAllEmployees}
+					/>
+				)}
+				{modals.registerForm && (
+					<RegistrationForm
+						setViewMode={setViewMode}
+						setUser={setUser}
+						setCookie={setCookie}
+						modals={modals}
+						closeModals={closeModals}
+						setRefresh={setRefresh}
+					/>
+				)}
+				<AppBar
+					position="fixed"
+					sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+				>
+					<Toolbar>
+						<Typography
+							variant="h6"
+							noWrap
+							component="div"
+							sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}
+						>
+							PRODUCTIVITY MANAGER APP
+						</Typography>
+						<NavbarMenu
+							viewMode={viewMode}
+							setViewMode={setViewMode}
+							user={user}
+							setUser={setUser}
+							cookies={cookies}
+							removeCookie={removeCookie}
+							modals={modals}
+							openModals={openModals}
+							clearUserData={clearUserData}
+							anchorOrigin={{
+								vertical: 'top',
+								horizontal: 'right'
+							}}
+						/>
+					</Toolbar>
+				</AppBar>
+				<Offset />
+				{user !== null && userData && (
+					<Dashboard
 						viewMode={viewMode}
 						setViewMode={setViewMode}
 						user={user}
 						setUser={setUser}
-						cookies={cookies}
-						removeCookie={removeCookie}
-						modals={modals}
-						openModals={openModals}
-						clearUserData={clearUserData}
-						anchorOrigin={{
-							vertical: 'top',
-							horizontal: 'right'
-						}}
-					/>
-				</Toolbar>
-			</AppBar>
-			<Offset />
-			{user !== null && userData && (
-				<Dashboard
-					viewMode={viewMode}
-					setViewMode={setViewMode}
-					user={user}
-					setUser={setUser}
-					// userProjects={userProjects}
-					// setUserProjects={setUserProjects}
-					currentProject={currentProject}
-					setCurrentProject={setCurrentProject}
-					dashboardProjects={dashboardProjects}
-					setDashboardProjects={setDashboardProjects}
-					userData={userData}
-					setUserData={setUserData}
-					// data={data}
-					// loadForm={loadForm}
-					// open={open}
-					// setOpen={setOpen}
-					modals={modals}
-					openModals={openModals}
-					closeModals={closeModals}
-					allEmployees={allEmployees}
-				/>
-			)}
-			{user !== null &&
-				user.access_level == HR_LEVEL &&
-				userData !== undefined && <HRPage />}
-			{user === null && <AboutPage user={user} />}
-			{user !== null &&
-				user.access_level != HR_LEVEL &&
-				userData !== undefined && (
-					<ProjectView
-						user={user}
+						// userProjects={userProjects}
+						// setUserProjects={setUserProjects}
 						currentProject={currentProject}
 						setCurrentProject={setCurrentProject}
-						setViewMode={setViewMode}
-						setCurrentColumn={setCurrentColumn}
-						currentTicket={currentTicket}
-						setCurrentTicket={setCurrentTicket}
-						currentColumn={currentColumn}
-						modals={modals}
-						closeModals={closeModals}
-						openModals={openModals}
+						dashboardProjects={dashboardProjects}
+						setDashboardProjects={setDashboardProjects}
 						userData={userData}
 						setUserData={setUserData}
+						// data={data}
+						// loadForm={loadForm}
+						// open={open}
+						// setOpen={setOpen}
+						modals={modals}
+						openModals={openModals}
+						closeModals={closeModals}
+						allEmployees={allEmployees}
 					/>
 				)}
-		</ThemeProvider>
+				{user !== null &&
+					user.access_level == HR_LEVEL &&
+					userData !== undefined && <HRPage />}
+				{user === null && <AboutPage user={user} />}
+				{user !== null &&
+					user.access_level != HR_LEVEL &&
+					userData !== undefined && (
+						<ProjectView
+							user={user}
+							currentProject={currentProject}
+							setCurrentProject={setCurrentProject}
+							setViewMode={setViewMode}
+							setCurrentColumn={setCurrentColumn}
+							currentTicket={currentTicket}
+							setCurrentTicket={setCurrentTicket}
+							currentColumn={currentColumn}
+							modals={modals}
+							closeModals={closeModals}
+							openModals={openModals}
+							userData={userData}
+							setUserData={setUserData}
+						/>
+					)}
+			</ThemeProvider>
+		</Container>
 	);
 };
 
