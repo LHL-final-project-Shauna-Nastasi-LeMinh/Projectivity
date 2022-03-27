@@ -25,9 +25,8 @@ import NewProjectForm from './components/Forms/NewProjectForm';
 import NewTicketForm from './components/Forms/NewTicketForm';
 import { HR_LEVEL } from './components/constants/AccessLevel';
 import HRPage from './components/HRPage';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import NotificationDrawer from './components/NotificationDrawer';
+
 import NavbarMenu from './components/NavbarMenu';
 import Dashboard from './components/Dashboard';
 import { styled } from '@mui/system';
@@ -51,6 +50,23 @@ const App = () => {
 	const [sentRequest, setSentRequest] = useState(false);
 	const [startBuild, setStartBuild] = useState(false);
 	const [userData, setUserData] = useState();
+
+	// sets the open or closed state of the notification drawer
+	const [notifyOpen, setNotifyOpen] = useState(false);
+	// an empty array to push notifications to
+	const [notifications, setNotifications] = useState([]);
+
+	const toggleDrawer = (open) => (event) => {
+		console.log('### CLICKED', open, event);
+		if (
+			event.type === 'keydown' &&
+			(event.key === 'Tab' || event.key === 'Shift')
+		) {
+			return;
+		}
+
+		setNotifyOpen(open);
+	};
 
 	useEffect(() => {
 		if (user !== null && !sentRequest) {
@@ -142,7 +158,7 @@ const App = () => {
 		deleteProjectForm: false,
 		deleteColumnForm: false,
 		deleteTicketForm: false,
-		deleteTicketDragForm: false,
+		deleteTicketDragForm: false
 	});
 
 	function openModals(prop) {
@@ -179,35 +195,32 @@ const App = () => {
 						setRefresh={setRefresh}
 					/>
 				)}
-				<AppBar
-					position="fixed"
-					sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-				>
-					<Toolbar>
-						<Typography
-							variant="h6"
-							noWrap
-							component="div"
-							sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1 }}
-						>
-							PRODUCTIVITY MANAGER APP
-						</Typography>
-						<NavbarMenu
-							viewMode={viewMode}
-							setViewMode={setViewMode}
-							user={user}
-							setUser={setUser}
-							modals={modals}
-							openModals={openModals}
-							clearUserData={clearUserData}
-							anchorOrigin={{
-								vertical: 'top',
-								horizontal: 'right'
-							}}
-						/>
-					</Toolbar>
-				</AppBar>
+				<NavbarMenu
+					viewMode={viewMode}
+					setViewMode={setViewMode}
+					user={user}
+					setUser={setUser}
+					modals={modals}
+					openModals={openModals}
+					clearUserData={clearUserData}
+					notifications={notifications}
+					setNotifications={setNotifications}
+					notifyOpen={notifyOpen}
+					setNotifyOpen={setNotifyOpen}
+					toggleDrawer={toggleDrawer}
+					anchorOrigin={{
+						vertical: 'top',
+						horizontal: 'right'
+					}}
+				/>
 				<Offset />
+				<NotificationDrawer
+					notifications={notifications}
+					setNotifications={setNotifications}
+					notifyOpen={notifyOpen}
+					setNotifyOpen={setNotifyOpen}
+					toggleDrawer={toggleDrawer}
+				/>
 				{user !== null && userData && (
 					<Dashboard
 						viewMode={viewMode}
