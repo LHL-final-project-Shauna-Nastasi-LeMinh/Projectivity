@@ -69,7 +69,6 @@ export default function NavbarMenu(props) {
 					setUser(null);
 					setStartBuild(false);
 					setViewMode(false);
-					removeCookie('user');
 				})
 				.catch((err) => {
 					console.log(err);

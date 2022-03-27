@@ -28,23 +28,12 @@ const colors = {
 	background: {
 		default: '#f7ede2'
 	},
-<<<<<<< HEAD
-	divider: '#E07A5F',
-	level: {
-		1: '#118ab2',
-		2: '#17c3b2',
-		3: '#ffb703',
-		4: '#F3722C',
-		5: '#F94144'
-	}
-=======
 	divider: '#AE2D2F',
 	min: '#264653',
 	low: '#2A9D8F',
 	medium: '#ffba08',
 	high: '#f3722c',
 	max: '#f94144'
->>>>>>> feature/notification-drawer
 };
 
 export const theme = createTheme({
