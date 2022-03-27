@@ -123,7 +123,8 @@ const App = () => {
 		editColumnForm: false,
 		deleteProjectForm: false,
 		deleteColumnForm: false,
-		deleteTicketForm: false
+		deleteTicketForm: false,
+		deleteTicketDragForm: false,
 	});
 
 	function openModals(prop) {

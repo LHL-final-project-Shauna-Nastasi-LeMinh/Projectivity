@@ -16,6 +16,7 @@ import Pusher from 'pusher-js';
 import { projectViewTheme } from './Theme';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import Bin from './Bin'
+import DeleteTicketDragForm from './Forms/DeleteTicketDragForm'
 
 export default function ProjectView(props) {
 	const {
@@ -39,6 +40,7 @@ export default function ProjectView(props) {
 	const [columns, setColumns] = useState([]);
 	const [resetSearchPane, setResetSearchPane] = useState(0);
 	const [selectedColumn, setSelectedColumn] = useState();
+	const [dragSource, setDragSource] = useState();
 
 	useEffect(() => {
 		if (currentProject && currentProject.Columns) {
@@ -108,26 +110,8 @@ export default function ProjectView(props) {
 		} else if (type === 'ticket') {
 			// move to recycle bin
 			if (destination.droppableId === 'ticket_bin') {
-				let column;
-				let columnIndex;
-				for (let i = 0; i < columns.length; i++) {
-					if (columns[i].name === source.droppableId) {
-						column = columns[i];
-						columnIndex = i;
-					}
-				}
-				const newTickets = JSON.parse(JSON.stringify(column.Tickets)); // deep clone
-				const [movingTicket] = newTickets.splice(source.index, 1);
-				const newColumn = { ...column, Tickets: newTickets };
-				columns[columnIndex] = newColumn;
-				axios
-					.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`)
-					.then((res) => {
-						console.log("Ticket removed successfully")
-					})
-					.catch(function (error) {
-						console.log(error.message);
-					});
+				setDragSource(source)
+				openModals('deleteTicketDragForm');
 			}
 			// moving ticket in the same column
 			else if (destination.droppableId === source.droppableId) {
@@ -276,6 +260,31 @@ export default function ProjectView(props) {
 		setColumns([...columns]);
 	};
 
+	const deleteTicketByDragDrop = function(dragSource) {
+		closeModals('deleteTicketDragForm')
+		let column;
+		let columnIndex;
+		for (let i = 0; i < columns.length; i++) {
+			if (columns[i].name === dragSource.droppableId) {
+				column = columns[i];
+				columnIndex = i;
+			}
+		}
+		const newTickets = JSON.parse(JSON.stringify(column.Tickets)); // deep clone
+		const [movingTicket] = newTickets.splice(dragSource.index, 1);
+		const newColumn = { ...column, Tickets: newTickets };
+		columns[columnIndex] = newColumn;
+		axios
+			.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`)
+			.then((res) => {
+				console.log("Ticket removed successfully")
+			})
+			.catch(function (error) {
+				console.log(error.message);
+			});
+
+	}
+
 	const searchFilter = function (criteria) {
 		const DESC = 'DESC';
 		const SEVERITY = 'SEVERITY';
@@ -402,6 +411,18 @@ export default function ProjectView(props) {
 				</Droppable>
 				<Bin/>
 			</DragDropContext>
+			{modals.deleteTicketDragForm && (
+				<DeleteTicketDragForm
+					modals={modals}
+					closeModals={closeModals}
+					dragSource={dragSource}
+					deleteTicket={deleteTicketByDragDrop}
+				/>
+			)}
 		</ThemeProvider>
 	);
 }
+// deleteColumn={deleteColumnFromProjectView}
+// currentProject={currentProject}
+// userData={userData}
+// setCurrentColumn={setCurrentColumn}
