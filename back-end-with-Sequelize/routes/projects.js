@@ -8,6 +8,7 @@ module.exports = (sequelizeModels) => {
   Projects = sequelizeModels.Project;
   Tickets = sequelizeModels.Ticket;
   History = sequelizeModels.History;
+  Notification = sequelizeModels.Notification;
 
   router.get("/user_data/:employee_id", async (req, res) => {
     try {
@@ -133,7 +134,7 @@ module.exports = (sequelizeModels) => {
 
       const project_id = project.dataValues.id;
       const assignment_date = Date.now();
-      const creatorInTheList = false;
+      let creatorInTheList = false;
       assignmentBulkCreateObject = assigneeIds.map((assigneeId) => {
         if (assigneeId === employee_id) {
           creatorInTheList = true;
@@ -149,6 +150,12 @@ module.exports = (sequelizeModels) => {
         });
       }
       await Project_Assignments.bulkCreate(assignmentBulkCreateObject);
+
+      // notification
+      const notificationBulkCreateObject = assignmentBulkCreateObject.map(assignment => {
+        return {user_id: assignment.employee_id, message: "You have been assigned to project " + name, creator: employee_id}
+      })
+      await Notification.bulkCreate(notificationBulkCreateObject);
 
       return res.json("success!");
     } catch (err) {
