@@ -240,7 +240,7 @@ export default function ProjectTicket(props) {
 						open={anchorPop}
 						anchorEl={anchorPop}
 						onClose={closePopover}
-						sx={{ pb: 3 }}
+						sx={{ pb: 3}}
 						anchorOrigin={{
 							vertical: 'bottom',
 							horizontal: 'right'
@@ -250,7 +250,7 @@ export default function ProjectTicket(props) {
 							sx={{
 								border: 1,
 								borderColor: 'grey.500',
-								// backgroundColor: 'primary.main',
+								backgroundColor: 'primary.main',
 								color: 'background.default',
 								mb: 2,
 								p: 2,
@@ -268,7 +268,7 @@ export default function ProjectTicket(props) {
 							</Typography>
 						</Box>
 						<Box
-							sx={{ display: 'inline-flex', justifyContent: 'center', pb: 3 }}
+							sx={{ display: 'inline-flex', justifyContent: 'center', pb: 3, backgroundColor: 'background.default' }}
 						>
 							<AssignTicket
 								currentProject={currentProject}
@@ -278,6 +278,7 @@ export default function ProjectTicket(props) {
 								tickets={tickets}
 								user={user}
 								title={title}
+                employee={employee}
 							/>
 						</Box>
 					</Popover>

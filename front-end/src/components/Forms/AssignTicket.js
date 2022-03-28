@@ -19,7 +19,8 @@ export default function AssignTicket(props) {
 		setTickets,
 		tickets,
 		user,
-		title
+		title,
+		employee
 	} = props;
 
 	const [employees, setEmployees] = useState({
@@ -27,6 +28,8 @@ export default function AssignTicket(props) {
 	});
 
 	const [value, setValue] = useState();
+
+	console.log("ASSIGN TICKET VALUE", employee)
 
 	const handleChange = (evt) => {
 		setValue(evt.target.value);
@@ -127,6 +130,7 @@ export default function AssignTicket(props) {
 					label="Emloyee"
 					id="Employee"
 					value={value}
+					defaultValue={employee.id ? employee.id : false}
 					onChange={(evt) => handleChange(evt)}
 				>
 					<MenuItem
