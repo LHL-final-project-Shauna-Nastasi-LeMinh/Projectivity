@@ -45,7 +45,8 @@ export default function Dashboard(props) {
 		userData,
 		setUserData,
 		openDrawer,
-		setOpenDrawer
+		setOpenDrawer,
+		drawerWidth
 	} = props;
 
 	const [projects, setProjects] = useState();
@@ -53,7 +54,7 @@ export default function Dashboard(props) {
 	const [modalProject, setModalProject] = useState();
 	// const [open, setOpen] = React.useState(false);
 	let index = 0;
-	const drawerWidth = '20rem';
+
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	useEffect(() => {
@@ -75,7 +76,7 @@ export default function Dashboard(props) {
 	}
 
 	const openedMixin = (theme) => ({
-		width: drawerWidth,
+		width: `${drawerWidth}rem`,
 		transition: theme.transitions.create('width', {
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.enteringScreen
@@ -101,12 +102,12 @@ export default function Dashboard(props) {
 				variant="permanent"
 				open={openDrawer}
 				sx={{
-					width: drawerWidth,
+					width: `${drawerWidth}rem`,
 					[`& .MuiDrawer-paper`]: {
-						width: drawerWidth,
+						width: `${drawerWidth}rem`,
 						boxSizing: 'border-box'
 					},
-					width: drawerWidth,
+					width: `${drawerWidth}rem`,
 					flexShrink: 0,
 					whiteSpace: 'nowrap',
 					boxSizing: 'border-box',

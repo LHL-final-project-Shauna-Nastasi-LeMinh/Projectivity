@@ -144,9 +144,8 @@ export default function ProjectColumn(props) {
 			{(provided) => (
 				<Box
 					sx={{
-						width: 'fit-content',
-						minWidth: '16rem',
-						mx: '1rem'
+						width: '16rem',
+						mx: '0.5rem'
 					}}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}

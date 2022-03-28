@@ -59,7 +59,8 @@ export default function NavbarMenu(props) {
 		setNotifyOpen,
 		toggleDrawer,
 		unreadNotifLength,
-		setUnreadNotifLength
+		setUnreadNotifLength,
+		drawerWidth
 	} = props;
 	const [email, setEmail] = useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);

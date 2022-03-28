@@ -62,6 +62,8 @@ const App = () => {
 	const [dashWidth, setDashWidth] = useState();
 	const [navHeight, setNavHeight] = useState();
 
+	const drawerWidth = '20';
+
 	const toggleDrawer = () => {
 		console.log('### TOGGLE DRAWER');
 		setNotifyOpen(notifyOpen ? false : true);
@@ -265,6 +267,7 @@ const App = () => {
 						allEmployees={allEmployees}
 						openDrawer={openDrawer}
 						setOpenDrawer={setOpenDrawer}
+						drawerWidth={drawerWidth}
 					/>
 				)}
 				{user !== null &&
@@ -288,6 +291,8 @@ const App = () => {
 							openModals={openModals}
 							userData={userData}
 							setUserData={setUserData}
+							drawerWidth={drawerWidth}
+							openDrawer={openDrawer}
 						/>
 					)}
 			</ThemeProvider>

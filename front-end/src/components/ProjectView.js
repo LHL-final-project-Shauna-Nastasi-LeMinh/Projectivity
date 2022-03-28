@@ -21,6 +21,7 @@ import DeleteTicketDragForm from './Forms/DeleteTicketDragForm';
 import { Button, Divider, Grid } from '@mui/material';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import styled from '@emotion/styled';
+import { theme } from './Theme';
 
 export default function ProjectView(props) {
 	const {
@@ -39,7 +40,9 @@ export default function ProjectView(props) {
 		openModals,
 		closeModals,
 		userData,
-		setUserData
+		setUserData,
+		openDrawer,
+		drawerWidth
 	} = props;
 	const [columns, setColumns] = useState([]);
 	const [resetSearchPane, setResetSearchPane] = useState(0);
@@ -287,13 +290,16 @@ export default function ProjectView(props) {
 		const newColumn = { ...column, Tickets: newTickets };
 		columns[columnIndex] = newColumn;
 		axios
-			.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`,
-			{ data: 
-				{ owner_id: movingTicket.owner_id, 
-					title: movingTicket.title,
-					updater_name: user.first_name + ' ' + user.last_name
+			.delete(
+				process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`,
+				{
+					data: {
+						owner_id: movingTicket.owner_id,
+						title: movingTicket.title,
+						updater_name: user.first_name + ' ' + user.last_name
+					}
 				}
-			})
+			)
 			.then((res) => {
 				console.log('Ticket removed successfully');
 			})
@@ -364,19 +370,29 @@ export default function ProjectView(props) {
 		setColumns([...allColumns]);
 	};
 
-	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
-
 	return (
 		<Box
 			sx={{
+				position: 'absolute',
 				width: 'fit-content',
-				flexGrow: 1
+				marginLeft: '1rem',
+				flexGrow: 1,
+				...(!openDrawer && {
+					left: '1rem',
+					transition: 'left 0.2s ease-out'
+				}),
+				...(openDrawer && {
+					left: `${drawerWidth}rem`,
+					transition: 'left 0.20s linear'
+				})
 			}}
 		>
 			<ThemeProvider theme={projectViewTheme}>
 				<Box
 					sx={{
-						width: '80rem'
+						maxWidth: '80rem',
+						minWidth: '60rem',
+						width: '70rem'
 					}}
 				>
 					<SearchPane
@@ -400,43 +416,66 @@ export default function ProjectView(props) {
 							>
 								{columns !== undefined &&
 									columns.map((column, colIndex) => (
-										<ProjectColumn
-											disablePadding
-											key={column.id}
-											user={user}
-											title={column.name}
-											column={column}
-											setViewMode={setViewMode}
-											currentColumn={currentColumn}
-											setCurrentColumn={setCurrentColumn}
-											currentTicket={currentTicket}
-											setCurrentTicket={setCurrentTicket}
-											colIndex={colIndex}
-											open={open}
-											setOpen={setOpen}
-											modals={modals}
-											openModals={openModals}
-											closeModals={closeModals}
-											deleteColumnFromProjectView={deleteColumnFromProjectView}
-											changeColumnFromProjectView={changeColumnFromProjectView}
-											createNewColumn={createNewColumn}
-											selectedColumn={selectedColumn}
-											setSelectedColumn={setSelectedColumn}
-											currentProject={currentProject}
-											userData={userData}
-											setUserData={setUserData}
-											setColumns={setColumns}
-										/>
+										<Box>
+											<ProjectColumn
+												disablePadding
+												key={column.id}
+												user={user}
+												title={column.name}
+												column={column}
+												setViewMode={setViewMode}
+												currentColumn={currentColumn}
+												setCurrentColumn={setCurrentColumn}
+												currentTicket={currentTicket}
+												setCurrentTicket={setCurrentTicket}
+												colIndex={colIndex}
+												open={open}
+												setOpen={setOpen}
+												modals={modals}
+												openModals={openModals}
+												closeModals={closeModals}
+												deleteColumnFromProjectView={
+													deleteColumnFromProjectView
+												}
+												changeColumnFromProjectView={
+													changeColumnFromProjectView
+												}
+												createNewColumn={createNewColumn}
+												selectedColumn={selectedColumn}
+												setSelectedColumn={setSelectedColumn}
+												currentProject={currentProject}
+												userData={userData}
+												setUserData={setUserData}
+												setColumns={setColumns}
+											/>
+										</Box>
 									))}
 
-								{user.access_level == MANAGER_LEVEL &&
-									columns !== undefined && (
+								{console.log(
+									drawerWidth,
+									columns.length,
+									Number(drawerWidth) +
+										columns.length * 16 -
+										columns.length * 0.5 +
+										2
+								)}
+								{user.access_level == MANAGER_LEVEL && columns !== undefined && (
+									<Box
+										sx={{
+											rotate: '90deg',
+											position: 'relative',
+											width: '24rem',
+											left: '-24rem',
+											top: '-0.25rem'
+										}}
+									>
 										<ProjectColumnNew
 											createNewColumn={createNewColumn}
 											columnsCount={columns.length}
 											openModals={openModals}
 										/>
-									)}
+									</Box>
+								)}
 								{provided.placeholder}
 							</Box>
 						)}

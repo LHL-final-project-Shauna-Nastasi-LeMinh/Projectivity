@@ -43,7 +43,6 @@ export default function ProjectColumnNew(props) {
 		<Draggable draggableId={`newColumn`} index={columnsCount} isDragDisabled>
 			{(provided) => (
 				<Box
-					sx={{ width: 'fit-content', minWidth: '16rem', mx: 1 }}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
