@@ -46,13 +46,16 @@ export default function ProjectColumnNew(props) {
 			{(provided) => (
 				<Box
 					sx={{
-						backgroundColor: 'primary.main',
 						display: 'flex',
 						flexDirection: 'column',
 						width: '4rem',
 						height: '95%',
 						marginRight: '1rem',
-						borderLeft: `1px solid ${theme.palette.secondary.main}`
+						borderLeft: `1px solid ${theme.palette.secondary.main}`,
+						backgroundColor: 'primary.main',
+						'&:hover': {
+							backgroundColor: 'secondary.light'
+						}
 					}}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
@@ -67,14 +70,11 @@ export default function ProjectColumnNew(props) {
 							width: '38rem',
 							rotate: '90deg',
 							color: 'background.default',
-							transition: 'background-color 0.5s ease',
-							'&:hover': {
-								backgroundColor: 'secondary.light'
-							}
+							transition: 'background-color 0.5s ease'
 						}}
 					>
 						<ListItemButton onClick={() => openModals('newColumnForm')}>
-							<ListItemText primary="New Column" />
+							<ListItemText primary="Create New Column" />
 							<AddIcon fontSize="large" />
 						</ListItemButton>
 					</ListItem>
