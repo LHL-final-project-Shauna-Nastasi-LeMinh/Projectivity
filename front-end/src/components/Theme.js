@@ -2,7 +2,7 @@ import { Block } from '@mui/icons-material';
 import { createTheme } from '@mui/material/styles';
 
 const colors = {
-	type: 'light',
+	// baseline: #293241
 	primary: {
 		main: '#293241',
 		light: '#535B67',
