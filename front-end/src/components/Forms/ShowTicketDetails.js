@@ -13,6 +13,7 @@ import {List, ListItem, Divider, ListItemText, Avatar, Chip} from '@mui/material
 import useEmployeesData from '../../hooks/useEmployeesData';
 
 import { choosePriorityColor, chooseSeverityColor } from '../../helpers/colorHelper';
+import { color } from '@mui/system';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -70,6 +71,7 @@ export default function ShowTicketDetails(props) {
 
   console.log("DATA CURR EMPLOYE TICKET>>", currentEmployee)
 
+
   return (
     
       <BootstrapDialog
@@ -101,30 +103,65 @@ export default function ShowTicketDetails(props) {
             sx={{
               width: '100%',
               bgcolor: 'background.paper',
+              p:0
             }}
           >
             <ListItem>
              
-              <ListItemText primary="Description:" secondary={ticketDetails.description} />
+              <ListItemText disableTypography 
+              primary={
+                <Typography style={{fontWeight: 700}}>Description: </Typography>
+              }
+              
+              secondary={ticketDetails.description} />
             </ListItem>
 
-            <Divider component="li" />
+            <Divider component="li" style={{opacity: 0.6}}/>
+
 
             <ListItem>
              
-              <ListItemText primary="Created at:" secondary={ticketDetails.createdAt.substring(0,10)} />
+              <ListItemText sx={{fontWeight: 900}} 
+              
+              primary={
+                <Typography style={{fontWeight: 700}}>Created at:</Typography>
+              }
+              
+              secondary={ticketDetails.createdAt.substring(0,10)} />
             </ListItem>
           
 
-          {/* <Divider component="li" /> */}
-
-          {ticketDetails.severity && (
+            {ticketDetails.owner_id && (
             <>
-            <Divider component="li" />
+            <Divider component="li" style={{opacity: 0.6}}/>
 
             <ListItem>
              
-              <ListItemText primary="Severity:" secondary={
+              <ListItemText sx={{fontWeight: 900}} 
+              
+              primary={
+                <Typography style={{fontWeight: 700}}>Assigned To:</Typography>
+              }
+              
+              secondary={`${currentEmployee.first_name} ${currentEmployee.last_name} - ${currentEmployee.email}`} />
+            </ListItem>
+          
+          </>
+          )}
+
+          {ticketDetails.severity && (
+            <>
+            <Divider component="li" style={{opacity: 0.6}}/>
+
+            <ListItem>
+             
+              <ListItemText sx={{fontWeight: 900}} 
+              
+              primary={
+                <Typography style={{fontWeight: 700, mb: 0.7}}>Severity:</Typography>
+              } 
+              
+              secondary={
                 <Chip
                 pl="2"
                 label={ticketDetails.severity}
@@ -137,14 +174,46 @@ export default function ShowTicketDetails(props) {
           </>
           )}
           
-
-          {ticketDetails.priority && (
+          {ticketDetails.type && (
             <>
-            <Divider component="li" />
+            <Divider component="li" style={{opacity: 0.6}}/>
 
             <ListItem>
              
-              <ListItemText primary="Priority:" 
+              <ListItemText sx={{fontWeight: 900}} 
+              
+              primary={
+                <Typography style={{fontWeight: 700, mb: 0.7}}>Type:</Typography>
+              } 
+              
+              
+              secondary={
+                <Chip
+                  pl="2"
+                  label={ticketDetails.type}
+                
+			       		  style={{backgroundColor: '#f2ebeb', fontWeight:'700'}}
+                   size="small"
+               />
+                }
+                 />
+            </ListItem>
+          
+          </>
+          )}
+
+
+          {ticketDetails.priority && (
+            <>
+            <Divider component="li" style={{opacity: 0.6}}/>
+
+            <ListItem>
+             
+              <ListItemText  sx={{fontWeight: 900}} 
+              
+              primary={
+                <Typography style={{fontWeight: 700, mb: 0.7}}>Priority:</Typography>
+              } 
               
               secondary={
                 
@@ -161,37 +230,28 @@ export default function ShowTicketDetails(props) {
           </>
           )}
 
-          {ticketDetails.type && (
-            <>
-            <Divider component="li" />
-
-            <ListItem>
-             
-              <ListItemText primary="Type:" secondary={ticketDetails.type} />
-            </ListItem>
           
-          </>
-          )}
-
           {ticketDetails.milestone && (
             <>
-            <Divider component="li" />
+            <Divider component="li" style={{opacity: 0.6}} />
 
             <ListItem>
              
-              <ListItemText primary="Milestone:" secondary={ticketDetails.milestone} />
-            </ListItem>
-          
-          </>
-          )}
+              <ListItemText sx={{fontWeight: 900}} 
+              
+              primary={
+                <Typography style={{fontWeight: 700, mb: 0.7}}>Milestone:</Typography>
+              }
 
-          {ticketDetails.owner_id && (
-            <>
-            <Divider component="li" />
-
-            <ListItem>
-             
-              <ListItemText primary="Assigned To:" secondary={`${currentEmployee.first_name} ${currentEmployee.last_name} - ${currentEmployee.email}`} />
+              secondary={
+                <Chip
+                pl="2"
+                label={ticketDetails.milestone}
+              
+                 style={{backgroundColor: '#f2ebeb', fontWeight:'700'}}
+                 size="small"
+          />}
+                 />
             </ListItem>
           
           </>

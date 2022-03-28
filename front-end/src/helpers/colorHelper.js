@@ -28,7 +28,7 @@ export function choosePriorityColor (priority) {
 
 export function chooseSeverityColor (severity) {
   const color = {
-    min: '#264653',
+    min: '#628594',
     low: '#2A9D8F',
     medium: '#ffba08',
     high: '#f3722c',
