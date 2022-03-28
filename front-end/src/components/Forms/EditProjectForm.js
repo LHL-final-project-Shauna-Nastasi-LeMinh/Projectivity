@@ -40,7 +40,7 @@ export default function RegistrationForm(props) {
 	} = props;
 	const [values, setValues] = useState({
 		message: '',
-		name: undefined
+		name: (modalProject && modalProject.name) ? modalProject.name : undefined
 	});
 	const [assignees, setAssignees] = useState([]);
 
@@ -107,11 +107,16 @@ export default function RegistrationForm(props) {
 	}
 
 	function updateProjectDetails() {
+		console.log("values.name: "+ values.name);
 		if (typeof values.name === 'undefined' || values.name === '') {
-			setValues({ ...values, name: '' });
+			console.log("COME HEE")
+			setValues((prev) => {
+				return { ...prev, name: '' };
+			});
 			return;
 		}
 
+		modalProject.name = values.name;
 		closeModals('editProjectForm');
 
 		//assign employee to the project
@@ -251,9 +256,7 @@ export default function RegistrationForm(props) {
 						size="large"
 						variant="contained"
 						onClick={() => {
-							closeModals('editProjectForm');
 							updateProjectDetails();
-							modalProject.name = values.name;
 						}}
 					>
 						Edit
