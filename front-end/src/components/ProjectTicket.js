@@ -165,7 +165,7 @@ export default function ProjectTicket(props) {
 	};
 
 	return (
-		<ListItem sx={{ display: 'block' }}>
+		<ListItem sx={{ display: 'block' }} >
 			<Stack direction="row" spacing={1}>
 				{ticket.priority && (
 					<Chip
@@ -208,7 +208,14 @@ export default function ProjectTicket(props) {
           alignItems: "center", 
         }}>
       <ListItemButton
-        sx={{ ml:0, pl:0}}
+        sx={{ ml:0, pl:0, 
+					"&:hover": {
+						backgroundColor: "transparent"
+					},
+					
+				}} 
+				disableTouchRipple
+				disableRipple
         onClick={handleTicketClick}
         
       >
