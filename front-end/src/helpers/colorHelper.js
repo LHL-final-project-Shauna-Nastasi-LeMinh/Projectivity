@@ -8,16 +8,44 @@ export function choosePriorityColor (priority) {
   };
 
   switch (priority) {
-    case 'Urgent':
+    case 'Urgent' || 'Catastrophic':
       return color.max;
       break;
-    case 'Essential':
+    case 'Essential' || 'Critical':
       return color.high;
       break;
-    case 'Valuable':
+    case 'Valuable' || 'Major':
       return color.medium;
       break;
-    case 'Discretionary':
+    case 'Discretionary' || 'Minor':
+      return color.low;
+      break;
+    default:
+      return color.min;
+      break;
+  }
+};
+
+export function chooseSeverityColor (severity) {
+  const color = {
+    min: '#264653',
+    low: '#2A9D8F',
+    medium: '#ffba08',
+    high: '#f3722c',
+    max: '#f94144'
+  };
+
+  switch (severity) {
+    case 'Catastrophic':
+      return color.max;
+      break;
+    case 'Critical':
+      return color.high;
+      break;
+    case 'Major':
+      return color.medium;
+      break;
+    case 'Minor':
       return color.low;
       break;
     default:
