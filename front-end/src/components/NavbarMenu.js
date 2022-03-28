@@ -205,7 +205,10 @@ export default function NavbarMenu(props) {
 									/>
 								)}
 								{unreadNotifLength > 0 && (
-									<Box sx={{ display: 'flex' }}>
+									<Box
+										sx={{ display: 'flex' }}
+										onClick={() => setNotifyOpen(!notifyOpen)}
+									>
 										<NotificationsActiveIcon
 											fontSize="large"
 											sx={{
