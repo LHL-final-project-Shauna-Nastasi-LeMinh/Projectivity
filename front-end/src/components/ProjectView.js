@@ -21,6 +21,7 @@ import DeleteTicketDragForm from './Forms/DeleteTicketDragForm';
 import { Button, Divider, Grid } from '@mui/material';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import styled from '@emotion/styled';
+import { theme } from './Theme';
 
 export default function ProjectView(props) {
 	const {
@@ -39,7 +40,9 @@ export default function ProjectView(props) {
 		openModals,
 		closeModals,
 		userData,
-		setUserData
+		setUserData,
+		openDrawer,
+		drawerWidth
 	} = props;
 	const [columns, setColumns] = useState([]);
 	const [resetSearchPane, setResetSearchPane] = useState(0);
@@ -287,13 +290,16 @@ export default function ProjectView(props) {
 		const newColumn = { ...column, Tickets: newTickets };
 		columns[columnIndex] = newColumn;
 		axios
-			.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`,
-			{ data: 
-				{ owner_id: movingTicket.owner_id, 
-					title: movingTicket.title,
-					updater_name: user.first_name + ' ' + user.last_name
+			.delete(
+				process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`,
+				{
+					data: {
+						owner_id: movingTicket.owner_id,
+						title: movingTicket.title,
+						updater_name: user.first_name + ' ' + user.last_name
+					}
 				}
-			})
+			)
 			.then((res) => {
 				console.log('Ticket removed successfully');
 			})
@@ -364,39 +370,63 @@ export default function ProjectView(props) {
 		setColumns([...allColumns]);
 	};
 
-	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
-
 	return (
 		<Box
 			sx={{
-				width: 'fit-content',
-				flexGrow: 1
+				position: 'absolute',
+				margin: '1rem',
+				flexGrow: 1,
+				...(!openDrawer && {
+					left: '1rem',
+					transition: 'left 0.2s ease-out'
+				}),
+				...(openDrawer && {
+					left: `${drawerWidth}rem`,
+					transition: 'left 0.20s linear'
+				})
 			}}
 		>
-			<ThemeProvider theme={projectViewTheme}>
-				<Box
-					sx={{
-						width: '80rem'
-					}}
+			<Box
+				sx={{
+					maxWidth: '80rem',
+					minWidth: '60rem',
+					width: 'fit-content'
+				}}
+			>
+				<SearchPane
+					searchFilter={searchFilter}
+					resetSearchPane={resetSearchPane}
+					user={user}
+				/>
+			</Box>
+			<DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+				<Droppable
+					droppableId="all-column"
+					direction="horizontal"
+					type="column"
 				>
-					<SearchPane
-						searchFilter={searchFilter}
-						resetSearchPane={resetSearchPane}
-						user={user}
-					/>
-				</Box>
-				<DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-					<Droppable
-						droppableId="all-column"
-						direction="horizontal"
-						type="column"
-					>
-						{(provided) => (
+					{(provided) => (
+						<Box
+							sx={{
+								height: '42rem',
+								minHeight: '42rem',
+								maxHeight: '42rem',
+								width: `${columns.length * 16 + 4}rem`,
+								// width: 'min-content',
+								minWidth: '90%',
+								maxWidth: '100%',
+								display: 'flex',
+								flexDirection: 'row'
+							}}
+							{...provided.droppableProps}
+							ref={provided.innerRef}
+						>
 							<Box
-								disablePadding
-								sx={{ display: 'flex' }}
-								{...provided.droppableProps}
-								ref={provided.innerRef}
+								sx={{
+									display: 'flex',
+									flexDirection: 'row',
+									margin: '1rem'
+								}}
 							>
 								{columns !== undefined &&
 									columns.map((column, colIndex) => (
@@ -439,19 +469,19 @@ export default function ProjectView(props) {
 									)}
 								{provided.placeholder}
 							</Box>
-						)}
-					</Droppable>
-					<Bin />
-				</DragDropContext>
-				{modals.deleteTicketDragForm && (
-					<DeleteTicketDragForm
-						modals={modals}
-						closeModals={closeModals}
-						dragSource={dragSource}
-						deleteTicket={deleteTicketByDragDrop}
-					/>
-				)}
-			</ThemeProvider>
+						</Box>
+					)}
+				</Droppable>
+				<Bin />
+			</DragDropContext>
+			{modals.deleteTicketDragForm && (
+				<DeleteTicketDragForm
+					modals={modals}
+					closeModals={closeModals}
+					dragSource={dragSource}
+					deleteTicket={deleteTicketByDragDrop}
+				/>
+			)}
 		</Box>
 	);
 }

@@ -144,9 +144,9 @@ export default function ProjectColumn(props) {
 			{(provided) => (
 				<Box
 					sx={{
-						width: 'fit-content',
-						minWidth: '16rem',
-						mx: '1rem'
+						flexGrow: 1,
+						width: '16rem',
+						mx: '0.5rem'
 					}}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
@@ -177,6 +177,8 @@ export default function ProjectColumn(props) {
 					)}
 					<ListItem
 						sx={{
+							backgroundColor: 'primary.main',
+							color: 'background.default',
 							padding: '0.1rem',
 							transition: 'background-color 0.5s ease',
 							'&:hover': {
@@ -215,10 +217,22 @@ export default function ProjectColumn(props) {
 										openModals('editColumnForm');
 										closeIconMenu();
 									}}
+									sx={{
+										color: 'background.default',
+										'&:hover': {
+											backgroundColor: 'secondary.light'
+										}
+									}}
 								>
 									Change Name
 								</MenuItem>
 								<MenuItem
+									sx={{
+										color: 'background.default',
+										'&:hover': {
+											backgroundColor: 'secondary.light'
+										}
+									}}
 									onClick={() => {
 										openModals('deleteColumnForm');
 										closeIconMenu();
@@ -266,14 +280,14 @@ export default function ProjectColumn(props) {
 						{(provided, snapshot) => (
 							<Box
 								sx={{
-									height: 'fit-content',
-									minHeight: '24rem',
-									maxHeight: '36rem',
+									minHeight: '75%',
+									height: '75%',
+									maxHeight: '75%',
 									backgroundColor: snapshot.isDraggingOver
 										? 'rgb(249, 65, 68, 0.1)'
 										: 'rgb(41, 50, 65, 0.1)',
 									transition: 'background-color 0.5s ease',
-
+									overflow: 'auto',
 									'&:hover': {
 										backgroundColor: 'rgb(249, 65, 68, 0.1)'
 									}
@@ -323,7 +337,8 @@ export default function ProjectColumn(props) {
 					<Divider />
 					<Box
 						sx={{
-							color: 'primary.main',
+							backgroundColor: 'primary.main',
+							color: 'background.default',
 							transition: 'background-color 0.5s ease',
 							'&:hover': {
 								backgroundColor: 'secondary.light'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { format } from "date-fns";
+import { format } from 'date-fns';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -8,50 +8,66 @@ import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import {List, ListItem, Divider, ListItemText, Avatar, Chip} from '@mui/material'
+import {
+	List,
+	ListItem,
+	Divider,
+	ListItemText,
+	Avatar,
+	Chip
+} from '@mui/material';
 
 import useEmployeesData from '../../hooks/useEmployeesData';
 
-import { choosePriorityColor, chooseSeverityColor } from '../../helpers/colorHelper';
-import { color } from '@mui/system';
-
+import {
+	choosePriorityColor,
+	chooseSeverityColor
+} from '../../helpers/colorHelper';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
+	'& .MuiDialogContent-root': {
+		padding: theme.spacing(2)
+	},
+	'& .MuiDialogActions-root': {
+		padding: theme.spacing(1)
+	}
 }));
 
 const BootstrapDialogTitle = (props) => {
-  const { children, onClose, ...other } = props;
+	const { children, onClose, ...other } = props;
 
-  return (
-    <DialogTitle sx={{ m: 0, p: 3, backgroundColor: 'primary.main',  color: 'background.default'}} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  );
+	return (
+		<DialogTitle
+			sx={{
+				m: 0,
+				p: 3,
+				backgroundColor: 'primary.main',
+				color: 'background.default'
+			}}
+			{...other}
+		>
+			{children}
+			{onClose ? (
+				<IconButton
+					aria-label="close"
+					onClick={onClose}
+					sx={{
+						position: 'absolute',
+						right: 8,
+						top: 8,
+						color: (theme) => theme.palette.grey[500]
+					}}
+				>
+					<CloseIcon />
+				</IconButton>
+			) : null}
+		</DialogTitle>
+	);
 };
 
 BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
+	children: PropTypes.node,
+	onClose: PropTypes.func.isRequired
 };
 
 export default function ShowTicketDetails(props) {
