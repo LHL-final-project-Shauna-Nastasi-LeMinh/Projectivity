@@ -107,6 +107,13 @@ export default function RegistrationForm(props) {
 	}
 
 	function updateProjectDetails() {
+		if (typeof values.name === 'undefined' || values.name === '') {
+			setValues({ ...values, name: '' });
+			return;
+		}
+
+		closeModals('editProjectForm');
+
 		//assign employee to the project
 		const mappedEmployees = buildEmployeeList();
 		const assigneeIds = assignees.map((fullname) => mappedEmployees[fullname]);

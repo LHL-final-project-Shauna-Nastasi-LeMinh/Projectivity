@@ -214,11 +214,12 @@ export default function RegistrationForm(props) {
 					</Box>
 					<Box sx={{ display: 'flex' }}>
 						<TextField
-							sx={{ m: 2, width: '50%' }}
+							sx={{ m: 2, flex: 1 }}
 							label="Password"
 							value={values.password}
 							type="password"
 							onChange={handleChange('password')}
+							autoComplete="new-password"
 							helperText={values.password === '' && 'Required field'}
 							error={values.password === ''}
 							endadornment={
@@ -235,7 +236,7 @@ export default function RegistrationForm(props) {
 							required
 						/>
 						<Select
-							sx={{ m: 2 }}
+							sx={{ m: 2, flex: 1 }}
 							label="Select A Role"
 							defaultValue={values.roleInput}
 							onChange={handleChange('roleInput')}

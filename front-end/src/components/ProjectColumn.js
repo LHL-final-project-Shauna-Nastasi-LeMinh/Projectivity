@@ -300,9 +300,6 @@ export default function ProjectColumn(props) {
 									sx={{
 										padding: '0.3em'
 									}}
-									{...provided.droppableProps}
-									ref={provided.innerRef}
-									isdraggingover={snapshot.isDraggingOver}
 								>
 									{/* <List
 									sx={{

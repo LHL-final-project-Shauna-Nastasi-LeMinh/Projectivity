@@ -60,6 +60,10 @@ export default function NewProjectForm(props) {
 	}
 
 	function createNewProject() {
+		if (typeof values.name === 'undefined' || values.name === '') {
+			setValues({ ...values, name: '' });
+			return;
+		}
 		//assign employee to the project
 		const mappedEmployees = buildEmployeeList();
 		const assigneeIds = assignees.map((fullname) => mappedEmployees[fullname]);
