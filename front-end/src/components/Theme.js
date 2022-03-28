@@ -60,25 +60,6 @@ export const dashboardTheme = createTheme({
 				}
 			}
 		},
-		MuiMenu: {
-			'& .MuiPaper-root': {
-				backgroundColor: 'primary.main',
-				color: 'background.default'
-			}
-		},
-		MuiListItem: {
-			styleOverrides: {
-				root: {
-					color: colors.background.default,
-					'&:hover': {
-						backgroundColor: colors.secondary.main
-					},
-					'&.Mui-selected': {
-						backgroundColor: colors.secondary.main
-					}
-				}
-			}
-		},
 		MuiListItemButton: {
 			styleOverrides: {
 				root: {
@@ -113,57 +94,98 @@ export const dashboardTheme = createTheme({
 });
 
 export const projectViewTheme = createTheme({
-	palette: colors
-	// components: {
-	// 	MuiDrawer: {
-	// 		styleOverrides: {
-	// 			paper: {
-	// 				backgroundColor: colors.primary.main
-	// 			}
-	// 		}
-	// 	},
-	// 	MuiListItem: {
-	// 		styleOverrides: {
-	// 			root: {
-	// 				color: colors.background.default,
-	// 				'&:hover': {
-	// 					backgroundColor: colors.secondary.main
-	// 				},
-	// 				'&.Mui-selected': {
-	// 					backgroundColor: colors.secondary.main
-	// 				}
-	// 			}
-	// 		}
-	// 	},
-	// 	MuiListItemButton: {
-	// 		styleOverrides: {
-	// 			root: {
-	// 				color: colors.background.default,
-	// 				'&:hover': {
-	// 					backgroundColor: colors.secondary.light
-	// 				},
-	// 				'&.Mui-selected': {
-	// 					backgroundColor: colors.secondary.main,
-	// 					'&:hover': {
-	// 						backgroundColor: colors.secondary.light
-	// 					}
-	// 				}
-	// 			}
-	// 		}
-	// 	},
-	// 	MuiListItemText: {
-	// 		styleOverrides: {
-	// 			root: {
-	// 				color: colors.background.default
-	// 			}
-	// 		}
-	// 	},
-	// 	MuiDivider: {
-	// 		styleOverrides: {
-	// 			root: {
-	// 				color: colors.secondary.main
-	// 			}
-	// 		}
-	// 	}
-	// }
+	palette: colors,
+	components: {
+		MuiDrawer: {
+			styleOverrides: {
+				paper: {
+					backgroundColor: colors.primary.main
+				}
+			}
+		},
+		MuiMenu: {
+			styleOverrides: {
+				root: {
+					backgroundColor: 'primary.main',
+					color: 'background.default'
+				},
+				paper: {
+					backgroundColor: 'primary.main',
+					color: 'background.default'
+				},
+				list: {
+					backgroundColor: 'primary.main',
+					color: 'background.default'
+				}
+			}
+		},
+		MuiListItem: {
+			// styleOverrides: {
+			// 	root: {
+			// 		color: colors.background.default,
+			// 		'&:hover': {
+			// 			backgroundColor: colors.secondary.main
+			// 		},
+			// 		'&.Mui-selected': {
+			// 			backgroundColor: colors.secondary.main
+			// 		}
+			// 	}
+			// }
+		},
+		MuiListItemButton: {
+			styleOverrides: {
+				root: {
+					color: colors.primary.main,
+					'&:hover': {
+						backgroundColor: colors.secondary.light
+					},
+					'&.Mui-selected': {
+						backgroundColor: colors.secondary.main,
+						'&:hover': {
+							backgroundColor: colors.secondary.light
+						}
+					}
+				}
+			}
+		},
+		MuiListItemText: {
+			styleOverrides: {
+				root: {
+					color: colors.background.default
+				}
+			}
+		},
+		MuiDivider: {
+			styleOverrides: {
+				root: {
+					color: colors.secondary.main
+				}
+			}
+		},
+		MuiSelect: {
+			styleOverrides: {
+				paper: {
+					backgroundColor: colors.primary.main
+				}
+			}
+		},
+		MuiMenu: {
+			styleOverrides: {
+				backgroundColor: colors.primary.main,
+				color: colors.background.default
+			}
+		},
+		MuiMenuItem: {
+			styleOverrides: {
+				backgroundColor: colors.primary.main,
+				color: colors.background.default,
+				'&:hover': {
+					backgroundColor: colors.secondary.light
+				},
+				'&:Mui-selected': {
+					backgroundColor: colors.secondary.main
+				}
+			}
+		}
+	}
 });

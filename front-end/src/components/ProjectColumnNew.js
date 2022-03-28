@@ -13,11 +13,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import AddSharpIcon from '@mui/icons-material/AddSharp';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddIcon from '@mui/icons-material/Add';
 import { Draggable } from 'react-beautiful-dnd';
 import Slide from '@mui/material/Slide';
 import { NEW_COLUMN_FORM } from './constants/Modes';
 import Bin from './Bin';
+import { Grid } from '@mui/material';
+import { theme } from './Theme';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
@@ -43,13 +45,28 @@ export default function ProjectColumnNew(props) {
 		<Draggable draggableId={`newColumn`} index={columnsCount} isDragDisabled>
 			{(provided) => (
 				<Box
+					sx={{
+						backgroundColor: 'primary.main',
+						display: 'flex',
+						flexDirection: 'column',
+						width: '4rem',
+						height: '95%',
+						marginRight: '1rem',
+						borderLeft: `1px solid ${theme.palette.secondary.main}`
+					}}
 					{...provided.draggableProps}
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
 				>
 					<ListItem
 						sx={{
-							padding: '0.1rem',
+							position: 'relative',
+							top: '44.75%',
+							left: '-425%',
+							height: '4rem',
+							width: '38rem',
+							rotate: '90deg',
+							color: 'background.default',
 							transition: 'background-color 0.5s ease',
 							'&:hover': {
 								backgroundColor: 'secondary.light'
@@ -58,10 +75,10 @@ export default function ProjectColumnNew(props) {
 					>
 						<ListItemButton onClick={() => openModals('newColumnForm')}>
 							<ListItemText primary="New Column" />
-							<AddCircleIcon fontSize="large" />
+							<AddIcon fontSize="large" />
 						</ListItemButton>
 					</ListItem>
-					<Divider />
+
 					<Dialog open={open} onClose={() => setOpen(false)}>
 						<DialogContent>
 							<TextField

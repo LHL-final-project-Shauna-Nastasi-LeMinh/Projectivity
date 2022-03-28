@@ -42,7 +42,7 @@ export default function NewProjectForm(props) {
 		name: undefined,
 		description: undefined
 	});
-  const [assignees, setAssignees] = useState([]);
+	const [assignees, setAssignees] = useState([]);
 
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
@@ -50,26 +50,34 @@ export default function NewProjectForm(props) {
 
 	function buildEmployeeList() {
 		const mappedEmployees = {};
-		allEmployees.forEach(employee => {
+		allEmployees.forEach((employee) => {
 			const fullname = employee.first_name + ' ' + employee.last_name;
 			mappedEmployees[fullname] = employee.id;
-		})
+		});
 		return mappedEmployees;
 	}
 
 	function createNewProject() {
-		
-		//assign employee to the project 
+		//assign employee to the project
 		const mappedEmployees = buildEmployeeList();
-		const assigneeIds = assignees.map(fullname => mappedEmployees[fullname]);
-		const params = {assigneeIds, name: values.name, description: values.description, employee_id: user.id, creator: user.first_name + ' ' + user.last_name}
+		const assigneeIds = assignees.map((fullname) => mappedEmployees[fullname]);
+		const params = {
+			assigneeIds,
+			name: values.name,
+			description: values.description,
+			employee_id: user.id,
+			creator: user.first_name + ' ' + user.last_name
+		};
 		axios
-			.post(process.env.REACT_APP_BACKEND_URL + '/projects/new', JSON.stringify(params),
+			.post(
+				process.env.REACT_APP_BACKEND_URL + '/projects/new',
+				JSON.stringify(params),
 				{
 					headers: {
 						'Content-Type': 'application/json'
 					}
-				})
+				}
+			)
 			.then((res) => {
 				axios
 					.get(process.env.REACT_APP_BACKEND_URL + `/projects/${user.id}`)
@@ -126,24 +134,26 @@ export default function NewProjectForm(props) {
 		boxShadow: 24
 	};
 
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
+	const ITEM_HEIGHT = 48;
+	const ITEM_PADDING_TOP = 8;
+	const MenuProps = {
+		PaperProps: {
+			style: {
+				maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+				width: 250
+			}
+		}
+	};
 
-  const handleSelectChange = (event) => {
-    const {target: { value },} = event;
-    setAssignees(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+	const handleSelectChange = (event) => {
+		const {
+			target: { value }
+		} = event;
+		setAssignees(
+			// On autofill we get a stringified value.
+			typeof value === 'string' ? value.split(',') : value
+		);
+	};
 
 	return (
 		<Modal
@@ -183,30 +193,46 @@ export default function NewProjectForm(props) {
 					/>
 				</Box>
 
-        <Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
-          <FormControl sx={{ m: 2, width: '90%' }}>
-            <InputLabel id="demo-multiple-checkbox-label">Employees</InputLabel>
-            <Select 
-              sx={{color: 'primary.main'}}
-              labelId="demo-multiple-checkbox-label"
-              id="demo-multiple-checkbox"
-              multiple
-              value={assignees}
-              onChange={handleSelectChange}
-              input={<OutlinedInput label="Employees" />}
-              renderValue={(selected) => selected.join(', ')}
-              MenuProps={MenuProps}
-            >
-              {allEmployees.map((employee) => (
-                <MenuItem key={employee.id} value={employee.first_name + ' ' + employee.last_name}>
-                  <Checkbox checked={assignees.indexOf(employee.first_name + ' ' + employee.last_name) > -1} 
+				<Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
+					<FormControl sx={{ m: 2, width: '90%' }}>
+						<InputLabel id="demo-multiple-checkbox-label">Employees</InputLabel>
+						<Select
+							sx={{ color: 'primary.main' }}
+							labelId="demo-multiple-checkbox-label"
+							id="demo-multiple-checkbox"
+							multiple
+							value={assignees}
+							onChange={handleSelectChange}
+							input={<OutlinedInput label="Employees" />}
+							renderValue={(selected) => selected.join(', ')}
+							MenuProps={MenuProps}
+						>
+							{allEmployees.map((employee) => (
+								<MenuItem
+									key={employee.id}
+									value={employee.first_name + ' ' + employee.last_name}
+									sx={{
+										backgroundColor: 'primary.main',
+										'&:hover': {
+											backgroundColor: 'secondary.light'
+										}
+									}}
+								>
+									<Checkbox
+										checked={
+											assignees.indexOf(
+												employee.first_name + ' ' + employee.last_name
+											) > -1
+										}
 										value={employee.id}
 									/>
-                  <ListItemText primary={employee.first_name + ' ' + employee.last_name} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+									<ListItemText
+										primary={employee.first_name + ' ' + employee.last_name}
+									/>
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
 				</Box>
 
 				<Divider />

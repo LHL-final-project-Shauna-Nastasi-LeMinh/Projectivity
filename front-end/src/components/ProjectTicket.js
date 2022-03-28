@@ -7,7 +7,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
-import { Box, Chip, Typography, Popover, Avatar, Stack } from '@mui/material'
+import { Box, Chip, Typography, Popover, Avatar, Stack } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import Fade from '@mui/material/Fade';
 import RemoveTicket from './Forms/RemoveTicket';
@@ -16,8 +16,7 @@ import NewTicketForm from './Forms/NewTicketForm';
 import TicketHistory from './Forms/TicketHistory';
 import AssignTicket from './Forms/AssignTicket';
 
-
-import useEmployeesData from "../hooks/useEmployeesData";
+import useEmployeesData from '../hooks/useEmployeesData';
 
 import { BlockRounded } from '@mui/icons-material';
 import { padding, palette, textAlign } from '@mui/system';
@@ -27,8 +26,7 @@ import {
 	EDIT_TICKET,
 	REMOVE_TICKET,
 	ADD_TICKET,
-	TICKET_HISTORY,
-
+	TICKET_HISTORY
 } from './constants/Modes';
 import { MANAGER_LEVEL } from './constants/AccessLevel';
 import { modalClasses } from '@mui/material';
@@ -57,15 +55,14 @@ export default function ProjectTicket(props) {
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [currentTicket, setCurrentTicket] = useState();
 
-  // handle opening and closing of MoreVertIcon
-  const [anchorEl, setAnchorEl] = useState(null);
+	// handle opening and closing of MoreVertIcon
+	const [anchorEl, setAnchorEl] = useState(null);
 	const [anchorPop, setAnchorPop] = useState(null);
 	const openPop = Boolean(anchorPop);
-  const openMenu = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
+	const openMenu = Boolean(anchorEl);
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+	};
 
 	const closeMenu = () => {
 		setAnchorEl(null);
@@ -75,18 +72,17 @@ export default function ProjectTicket(props) {
 	const id = openPop ? 'simple-popover' : undefined;
 
 	const openPopover = (event) => {
-		setCurrentTicket(ticketId)
+		setCurrentTicket(ticketId);
 		setAnchorPop(event.currentTarget);
-	}
+	};
 
 	const closePopover = () => {
 		setAnchorPop(false);
-	}
-
+	};
 
 	const handleDialogOpening = (evt) => {
 		console.log(evt.target.id);
-		console.log(evt.currentTarget)
+		console.log(evt.currentTarget);
 
 		if (evt.target.id === 'edit') {
 			// openModals('newTicketForm');
@@ -156,147 +152,131 @@ export default function ProjectTicket(props) {
 		}
 	};
 
-	
-	
-
-	const employee = useEmployeesData(ticket.owner_id, tickets)
+	const employee = useEmployeesData(ticket.owner_id, tickets);
 
 	const isAvatar = () => {
+		return;
+	};
 
-		return 
-	}
-
-  return (
-	
-	  
-    <ListItem sx={{  display: "block"}}>
+	return (
+		<ListItem sx={{ display: 'block' }}>
 			<Stack direction="row" spacing={1}>
-				{ticket.priority &&
+				{ticket.priority && (
 					<Chip
-          pl="2"
-          label={ticket.priority}
-         
-					style={{backgroundColor: choosePriorityColor(ticket.priority), fontWeight:'700'}}
-          size="small"
-        />
-				}
-
-				{/* {!employee.avatar.length && Object.keys(employee).length !== 0 && ticket.owner_id &&
-				<Avatar 
-					sx={{ width: 26, height: 26, borderRadius: 1 }}
-					 >
-						 {`${employee.first_name[0]}${employee.last_name[0]}`}
-					 </Avatar>
-					
-        } */}
-
-				{Object.keys(employee).length !== 0 && ticket.owner_id && 
-				  <Avatar 
-					sx={{ width: 26, height: 26, borderRadius: 1}}
-					size={100}
-					alt='JON'
-					src={employee.avatar}>
-						<img alt={`${employee.first_name[0]}${employee.last_name[0]}`}></img>
-						</Avatar>
-        }
-				</Stack>
-        
-        
-      <ListItemButton
-        sx={{
-          px: '0',
-          display:"flex", justifyContent:"space-between", alignItems:"center"
-        }}
-        
-			>
-        
-
-				
-          <div>
-					<Typography sx={{ color: 'background.default' }}>{title}</Typography>
-				{/* <ListItemText primary={title} sx={{ fontSize: 'small' }} /> */}
-        </div>
-        
-        
-        <div style={{ display: "inherit"}}>
-        <IconButton 
-					sx={{px:"0"}}
-					aria-describedby={id} 
-					variant="contained"
-					onClick={openPopover}
-				>
-					<PersonAddIcon 
-					sx={{ fontSize: 'small'}}
-					
+						pl="2"
+						label={ticket.priority}
+						style={{
+							backgroundColor: choosePriorityColor(ticket.priority),
+							fontWeight: '700'
+						}}
+						size="small"
 					/>
-					</IconButton >
+				)}
+
+				{/* {!employee.avatar.length &&
+					Object.keys(employee).length !== 0 &&
+					ticket.owner_id && (
+						<Avatar sx={{ width: 26, height: 26, borderRadius: 1 }}>
+							{`${employee.first_name[0]}${employee.last_name[0]}`}
+						</Avatar>
+					)} */}
+
+				{Object.keys(employee).length !== 0 && ticket.owner_id && (
+					<Avatar
+						sx={{ width: 26, height: 26, borderRadius: 1 }}
+						size={100}
+						alt="JON"
+						src={employee.avatar}
+					>
+						<img
+							alt={`${employee.first_name[0]}${employee.last_name[0]}`}
+						></img>
+					</Avatar>
+				)}
+			</Stack>
+
+			<ListItemButton
+				sx={{
+					px: '0',
+					display: 'flex',
+					justifyContent: 'space-between',
+					alignItems: 'center'
+				}}
+				disableRipple
+			>
+				<div>
+					<Typography sx={{ color: 'background.default' }}>{title}</Typography>
+					{/* <ListItemText primary={title} sx={{ fontSize: 'small' }} /> */}
+				</div>
+
+				<div style={{ display: 'inherit' }}>
+					<IconButton
+						sx={{ px: '0' }}
+						aria-describedby={id}
+						variant="contained"
+						onClick={openPopover}
+					>
+						<PersonAddIcon sx={{ fontSize: 'small' }} />
+					</IconButton>
 
 					<Popover
-				    id={id}
-				    open={anchorPop}
-				    anchorEl={anchorPop}
-				    onClose={closePopover}
-						sx={{pb:3}}
-				    anchorOrigin={{
-				    vertical: 'bottom',
-				    horizontal: 'right',
-						
-				  }}
-				>
-				  
+						id={id}
+						open={anchorPop}
+						anchorEl={anchorPop}
+						onClose={closePopover}
+						sx={{ pb: 3 }}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right'
+						}}
+					>
 						<Box
-						sx={{
-						border: 1,
-						borderColor: 'grey.500', 
-						backgroundColor: 'primary.main',
-						color: 'background.default',
-            mb: 2, 
-            p: 2,
-						textAlign: 'center',
-						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center'
+							sx={{
+								border: 1,
+								borderColor: 'grey.500',
+								// backgroundColor: 'primary.main',
+								color: 'background.default',
+								mb: 2,
+								p: 2,
+								textAlign: 'center',
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'center'
+							}}
+						>
+							<Typography variant="p" align="center">
+								<PersonAddIcon fontSize="small" color="secondary" />
+							</Typography>
+							<Typography variant="p" align="center">
+								Assign Ticket To An Employee
+							</Typography>
+						</Box>
+						<Box
+							sx={{ display: 'inline-flex', justifyContent: 'center', pb: 3 }}
+						>
+							<AssignTicket
+								currentProject={currentProject}
+								ticketId={ticketId}
+								setAnchorPop={setAnchorPop}
+								setTickets={setTickets}
+								tickets={tickets}
+								user={user}
+								title={title}
+							/>
+						</Box>
+					</Popover>
 
-					}}
-				>
-					<Typography variant="p" align="center">
-					<PersonAddIcon 
-					 fontSize='small'
-						color="secondary"
-					
-					/>
-					</Typography>
-					<Typography variant="p" align="center">
-						Assign Ticket To An Employee
-					</Typography>
-				</Box>
-				<Box sx={{display: 'inline-flex', justifyContent:"center", pb: 3}}>
-						<AssignTicket
-							currentProject={currentProject}
-							ticketId={ticketId}
-							setAnchorPop={setAnchorPop}
-							setTickets={setTickets}
-							tickets={tickets}
-							user={user}
-							title={title}
-						/>
-					</Box>
-					
-				</Popover>
+					<IconButton
+						id="fade-button"
+						aria-controls={openMenu ? 'fade-menu' : undefined}
+						aria-haspopup="true"
+						aria-expanded={openMenu ? 'true' : undefined}
+						onClick={handleClick}
+						sx={{ px: '0', ml: '1' }}
+					>
+						<MoreVertIcon />
 
-
-
-        <IconButton
-          id="fade-button"
-          aria-controls={openMenu ? 'fade-menu' : undefined}
-          aria-haspopup="true"
-          aria-expanded={openMenu ? 'true' : undefined}
-          onClick={handleClick}
-          sx={{px:"0", ml:"1"}}
-        >  
-          <MoreVertIcon />
-
-				 {/* <div style={{ display: 'inherit' }}>
+						{/* <div style={{ display: 'inherit' }}>
 					<IconButton sx={{ px: '0' }}>
 						<PersonAddIcon sx={{ fontSize: 'small' }} />
 					</IconButton>
@@ -309,7 +289,7 @@ export default function ProjectTicket(props) {
 						sx={{ px: '0', ml: '1' }}
 					>
 						<MoreVertIcon /> */}
-					</IconButton> 
+					</IconButton>
 
 					{dialogOpen === SHOW_TICKET_DETAILS && (
 						<ShowTicketDetails
@@ -391,8 +371,7 @@ export default function ProjectTicket(props) {
 						</MenuItem>
 					</Menu>
 				</div>
-				</ListItemButton>
-			
+			</ListItemButton>
 		</ListItem>
 	);
 }

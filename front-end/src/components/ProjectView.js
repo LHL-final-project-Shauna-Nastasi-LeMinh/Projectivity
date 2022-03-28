@@ -373,9 +373,7 @@ export default function ProjectView(props) {
 	return (
 		<Box
 			sx={{
-				height: '90%',
 				position: 'absolute',
-				width: 'fit-content',
 				margin: '1rem',
 				flexGrow: 1,
 				...(!openDrawer && {
@@ -393,7 +391,7 @@ export default function ProjectView(props) {
 					sx={{
 						maxWidth: '80rem',
 						minWidth: '60rem',
-						width: '70rem'
+						width: 'fit-content'
 					}}
 				>
 					<SearchPane
@@ -410,64 +408,72 @@ export default function ProjectView(props) {
 					>
 						{(provided) => (
 							<Box
-								disablePadding
 								sx={{
-									height: '92.5%',
-									display: 'flex'
+									height: '42rem',
+									minHeight: '42rem',
+									maxHeight: '42rem',
+									width: `${columns.length * 16 + 4}rem`,
+									// width: 'min-content',
+									minWidth: '90%',
+									maxWidth: '100%',
+									display: 'flex',
+									flexDirection: 'row'
 								}}
 								{...provided.droppableProps}
 								ref={provided.innerRef}
 							>
-								{columns !== undefined &&
-									columns.map((column, colIndex) => (
-										<ProjectColumn
-											disablePadding
-											key={column.id}
-											user={user}
-											title={column.name}
-											column={column}
-											setViewMode={setViewMode}
-											currentColumn={currentColumn}
-											setCurrentColumn={setCurrentColumn}
-											currentTicket={currentTicket}
-											setCurrentTicket={setCurrentTicket}
-											colIndex={colIndex}
-											open={open}
-											setOpen={setOpen}
-											modals={modals}
-											openModals={openModals}
-											closeModals={closeModals}
-											deleteColumnFromProjectView={deleteColumnFromProjectView}
-											changeColumnFromProjectView={changeColumnFromProjectView}
-											createNewColumn={createNewColumn}
-											selectedColumn={selectedColumn}
-											setSelectedColumn={setSelectedColumn}
-											currentProject={currentProject}
-											userData={userData}
-											setUserData={setUserData}
-											setColumns={setColumns}
-										/>
-									))}
+								<Box
+									sx={{
+										display: 'flex',
+										flexDirection: 'row',
+										margin: '1rem'
+									}}
+								>
+									{columns !== undefined &&
+										columns.map((column, colIndex) => (
+											<ProjectColumn
+												disablePadding
+												key={column.id}
+												user={user}
+												title={column.name}
+												column={column}
+												setViewMode={setViewMode}
+												currentColumn={currentColumn}
+												setCurrentColumn={setCurrentColumn}
+												currentTicket={currentTicket}
+												setCurrentTicket={setCurrentTicket}
+												colIndex={colIndex}
+												open={open}
+												setOpen={setOpen}
+												modals={modals}
+												openModals={openModals}
+												closeModals={closeModals}
+												deleteColumnFromProjectView={
+													deleteColumnFromProjectView
+												}
+												changeColumnFromProjectView={
+													changeColumnFromProjectView
+												}
+												createNewColumn={createNewColumn}
+												selectedColumn={selectedColumn}
+												setSelectedColumn={setSelectedColumn}
+												currentProject={currentProject}
+												userData={userData}
+												setUserData={setUserData}
+												setColumns={setColumns}
+											/>
+										))}
 
-								{user.access_level == MANAGER_LEVEL && columns !== undefined && (
-									<Box
-										sx={{
-											rotate: '90deg',
-											position: 'relative',
-											height: 'fit-content',
-											width: '36rem',
-											left: '-16rem',
-											top: '20rem'
-										}}
-									>
-										<ProjectColumnNew
-											createNewColumn={createNewColumn}
-											columnsCount={columns.length}
-											openModals={openModals}
-										/>
-									</Box>
-								)}
-								{provided.placeholder}
+									{user.access_level == MANAGER_LEVEL &&
+										columns !== undefined && (
+											<ProjectColumnNew
+												createNewColumn={createNewColumn}
+												columnsCount={columns.length}
+												openModals={openModals}
+											/>
+										)}
+									{provided.placeholder}
+								</Box>
 							</Box>
 						)}
 					</Droppable>

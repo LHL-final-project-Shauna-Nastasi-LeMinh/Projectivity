@@ -144,6 +144,7 @@ export default function ProjectColumn(props) {
 			{(provided) => (
 				<Box
 					sx={{
+						flexGrow: 1,
 						width: '16rem',
 						mx: '0.5rem'
 					}}
