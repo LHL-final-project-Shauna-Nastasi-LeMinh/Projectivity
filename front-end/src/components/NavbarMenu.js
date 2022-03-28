@@ -36,6 +36,7 @@ import Accordion from "@mui/material/Accordion";
 import { Slide } from "@mui/material";
 import { theme, logoTheme } from "./Theme";
 import CircleIcon from "@mui/icons-material/Circle";
+import { ThemeProvider } from "@mui/private-theming";
 
 const page_strings = ["About", "Login", "Register"];
 const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM];
@@ -138,7 +139,7 @@ export default function NavbarMenu(props) {
         zIndex: theme => theme.zIndex.drawer + 1,
         width: "100%",
         borderBottom: 1,
-        borderColor: "secondary.main",
+        borderColor: "divider",
       }}
     >
       <Toolbar>
@@ -152,20 +153,36 @@ export default function NavbarMenu(props) {
           }}
         >
           <Box
-            theme={logoTheme}
             sx={{
               display: "flex",
               justifyContent: "space-between",
               alignContent: "center",
               mx: 1,
-              color: "#FFFFFF",
-              "&:hover": { color: "secondary.light" },
             }}
           >
-            <Typography variant="h4" sx={{ alignSelf: "center", mx: 1 }}>
-              SyncUp
+            <Typography
+              variant="h4"
+              theme={logoTheme}
+              sx={{
+                alignSelf: "center",
+                mx: 1,
+                color: "secondary.main",
+                "&:hover": {
+                  color: "secondary.light",
+                },
+              }}
+            >
+              Projectivity
             </Typography>
-            <Typography variant="h6" sx={{ alignSelf: "center", mx: 1 }}>
+            <Typography
+              variant="h6"
+              theme={logoTheme}
+              sx={{
+                alignSelf: "center",
+                mx: 1,
+                color: "background.default",
+              }}
+            >
               Synchronize your team
             </Typography>
           </Box>

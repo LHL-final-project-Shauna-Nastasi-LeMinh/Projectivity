@@ -74,8 +74,9 @@ export default function DashboardItem(props) {
 			onClick={(event) => {
 				handleClick('listItem', event, listIndex);
 			}}
+			sx={{ px: 2 }}
 		>
-			<FolderIcon sx={{ mx: 1, color: 'primary.light' }} />
+			<FolderIcon sx={{ mx: 1, color: 'primary.light', px: 2 }} />
 			<ListItemText key={key} primary={value} />
 			<IconButton
 				onClick={(event) => {
@@ -85,6 +86,7 @@ export default function DashboardItem(props) {
 				aria-controls={open ? 'demo-positioned-menu' : undefined}
 				aria-haspopup="true"
 				aria-expanded={open ? 'true' : undefined}
+				sx={{ px: 2 }}
 			>
 				<MenuIcon fontSize="medium" sx={{ color: 'background.default' }} />
 			</IconButton>
@@ -94,8 +96,9 @@ export default function DashboardItem(props) {
 				anchorEl={anchorEl}
 				open={open}
 				onClose={handleClose}
+				color="primary.main"
 				anchorOrigin={{
-					vertical: 'top',
+					vertical: 'bottom',
 					horizontal: 'left'
 				}}
 				transformOrigin={{
@@ -104,12 +107,14 @@ export default function DashboardItem(props) {
 				}}
 			>
 				<MenuItem
+					sx={{ '&:hover': { backgroundColor: 'secondary.light' } }}
 					onClick={() => selectModal('editProjectForm', dashItemProject)}
 				>
 					<EditIcon fontSize="small" />
 					Edit Project
 				</MenuItem>
 				<MenuItem
+					sx={{ '&:hover': { backgroundColor: 'secondary.light' } }}
 					onClick={() => selectModal('deleteProjectForm', dashItemProject)}
 				>
 					<DeleteIcon fontSize="small" />

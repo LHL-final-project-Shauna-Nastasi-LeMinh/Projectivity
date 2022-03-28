@@ -2,7 +2,7 @@ import { Block } from '@mui/icons-material';
 import { createTheme } from '@mui/material/styles';
 
 const colors = {
-	type: 'light',
+	// baseline: #293241
 	primary: {
 		main: '#293241',
 		light: '#535B67',
@@ -28,7 +28,7 @@ const colors = {
 	background: {
 		default: '#f7ede2'
 	},
-	divider: '#AE2D2F',
+	divider: 'rgb(249, 65, 68,0.75)',
 	min: '#264653',
 	low: '#2A9D8F',
 	medium: '#ffba08',
@@ -58,6 +58,12 @@ export const dashboardTheme = createTheme({
 				paper: {
 					backgroundColor: colors.primary.main
 				}
+			}
+		},
+		MuiMenu: {
+			'& .MuiPaper-root': {
+				backgroundColor: 'primary.main',
+				color: 'background.default'
 			}
 		},
 		MuiListItem: {
