@@ -39,7 +39,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 
 const page_strings = ["About", "Login", "Register"];
 const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Logout"];
 const setting_views = [LANDING_VIEW, LANDING_VIEW, LANDING_VIEW, LANDING_VIEW];
 
 export default function NavbarMenu(props) {
