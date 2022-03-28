@@ -211,12 +211,6 @@ export default function ProjectColumn(props) {
 								open={openIconMenu}
 								onClose={closeIconMenu}
 								TransitionComponent={Fade}
-								sx={{
-									color: 'background.default',
-									'&:hover': {
-										backgroundColor: 'secondary.light'
-									}
-								}}
 							>
 								<MenuItem
 									onClick={() => {
