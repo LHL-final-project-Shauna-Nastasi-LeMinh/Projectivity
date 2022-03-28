@@ -42,7 +42,8 @@ export default function NotificationDrawer(props) {
 		setNotifications,
 		notifyOpen,
 		setNotifyOpen,
-		toggleDrawer
+		toggleDrawer,
+		drawerWidth
 	} = props;
 
 	const temp_notifications = [
@@ -82,15 +83,18 @@ export default function NotificationDrawer(props) {
 			>
 				<Typography
 					fontSize="medium"
+					variant="body2"
 					sx={{
-						color: 'background.default'
+						color: 'background.default',
+						textTransform: 'none'
 					}}
 				>
-					Your Notifications:
+					Your Notifications
 				</Typography>
 			</AccordionDetails>
 			{notifyOpen &&
-				notifications && notifications.map((notif, index) => {
+				notifications &&
+				notifications.map((notif, index) => {
 					return (
 						<AccordionDetails
 							sx={{
