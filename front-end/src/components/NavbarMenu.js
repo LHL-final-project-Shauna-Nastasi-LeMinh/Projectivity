@@ -69,28 +69,20 @@ export default function NavbarMenu(props) {
 		setAnchorElUser(event.currentTarget);
 	};
 
-	function handleMenuClick(string, newMode) {
-		if (string === 'Logout') {
-			// a axios call to clear cookie session in server side too
-			axios
-				.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
-				.then((res) => {
-					setUser(null);
-					setStartBuild(false);
-					setViewMode(false);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-			clearUserData();
-		}
+	function logout() {
+		// a axios call to clear cookie session in server side too
+		axios
+			.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
+			.then((res) => {
+				setUser(null);
+				setStartBuild(false);
+				setViewMode(false);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		clearUserData();
 
-		if (string === 'Login' || string === 'Register') {
-			// handleOpenLogin
-		}
-
-		console.log('string is:', string);
-		setViewMode(newMode);
 		setAnchorElUser(null);
 	}
 
@@ -140,9 +132,9 @@ export default function NavbarMenu(props) {
 			position="fixed"
 			sx={{
 				zIndex: (theme) => theme.zIndex.drawer + 1,
-				width: '100%',
-				borderBottom: 1,
-				borderColor: 'divider'
+				width: '100%'
+				// borderBottom: 1,
+				// borderColor: 'divider'
 			}}
 		>
 			<Toolbar>
@@ -186,10 +178,17 @@ export default function NavbarMenu(props) {
 								color: 'background.default'
 							}}
 						>
-							Synchronize your team
+							Keep your project on track
 						</Typography>
 					</Box>
-					<Box sx={{ display: 'flex' }}>
+					<Box
+						sx={{
+							display: 'flex',
+							alignContent: 'center',
+							alignItems: 'center',
+							justifyContent: 'space-between'
+						}}
+					>
 						{user && (
 							<Button onClick={toggleDrawer}>
 								{unreadNotifLength <= 0 && (
@@ -197,7 +196,11 @@ export default function NavbarMenu(props) {
 										sx={{
 											position: 'absolute',
 											zIndex: 1,
-											color: 'background.default'
+											color: 'background.default',
+											px: '0.5rem',
+											'&:hover': {
+												color: 'secondary.light'
+											}
 										}}
 									/>
 								)}
@@ -206,7 +209,10 @@ export default function NavbarMenu(props) {
 										<NotificationsActiveIcon
 											fontSize="large"
 											sx={{
-												color: 'background.default'
+												color: 'background.default',
+												'&:hover': {
+													color: 'secondary.light'
+												}
 											}}
 										/>
 										<CircleIcon
@@ -253,14 +259,28 @@ export default function NavbarMenu(props) {
 									<Button
 										key="about"
 										onClick={() => setViewMode(false)}
-										sx={{ color: 'white', display: 'block' }}
+										sx={{
+											color: 'white',
+											display: 'block',
+											px: '0.5rem',
+											'&:hover': {
+												color: 'secondary.light'
+											}
+										}}
 									>
 										About
 									</Button>
 									<Button
 										key="login"
 										onClick={() => openModals('loginForm')}
-										sx={{ color: 'white', display: 'block' }}
+										sx={{
+											color: 'white',
+											display: 'block',
+											px: '0.5rem',
+											'&:hover': {
+												color: 'secondary.light'
+											}
+										}}
 									>
 										Login
 									</Button>
@@ -268,53 +288,52 @@ export default function NavbarMenu(props) {
 							)}
 
 							{user && (
-								<Box sx={{ display: 'flex' }}>
-									<Typography variant="h6">{email}</Typography>
-									{user && user.access_level == HR_LEVEL && (
-										<Button
-											key="register"
-											sx={{ color: 'white', display: 'block' }}
-											onClick={() => openModals('registerForm')}
+								<Box>
+									<Box sx={{ display: 'flex' }}>
+										<Typography
+											variant="subtitle1"
+											sx={{ alignSelf: 'center', px: '0.5rem' }}
 										>
-											Add Employee
-										</Button>
-									)}
-									<Tooltip title="Open settings">
-										<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-											<Avatar
-												alt="Remy Sharp"
-												src="/static/images/avatar/2.jpg"
-											/>
-										</IconButton>
-									</Tooltip>
+											{email}
+										</Typography>
 
-									<Menu
-										sx={{ mt: '45px' }}
-										id="menu-appbar"
-										anchorEl={anchorElUser}
-										anchorOrigin={{
-											vertical: 'top',
-											horizontal: 'right'
-										}}
-										keepMounted
-										transformOrigin={{
-											vertical: 'top',
-											horizontal: 'right'
-										}}
-										open={Boolean(anchorElUser)}
-										onClose={() => setAnchorElUser(null)}
-									>
-										{settings.map((setting, index) => (
-											<MenuItem
-												key={setting}
-												onClick={() =>
-													handleMenuClick(setting, setting_views[index])
-												}
+										{user && user.access_level == HR_LEVEL && (
+											<Button
+												key="register"
+												sx={{
+													color: 'white',
+													display: 'block',
+													px: '0.5rem',
+													'&:hover': {
+														color: 'secondary.light'
+													}
+												}}
+												onClick={() => openModals('registerForm')}
 											>
-												<Typography textAlign="center">{setting}</Typography>
-											</MenuItem>
-										))}
-									</Menu>
+												Add Employee
+											</Button>
+										)}
+										{user && (
+											<Button
+												key="logout"
+												onClick={() => logout()}
+												sx={{ color: 'white', display: 'block', px: '0.5rem' }}
+											>
+												<Typography
+													variant="subtitle2"
+													sx={{
+														alignSelf: 'center',
+														px: '0.5rem',
+														'&:hover': {
+															color: 'secondary.light'
+														}
+													}}
+												>
+													Logout
+												</Typography>
+											</Button>
+										)}
+									</Box>
 								</Box>
 							)}
 						</Box>

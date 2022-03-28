@@ -21,6 +21,7 @@ import AddIcon from '@mui/icons-material/Add';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { Button, Divider, Grid } from '@mui/material';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { Rotate90DegreesCcw } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { theme } from './Theme';
@@ -201,14 +202,20 @@ export default function Dashboard(props) {
 									/>
 								))}
 							{user.access_level == MANAGER_LEVEL && (
-								<ListItemButton value="Create New Project" sx={{ mx: 2 }}>
+								<ListItemButton
+									value="Create New Project"
+									sx={{
+										px: '1.75rem',
+										borderTop: `1px solid ${theme.palette.secondary.main}`
+									}}
+								>
 									<ListItemText
 										primary="Create New Project"
 										onClick={() => openModals('newProjectForm')}
 									/>
 									<AddIcon
 										fontSize="large"
-										sx={{ color: 'background.default', mx: 2 }}
+										sx={{ color: 'background.default' }}
 									/>
 								</ListItemButton>
 							)}
@@ -225,25 +232,40 @@ export default function Dashboard(props) {
 								width: '10px',
 								right: '0px',
 								top: '0px',
-								backgroundColor: 'primary.dark',
-								borderLeft: `1px solid ${theme.palette.divider}`,
+								backgroundColor: 'primary.main',
+								// borderLeft: `1px solid ${theme.palette.divider}`,
 								'&:hover': {
 									backgroundColor: 'secondary.light'
 								}
 							}}
 							onClick={toggleDrawer}
 						>
-							<ArrowLeftIcon
-								color="inherit"
-								aria-label="open drawer"
-								edge="start"
-								sx={{
-									color: 'secondary.main',
-									position: 'absolute',
-									top: '50%',
-									right: '-25%'
-								}}
-							/>
+							{openDrawer && (
+								<ArrowLeftIcon
+									color="inherit"
+									aria-label="open drawer"
+									edge="start"
+									sx={{
+										color: 'secondary.main',
+										position: 'absolute',
+										top: '50%',
+										right: '-25%'
+									}}
+								/>
+							)}
+							{!openDrawer && (
+								<ArrowRightIcon
+									color="inherit"
+									aria-label="open drawer"
+									edge="start"
+									sx={{
+										color: 'secondary.main',
+										position: 'absolute',
+										top: '50%',
+										right: '-25%'
+									}}
+								/>
+							)}
 						</Button>
 					</Box>
 				</Box>
