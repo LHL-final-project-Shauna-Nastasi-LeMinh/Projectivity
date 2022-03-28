@@ -65,28 +65,34 @@ const App = () => {
 	const drawerWidth = '20';
 
 	const toggleDrawer = () => {
-		console.log('### TOGGLE DRAWER');
-		setNotifyOpen(notifyOpen ? false : true);
+    console.log("### notifyOpen:" + notifyOpen);
+    setNotifyOpen(notifyOpen ? false : true);
+    closeDrawer();
 
-		// if notification drawer is closed, clear all Unread status and change to Read
-		if (!notifyOpen && unreadNotifLength && unreadNotifLength > 0) {
-			axios
-				.get(
-					process.env.REACT_APP_BACKEND_URL +
-						`/notifications/${user.id}/setUnreadAll`
-				)
-				.then((res) => {
-					const newNotifs = JSON.parse(JSON.stringify(notifications));
-					newNotifs.map((notif) => (notif.unread = false));
-					setNotifications(newNotifs);
-					setUnreadNotifLength(null);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
-		setNotifyOpen(notifyOpen ? false : true);
-	};
+    // setNotifyOpen(notifyOpen ? false : true);
+  };
+
+  const closeDrawer = function () {
+    // if notification drawer is closed, clear all Unread status and change to Read
+    if (!notifyOpen) return;
+    setNotifyOpen(false);
+    if (unreadNotifLength && unreadNotifLength > 0) {
+      axios
+        .get(
+          process.env.REACT_APP_BACKEND_URL +
+            `/notifications/${user.id}/setUnreadAll`
+        )
+        .then(res => {
+          const newNotifs = JSON.parse(JSON.stringify(notifications));
+          newNotifs.map(notif => (notif.unread = false));
+          setNotifications(newNotifs);
+          setUnreadNotifLength(null);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
 
 	useEffect(() => {
 		if (user !== null && !sentRequest) {
@@ -241,6 +247,7 @@ const App = () => {
 					}}
 					unreadNotifLength={unreadNotifLength}
 					setUnreadNotifLength={setUnreadNotifLength}
+					closeDrawer={closeDrawer}
 				/>
 				<Offset />
 				{user !== null && userData && (

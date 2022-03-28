@@ -59,14 +59,20 @@ export default function NotificationDrawer(props) {
 			onChange={toggleDrawer}
 			hidden={!notifyOpen}
 			TransitionComponent={Slide}
+			TransitionProps={{
+        mountOnEnter: true,
+        unmountOnExit: true,
+        timeout: { enter: 500 },
+      }}
+      elevation={0}
 			sx={{
 				position: 'fixed',
 				top: '4rem',
 				right: '6rem',
 				zIndex: (theme) => theme.zIndex.appBar + 1,
 				width: '25rem',
-				backgroundColor: '#FFFFFF',
-				border: `1px solid ${theme.palette.secondary.main}`,
+				backgroundColor: 'transparent',
+				border: `none`,
 				color: 'primary.main'
 			}}
 		>
@@ -86,10 +92,10 @@ export default function NotificationDrawer(props) {
 					variant="body2"
 					sx={{
 						color: 'background.default',
-						textTransform: 'none'
+						textTransform: 'uppercase'
 					}}
 				>
-					Your Notifications
+					Notifications
 				</Typography>
 			</AccordionDetails>
 			{notifyOpen &&
@@ -98,7 +104,7 @@ export default function NotificationDrawer(props) {
 					return (
 						<AccordionDetails
 							sx={{
-								height: '1rem',
+								height: '0.5rem',
 								zIndex: 2,
 								color: notif.unread ? 'primary.main' : 'black',
 								backgroundColor: '#FFFFFF',
@@ -107,28 +113,19 @@ export default function NotificationDrawer(props) {
 								'&:hover': {
 									backgroundColor: 'secondary.light'
 								},
-								'&:last-child': {
-									borderBottom: 'none'
-								}
+								borderLeft: `1px solid ${theme.palette.divider}`,
+                borderRight: `1px solid ${theme.palette.divider}`,
+								textTransform: "none",
 							}}
 						>
 							<Typography
-								fontSize="medium"
+								fontSize="small"
 								sx={{
-									color: 'primary.main'
+									color: notif.unread ? "red" : "black",
 								}}
 							>
 								{notif.message}
 							</Typography>
-							<Button
-								sx={{
-									position: 'absolute',
-									top: `${42 * index + 44}px`,
-									right: '0'
-								}}
-							>
-								<ClearIcon fontSize="small" />
-							</Button>
 						</AccordionDetails>
 					);
 				})}

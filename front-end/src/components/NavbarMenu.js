@@ -37,6 +37,7 @@ import { Slide } from '@mui/material';
 import { theme, logoTheme } from './Theme';
 import CircleIcon from '@mui/icons-material/Circle';
 import { ThemeProvider } from '@mui/private-theming';
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 const page_strings = ['About', 'Login', 'Register'];
 const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM];
@@ -60,7 +61,8 @@ export default function NavbarMenu(props) {
 		toggleDrawer,
 		unreadNotifLength,
 		setUnreadNotifLength,
-		drawerWidth
+		drawerWidth,
+		closeDrawer
 	} = props;
 	const [email, setEmail] = useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -101,6 +103,7 @@ export default function NavbarMenu(props) {
 		const channel = pusher.subscribe(NOTIF_CHANNEL);
 		channel.bind(NOTIF_NEW_EVENT, function (notif_to_id) {
 			if (!notif_to_id) return;
+			if (!user) return;
 			if (notif_to_id === user.id) return;
 			updateNotifications();
 		});
@@ -124,7 +127,9 @@ export default function NavbarMenu(props) {
 			});
 	};
 	// WebSocket code end
-
+const test = function() {
+	console.log("AAAAAAAAAAAAAAAA")
+}
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (
@@ -190,7 +195,8 @@ export default function NavbarMenu(props) {
 						}}
 					>
 						{user && (
-							<Button>
+							<ClickAwayListener onClickAway={closeDrawer}>
+							<Button onClick={() => toggleDrawer()}>
 								{unreadNotifLength <= 0 && (
 									<NotificationsIcon
 										sx={{
@@ -249,6 +255,7 @@ export default function NavbarMenu(props) {
 									/>
 								)}
 							</Button>
+							</ClickAwayListener>
 						)}
 						<Box sx={{ display: 'flex' }}>
 							{!user && (

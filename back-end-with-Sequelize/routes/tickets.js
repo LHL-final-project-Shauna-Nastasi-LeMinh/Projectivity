@@ -177,10 +177,10 @@ module.exports = (sequelizeModels, pusher) => {
       }
       // if assigning to new owner
       if (owner_id ) {
-        await addNotification(owner_id, updater_name + " assigned ticket " + title + " to you", updater_name)
+        await addNotification(owner_id, `Ticket ${title} is assigned to you`, updater_name)
         pusher.trigger(NOTIF_CHANNEL, NOTIF_NEW_EVENT, {notif_to_id: owner_id});
         if (exisiting_owner_id) {
-          notifMes = updater_name + " unassigned ticket " + title + " from you";
+          notifMes = `Ticket ${title} is unassigned from you`;
           await addNotification(exisiting_owner_id, notifMes, updater_name)
         }
       }
@@ -193,27 +193,19 @@ module.exports = (sequelizeModels, pusher) => {
           await addNotification(exisiting_owner_id, notifMes , updater_name)
         }
         if (severity !== undefined && oldTicketData.severity !== severity) {
-          notifMes = oldTicketData.severity
-            ? `${updater_name} changed ticket severity from ${oldTicketData.severity} to ${severity}`
-            : `${updater_name} changed ticket severity to ${severity}`
+          notifMes = `Ticket "${oldTicketData.title}" changed severity to ${severity}`
           await addNotification(exisiting_owner_id, notifMes, updater_name)
         }
         if (priority !== undefined && oldTicketData.priority !== priority) {
-          notifMes = oldTicketData.priority
-            ? `${updater_name} changed ticket priority from ${oldTicketData.priority} to ${priority}`
-            : `${updater_name} changed ticket priority to ${priority}`
+          notifMes = `Ticket "${oldTicketData.title}" changed priority to ${priority}`
           await addNotification(exisiting_owner_id, notifMes, updater_name)
         }
         if (type !== undefined && oldTicketData.type !== type) {
-          notifMes = oldTicketData.type
-            ? `${updater_name} changed ticket type from ${oldTicketData.type} to ${type}`
-            : `${updater_name} changed ticket type to ${type}`
+          notifMes = `Ticket "${oldTicketData.title}" changed type to ${type}`
           await addNotification(exisiting_owner_id, notifMes, updater_name)
         }
         if (milestone !== undefined && oldTicketData.milestone !== milestone) {
-          notifMes = oldTicketData.milestone
-            ? `${updater_name} changed ticket milestone from ${oldTicketData.milestone} to ${milestone}`
-            : `${updater_name} changed ticket milestone to ${milestone}`
+          notifMes = `Ticket "${oldTicketData.milestone}" changed type to ${milestone}`
           await addNotification(exisiting_owner_id, notifMes, updater_name)
         }
       }
