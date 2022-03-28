@@ -119,6 +119,10 @@ export default function NewTicketForm(props) {
 	};
 
 	const onAdd = (event) => {
+		if (values.title === undefined) {
+			setValues({ ...values, title: '' });
+			return;
+		}
 		// add new ticket to db
 		axios
 			.post(process.env.REACT_APP_BACKEND_URL + '/tickets/new', {

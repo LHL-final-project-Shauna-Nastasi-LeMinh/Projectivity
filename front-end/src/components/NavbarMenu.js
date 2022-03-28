@@ -141,7 +141,7 @@ export default function NavbarMenu(props) {
 				zIndex: (theme) => theme.zIndex.drawer + 1,
 				width: '100%',
 				borderBottom: 1,
-				borderColor: 'secondary.main'
+				borderColor: 'divider'
 			}}
 		>
 			<Toolbar>

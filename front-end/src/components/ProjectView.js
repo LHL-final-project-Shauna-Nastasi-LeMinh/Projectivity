@@ -18,6 +18,9 @@ import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/private-theming';
 import { projectViewTheme } from './Theme';
 import DeleteTicketDragForm from './Forms/DeleteTicketDragForm';
+import { Button, Divider, Grid } from '@mui/material';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import styled from '@emotion/styled';
 
 export default function ProjectView(props) {
 	const {
@@ -361,14 +364,13 @@ export default function ProjectView(props) {
 		setColumns([...allColumns]);
 	};
 
+	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+
 	return (
 		<Box
 			sx={{
-				position: 'absolute',
-				left: '16rem',
-				top: '4rem',
-				minWidth: 'min-content',
-				width: 'fit-content'
+				width: 'fit-content',
+				flexGrow: 1
 			}}
 		>
 			<ThemeProvider theme={projectViewTheme}>
