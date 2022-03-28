@@ -176,6 +176,8 @@ export default function ProjectColumn(props) {
 					)}
 					<ListItem
 						sx={{
+							backgroundColor: 'primary.main',
+							color: 'background.default',
 							padding: '0.1rem',
 							transition: 'background-color 0.5s ease',
 							'&:hover': {
@@ -265,14 +267,14 @@ export default function ProjectColumn(props) {
 						{(provided, snapshot) => (
 							<Box
 								sx={{
-									height: 'fit-content',
-									minHeight: '24rem',
-									maxHeight: '36rem',
+									minHeight: '75%',
+									height: '75%',
+									maxHeight: '75%',
 									backgroundColor: snapshot.isDraggingOver
 										? 'rgb(249, 65, 68, 0.1)'
 										: 'rgb(41, 50, 65, 0.1)',
 									transition: 'background-color 0.5s ease',
-
+									overflow: 'auto',
 									'&:hover': {
 										backgroundColor: 'rgb(249, 65, 68, 0.1)'
 									}
@@ -322,7 +324,8 @@ export default function ProjectColumn(props) {
 					<Divider />
 					<Box
 						sx={{
-							color: 'primary.main',
+							backgroundColor: 'primary.main',
+							color: 'background.default',
 							transition: 'background-color 0.5s ease',
 							'&:hover': {
 								backgroundColor: 'secondary.light'

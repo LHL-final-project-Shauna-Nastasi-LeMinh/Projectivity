@@ -373,9 +373,10 @@ export default function ProjectView(props) {
 	return (
 		<Box
 			sx={{
+				height: '90%',
 				position: 'absolute',
 				width: 'fit-content',
-				marginLeft: '1rem',
+				margin: '1rem',
 				flexGrow: 1,
 				...(!openDrawer && {
 					left: '1rem',
@@ -410,63 +411,53 @@ export default function ProjectView(props) {
 						{(provided) => (
 							<Box
 								disablePadding
-								sx={{ display: 'flex' }}
+								sx={{
+									height: '92.5%',
+									display: 'flex'
+								}}
 								{...provided.droppableProps}
 								ref={provided.innerRef}
 							>
 								{columns !== undefined &&
 									columns.map((column, colIndex) => (
-										<Box>
-											<ProjectColumn
-												disablePadding
-												key={column.id}
-												user={user}
-												title={column.name}
-												column={column}
-												setViewMode={setViewMode}
-												currentColumn={currentColumn}
-												setCurrentColumn={setCurrentColumn}
-												currentTicket={currentTicket}
-												setCurrentTicket={setCurrentTicket}
-												colIndex={colIndex}
-												open={open}
-												setOpen={setOpen}
-												modals={modals}
-												openModals={openModals}
-												closeModals={closeModals}
-												deleteColumnFromProjectView={
-													deleteColumnFromProjectView
-												}
-												changeColumnFromProjectView={
-													changeColumnFromProjectView
-												}
-												createNewColumn={createNewColumn}
-												selectedColumn={selectedColumn}
-												setSelectedColumn={setSelectedColumn}
-												currentProject={currentProject}
-												userData={userData}
-												setUserData={setUserData}
-												setColumns={setColumns}
-											/>
-										</Box>
+										<ProjectColumn
+											disablePadding
+											key={column.id}
+											user={user}
+											title={column.name}
+											column={column}
+											setViewMode={setViewMode}
+											currentColumn={currentColumn}
+											setCurrentColumn={setCurrentColumn}
+											currentTicket={currentTicket}
+											setCurrentTicket={setCurrentTicket}
+											colIndex={colIndex}
+											open={open}
+											setOpen={setOpen}
+											modals={modals}
+											openModals={openModals}
+											closeModals={closeModals}
+											deleteColumnFromProjectView={deleteColumnFromProjectView}
+											changeColumnFromProjectView={changeColumnFromProjectView}
+											createNewColumn={createNewColumn}
+											selectedColumn={selectedColumn}
+											setSelectedColumn={setSelectedColumn}
+											currentProject={currentProject}
+											userData={userData}
+											setUserData={setUserData}
+											setColumns={setColumns}
+										/>
 									))}
 
-								{console.log(
-									drawerWidth,
-									columns.length,
-									Number(drawerWidth) +
-										columns.length * 16 -
-										columns.length * 0.5 +
-										2
-								)}
 								{user.access_level == MANAGER_LEVEL && columns !== undefined && (
 									<Box
 										sx={{
 											rotate: '90deg',
 											position: 'relative',
-											width: '24rem',
-											left: '-24rem',
-											top: '-0.25rem'
+											height: 'fit-content',
+											width: '36rem',
+											left: '-16rem',
+											top: '20rem'
 										}}
 									>
 										<ProjectColumnNew
