@@ -190,7 +190,7 @@ export default function NavbarMenu(props) {
 						}}
 					>
 						{user && (
-							<Button onClick={toggleDrawer}>
+							<Button>
 								{unreadNotifLength <= 0 && (
 									<NotificationsIcon
 										sx={{

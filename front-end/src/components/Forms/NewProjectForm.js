@@ -44,6 +44,8 @@ export default function NewProjectForm(props) {
 	});
 	const [assignees, setAssignees] = useState([]);
 
+	console.log('### assignees', assignees);
+
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
 	};
@@ -137,10 +139,14 @@ export default function NewProjectForm(props) {
 	const ITEM_HEIGHT = 48;
 	const ITEM_PADDING_TOP = 8;
 	const MenuProps = {
+		root: {
+			backgroundColor: 'primary.main',
+			color: 'background.default'
+		},
 		PaperProps: {
 			style: {
-				maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-				width: 250
+				maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP
+				// backgroundColor: 'primary.main'
 			}
 		}
 	};
@@ -197,7 +203,6 @@ export default function NewProjectForm(props) {
 					<FormControl sx={{ m: 2, width: '90%' }}>
 						<InputLabel id="demo-multiple-checkbox-label">Employees</InputLabel>
 						<Select
-							sx={{ color: 'primary.main' }}
 							labelId="demo-multiple-checkbox-label"
 							id="demo-multiple-checkbox"
 							multiple
@@ -205,18 +210,17 @@ export default function NewProjectForm(props) {
 							onChange={handleSelectChange}
 							input={<OutlinedInput label="Employees" />}
 							renderValue={(selected) => selected.join(', ')}
-							MenuProps={MenuProps}
 						>
 							{allEmployees.map((employee) => (
 								<MenuItem
-									key={employee.id}
-									value={employee.first_name + ' ' + employee.last_name}
 									sx={{
-										backgroundColor: 'primary.main',
+										color: 'background.default',
 										'&:hover': {
 											backgroundColor: 'secondary.light'
 										}
 									}}
+									key={employee.id}
+									value={employee.first_name + ' ' + employee.last_name}
 								>
 									<Checkbox
 										checked={
@@ -225,6 +229,13 @@ export default function NewProjectForm(props) {
 											) > -1
 										}
 										value={employee.id}
+										color="secondary"
+										sx={{
+											color: 'secondary.main',
+											'&:hover': {
+												color: 'secondary.light'
+											}
+										}}
 									/>
 									<ListItemText
 										primary={employee.first_name + ' ' + employee.last_name}

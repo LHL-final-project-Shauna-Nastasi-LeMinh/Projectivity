@@ -355,18 +355,54 @@ export default function ProjectTicket(props) {
 						onClose={closeMenu}
 						TransitionComponent={Fade}
 					>
-						<MenuItem id="details" onClick={(evt) => handleDialogOpening(evt)}>
+						<MenuItem
+							sx={{
+								color: 'background.default',
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								}
+							}}
+							id="details"
+							onClick={(evt) => handleDialogOpening(evt)}
+						>
 							Details
 						</MenuItem>
-						<MenuItem id="edit" onClick={handleDialogOpening}>
+						<MenuItem
+							sx={{
+								color: 'background.default',
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								}
+							}}
+							id="edit"
+							onClick={handleDialogOpening}
+						>
 							Edit
 						</MenuItem>
 						{user.access_level == MANAGER_LEVEL && (
-							<MenuItem id="remove" onClick={(evt) => handleDialogOpening(evt)}>
+							<MenuItem
+								sx={{
+									color: 'background.default',
+									'&:hover': {
+										backgroundColor: 'secondary.light'
+									}
+								}}
+								id="remove"
+								onClick={(evt) => handleDialogOpening(evt)}
+							>
 								Remove
 							</MenuItem>
 						)}
-						<MenuItem id="history" onClick={handleDialogOpening}>
+						<MenuItem
+							sx={{
+								color: 'background.default',
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								}
+							}}
+							id="history"
+							onClick={handleDialogOpening}
+						>
 							History
 						</MenuItem>
 					</Menu>

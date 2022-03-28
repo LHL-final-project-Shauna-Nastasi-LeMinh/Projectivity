@@ -96,7 +96,8 @@ export default function DashboardItem(props) {
 				anchorEl={anchorEl}
 				open={open}
 				onClose={handleClose}
-				color="primary.main"
+				color="primary"
+				sx={{ color: 'background.default' }}
 				anchorOrigin={{
 					vertical: 'bottom',
 					horizontal: 'left'
@@ -107,15 +108,31 @@ export default function DashboardItem(props) {
 				}}
 			>
 				<MenuItem
-					sx={{ '&:hover': { backgroundColor: 'secondary.light' } }}
-					onClick={() => selectModal('editProjectForm', dashItemProject)}
+					sx={{
+						color: 'background.default',
+						'&:hover': {
+							backgroundColor: 'secondary.light'
+						}
+					}}
+					onClick={() => {
+						selectModal('editProjectForm', dashItemProject);
+						handleClose();
+					}}
 				>
 					<EditIcon fontSize="small" />
 					Edit Project
 				</MenuItem>
 				<MenuItem
-					sx={{ '&:hover': { backgroundColor: 'secondary.light' } }}
-					onClick={() => selectModal('deleteProjectForm', dashItemProject)}
+					sx={{
+						color: 'background.default',
+						'&:hover': {
+							backgroundColor: 'secondary.light'
+						}
+					}}
+					onClick={() => {
+						selectModal('deleteProjectForm', dashItemProject);
+						handleClose();
+					}}
 				>
 					<DeleteIcon fontSize="small" />
 					Delete Project

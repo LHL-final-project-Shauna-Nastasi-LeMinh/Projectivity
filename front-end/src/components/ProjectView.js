@@ -386,108 +386,102 @@ export default function ProjectView(props) {
 				})
 			}}
 		>
-			<ThemeProvider theme={projectViewTheme}>
-				<Box
-					sx={{
-						maxWidth: '80rem',
-						minWidth: '60rem',
-						width: 'fit-content'
-					}}
+			<Box
+				sx={{
+					maxWidth: '80rem',
+					minWidth: '60rem',
+					width: 'fit-content'
+				}}
+			>
+				<SearchPane
+					searchFilter={searchFilter}
+					resetSearchPane={resetSearchPane}
+					user={user}
+				/>
+			</Box>
+			<DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
+				<Droppable
+					droppableId="all-column"
+					direction="horizontal"
+					type="column"
 				>
-					<SearchPane
-						searchFilter={searchFilter}
-						resetSearchPane={resetSearchPane}
-						user={user}
-					/>
-				</Box>
-				<DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-					<Droppable
-						droppableId="all-column"
-						direction="horizontal"
-						type="column"
-					>
-						{(provided) => (
+					{(provided) => (
+						<Box
+							sx={{
+								height: '42rem',
+								minHeight: '42rem',
+								maxHeight: '42rem',
+								width: `${columns.length * 16 + 4}rem`,
+								// width: 'min-content',
+								minWidth: '90%',
+								maxWidth: '100%',
+								display: 'flex',
+								flexDirection: 'row'
+							}}
+							{...provided.droppableProps}
+							ref={provided.innerRef}
+						>
 							<Box
 								sx={{
-									height: '42rem',
-									minHeight: '42rem',
-									maxHeight: '42rem',
-									width: `${columns.length * 16 + 4}rem`,
-									// width: 'min-content',
-									minWidth: '90%',
-									maxWidth: '100%',
 									display: 'flex',
-									flexDirection: 'row'
+									flexDirection: 'row',
+									margin: '1rem'
 								}}
-								{...provided.droppableProps}
-								ref={provided.innerRef}
 							>
-								<Box
-									sx={{
-										display: 'flex',
-										flexDirection: 'row',
-										margin: '1rem'
-									}}
-								>
-									{columns !== undefined &&
-										columns.map((column, colIndex) => (
-											<ProjectColumn
-												disablePadding
-												key={column.id}
-												user={user}
-												title={column.name}
-												column={column}
-												setViewMode={setViewMode}
-												currentColumn={currentColumn}
-												setCurrentColumn={setCurrentColumn}
-												currentTicket={currentTicket}
-												setCurrentTicket={setCurrentTicket}
-												colIndex={colIndex}
-												open={open}
-												setOpen={setOpen}
-												modals={modals}
-												openModals={openModals}
-												closeModals={closeModals}
-												deleteColumnFromProjectView={
-													deleteColumnFromProjectView
-												}
-												changeColumnFromProjectView={
-													changeColumnFromProjectView
-												}
-												createNewColumn={createNewColumn}
-												selectedColumn={selectedColumn}
-												setSelectedColumn={setSelectedColumn}
-												currentProject={currentProject}
-												userData={userData}
-												setUserData={setUserData}
-												setColumns={setColumns}
-											/>
-										))}
+								{columns !== undefined &&
+									columns.map((column, colIndex) => (
+										<ProjectColumn
+											disablePadding
+											key={column.id}
+											user={user}
+											title={column.name}
+											column={column}
+											setViewMode={setViewMode}
+											currentColumn={currentColumn}
+											setCurrentColumn={setCurrentColumn}
+											currentTicket={currentTicket}
+											setCurrentTicket={setCurrentTicket}
+											colIndex={colIndex}
+											open={open}
+											setOpen={setOpen}
+											modals={modals}
+											openModals={openModals}
+											closeModals={closeModals}
+											deleteColumnFromProjectView={deleteColumnFromProjectView}
+											changeColumnFromProjectView={changeColumnFromProjectView}
+											createNewColumn={createNewColumn}
+											selectedColumn={selectedColumn}
+											setSelectedColumn={setSelectedColumn}
+											currentProject={currentProject}
+											userData={userData}
+											setUserData={setUserData}
+											setColumns={setColumns}
+										/>
+									))}
 
-									{user.access_level == MANAGER_LEVEL &&
-										columns !== undefined && (
-											<ProjectColumnNew
-												createNewColumn={createNewColumn}
-												columnsCount={columns.length}
-												openModals={openModals}
-											/>
-										)}
-									{provided.placeholder}
-								</Box>
+								{user.access_level == MANAGER_LEVEL &&
+									columns !== undefined && (
+										<ProjectColumnNew
+											createNewColumn={createNewColumn}
+											columnsCount={columns.length}
+											openModals={openModals}
+										/>
+									)}
+								{provided.placeholder}
 							</Box>
-						)}
-					</Droppable>
-					<Bin />
-				</DragDropContext>
-				{modals.deleteTicketDragForm && (
-					<DeleteTicketDragForm
-						modals={modals}
-						closeModals={closeModals}
-						dragSource={dragSource}
-						deleteTicket={deleteTicketByDragDrop}
-					/>
-				)}
-			</ThemeProvider>
+						</Box>
+					)}
+				</Droppable>
+				<Bin />
+			</DragDropContext>
+			{modals.deleteTicketDragForm && (
+				<DeleteTicketDragForm
+					modals={modals}
+					closeModals={closeModals}
+					dragSource={dragSource}
+					deleteTicket={deleteTicketByDragDrop}
+				/>
+			)}
 		</Box>
 	);
 }

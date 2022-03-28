@@ -83,11 +83,13 @@ export default function NotificationDrawer(props) {
 			>
 				<Typography
 					fontSize="medium"
+					variant="body2"
 					sx={{
-						color: 'background.default'
+						color: 'background.default',
+						textTransform: 'none'
 					}}
 				>
-					Your Notifications:
+					Your Notifications
 				</Typography>
 			</AccordionDetails>
 			{notifyOpen &&

@@ -77,29 +77,85 @@ export default function NewTicketForm(props) {
 	);
 
 	//   // map over each ticket detail to create a list for dropdown menu
-	// const severitiesMenu = ticketDetails.severities.map(severity => <MenuItem key={severity.id} value={severity.name}>{severity.name}</MenuItem>)
-	// const prioritiesMenu = ticketDetails.priorities.map(priority => <MenuItem key={priority.id} value={priority.name}>{priority.name}</MenuItem>)
-	// const typesMenu = ticketDetails.types.map(type => <MenuItem key={type.id} value={type.name}>{type.name}</MenuItem>)
-	// const milestonesMenu = ticketDetails.milestones.map(milestone => <MenuItem key={milestone.id} value={milestone.name}>{milestone.name}</MenuItem>)
+	// // const severitiesMenu = ticketDetails.severities.map(severity => <MenuItem sx={{
+	// 					color: 'background.default',
+	// 					'&:hover': {
+	// 						backgroundColor: 'secondary.light'
+	// 					}
+	// 				}} key={severity.id} value={severity.name}>{severity.name}</MenuItem>)
+	// // const prioritiesMenu = ticketDetails.priorities.map(priority => <MenuItem sx={{
+	// 					color: 'background.default',
+	// 					'&:hover': {
+	// 						backgroundColor: 'secondary.light'
+	// 					}
+	// 				}} key={priority.id} value={priority.name}>{priority.name}</MenuItem>)
+	// // const typesMenu = ticketDetails.types.map(type => <MenuItem sx={{
+	// 					color: 'background.default',
+	// 					'&:hover': {
+	// 						backgroundColor: 'secondary.light'
+	// 					}
+	// 				}} key={type.id} value={type.name}>{type.name}</MenuItem>)
+	// // const milestonesMenu = ticketDetails.milestones.map(milestone => <MenuItem sx={{
+	// 					color: 'background.default',
+	// 					'&:hover': {
+	// 						backgroundColor: 'secondary.light'
+	// 					}
+	// 				}} key={milestone.id} value={milestone.name}>{milestone.name}</MenuItem>)
 
 	// map over each ticket detail to create a list for dropdown menu
 	const severitiesMenu = ticketDetails.severities.map((severity) => (
-		<MenuItem key={severity.id} value={severity.name}>
+		<MenuItem
+			sx={{
+				color: 'background.default',
+				'&:hover': {
+					backgroundColor: 'secondary.light'
+				}
+			}}
+			key={severity.id}
+			value={severity.name}
+		>
 			{severity.name}
 		</MenuItem>
 	));
 	const prioritiesMenu = ticketDetails.priorities.map((priority) => (
-		<MenuItem key={priority.id} value={priority.name}>
+		<MenuItem
+			sx={{
+				color: 'background.default',
+				'&:hover': {
+					backgroundColor: 'secondary.light'
+				}
+			}}
+			key={priority.id}
+			value={priority.name}
+		>
 			{priority.name}
 		</MenuItem>
 	));
 	const typesMenu = ticketDetails.types.map((type) => (
-		<MenuItem key={type.id} value={type.name}>
+		<MenuItem
+			sx={{
+				color: 'background.default',
+				'&:hover': {
+					backgroundColor: 'secondary.light'
+				}
+			}}
+			key={type.id}
+			value={type.name}
+		>
 			{type.name}
 		</MenuItem>
 	));
 	const milestonesMenu = ticketDetails.milestones.map((milestone) => (
-		<MenuItem key={milestone.id} value={milestone.name}>
+		<MenuItem
+			sx={{
+				color: 'background.default',
+				'&:hover': {
+					backgroundColor: 'secondary.light'
+				}
+			}}
+			key={milestone.id}
+			value={milestone.name}
+		>
 			{milestone.name}
 		</MenuItem>
 	));
@@ -313,7 +369,15 @@ export default function NewTicketForm(props) {
 								onChange={handleChange('type')}
 								defaultValue={editTicket ? `${ticket.type}` : ''}
 							>
-								<MenuItem value="">
+								<MenuItem
+									sx={{
+										color: 'background.default',
+										'&:hover': {
+											backgroundColor: 'secondary.light'
+										}
+									}}
+									value=""
+								>
 									<em></em>
 								</MenuItem>
 								{typesMenu}

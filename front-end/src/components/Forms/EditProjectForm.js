@@ -45,21 +45,21 @@ export default function RegistrationForm(props) {
 	const [assignees, setAssignees] = useState([]);
 
 	useEffect(() => {
-
-    axios
-				.get(
-					process.env.REACT_APP_BACKEND_URL + `/projects/${currentProject.id}/assignees`
-				)
-				.then((res) => {
-          if (res && res.data) {
-						const assgineeArray = [];
-						res.data.forEach(assignee => {
-							assgineeArray.push(assignee.first_name + ' ' + assignee.last_name)
-						}) 
-						setAssignees(assgineeArray);
-          }
-				});
-  }, [])
+		axios
+			.get(
+				process.env.REACT_APP_BACKEND_URL +
+					`/projects/${currentProject.id}/assignees`
+			)
+			.then((res) => {
+				if (res && res.data) {
+					const assgineeArray = [];
+					res.data.forEach((assignee) => {
+						assgineeArray.push(assignee.first_name + ' ' + assignee.last_name);
+					});
+					setAssignees(assgineeArray);
+				}
+			});
+	}, []);
 
 	const handleChange = (prop) => (event) => {
 		setValues({
@@ -80,47 +80,55 @@ export default function RegistrationForm(props) {
 	};
 
 	const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
+	const ITEM_PADDING_TOP = 8;
+	const MenuProps = {
+		PaperProps: {
+			style: {
+				maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+				width: 250
+			}
+		}
+	};
 
-  const handleSelectChange = (event) => {
-    const {target: { value },} = event;
-    setAssignees(
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
+	const handleSelectChange = (event) => {
+		const {
+			target: { value }
+		} = event;
+		setAssignees(typeof value === 'string' ? value.split(',') : value);
+	};
 
 	function buildEmployeeList() {
 		const mappedEmployees = {};
-		allEmployees.forEach(employee => {
+		allEmployees.forEach((employee) => {
 			const fullname = employee.first_name + ' ' + employee.last_name;
 			mappedEmployees[fullname] = employee.id;
-		})
+		});
 		return mappedEmployees;
 	}
 
 	function updateProjectDetails() {
-		
-		//assign employee to the project 
+		//assign employee to the project
 		const mappedEmployees = buildEmployeeList();
-		const assigneeIds = assignees.map(fullname => mappedEmployees[fullname]);
-		const params = {assigneeIds, name: values.name, description: values.description, employee_id: user.id}
+		const assigneeIds = assignees.map((fullname) => mappedEmployees[fullname]);
+		const params = {
+			assigneeIds,
+			name: values.name,
+			description: values.description,
+			employee_id: user.id
+		};
 		axios
-			.post(process.env.REACT_APP_BACKEND_URL + `/projects/${currentProject.id}/details`, JSON.stringify(params),
+			.post(
+				process.env.REACT_APP_BACKEND_URL +
+					`/projects/${currentProject.id}/details`,
+				JSON.stringify(params),
 				{
 					headers: {
 						'Content-Type': 'application/json'
 					}
-				})
+				}
+			)
 			.then((res) => {
-				console.log(res.data)
+				console.log(res.data);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -172,29 +180,51 @@ export default function RegistrationForm(props) {
 				</Box>
 				<Divider />
 				<Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
-          <FormControl sx={{ m: 2, width: '90%' }}>
-            <InputLabel id="demo-multiple-checkbox-label">Employees</InputLabel>
-            <Select 
-              sx={{color: 'primary.main'}}
-              labelId="demo-multiple-checkbox-label"
-              id="demo-multiple-checkbox"
-              multiple
-              value={assignees}
-              onChange={handleSelectChange}
-              input={<OutlinedInput label="Employees" />}
-              renderValue={(selected) => selected.join(', ')}
-              MenuProps={MenuProps}
-            >
-              {allEmployees.map((employee) => (
-                <MenuItem key={employee.id} value={employee.first_name + ' ' + employee.last_name}>
-                  <Checkbox checked={assignees.indexOf(employee.first_name + ' ' + employee.last_name) > -1} 
+					<FormControl sx={{ m: 2, width: '90%' }}>
+						<InputLabel id="demo-multiple-checkbox-label">Employees</InputLabel>
+						<Select
+							sx={{ color: 'primary.main' }}
+							labelId="demo-multiple-checkbox-label"
+							id="demo-multiple-checkbox"
+							multiple
+							value={assignees}
+							onChange={handleSelectChange}
+							input={<OutlinedInput label="Employees" />}
+							renderValue={(selected) => selected.join(', ')}
+						>
+							{allEmployees.map((employee) => (
+								<MenuItem
+									sx={{
+										color: 'background.default',
+										'&:hover': {
+											backgroundColor: 'secondary.light'
+										}
+									}}
+									key={employee.id}
+									value={employee.first_name + ' ' + employee.last_name}
+								>
+									<Checkbox
+										checked={
+											assignees.indexOf(
+												employee.first_name + ' ' + employee.last_name
+											) > -1
+										}
 										value={employee.id}
+										color="secondary"
+										sx={{
+											color: 'secondary.main',
+											'&:hover': {
+												color: 'secondary.light'
+											}
+										}}
 									/>
-                  <ListItemText primary={employee.first_name + ' ' + employee.last_name} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+									<ListItemText
+										primary={employee.first_name + ' ' + employee.last_name}
+									/>
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
 				</Box>
 				<Box
 					sx={{

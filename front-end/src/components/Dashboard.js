@@ -204,15 +204,13 @@ export default function Dashboard(props) {
 							{user.access_level == MANAGER_LEVEL && (
 								<ListItemButton
 									value="Create New Project"
+									onClick={() => openModals('newProjectForm')}
 									sx={{
 										px: '1.75rem',
 										borderTop: `1px solid ${theme.palette.secondary.main}`
 									}}
 								>
-									<ListItemText
-										primary="Create New Project"
-										onClick={() => openModals('newProjectForm')}
-									/>
+									<ListItemText primary="Create New Project" />
 									<AddIcon
 										fontSize="large"
 										sx={{ color: 'background.default' }}
