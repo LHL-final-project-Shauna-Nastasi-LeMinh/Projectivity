@@ -178,6 +178,7 @@ export default function RegistrationForm(props) {
 						}}
 						label="New Project Name"
 						value={values.name}
+						// defaultValue={}
 						type="text"
 						onChange={handleChange('name')}
 						helperText={values.name === '' && 'Required field'}
