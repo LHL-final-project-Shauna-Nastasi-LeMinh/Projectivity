@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect, componentDidUpdate } from 'react';
+import React, { useState, useEffect, componentDidUpdate, useRef } from 'react';
 import axios from 'axios';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -32,6 +32,8 @@ import Dashboard from './components/Dashboard';
 import { styled } from '@mui/system';
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './components/Theme';
+import { Button, Divider, Grid } from '@mui/material';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 
 const App = () => {
 	const [user, setUser] = useState(null);
@@ -50,13 +52,19 @@ const App = () => {
 	const [sentRequest, setSentRequest] = useState(false);
 	const [startBuild, setStartBuild] = useState(false);
 	const [userData, setUserData] = useState();
+	const [openDrawer, setOpenDrawer] = useState(true);
 
 	// sets the open or closed state of the notification drawer
 	const [notifyOpen, setNotifyOpen] = useState(false);
 	// an empty array to push notifications to
 	const [notifications, setNotifications] = useState([]);
+	const [dashWidth, setDashWidth] = useState();
+	const [navHeight, setNavHeight] = useState();
+	const dashRef = useRef();
+	const navRef = useRef();
 
 	const toggleDrawer = () => {
+		console.log('### TOGGLE DRAWER');
 		setNotifyOpen(notifyOpen ? false : true);
 	};
 
@@ -213,53 +221,58 @@ const App = () => {
 					}}
 				/>
 				<Offset />
-				{user !== null && userData && (
-					<Dashboard
-						viewMode={viewMode}
-						setViewMode={setViewMode}
-						user={user}
-						setUser={setUser}
-						// userProjects={userProjects}
-						// setUserProjects={setUserProjects}
-						currentProject={currentProject}
-						setCurrentProject={setCurrentProject}
-						dashboardProjects={dashboardProjects}
-						setDashboardProjects={setDashboardProjects}
-						userData={userData}
-						setUserData={setUserData}
-						// data={data}
-						// loadForm={loadForm}
-						// open={open}
-						// setOpen={setOpen}
-						modals={modals}
-						openModals={openModals}
-						closeModals={closeModals}
-						allEmployees={allEmployees}
-					/>
-				)}
-				{user !== null &&
-					user.access_level == HR_LEVEL &&
-					userData !== undefined && <HRPage />}
-				{user === null && <AboutPage user={user} />}
-				{user !== null &&
-					user.access_level != HR_LEVEL &&
-					userData !== undefined && (
-						<ProjectView
+				<Box sx={{ display: 'flex' }}>
+					{user !== null && userData && (
+						<Dashboard
+							viewMode={viewMode}
+							setViewMode={setViewMode}
 							user={user}
+							setUser={setUser}
+							// userProjects={userProjects}
+							// setUserProjects={setUserProjects}
 							currentProject={currentProject}
 							setCurrentProject={setCurrentProject}
-							setViewMode={setViewMode}
-							setCurrentColumn={setCurrentColumn}
-							currentTicket={currentTicket}
-							setCurrentTicket={setCurrentTicket}
-							currentColumn={currentColumn}
-							modals={modals}
-							closeModals={closeModals}
-							openModals={openModals}
+							dashboardProjects={dashboardProjects}
+							setDashboardProjects={setDashboardProjects}
 							userData={userData}
 							setUserData={setUserData}
+							// data={data}
+							// loadForm={loadForm}
+							// open={open}
+							// setOpen={setOpen}
+							modals={modals}
+							openModals={openModals}
+							closeModals={closeModals}
+							allEmployees={allEmployees}
+							openDrawer={openDrawer}
+							setOpenDrawer={setOpenDrawer}
 						/>
 					)}
+
+					{user !== null &&
+						user.access_level == HR_LEVEL &&
+						userData !== undefined && <HRPage />}
+					{user === null && <AboutPage user={user} />}
+					{user !== null &&
+						user.access_level != HR_LEVEL &&
+						userData !== undefined && (
+							<ProjectView
+								user={user}
+								currentProject={currentProject}
+								setCurrentProject={setCurrentProject}
+								setViewMode={setViewMode}
+								setCurrentColumn={setCurrentColumn}
+								currentTicket={currentTicket}
+								setCurrentTicket={setCurrentTicket}
+								currentColumn={currentColumn}
+								modals={modals}
+								closeModals={closeModals}
+								openModals={openModals}
+								userData={userData}
+								setUserData={setUserData}
+							/>
+						)}
+				</Box>
 			</ThemeProvider>
 		</Container>
 	);

@@ -112,7 +112,7 @@ export default function NavbarMenu(props) {
 				zIndex: (theme) => theme.zIndex.drawer + 1,
 				width: '100%',
 				borderBottom: 1,
-				borderColor: 'secondary.main'
+				borderColor: 'divider'
 			}}
 		>
 			<Toolbar>
@@ -137,7 +137,7 @@ export default function NavbarMenu(props) {
 						}}
 					>
 						<Typography variant="h4" sx={{ alignSelf: 'center', mx: 1 }}>
-							SyncUp
+							Projectivity
 						</Typography>
 						<Typography variant="h6" sx={{ alignSelf: 'center', mx: 1 }}>
 							Synchronize your team
@@ -187,14 +187,15 @@ export default function NavbarMenu(props) {
 										</Typography>
 									</Box>
 								)}
-
-								<NotificationDrawer
-									notifications={notifications}
-									setNotifications={setNotifications}
-									notifyOpen={notifyOpen}
-									setNotifyOpen={setNotifyOpen}
-									toggleDrawer={toggleDrawer}
-								/>
+								{notifications && (
+									<NotificationDrawer
+										notifications={notifications}
+										setNotifications={setNotifications}
+										notifyOpen={notifyOpen}
+										setNotifyOpen={setNotifyOpen}
+										toggleDrawer={toggleDrawer}
+									/>
+								)}
 							</Button>
 						)}
 						<Box sx={{ display: 'flex' }}>

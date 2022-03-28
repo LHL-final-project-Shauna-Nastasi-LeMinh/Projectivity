@@ -74,7 +74,7 @@ export default function NotificationDrawer(props) {
 					height: '1rem',
 					zIndex: 2,
 					bgcolor: 'primary.main',
-					borderBottom: `1px solid ${theme.palette.secondary.main}`,
+					borderBottom: `1px solid ${theme.palette.divider}`,
 					'&:last-child': {
 						borderBottom: 'none'
 					}
@@ -99,7 +99,7 @@ export default function NotificationDrawer(props) {
 								color: 'primary.main',
 								backgroundColor: '#FFFFFF',
 								bgcolor: '#FFFFFF',
-								borderBottom: `1px solid ${theme.palette.secondary.main}`,
+								borderBottom: `1px solid ${theme.palette.divider}`,
 								'&:hover': {
 									backgroundColor: 'secondary.light'
 								},
