@@ -109,6 +109,12 @@ export default function ProjectTicket(props) {
     closeMenu();
   };
 
+
+  const handleTicketClick = () => {
+    console.log('ticket was clicked')
+    setDialogOpen(SHOW_TICKET_DETAILS);
+  }
+
   //
 
   const handleToggle = value => () => {
@@ -154,9 +160,6 @@ export default function ProjectTicket(props) {
 
   const employee = useEmployeesData(ticket.owner_id, tickets);
 
-  const isAvatar = () => {
-    return;
-  };
 
   return (
     <ListItem sx={{ display: "block" }}>
@@ -196,18 +199,22 @@ export default function ProjectTicket(props) {
         )}
       </Stack>
 
-      <ListItemButton
-        sx={{
+      <Box sx={{
           px: "0",
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
-        }}
+          alignItems: "center", 
+        }}>
+      <ListItemButton
+        sx={{ ml:0, pl:0}}
+        onClick={handleTicketClick}
+        
       >
         <div>
-          <Typography sx={{ color: "background.default" }}>{title}</Typography>
+          <Typography sx={{ color: "background.default"}}>{title}</Typography>
           {/* <ListItemText primary={title} sx={{ fontSize: 'small' }} /> */}
         </div>
+        </ListItemButton>
 
         <div style={{ display: "inherit" }}>
           <IconButton
@@ -371,7 +378,8 @@ export default function ProjectTicket(props) {
             </MenuItem>
           </Menu>
         </div>
-      </ListItemButton>
+      {/* </ListItemButton> */}
+      </Box>
     </ListItem>
   );
 }
