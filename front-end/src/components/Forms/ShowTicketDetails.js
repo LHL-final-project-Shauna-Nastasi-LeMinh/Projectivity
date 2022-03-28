@@ -12,7 +12,7 @@ import {List, ListItem, Divider, ListItemText, Avatar, Chip} from '@mui/material
 
 import useEmployeesData from '../../hooks/useEmployeesData';
 
-import { choosePriorityColor } from '../../helpers/colorHelper';
+import { choosePriorityColor, chooseSeverityColor } from '../../helpers/colorHelper';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -124,7 +124,14 @@ export default function ShowTicketDetails(props) {
 
             <ListItem>
              
-              <ListItemText primary="Severity:" secondary={ticketDetails.severity} />
+              <ListItemText primary="Severity:" secondary={
+                <Chip
+                pl="2"
+                label={ticketDetails.severity}
+              
+                 style={{backgroundColor: chooseSeverityColor(ticketDetails.severity), fontWeight:'700'}}
+                 size="small"
+             />} />
             </ListItem>
           
           </>
