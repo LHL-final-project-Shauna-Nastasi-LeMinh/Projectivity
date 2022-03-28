@@ -127,9 +127,7 @@ export default function NavbarMenu(props) {
 			});
 	};
 	// WebSocket code end
-const test = function() {
-	console.log("AAAAAAAAAAAAAAAA")
-}
+
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (

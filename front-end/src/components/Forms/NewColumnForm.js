@@ -53,7 +53,9 @@ export default function NewColumnForm(props) {
   const onCreateColumn = function () {
     //validation
     if (typeof values.name === "undefined" || values.name === "") {
-      setValues({ ...values, name: "" });
+      setValues((prev) => {
+				return { ...prev, name: '' };
+			});
       return;
     }
 

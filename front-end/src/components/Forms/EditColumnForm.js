@@ -64,7 +64,9 @@ export default function EditColumnForm(props) {
 
 	function edit() {
 		if (typeof values.name === 'undefined' || values.name === '') {
-			setValues({ ...values, name: '' });
+			setValues((prev) => {
+				return { ...prev, name: '' };
+			});
 			return;
 		}
 
