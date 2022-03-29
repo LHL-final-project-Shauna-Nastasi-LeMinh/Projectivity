@@ -302,6 +302,7 @@ export default function ProjectView(props) {
 				}
 			)
 			.then((res) => {
+				setColumns((prev) => [...prev]);
 				console.log('Ticket removed successfully');
 			})
 			.catch(function (error) {
