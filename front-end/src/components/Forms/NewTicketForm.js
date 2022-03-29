@@ -308,7 +308,7 @@ export default function NewTicketForm(props) {
 				<Box sx={{ width: '100%', backgroundColor: 'background.default'}}>
 					<Box sx={{ display: 'flex' }}>
 						<TextField
-							sx={{ m: 2 }}
+							sx={{ m: 2, minWidth: 230 }}
 							label="Ticket Title"
 							value={values.title}
 							type="text"
@@ -319,7 +319,7 @@ export default function NewTicketForm(props) {
 							required
 						/>
 						<TextField
-							sx={{ m: 2 }}
+							sx={{ m: 2, minWidth: 230 }}
 							label="Ticket Details"
 							value={values.description}
 							type="text"
@@ -331,7 +331,7 @@ export default function NewTicketForm(props) {
 						/>
 					</Box>
 					<Box sx={{ display: 'flex', justifyContent: 'center'}}>
-						<FormControl sx={{ m: 2, minWidth: 223 }}>
+						<FormControl sx={{ m: 2, minWidth: 230 }}>
 							<InputLabel id="PriorityLabel">Priority</InputLabel>
 							<Select
 								labelId="PriorityLabel"
@@ -347,7 +347,7 @@ export default function NewTicketForm(props) {
 
 						
 
-						<FormControl sx={{ m: 2, minWidth: 223 }}>
+						<FormControl sx={{ m: 2, minWidth: 230 }}>
 							<InputLabel id="SeverityLabel">Severity</InputLabel>
 							<Select
 								labelId="SeverityLabel"
@@ -374,7 +374,7 @@ export default function NewTicketForm(props) {
                 {severitiesMenu}
             </TextField> */}
 					<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-						<FormControl sx={{ m: 2, minWidth: 223 }}>
+						<FormControl sx={{ m: 2, minWidth: 230}}>
 							<InputLabel id="TypeLabel">Type</InputLabel>
 							<Select
 								labelId="TypeLabel"
@@ -399,7 +399,7 @@ export default function NewTicketForm(props) {
 							</Select>
 						</FormControl>
 
-						<FormControl sx={{ m: 2, minWidth: 223 }}>
+						<FormControl sx={{ m: 2, minWidth: 230 }}>
 							<InputLabel id="MilestoneLabel">Milestone</InputLabel>
 							<Select
 								labelId="MilestoneLabel"
