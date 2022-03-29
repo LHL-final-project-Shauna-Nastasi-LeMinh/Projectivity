@@ -499,6 +499,7 @@ export default function ProjectView(props) {
 						</Box>
 					)}
 				</Droppable>
+				{user && user.access_level == MANAGER_LEVEL &&
 				<Box
 					sx={{
 						position: 'fixed',
@@ -509,7 +510,7 @@ export default function ProjectView(props) {
 					}}
 				>
 					<BinDrawer />
-				</Box>
+				</Box>}
 			</DragDropContext>
 			{/* {modals.deleteTicketDragForm && (
 				<DeleteTicketDragForm
