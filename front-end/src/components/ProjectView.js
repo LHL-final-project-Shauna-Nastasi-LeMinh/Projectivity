@@ -236,7 +236,7 @@ export default function ProjectView(props) {
 			.then((res) => {
 				console.log(res.data);
 				const newColumns = columns.filter((column) => column.id !== columnId);
-				setColumns([...newColumns]);
+				setColumns(prev => [...newColumns]);
 
 				currentProject.Columns.map((column, index) => {
 					if (column.id === columnId) {
@@ -302,6 +302,8 @@ export default function ProjectView(props) {
 				}
 			)
 			.then((res) => {
+				currentProject.Columns[columnIndex] = newColumn;
+				setCurrentColumn(currentProject.Columns);
 				setColumns((prev) => [...prev]);
 				console.log('Ticket removed successfully');
 			})
