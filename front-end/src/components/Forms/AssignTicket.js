@@ -8,8 +8,14 @@ import {
 	MenuItem,
 	Button,
 	Box,
-	Typography
+	Typography,
+	Paper,
+	Modal,
+	IconButton,
 } from '@mui/material';
+
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function AssignTicket(props) {
 	const {
@@ -21,8 +27,9 @@ export default function AssignTicket(props) {
 		user,
 		title,
 		employee,
-		ticket
-		
+		ticket,
+		dialogOpen,
+		setDialogOpen
 	} = props;
 
 	const [employees, setEmployees] = useState({
@@ -100,7 +107,7 @@ export default function AssignTicket(props) {
 					});
 				});
 			
-				setAnchorPop(false);
+				setDialogOpen(false);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -108,32 +115,63 @@ export default function AssignTicket(props) {
 	};
 
 	const style = {
-		width: 'fit-content',
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		transform: 'translate(-50%, -50%)',
+		width: 420,
 		height: 'fit-content',
 		backgroundColor: 'primary.main',
 		boxShadow: 24
 	};
 
 	return (
-		<>
-			{/* <Box
+		<Modal
+		open={dialogOpen}
+		onClose={() => setDialogOpen(false)}
+		aria-labelledby="modal-assign-title"
+		aria-describedby="modal-assign-description"
+	>
+		<Paper sx={style}>
+
+		<Box
 					sx={{
 						backgroundColor: 'primary.main',
 						color: 'background.default',
-            m: 0, 
-            p: 2
+						m: 2,
+						display: "inline-flex",
+						
 					}}
 				>
-					<Typography variant="p" align="center">
-					
+					<Typography variant="p" sx={{mr: 2}}>
+								<PersonAddIcon fontSize="small" color="secondary" />
+							</Typography>
+							<Typography variant="p">
+								Assign Ticket To An Employee
 					</Typography>
-					<Typography variant="p" align="center">
-						Assign Ticket To An Employee
-					</Typography>
-				</Box> */}
 
-			{/* <Box sx={{display: 'inline-flex', justifyContent:"center"}}> */}
-			<FormControl sx={{ m: 1, minWidth: 300 }}>
+					<IconButton
+					aria-label="close"
+					onClick={() => setDialogOpen(false)}
+					sx={{
+						position: 'absolute',
+						right: 8,
+						top: 8,
+						color: 'grey'
+					}}
+				>
+					<CloseIcon />
+				</IconButton>
+				</Box>
+		
+		<Box sx={{ 
+					width: '100%', 
+					backgroundColor: 'background.default', 
+					textAlign: 'center',
+					display: 'inline-flex',  
+					py: 2, }}>
+
+		<FormControl sx={{ m: 1, minWidth: 300 }}>
 				<InputLabel id="EmployeeLabel">Employees</InputLabel>
 				<Select
 					labelId="EmployeeLabel"
@@ -168,7 +206,12 @@ export default function AssignTicket(props) {
 				{' '}
 				Assign
 			</Button>
-			{/* </Box> */}
-		</>
-	);
+
+
+
+		</Box>
+		</Paper>
+	</Modal>
+		
+	)
 }
