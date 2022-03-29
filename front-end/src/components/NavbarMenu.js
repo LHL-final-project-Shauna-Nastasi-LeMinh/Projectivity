@@ -249,7 +249,7 @@ export default function NavbarMenu(props) {
 											</Typography>
 										</Box>
 									)}
-									{unreadNotifLength >= 0 && (
+									{notifications && (
 										<NotificationDrawer
 											notifications={notifications}
 											setNotifications={setNotifications}

@@ -13,7 +13,7 @@ import {
 	InputLabel,
 	Select
 } from '@mui/material';
-import { AddBox, CatchingPokemonSharp } from '@mui/icons-material';
+import { AddBox } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 
 import { ADD_TICKET, EDIT_TICKET } from '../constants/Modes';
@@ -25,25 +25,20 @@ export default function NewTicketForm(props) {
 		currentColumn,
 		dialogOpen,
 		setDialogOpen,
+		tickets,
 		setTickets,
 		onsubmitMsg,
 		title,
 		currentTicket,
+		modals,
 		currentProject,
-		setCurrentProject,
 		userData,
 		setUserData,
 		editTicket,
-		setColumns,
-		modals,
-		openModals,
-		closeModals,
-		ticketData
+		setColumns
 	} = props;
 
-	console.log('### TICKET DATA INSIDE', ticketData);
-	const { column, ticket, ticketId, tickets } = ticketData;
-
+	console.log(currentTicket);
 	// state to keep ticket details
 	const [ticketDetails, setTicketDetails] = useState({
 		severities: [],
@@ -52,10 +47,10 @@ export default function NewTicketForm(props) {
 		milestones: []
 	});
 
-	// let ticket = {};
-	// if (currentTicket !== undefined) {
-	// 	ticket = tickets.filter((t) => t.id === currentTicket)[0];
-	// }
+	let ticket = {};
+	if (currentTicket !== undefined) {
+		ticket = tickets.filter((t) => t.id === currentTicket)[0];
+	}
 
 	// console.log(ticket)
 	// fetch available tikets details from db such as tickets type/priority etc.
@@ -193,19 +188,18 @@ export default function NewTicketForm(props) {
 				creator_name: user.first_name + ' ' + user.last_name
 			})
 			.then((res) => {
-				console.log('### created new ticket', res.data);
+				console.log('created new ticket', res.data);
 
-				const newTicket = res.data;
+				const newTicket = { ...res.data };
+				setTickets([...tickets, newTicket]);
+				setDialogOpen(false);
 
 				currentProject.Columns.map((column) => {
 					if (column.id === currentColumn) {
 						column.Tickets.push(newTicket);
 					}
 				});
-
 				setColumns(currentProject.Columns);
-				setCurrentProject(currentProject);
-				closeModals('newTicketForm');
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -234,7 +228,6 @@ export default function NewTicketForm(props) {
 		if (validationFail) {
 			return;
 		}
-
 		// update ticket to db
 		axios
 			.post(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticket.id}`, {
@@ -248,18 +241,18 @@ export default function NewTicketForm(props) {
 				updater_name: user.first_name + ' ' + user.last_name
 			})
 			.then((res) => {
-				console.log('### updated new ticket', res.data);
+				console.log('updated new ticket', res.data);
 
 				const updatedTicket = res.data[0];
 				console.log('Ticket', updatedTicket);
 				// console.log("updated new ticket", updatedTicket)
 				const updatedTickets = tickets.filter(
-					(ticket) => ticket.id !== ticketId
+					(ticket) => ticket.id !== currentTicket
 				);
-				console.log('### UPDATED Tickets', updatedTickets);
+				console.log('Tickets', updatedTickets);
+				setTickets([...updatedTickets, updatedTicket]);
 				console.log(tickets);
-				closeModals('newTicketForm');
-				// setDialogOpen(false);
+				setDialogOpen(false);
 
 				currentProject.Columns.map((currColumn) => {
 					currColumn.Tickets.map((currTicket, index) => {
@@ -268,15 +261,6 @@ export default function NewTicketForm(props) {
 						}
 					});
 				});
-
-				setCurrentProject(currentProject);
-				console.log('### ON EDIT DATA RETURNED', currentProject, [
-					...updatedTickets,
-					updatedTicket
-				]);
-				setColumns(currentProject.Columns);
-				console.log('### NEW COLUMNS', currentProject.Columns);
-				setTickets([...updatedTickets, updatedTicket]);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -297,8 +281,8 @@ export default function NewTicketForm(props) {
 
 	return (
 		<Modal
-			open={modals.newTicketForm}
-			onClose={() => closeModals('newTicketForm')}
+			open={dialogOpen}
+			onClose={() => setDialogOpen(false)}
 			aria-labelledby="modal-login-form"
 			aria-describedby="modal-modal-login-form"
 		>
@@ -321,7 +305,7 @@ export default function NewTicketForm(props) {
 
 				<Divider />
 
-				<Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
+				<Box sx={{ width: '100%', backgroundColor: 'background.default'}}>
 					<Box sx={{ display: 'flex' }}>
 						<TextField
 							sx={{ m: 2, minWidth: 230 }}
@@ -346,7 +330,7 @@ export default function NewTicketForm(props) {
 							required
 						/>
 					</Box>
-					<Box sx={{ display: 'flex', justifyContent: 'center' }}>
+					<Box sx={{ display: 'flex', justifyContent: 'center'}}>
 						<FormControl sx={{ m: 2, minWidth: 230 }}>
 							<InputLabel id="PriorityLabel">Priority</InputLabel>
 							<Select
@@ -360,6 +344,8 @@ export default function NewTicketForm(props) {
 								{prioritiesMenu}
 							</Select>
 						</FormControl>
+
+						
 
 						<FormControl sx={{ m: 2, minWidth: 230 }}>
 							<InputLabel id="SeverityLabel">Severity</InputLabel>
@@ -375,7 +361,7 @@ export default function NewTicketForm(props) {
 							</Select>
 						</FormControl>
 					</Box>
-					{/* <TextField
+						{/* <TextField
                 sx={{ m: 2 }}
                 id="outlined-select-severity"
                 select
@@ -388,7 +374,7 @@ export default function NewTicketForm(props) {
                 {severitiesMenu}
             </TextField> */}
 					<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-						<FormControl sx={{ m: 2, minWidth: 230 }}>
+						<FormControl sx={{ m: 2, minWidth: 230}}>
 							<InputLabel id="TypeLabel">Type</InputLabel>
 							<Select
 								labelId="TypeLabel"
@@ -429,7 +415,8 @@ export default function NewTicketForm(props) {
 					</Box>
 				</Box>
 
-				{/* BUTTTONS */}
+
+{/* BUTTTONS */}
 				<Divider />
 
 				<Box
@@ -455,11 +442,12 @@ export default function NewTicketForm(props) {
 						color="secondary"
 						size="large"
 						variant="contained"
-						onClick={() => closeModals('newTicketForm')}
+						onClick={() => setDialogOpen(false)}
 					>
 						Cancel
 					</Button>
 				</Box>
+
 			</Paper>
 		</Modal>
 	);
