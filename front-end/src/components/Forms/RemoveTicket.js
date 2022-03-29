@@ -78,6 +78,12 @@ export default function RemoveTicket(props) {
 			keepMounted
 			onClose={handleClose}
 			aria-describedby="alert-dialog-slide-description"
+			PaperProps = {{
+        style: {
+          backgroundColor: "#f7ede2",
+          bgColor: "#f7ede2",
+        }
+      }}
 		>
 			<DialogTitle>Delete</DialogTitle>
 			<DialogContent>
