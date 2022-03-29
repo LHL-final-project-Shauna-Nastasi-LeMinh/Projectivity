@@ -26,7 +26,8 @@ import {
 	EDIT_TICKET,
 	REMOVE_TICKET,
 	ADD_TICKET,
-	TICKET_HISTORY
+	TICKET_HISTORY,
+  ASSIGN_TICKET
 } from './constants/Modes';
 import { MANAGER_LEVEL } from './constants/AccessLevel';
 import { modalClasses } from '@mui/material';
@@ -190,13 +191,16 @@ export default function ProjectTicket(props) {
 
 				{Object.keys(employee).length !== 0 && ticket.owner_id && (
 					<Avatar
-						sx={{ width: 26, height: 26, borderRadius: 1 }}
+						sx={{ width: 26, height: 26, borderRadius: 1, backgroundSize: 'cover', backgroundPosition: 'center',}}
 						size={100}
-						alt="JON"
+						alt={`${employee.first_name[0]}${employee.last_name[0]}`}
+            
 						src={employee.avatar}
+            
 					>
 						<img
 							alt={`${employee.first_name[0]}${employee.last_name[0]}`}
+              src={''}
 						></img>
 					</Avatar>
 				)}
@@ -231,60 +235,11 @@ export default function ProjectTicket(props) {
 						sx={{ px: '0' }}
 						aria-describedby={id}
 						variant="contained"
-						onClick={openPopover}
+						onClick={() => setDialogOpen(ASSIGN_TICKET)}
 					>
 						<PersonAddIcon sx={{ fontSize: 'small' }} />
 					</IconButton>
-
-					<Popover
-						id={id}
-						open={anchorPop}
-						anchorEl={anchorPop}
-						onClose={closePopover}
-						sx={{ pb: 3}}
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'right'
-						}}
-					>
-						<Box
-							sx={{
-								border: 1,
-								borderColor: 'grey.500',
-								backgroundColor: 'primary.main',
-								color: 'background.default',
-								mb: 2,
-								p: 2,
-								textAlign: 'center',
-								display: 'flex',
-								flexDirection: 'column',
-								justifyContent: 'center'
-							}}
-						>
-							<Typography variant="p" align="center">
-								<PersonAddIcon fontSize="small" color="secondary" />
-							</Typography>
-							<Typography variant="p" align="center">
-								Assign Ticket To An Employee
-							</Typography>
-						</Box>
-						<Box
-							sx={{ display: 'inline-flex', justifyContent: 'center', pb: 3, backgroundColor: 'background.default' }}
-						>
-							<AssignTicket
-								currentProject={currentProject}
-								ticketId={ticketId}
-								setAnchorPop={setAnchorPop}
-								setTickets={setTickets}
-								tickets={tickets}
-								user={user}
-								title={title}
-                employee={employee}
-                ticket={ticket}
-							/>
-						</Box>
-					</Popover>
-
+						
 					<IconButton
 						id="fade-button"
 						aria-controls={openMenu ? 'fade-menu' : undefined}
@@ -309,6 +264,22 @@ export default function ProjectTicket(props) {
 					>
 						<MoreVertIcon /> */}
 					</IconButton>
+
+          {dialogOpen === ASSIGN_TICKET && (
+            <AssignTicket
+            currentProject={currentProject}
+            ticketId={ticketId}
+            setAnchorPop={setAnchorPop}
+            setTickets={setTickets}
+            tickets={tickets}
+            user={user}
+            title={title}
+            employee={employee}
+            ticket={ticket}
+            dialogOpen={dialogOpen}
+            setDialogOpen={setDialogOpen}
+          />
+          )}
 
 					{dialogOpen === SHOW_TICKET_DETAILS && (
 						<ShowTicketDetails
