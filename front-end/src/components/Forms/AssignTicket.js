@@ -11,7 +11,7 @@ import {
 	Typography,
 	Paper,
 	Modal,
-	IconButton,
+	IconButton
 } from '@mui/material';
 
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -38,7 +38,7 @@ export default function AssignTicket(props) {
 
 	const [value, setValue] = useState();
 
-	console.log("ASSIGN TICKET VALUE", employee)
+	console.log('ASSIGN TICKET VALUE', employee);
 
 	const handleChange = (evt) => {
 		setValue(evt.target.value);
@@ -106,7 +106,7 @@ export default function AssignTicket(props) {
 						}
 					});
 				});
-			
+
 				setDialogOpen(false);
 			})
 			.catch(function (error) {
@@ -127,91 +127,86 @@ export default function AssignTicket(props) {
 
 	return (
 		<Modal
-		open={dialogOpen}
-		onClose={() => setDialogOpen(false)}
-		aria-labelledby="modal-assign-title"
-		aria-describedby="modal-assign-description"
-	>
-		<Paper sx={style}>
-
-		<Box
+			open={dialogOpen}
+			onClose={() => setDialogOpen(false)}
+			aria-labelledby="modal-assign-title"
+			aria-describedby="modal-assign-description"
+		>
+			<Paper sx={style}>
+				<Box
 					sx={{
 						backgroundColor: 'primary.main',
 						color: 'background.default',
 						m: 2,
-						display: "inline-flex",
-						
+						display: 'inline-flex'
 					}}
 				>
-					<Typography variant="p" sx={{mr: 2}}>
-								<PersonAddIcon fontSize="small" color="secondary" />
-							</Typography>
-							<Typography variant="p">
-								Assign Ticket To An Employee
+					<Typography variant="p" sx={{ mr: 2 }}>
+						<PersonAddIcon disableRipple fontSize="small" color="secondary" />
 					</Typography>
+					<Typography variant="p">Assign Ticket To An Employee</Typography>
 
 					<IconButton
-					aria-label="close"
-					onClick={() => setDialogOpen(false)}
+						disableRipple
+						aria-label="close"
+						onClick={() => setDialogOpen(false)}
+						sx={{
+							position: 'absolute',
+							right: 8,
+							top: 8,
+							color: 'grey'
+						}}
+					>
+						<CloseIcon />
+					</IconButton>
+				</Box>
+
+				<Box
 					sx={{
-						position: 'absolute',
-						right: 8,
-						top: 8,
-						color: 'grey'
+						width: '100%',
+						backgroundColor: 'background.default',
+						textAlign: 'center',
+						display: 'inline-flex',
+						py: 2
 					}}
 				>
-					<CloseIcon />
-				</IconButton>
-				</Box>
-		
-		<Box sx={{ 
-					width: '100%', 
-					backgroundColor: 'background.default', 
-					textAlign: 'center',
-					display: 'inline-flex',  
-					py: 2, }}>
+					<FormControl sx={{ m: 1, minWidth: 300 }}>
+						<InputLabel id="EmployeeLabel">Employees</InputLabel>
+						<Select
+							labelId="EmployeeLabel"
+							label="Emloyee"
+							id="Employee"
+							value={value}
+							defaultValue={employee.id ? employee.id : false}
+							onChange={(evt) => handleChange(evt)}
+						>
+							<MenuItem
+								sx={{
+									color: 'background.default',
+									'&:hover': {
+										backgroundColor: 'secondary.light'
+									}
+								}}
+								value="All"
+							>
+								<em>All Employees</em>
+							</MenuItem>
+							{employeeList}
+						</Select>
+					</FormControl>
 
-		<FormControl sx={{ m: 1, minWidth: 300 }}>
-				<InputLabel id="EmployeeLabel">Employees</InputLabel>
-				<Select
-					labelId="EmployeeLabel"
-					label="Emloyee"
-					id="Employee"
-					value={value}
-					defaultValue={employee.id ? employee.id : false}
-					onChange={(evt) => handleChange(evt)}
-				>
-					<MenuItem
-						sx={{
-							color: 'background.default',
-							'&:hover': {
-								backgroundColor: 'secondary.light'
-							}
-						}}
-						value="All"
+					<Button
+						sx={{ mx: 2, width: '10%' }}
+						color="success"
+						size="large"
+						variant="contained"
+						onClick={() => assignTicket()}
 					>
-						<em>All Employees</em>
-					</MenuItem>
-					{employeeList}
-				</Select>
-			</FormControl>
-
-			<Button
-				sx={{ mx: 2, width: '10%' }}
-				color="success"
-				size="large"
-				variant="contained"
-				onClick={() => assignTicket()}
-			>
-				{' '}
-				Assign
-			</Button>
-
-
-
-		</Box>
-		</Paper>
-	</Modal>
-		
-	)
+						{' '}
+						Assign
+					</Button>
+				</Box>
+			</Paper>
+		</Modal>
+	);
 }

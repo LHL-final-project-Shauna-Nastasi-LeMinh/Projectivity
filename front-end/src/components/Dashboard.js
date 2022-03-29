@@ -203,6 +203,7 @@ export default function Dashboard(props) {
 								))}
 							{user.access_level == MANAGER_LEVEL && (
 								<ListItemButton
+									disableRipple
 									value="Create New Project"
 									onClick={() => openModals('newProjectForm')}
 									sx={{
@@ -212,6 +213,7 @@ export default function Dashboard(props) {
 								>
 									<ListItemText primary="Create New Project" />
 									<AddIcon
+										disableRipple
 										fontSize="large"
 										sx={{ color: 'background.default' }}
 									/>
@@ -240,6 +242,7 @@ export default function Dashboard(props) {
 						>
 							{openDrawer && (
 								<ArrowLeftIcon
+									disableRipple
 									color="inherit"
 									aria-label="open drawer"
 									edge="start"
@@ -253,6 +256,7 @@ export default function Dashboard(props) {
 							)}
 							{!openDrawer && (
 								<ArrowRightIcon
+									disableRipple
 									color="inherit"
 									aria-label="open drawer"
 									edge="start"

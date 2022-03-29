@@ -132,7 +132,7 @@ export const dashboardTheme = createTheme({
 			styleOverrides: {
 				root: {
 					color: colors.secondary.light,
-					backgroundColor: colors.background.default,
+					// backgroundColor: colors.background.default,
 					'&$checked': {
 						color: colors.background.default
 					},

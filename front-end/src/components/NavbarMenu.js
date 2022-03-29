@@ -37,7 +37,7 @@ import { Slide } from '@mui/material';
 import { theme, logoTheme } from './Theme';
 import CircleIcon from '@mui/icons-material/Circle';
 import { ThemeProvider } from '@mui/private-theming';
-import ClickAwayListener from "@mui/material/ClickAwayListener";
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 const page_strings = ['About', 'Login', 'Register'];
 const page_views = [ABOUT_VIEW, LOGIN_FORM, REGISTER_FORM];
@@ -194,68 +194,71 @@ export default function NavbarMenu(props) {
 					>
 						{user && (
 							<ClickAwayListener onClickAway={closeDrawer}>
-							<Button onClick={() => toggleDrawer()}>
-								{unreadNotifLength <= 0 && (
-									<NotificationsIcon
-										sx={{
-											position: 'absolute',
-											zIndex: 1,
-											color: 'background.default',
-											px: '0.5rem',
-											'&:hover': {
-												color: 'secondary.light'
-											}
-										}}
-									/>
-								)}
-								{unreadNotifLength > 0 && (
-									<Box
-										sx={{ display: 'flex' }}
-										onClick={() => setNotifyOpen(!notifyOpen)}
-									>
-										<NotificationsActiveIcon
-											fontSize="large"
+								<Button onClick={() => toggleDrawer()}>
+									{unreadNotifLength <= 0 && (
+										<NotificationsIcon
+											disableRipple
 											sx={{
+												position: 'absolute',
+												zIndex: 1,
 												color: 'background.default',
+												px: '0.5rem',
 												'&:hover': {
 													color: 'secondary.light'
 												}
 											}}
 										/>
-										<CircleIcon
-											sx={{
-												position: 'absolute',
-												height: '20px',
-												right: '10px',
-												top: '10px',
-												zIndex: 1,
-												color: 'secondary.main'
-											}}
-										/>
-										<Typography
-											sx={{
-												position: 'absolute',
-												fontSize: '12px',
-												right: '19px',
-												top: '11px',
-												zIndex: 1,
-												color: '#FFFFFF'
-											}}
+									)}
+									{unreadNotifLength > 0 && (
+										<Box
+											sx={{ display: 'flex' }}
+											onClick={() => setNotifyOpen(!notifyOpen)}
 										>
-											{unreadNotifLength}
-										</Typography>
-									</Box>
-								)}
-								{notifications && (
-									<NotificationDrawer
-										notifications={notifications}
-										setNotifications={setNotifications}
-										notifyOpen={notifyOpen}
-										setNotifyOpen={setNotifyOpen}
-										toggleDrawer={toggleDrawer}
-									/>
-								)}
-							</Button>
+											<NotificationsActiveIcon
+												disableRipple
+												fontSize="large"
+												sx={{
+													color: 'background.default',
+													'&:hover': {
+														color: 'secondary.light'
+													}
+												}}
+											/>
+											<CircleIcon
+												disableRipple
+												sx={{
+													position: 'absolute',
+													height: '20px',
+													right: '10px',
+													top: '10px',
+													zIndex: 1,
+													color: 'secondary.main'
+												}}
+											/>
+											<Typography
+												sx={{
+													position: 'absolute',
+													fontSize: '12px',
+													right: '19px',
+													top: '11px',
+													zIndex: 1,
+													color: '#FFFFFF'
+												}}
+											>
+												{unreadNotifLength}
+											</Typography>
+										</Box>
+									)}
+									{notifications && (
+										<NotificationDrawer
+											notifications={notifications}
+											setNotifications={setNotifications}
+											notifyOpen={notifyOpen}
+											setNotifyOpen={setNotifyOpen}
+											toggleDrawer={toggleDrawer}
+										/>
+									)}
+								</Button>
 							</ClickAwayListener>
 						)}
 						<Box sx={{ display: 'flex' }}>

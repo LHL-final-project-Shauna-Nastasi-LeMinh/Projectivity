@@ -27,7 +27,7 @@ import {
 	REMOVE_TICKET,
 	ADD_TICKET,
 	TICKET_HISTORY,
-  ASSIGN_TICKET
+	ASSIGN_TICKET
 } from './constants/Modes';
 import { MANAGER_LEVEL } from './constants/AccessLevel';
 import { modalClasses } from '@mui/material';
@@ -111,11 +111,10 @@ export default function ProjectTicket(props) {
 		closeMenu();
 	};
 
-
-  const handleTicketClick = () => {
-    console.log('ticket was clicked')
-    setDialogOpen(SHOW_TICKET_DETAILS);
-  }
+	const handleTicketClick = () => {
+		console.log('ticket was clicked');
+		setDialogOpen(SHOW_TICKET_DETAILS);
+	};
 
 	//
 
@@ -167,7 +166,7 @@ export default function ProjectTicket(props) {
 	};
 
 	return (
-		<ListItem sx={{ display: 'block' }} >
+		<ListItem sx={{ display: 'block' }}>
 			<Stack direction="row" spacing={1}>
 				{ticket.priority && (
 					<Chip
@@ -191,56 +190,74 @@ export default function ProjectTicket(props) {
 
 				{Object.keys(employee).length !== 0 && ticket.owner_id && (
 					<Avatar
-						sx={{ width: 26, height: 26, borderRadius: 1, backgroundSize: 'cover', backgroundPosition: 'center',}}
+						sx={{
+							width: 26,
+							height: 26,
+							borderRadius: 1,
+							backgroundSize: 'cover',
+							backgroundPosition: 'center'
+						}}
 						size={100}
 						alt={`${employee.first_name[0]}${employee.last_name[0]}`}
-            
 						src={employee.avatar}
-            
 					>
 						<img
 							alt={`${employee.first_name[0]}${employee.last_name[0]}`}
-              src={''}
+							src={''}
 						></img>
 					</Avatar>
 				)}
 			</Stack>
 
-			<Box sx={{
-          px: "0",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center", 
-        }}>
-      <ListItemButton
-        sx={{ ml:0, pl:0, 
-					"&:hover": {
-						backgroundColor: "transparent"
-					},
-					
-				}} 
-				disableTouchRipple
-				disableRipple
-        onClick={handleTicketClick}
-        
-      >
-				<div>
-					<Typography sx={{ color: 'background.default' }}>{title}</Typography>
-					{/* <ListItemText primary={title} sx={{ fontSize: 'small' }} /> */}
-				</div>
-        </ListItemButton>
+			<Box
+				sx={{
+					px: '0',
+					display: 'flex',
+					justifyContent: 'space-between',
+					alignItems: 'center'
+				}}
+			>
+				<ListItemButton
+					disableRipple
+					sx={{
+						ml: 0,
+						pl: 0,
+						'&:hover': {
+							backgroundColor: 'transparent'
+						}
+					}}
+					disableTouchRipple
+					disableRipple
+					onClick={handleTicketClick}
+				>
+					<div>
+						<Typography sx={{ color: 'background.default' }}>
+							{title}
+						</Typography>
+						{/* <ListItemText primary={title} sx={{ fontSize: 'small' }} /> */}
+					</div>
+				</ListItemButton>
 
 				<div style={{ display: 'inherit' }}>
 					<IconButton
+						disableRipple
 						sx={{ px: '0' }}
 						aria-describedby={id}
 						variant="contained"
 						onClick={() => setDialogOpen(ASSIGN_TICKET)}
 					>
-						<PersonAddIcon sx={{ fontSize: 'small' }} />
+						<PersonAddIcon
+							disableRipple
+							sx={{
+								fontSize: 'small',
+								color: 'background.default',
+								'&:hover': { color: 'primary.main' }
+							}}
+						/>
 					</IconButton>
-						
+
 					<IconButton
+						disableRipple
 						id="fade-button"
 						aria-controls={openMenu ? 'fade-menu' : undefined}
 						aria-haspopup="true"
@@ -248,7 +265,13 @@ export default function ProjectTicket(props) {
 						onClick={handleClick}
 						sx={{ px: '0', ml: '1' }}
 					>
-						<MoreVertIcon />
+						<MoreVertIcon
+							disableRipple
+							sx={{
+								color: 'background.default',
+								'&:hover': { color: 'primary.main' }
+							}}
+						/>
 
 						{/* <div style={{ display: 'inherit' }}>
 					<IconButton sx={{ px: '0' }}>
@@ -265,21 +288,21 @@ export default function ProjectTicket(props) {
 						<MoreVertIcon /> */}
 					</IconButton>
 
-          {dialogOpen === ASSIGN_TICKET && (
-            <AssignTicket
-            currentProject={currentProject}
-            ticketId={ticketId}
-            setAnchorPop={setAnchorPop}
-            setTickets={setTickets}
-            tickets={tickets}
-            user={user}
-            title={title}
-            employee={employee}
-            ticket={ticket}
-            dialogOpen={dialogOpen}
-            setDialogOpen={setDialogOpen}
-          />
-          )}
+					{dialogOpen === ASSIGN_TICKET && (
+						<AssignTicket
+							currentProject={currentProject}
+							ticketId={ticketId}
+							setAnchorPop={setAnchorPop}
+							setTickets={setTickets}
+							tickets={tickets}
+							user={user}
+							title={title}
+							employee={employee}
+							ticket={ticket}
+							dialogOpen={dialogOpen}
+							setDialogOpen={setDialogOpen}
+						/>
+					)}
 
 					{dialogOpen === SHOW_TICKET_DETAILS && (
 						<ShowTicketDetails
@@ -397,9 +420,9 @@ export default function ProjectTicket(props) {
 							History
 						</MenuItem>
 					</Menu>
-          </div>
-      {/* </ListItemButton> */}
-      </Box>
+				</div>
+				{/* </ListItemButton> */}
+			</Box>
 		</ListItem>
 	);
 }

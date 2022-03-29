@@ -49,6 +49,7 @@ const BootstrapDialogTitle = (props) => {
 			{children}
 			{onClose ? (
 				<IconButton
+					disableRipple
 					aria-label="close"
 					onClick={onClose}
 					sx={{
@@ -71,212 +72,213 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function ShowTicketDetails(props) {
+	const { dialogOpen, setDialogOpen, ticketId, tickets } = props;
 
-  const {dialogOpen, setDialogOpen, ticketId, tickets} = props
+	const ticketDetails = tickets.filter((ticket) => ticket.id === ticketId)[0];
 
-  const ticketDetails = tickets.filter(ticket => ticket.id === ticketId)[0]
+	console.log('TICKETDETAILS???', ticketDetails);
 
-  console.log("TICKETDETAILS???", ticketDetails)
+	const handleClose = () => {
+		console.log(tickets);
+		setDialogOpen(false);
+	};
 
-  const handleClose = () => {
-    console.log(tickets)
-    setDialogOpen(false);
-  };
+	const currentEmployee = useEmployeesData(ticketDetails.owner_id, tickets);
 
-  const currentEmployee = useEmployeesData(ticketDetails.owner_id, tickets)
+	console.log('DATA CURR EMPLOYE TICKET>>', currentEmployee);
 
-  console.log("DATA CURR EMPLOYE TICKET>>", currentEmployee)
+	return (
+		<BootstrapDialog
+			onClose={handleClose}
+			aria-labelledby="customized-dialog-title"
+			open={dialogOpen}
+			fullWidth
+			maxWidth="md"
+		>
+			<BootstrapDialogTitle
+				id="customized-dialog-title"
+				onClose={handleClose}
+				sx={{
+					display: 'inline-flex',
+					backgroundColor: 'primary.main',
+					color: 'white'
+				}}
+			>
+				{`Ticket: ${ticketDetails.title}`}
+				{Object.keys(currentEmployee).length !== 0 && ticketDetails.owner_id && (
+					<Avatar
+						sx={{ width: 30, height: 30, borderRadius: 1, ml: 3 }}
+						size={100}
+						alt="JON"
+						src={currentEmployee.avatar}
+					>
+						<img
+							alt={`${currentEmployee.first_name[0]}${currentEmployee.last_name[0]}`}
+						></img>
+					</Avatar>
+				)}
+			</BootstrapDialogTitle>
+			<DialogContent dividers>
+				<List
+					sx={{
+						width: '100%',
+						bgcolor: 'background.paper',
+						p: 0
+					}}
+				>
+					<ListItem>
+						<ListItemText
+							disableTypography
+							primary={
+								<Typography style={{ fontWeight: 700 }}>
+									Description:{' '}
+								</Typography>
+							}
+							secondary={ticketDetails.description}
+						/>
+					</ListItem>
 
+					<Divider component="li" style={{ opacity: 0.6 }} />
 
-  return (
-    
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={dialogOpen}
-        fullWidth
-        maxWidth ='md'
-      >
-        <BootstrapDialogTitle 
-          id="customized-dialog-title" 
-          onClose={handleClose}
-          sx={{display: "inline-flex", backgroundColor: 'primary.main', color: 'white'}}
-          >
-         
-          {`Ticket: ${ticketDetails.title}`}
-          {Object.keys(currentEmployee).length !== 0 && ticketDetails.owner_id && 
-				  <Avatar 
-					sx={{ width: 30, height: 30, borderRadius: 1, ml: 3}}
-					size={100}
-					alt='JON'
-					src={currentEmployee.avatar}>
-						<img alt={`${currentEmployee.first_name[0]}${currentEmployee.last_name[0]}`}></img>
-						</Avatar>
-        }
-        </BootstrapDialogTitle>
-        <DialogContent dividers>
-          <List
-            sx={{
-              width: '100%',
-              bgcolor: 'background.paper',
-              p:0
-            }}
-          >
-            <ListItem>
-             
-              <ListItemText disableTypography 
-              primary={
-                <Typography style={{fontWeight: 700}}>Description: </Typography>
-              }
-              
-              secondary={ticketDetails.description} />
-            </ListItem>
+					<ListItem>
+						<ListItemText
+							sx={{ fontWeight: 900 }}
+							primary={
+								<Typography style={{ fontWeight: 700 }}>Created at:</Typography>
+							}
+							secondary={ticketDetails.createdAt.substring(0, 10)}
+						/>
+					</ListItem>
 
-            <Divider component="li" style={{opacity: 0.6}}/>
+					{ticketDetails.owner_id && (
+						<>
+							<Divider component="li" style={{ opacity: 0.6 }} />
 
+							<ListItem>
+								<ListItemText
+									sx={{ fontWeight: 900 }}
+									primary={
+										<Typography style={{ fontWeight: 700 }}>
+											Assigned To:
+										</Typography>
+									}
+									secondary={`${currentEmployee.first_name} ${currentEmployee.last_name} - ${currentEmployee.email}`}
+								/>
+							</ListItem>
+						</>
+					)}
 
-            <ListItem>
-             
-              <ListItemText sx={{fontWeight: 900}} 
-              
-              primary={
-                <Typography style={{fontWeight: 700}}>Created at:</Typography>
-              }
-              
-              secondary={ticketDetails.createdAt.substring(0,10)} />
-            </ListItem>
-          
+					{ticketDetails.severity && (
+						<>
+							<Divider component="li" style={{ opacity: 0.6 }} />
 
-            {ticketDetails.owner_id && (
-            <>
-            <Divider component="li" style={{opacity: 0.6}}/>
+							<ListItem>
+								<ListItemText
+									sx={{ fontWeight: 900 }}
+									primary={
+										<Typography style={{ fontWeight: 700, mb: 0.7 }}>
+											Severity:
+										</Typography>
+									}
+									secondary={
+										<Chip
+											pl="2"
+											label={ticketDetails.severity}
+											style={{
+												backgroundColor: chooseSeverityColor(
+													ticketDetails.severity
+												),
+												fontWeight: '700'
+											}}
+											size="small"
+										/>
+									}
+								/>
+							</ListItem>
+						</>
+					)}
 
-            <ListItem>
-             
-              <ListItemText sx={{fontWeight: 900}} 
-              
-              primary={
-                <Typography style={{fontWeight: 700}}>Assigned To:</Typography>
-              }
-              
-              secondary={`${currentEmployee.first_name} ${currentEmployee.last_name} - ${currentEmployee.email}`} />
-            </ListItem>
-          
-          </>
-          )}
+					{ticketDetails.type && (
+						<>
+							<Divider component="li" style={{ opacity: 0.6 }} />
 
-          {ticketDetails.severity && (
-            <>
-            <Divider component="li" style={{opacity: 0.6}}/>
+							<ListItem>
+								<ListItemText
+									sx={{ fontWeight: 900 }}
+									primary={
+										<Typography style={{ fontWeight: 700, mb: 0.7 }}>
+											Type:
+										</Typography>
+									}
+									secondary={
+										<Chip
+											pl="2"
+											label={ticketDetails.type}
+											style={{ backgroundColor: '#f2ebeb', fontWeight: '700' }}
+											size="small"
+										/>
+									}
+								/>
+							</ListItem>
+						</>
+					)}
 
-            <ListItem>
-             
-              <ListItemText sx={{fontWeight: 900}} 
-              
-              primary={
-                <Typography style={{fontWeight: 700, mb: 0.7}}>Severity:</Typography>
-              } 
-              
-              secondary={
-                <Chip
-                pl="2"
-                label={ticketDetails.severity}
-              
-                 style={{backgroundColor: chooseSeverityColor(ticketDetails.severity), fontWeight:'700'}}
-                 size="small"
-             />} />
-            </ListItem>
-          
-          </>
-          )}
-          
-          {ticketDetails.type && (
-            <>
-            <Divider component="li" style={{opacity: 0.6}}/>
+					{ticketDetails.priority && (
+						<>
+							<Divider component="li" style={{ opacity: 0.6 }} />
 
-            <ListItem>
-             
-              <ListItemText sx={{fontWeight: 900}} 
-              
-              primary={
-                <Typography style={{fontWeight: 700, mb: 0.7}}>Type:</Typography>
-              } 
-              
-              
-              secondary={
-                <Chip
-                  pl="2"
-                  label={ticketDetails.type}
-                
-			       		  style={{backgroundColor: '#f2ebeb', fontWeight:'700'}}
-                   size="small"
-               />
-                }
-                 />
-            </ListItem>
-          
-          </>
-          )}
+							<ListItem>
+								<ListItemText
+									sx={{ fontWeight: 900 }}
+									primary={
+										<Typography style={{ fontWeight: 700, mb: 0.7 }}>
+											Priority:
+										</Typography>
+									}
+									secondary={
+										<Chip
+											pl="2"
+											label={ticketDetails.priority}
+											style={{
+												backgroundColor: choosePriorityColor(
+													ticketDetails.priority
+												),
+												fontWeight: '700'
+											}}
+											size="small"
+										/>
+									}
+								/>
+							</ListItem>
+						</>
+					)}
 
+					{ticketDetails.milestone && (
+						<>
+							<Divider component="li" style={{ opacity: 0.6 }} />
 
-          {ticketDetails.priority && (
-            <>
-            <Divider component="li" style={{opacity: 0.6}}/>
-
-            <ListItem>
-             
-              <ListItemText  sx={{fontWeight: 900}} 
-              
-              primary={
-                <Typography style={{fontWeight: 700, mb: 0.7}}>Priority:</Typography>
-              } 
-              
-              secondary={
-                
-                <Chip
-                  pl="2"
-                  label={ticketDetails.priority}
-                
-			       		  style={{backgroundColor: choosePriorityColor(ticketDetails.priority), fontWeight:'700'}}
-                   size="small"
-               />
-                } />
-            </ListItem>
-          
-          </>
-          )}
-
-          
-          {ticketDetails.milestone && (
-            <>
-            <Divider component="li" style={{opacity: 0.6}} />
-
-            <ListItem>
-             
-              <ListItemText sx={{fontWeight: 900}} 
-              
-              primary={
-                <Typography style={{fontWeight: 700, mb: 0.7}}>Milestone:</Typography>
-              }
-
-              secondary={
-                <Chip
-                pl="2"
-                label={ticketDetails.milestone}
-              
-                 style={{backgroundColor: '#f2ebeb', fontWeight:'700'}}
-                 size="small"
-          />}
-                 />
-            </ListItem>
-          
-          </>
-          )}
-
-          </List>
-        </DialogContent>
-  
-      </BootstrapDialog>
-    
-  );
+							<ListItem>
+								<ListItemText
+									sx={{ fontWeight: 900 }}
+									primary={
+										<Typography style={{ fontWeight: 700, mb: 0.7 }}>
+											Milestone:
+										</Typography>
+									}
+									secondary={
+										<Chip
+											pl="2"
+											label={ticketDetails.milestone}
+											style={{ backgroundColor: '#f2ebeb', fontWeight: '700' }}
+											size="small"
+										/>
+									}
+								/>
+							</ListItem>
+						</>
+					)}
+				</List>
+			</DialogContent>
+		</BootstrapDialog>
+	);
 }
