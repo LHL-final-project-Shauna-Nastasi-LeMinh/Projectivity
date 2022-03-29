@@ -48,7 +48,8 @@ export default function ProjectTicket(props) {
 		userData,
 		setUserData,
 		editTicket,
-		setEditTicket
+		setEditTicket,
+		setColumns
 	} = props;
 
 	const [checked, setChecked] = React.useState([1]);
@@ -330,6 +331,7 @@ export default function ProjectTicket(props) {
 							currentProject={currentProject}
 							userData={userData}
 							setCurrentColumn={setCurrentColumn}
+							setColumns={setColumns}
 						/>
 					)}
 

@@ -325,6 +325,7 @@ export default function ProjectColumn(props) {
 										setUserData={setUserData}
 										editTicket={editTicket}
 										setEditTicket={setEditTicket}
+										setColumns={setColumns}
 									/>
 								</List>
 								{provided.placeholder}
@@ -390,7 +391,8 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 		userData,
 		setUserData,
 		editTicket,
-		setEditTicket
+		setEditTicket,
+		setColumns
 	} = props;
 	return tickets.map((ticket, index) => {
 		return (
@@ -438,6 +440,7 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 							setEditTicket={setEditTicket}
 							currentProject={currentProject}
 							userData={userData}
+							setColumns={setColumns}
 						/>
 					</Box>
 				)}

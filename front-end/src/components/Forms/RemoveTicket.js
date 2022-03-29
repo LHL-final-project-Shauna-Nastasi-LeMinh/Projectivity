@@ -27,7 +27,8 @@ export default function RemoveTicket(props) {
 		currentProject,
 		currentColumn,
 		setCurrentColumn,
-		userData
+		userData,
+		setColumns
 	} = props;
 
 	const onConfirmDelete = () => {
@@ -56,6 +57,7 @@ export default function RemoveTicket(props) {
 						}
 					});
 				});
+				setColumns(currentProject.Columns);
 
 				setDialogOpen(false);
 			})
