@@ -45,6 +45,7 @@ export default function ProjectTicket(props) {
 		ticket,
 		setCurrentColumn,
 		currentProject,
+		setCurrentProject,
 		userData,
 		setUserData,
 		editTicket,
@@ -109,11 +110,10 @@ export default function ProjectTicket(props) {
 		closeMenu();
 	};
 
-
-  const handleTicketClick = () => {
-    console.log('ticket was clicked')
-    setDialogOpen(SHOW_TICKET_DETAILS);
-  }
+	const handleTicketClick = () => {
+		console.log('ticket was clicked');
+		setDialogOpen(SHOW_TICKET_DETAILS);
+	};
 
 	//
 
@@ -165,7 +165,7 @@ export default function ProjectTicket(props) {
 	};
 
 	return (
-		<ListItem sx={{ display: 'block' }} >
+		<ListItem sx={{ display: 'block' }}>
 			<Stack direction="row" spacing={1}>
 				{ticket.priority && (
 					<Chip
@@ -201,29 +201,33 @@ export default function ProjectTicket(props) {
 				)}
 			</Stack>
 
-			<Box sx={{
-          px: "0",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center", 
-        }}>
-      <ListItemButton
-        sx={{ ml:0, pl:0, 
-					"&:hover": {
-						backgroundColor: "transparent"
-					},
-					
-				}} 
-				disableTouchRipple
-				disableRipple
-        onClick={handleTicketClick}
-        
-      >
-				<div>
-					<Typography sx={{ color: 'background.default' }}>{title}</Typography>
-					{/* <ListItemText primary={title} sx={{ fontSize: 'small' }} /> */}
-				</div>
-        </ListItemButton>
+			<Box
+				sx={{
+					px: '0',
+					display: 'flex',
+					justifyContent: 'space-between',
+					alignItems: 'center'
+				}}
+			>
+				<ListItemButton
+					sx={{
+						ml: 0,
+						pl: 0,
+						'&:hover': {
+							backgroundColor: 'transparent'
+						}
+					}}
+					disableTouchRipple
+					disableRipple
+					onClick={handleTicketClick}
+				>
+					<div>
+						<Typography sx={{ color: 'background.default' }}>
+							{title}
+						</Typography>
+						{/* <ListItemText primary={title} sx={{ fontSize: 'small' }} /> */}
+					</div>
+				</ListItemButton>
 
 				<div style={{ display: 'inherit' }}>
 					<IconButton
@@ -240,7 +244,7 @@ export default function ProjectTicket(props) {
 						open={anchorPop}
 						anchorEl={anchorPop}
 						onClose={closePopover}
-						sx={{ pb: 3}}
+						sx={{ pb: 3 }}
 						anchorOrigin={{
 							vertical: 'bottom',
 							horizontal: 'right'
@@ -268,7 +272,12 @@ export default function ProjectTicket(props) {
 							</Typography>
 						</Box>
 						<Box
-							sx={{ display: 'inline-flex', justifyContent: 'center', pb: 3, backgroundColor: 'background.default' }}
+							sx={{
+								display: 'inline-flex',
+								justifyContent: 'center',
+								pb: 3,
+								backgroundColor: 'background.default'
+							}}
 						>
 							<AssignTicket
 								currentProject={currentProject}
@@ -278,7 +287,7 @@ export default function ProjectTicket(props) {
 								tickets={tickets}
 								user={user}
 								title={title}
-                employee={employee}
+								employee={employee}
 							/>
 						</Box>
 					</Popover>
@@ -328,7 +337,9 @@ export default function ProjectTicket(props) {
 							dialogOpen={dialogOpen}
 							setDialogOpen={setDialogOpen}
 							currentProject={currentProject}
+							setCurrentProject={setCurrentProject}
 							userData={userData}
+							setUserData={setUserData}
 							setCurrentColumn={setCurrentColumn}
 						/>
 					)}
@@ -423,9 +434,9 @@ export default function ProjectTicket(props) {
 							History
 						</MenuItem>
 					</Menu>
-          </div>
-      {/* </ListItemButton> */}
-      </Box>
+				</div>
+				{/* </ListItemButton> */}
+			</Box>
 		</ListItem>
 	);
 }

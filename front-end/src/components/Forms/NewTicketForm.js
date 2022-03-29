@@ -261,6 +261,8 @@ export default function NewTicketForm(props) {
 						}
 					});
 				});
+
+				console.log('###', currentProject);
 			})
 			.catch(function (error) {
 				console.log(error.message);
