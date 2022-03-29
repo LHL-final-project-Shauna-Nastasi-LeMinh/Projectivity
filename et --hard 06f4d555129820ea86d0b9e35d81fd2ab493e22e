@@ -1,0 +1,2362 @@
+[33mcommit e957fb82242d618a2367ac3e9c5ef28563ae1c57[m[33m ([m[1;36mHEAD -> [m[1;32mrebase-master[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m, [m[1;32mdrag-and-drop-bugfix[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 29 14:20:01 2022 -0400
+
+    fixing chrome bug with new column
+
+[33mcommit 05f42b0e921a08e028cb897533f084d4641dc20a[m
+Merge: 0da9d89 a7fa21e
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 29 14:16:15 2022 -0400
+
+    Merge branch 'new-stash'
+
+[33mcommit 0da9d8936be49cce12b392f7a7eb1faa53586232[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 29 14:06:31 2022 -0400
+
+    fixing new/edit project forms
+
+[33mcommit 1c0da2b4b7d3a8c0ab023607c53d6f3047878a5b[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 29 14:08:24 2022 -0400
+
+    Fix Ticket details background
+
+[33mcommit a7fa21e5dfda968182969c741ab03c298a2a8577[m[33m ([m[1;31morigin/new-stash[m[33m, [m[1;32mnew-stash[m[33m)[m
+Merge: 06f4d55 75479d3
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 29 14:07:11 2022 -0400
+
+    Merge branch 'dialog-to-modal'
+
+[33mcommit 75479d37fa2233e9a958087948dc0dfef43aa29d[m[33m ([m[1;32mdialog-to-modal[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 29 14:06:31 2022 -0400
+
+    fixing new/edit project forms
+
+[33mcommit 06f4d555129820ea86d0b9e35d81fd2ab493e22e[m
+Merge: 99bb281 89e4c50
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 29 13:58:21 2022 -0400
+
+    Fix background for Ticket History
+
+[33mcommit 99bb281b3f329f22af909d2b07c47e94aea8df13[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 29 13:52:55 2022 -0400
+
+    Fix background for Ticket History
+
+[33mcommit 89e4c5034f28125af2e7a4b26eedcc3b539a7dcf[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 29 12:09:05 2022 -0400
+
+    more small styling changes
+
+[33mcommit 952fcff72e191e2b28f77843f84e7730996f2169[m
+Merge: 850abb0 739265e
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 29 09:06:31 2022 -0400
+
+    Merge branch 'master' into lm
+
+[33mcommit 850abb0fdc01923f589dadc8b5fb52b527d64e30[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 29 09:05:47 2022 -0400
+
+    Notif drawer: change title background
+
+[33mcommit 739265e2bab5b59b3d744c7369865edddd24439d[m[33m ([m[1;31morigin/more-styling[m[33m)[m
+Merge: 29f8815 b3540b2
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 29 06:54:31 2022 +0000
+
+    Merge branch 'feature/assign-ticket'
+
+[33mcommit b3540b2d39d06a5d34b9d5999d1523a8ae4756fa[m[33m ([m[1;31morigin/feature/assign-ticket[m[33m)[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 29 06:49:12 2022 +0000
+
+    Refactor Assign Ticket component to be a modal
+
+[33mcommit 29f88159dc8049a14c32f8a813193595c02ed07b[m
+Merge: 257bdc9 ac4082a
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 29 00:54:12 2022 -0400
+
+    Merge branch 'master' of github.com:LHL-final-project-Shauna-Nastasi-LeMinh/final-project
+
+[33mcommit 257bdc99dc2d91024e3ad7d3ca88a26ce09ad44b[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 29 00:53:57 2022 -0400
+
+    touch up on Notification drawer
+
+[33mcommit ac4082aafd496b40751c2fcd1623c633caa67f46[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 29 04:48:51 2022 +0000
+
+    Change width of input fields to work the same in chrome/firefox
+
+[33mcommit 5b6d4bc47d5a229be42490d64d55c455d97b9a42[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 29 04:36:28 2022 +0000
+
+    style new ticket form
+
+[33mcommit 5e039a8b95506de17587ba4993078f72401554d4[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 29 03:58:28 2022 +0000
+
+    fix avatar bug
+
+[33mcommit 9c1dfc8449b0ab12f22f4e87f5b48d2134713586[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 28 23:41:46 2022 -0400
+
+    fix bug: Removed ticket re-appear after drag drop
+
+[33mcommit b542865c3508e9686419bb24540390997af2184e[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 29 02:25:58 2022 +0000
+
+    Revert "fixing bugs"
+    
+    This reverts commit 7aa7522692a34d9e5c9f1404062d7d763019d0c6.
+
+[33mcommit 7aa7522692a34d9e5c9f1404062d7d763019d0c6[m[33m ([m[1;31morigin/bug-fixing[m[33m, [m[1;32mbug-fixing[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 20:57:31 2022 -0400
+
+    fixing bugs
+
+[33mcommit 8967c7bd083fd3c0eb7334b66b542df63390e786[m
+Merge: ac11337 ac3ea0c
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 19:27:16 2022 -0400
+
+    Merge branch 'test'
+
+[33mcommit ac113378c69ee022b81942fa4d3f9cdf4c79a889[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 19:20:43 2022 -0400
+
+    stashing changes before pull
+
+[33mcommit 493bfe82b799de62a986734bafa26c630a1d1cc9[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 15:50:09 2022 -0400
+
+    small styling change
+
+[33mcommit ac3ea0cf6fe2732368198a270c011546f5fab3e2[m[33m ([m[1;32mtest[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 19:20:43 2022 -0400
+
+    stashing changes before pull
+
+[33mcommit 7f244923a32c72654ddc1881eb929aca780ae222[m
+Merge: 61b9705 bca16dc
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 28 17:36:17 2022 -0400
+
+    Merge branch 'master' into lmn
+
+[33mcommit 61b970529b057737b1a1d6ff1dfd26690bba0d32[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 28 17:35:58 2022 -0400
+
+    Fix inner ticket button ripple
+
+[33mcommit bca16dceee6ee16cb187015b9f6f992156e6b4a4[m
+Merge: e7e3c30 a4e2ba1
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 28 21:20:03 2022 +0000
+
+    Merge branch 'master' into feature/show-ticket-details
+
+[33mcommit e7e3c301da33b344398b9cbc41a31587c7619ab6[m[33m ([m[1;31morigin/feature/show-ticket-details[m[33m)[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 28 21:18:23 2022 +0000
+
+    Add a default value to show when assigning ticket to employee based on wheter it was assigned before
+
+[33mcommit a4e2ba1a54d84d47125a4b62fa117be7f741c80f[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 28 16:54:18 2022 -0400
+
+    fix validation forms
+
+[33mcommit fa4d4f7f42700a6942a5d5c458d2e24ac77fed90[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 28 16:26:24 2022 -0400
+
+    Notification drawer
+
+[33mcommit 521026597576044b4f555d0d94ec327097000a7b[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 15:50:09 2022 -0400
+
+    small styling change
+
+[33mcommit da324c572df1a6ea70e68d0fc512aec827c368c2[m[33m ([m[1;32mfinal-styling-2[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 15:43:03 2022 -0400
+
+    updating editprojectform
+
+[33mcommit abd49fd98a04ab1994e1674b5f63f14d64b6cc8c[m[33m ([m[1;31morigin/stash[m[33m, [m[1;32mstash[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 15:30:25 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit b046d580b405c39a0012793ff34f90af71591c22[m
+Merge: 3a5bfb1 9fcd8ee
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 28 18:55:59 2022 +0000
+
+    fix merge
+
+[33mcommit 3a5bfb1fadcc747cf1062bcfdd61eb84e73315bc[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 28 18:10:30 2022 +0000
+
+    add styles
+
+[33mcommit 9fcd8ee6426fe9d63b8838ae4b1b91601e461cdb[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 13:32:21 2022 -0400
+
+    fixing some bugs with the last push
+
+[33mcommit 5d99d04a34633a595ee1a3318803962d1860a29c[m[33m ([m[1;31morigin/final-styling[m[33m, [m[1;32mfinal-styling[m[33m)[m
+Merge: 3c94602 a851441
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 13:21:43 2022 -0400
+
+    fixing merge conflicts and pushing styling changes
+
+[33mcommit a8514417dde5006c48b440847384acbfcd31b385[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 13:11:25 2022 -0400
+
+    adding menu styling to the entire app
+
+[33mcommit 1d3c29cc2543f5cd47de8b3bd4d78df0afcc8648[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 11:41:42 2022 -0400
+
+    fixing right side of navbar styling and buttons
+
+[33mcommit 3c94602683f610691baa33b62d0f29c93ee4002e[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 28 15:33:41 2022 +0000
+
+    Style ticket severity to be shown as a badge
+
+[33mcommit 7cec11ad896e902f174431018d4845c4f6afb2de[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 28 15:32:59 2022 +0000
+
+    Add a fn to choose color for ticket severity
+
+[33mcommit d2234239ff8fb2609f290a5711e34679a50a146b[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 28 15:31:59 2022 +0000
+
+    Add click event on ticket to show ticket details
+
+[33mcommit 56249200a987ea142b22ef7008db8df9a53fdb74[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 11:06:07 2022 -0400
+
+    fixing some styling bugs
+
+[33mcommit 4fc9b4e0434d731bbfb94ade9aa430ccae1cb846[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 09:11:31 2022 -0400
+
+    fixing styling for columns, column name, and create new ticket button
+
+[33mcommit c84f07fbe716ac74c2774d5cc5bfee8680e96c22[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 28 08:40:27 2022 -0400
+
+    fixing new column
+
+[33mcommit 4395c6733b153f563fe36108357e0f9142eb179c[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 23:07:11 2022 -0400
+
+    Fix bug: not close 3dots menu when opening edit/delete project modal
+
+[33mcommit 1f56dca990e6c0904abfa38b24166a5661a7eafb[m
+Merge: b86d7d3 08682dc
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 22:58:10 2022 -0400
+
+    Form validation and bugs
+
+[33mcommit b86d7d31c66eab96e55008c4247617c677ddeaca[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 22:55:48 2022 -0400
+
+    Form validation and bugs
+
+[33mcommit 08682dc555422dfce444b27d675afb44fe9821f1[m
+Merge: 436db2c 5ba49f1
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 21:48:04 2022 -0400
+
+    fixing merge conflicts and pushing changes to dashboard open and close
+
+[33mcommit 436db2c68da68dfda59100ed97716df82669c930[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 21:37:34 2022 -0400
+
+    pushing changes to logo
+
+[33mcommit 5ba49f1529ba9cb893c6e0c8d049309bcbe246a9[m[33m ([m[1;32mdashboard-styling[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 20:39:51 2022 -0400
+
+    adding dashboard open and close button
+
+[33mcommit caee4b50070add081b3cc5652ff583472a8ceed5[m
+Merge: dc3da4c 7a11a8c
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 23:56:04 2022 +0000
+
+    Merge branch 'master' into feature/show-ticket-details
+
+[33mcommit dc3da4c59250d9f9a4e5116ab5d26179df4a2d49[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 23:55:07 2022 +0000
+
+    Create helper function to choose color for chip
+
+[33mcommit 7c6912f9593cd78c5864146029b165719e9c8eba[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 23:54:26 2022 +0000
+
+    Fetch data of a ticket assignee and render additional fields about ticket
+
+[33mcommit 7a11a8ce7e016561b4781d3ba43a240fd77a13ce[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 19:37:15 2022 -0400
+
+    history for ticket assign
+
+[33mcommit c4900cd39e8d7d82f7cb05fe42ee7163b51115bf[m
+Merge: a1de278 e2c7051
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 21:34:35 2022 +0000
+
+    Merge branch 'master' into feature/assign-ticket
+
+[33mcommit a1de278606d26843ecb02fbe56cc3dce1ab3a238[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 21:30:58 2022 +0000
+
+    Move header an container of Assign Ticket to Project Ticket, add style
+
+[33mcommit e2c705136fba1df510b1b41abe4b3207ebd908bd[m
+Merge: d213719 6191076
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 16:59:33 2022 -0400
+
+    Notification WebSocket
+
+[33mcommit d213719755b19b810014cd3bc547bd251ac28379[m
+Merge: 15cecf2 54ef46e
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 15:54:47 2022 -0400
+
+    Notif WebSocket
+
+[33mcommit 61910766deaff4186dcf5c5eac8686b995fd6a9a[m
+Merge: 573355b 98ea6ab
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 19:47:19 2022 +0000
+
+    Merge branch 'master' into feature/assign-ticket
+
+[33mcommit 573355b6e139a4865e7ff6e0a3c3ead547457f48[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 19:46:17 2022 +0000
+
+    Change data type of avatar to be text and update seeds
+
+[33mcommit ccdd2bd24cb63089495f23528e135d4ebd49a898[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 19:45:13 2022 +0000
+
+    Render avatar conditionally if employee has one otherwise render initials of the employee
+
+[33mcommit 98ea6abfa2e3df4302c8a93ed278eec7427efe01[m
+Merge: 54ef46e 377ce2e
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 14:57:22 2022 -0400
+
+    Merge branch 'notification-drawer-styling'
+
+[33mcommit 377ce2e427fce3423aa7c8acaecbc849c1a689d4[m[33m ([m[1;32mnotification-drawer-styling[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 14:56:50 2022 -0400
+
+    adding more styling to navbar
+
+[33mcommit e4975c37055bd5f183938ed9769e094bf5a1e988[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 13:58:57 2022 -0400
+
+    finishing notification drawer styling
+
+[33mcommit 15cecf207571310ddaa490ebe3d0defbca9e764f[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 12:54:52 2022 -0400
+
+    Notification function
+
+[33mcommit 54ef46e74abef97add81ff481990e69f0576b341[m
+Merge: 740b943 799114f
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 16:47:25 2022 +0000
+
+    Merge branch 'master' into feature/assign-ticket
+
+[33mcommit 740b943612ee131f089d2863bdd14098e478ae22[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 16:45:53 2022 +0000
+
+    fixed avatar badge update
+
+[33mcommit 799114fdc8495e0daa816ee652d8832579fb2b80[m
+Merge: d2ff4fb 83ddc39
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 12:09:35 2022 -0400
+
+    Merge branch 'feature/notification-drawer'
+
+[33mcommit 83ddc3993b885848f180f0f5eea30e3624cfa5be[m[33m ([m[1;32mfeature/notification-drawer[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 12:02:06 2022 -0400
+
+    fixing more merge conflicts
+
+[33mcommit 0328588bb632f46114d6bd078d70197d12a79f7e[m
+Merge: 9a7c64d aecae00
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 12:01:16 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit d2ff4fb759a8049cf6ab0c72b91e2339996382b5[m
+Merge: f38d18d aecae00
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 11:54:40 2022 -0400
+
+    Merge branch 'feature/notification-drawer'
+
+[33mcommit aecae0056a361d616316ad638666c2290428f974[m[33m ([m[1;31morigin/feature/notification-drawer[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 11:54:24 2022 -0400
+
+    adding notficiation drawer
+
+[33mcommit e8eb549b60872f8449c6ceb130f5e4c6ccaf7586[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 11:40:37 2022 -0400
+
+    Notification function
+
+[33mcommit f38d18d58bdc57aee22e65507b503ec0a13e467c[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 10:11:00 2022 -0400
+
+    move column Droppable to Box tag
+
+[33mcommit d861c146ad1527543442c2916fd6c74b446db7cc[m
+Merge: 01ee19c f30fdfd
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 09:44:11 2022 -0400
+
+    Merge branch 'master' into lm
+
+[33mcommit 01ee19cf861bc33d35b0c94437084541334c5f69[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 27 09:43:56 2022 -0400
+
+    starting notification
+
+[33mcommit f30fdfd7c458887770e0df2b9fbde578b047bf4d[m
+Merge: 08171b4 44766eb
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 08:43:30 2022 +0000
+
+    fix merge
+
+[33mcommit 08171b48c3d3c36363aa68604deffbc36501f002[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 07:51:15 2022 +0000
+
+    Add an avatar column to employees table and ressed db
+
+[33mcommit 4face521d62b4a25e020dd54465870ecf26b660c[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 07:50:53 2022 +0000
+
+    Add an Avatar component to ticket card when the employee is assigned
+
+[33mcommit 0fa8dde4a5e20b7101416abba9c00629a0b8ba8f[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 07:50:11 2022 +0000
+
+    Check if there is employee id
+
+[33mcommit ef7e71766148c990e087d2d8d671d6ac0aa8aa85[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 06:44:57 2022 +0000
+
+    Create a route for get req to query empluyee by id
+
+[33mcommit 0cdcd980dd50d83b7ddaf770d7f368b10a587b50[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 06:43:25 2022 +0000
+
+    Create cutom hook to get the specific employee from db and return this employee as state
+
+[33mcommit 8685a6253f23b43dd31f320b857b2031d0054ebd[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 05:04:57 2022 +0000
+
+    Update ticket state after assigning ticket to employee
+
+[33mcommit 44766eba36b26cef7112c453ebc47ac5ee5d47ce[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 00:30:17 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit a94266c40c70c38b840ab2cef27bc7074187f901[m
+Merge: 124014c 5928f44
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 00:29:04 2022 -0400
+
+    adding new styles
+
+[33mcommit 5928f444f7cafdf82609e722a3c6e6b47d6bbe9c[m[33m ([m[1;31morigin/styles[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 27 00:26:03 2022 -0400
+
+    adding more styling
+
+[33mcommit dd84e91654ad2aa80cc7ccb20aca2faaa9b995e8[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 04:08:58 2022 +0000
+
+    Make and nadle req to db to updtae owner_id field of a specific ticket
+
+[33mcommit 4caa81c5ab540b84b949c7d66b9033d31db78fff[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 23:27:44 2022 -0400
+
+    fixing menus and some styling
+
+[33mcommit 1d7b715d1c653bf744392ef6def2680bdb474e46[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 27 02:01:09 2022 +0000
+
+    Fetch data of current project assignes to load data in menu list item
+
+[33mcommit 124014cac750085a92f020a63586761920f13cf9[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 21:45:00 2022 -0400
+
+    Drag drop to remove ticket
+
+[33mcommit 99d128bea85a6c6ff75df2ce22873d3587eb344c[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 21:22:02 2022 -0400
+
+    remove react-cookies
+
+[33mcommit 5b0ad1e1fa77b542188d654eec7c13640b88994a[m
+Merge: 58f751b 2083794
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 21:15:50 2022 -0400
+
+    Merge branch 'master' into lm
+
+[33mcommit 58f751b19f9866d07d369019e46928b44ad9ba07[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 21:15:34 2022 -0400
+
+    confirmation modal for delete ticket by drag drop
+
+[33mcommit 2083794c63e31b31de3cd537932c035f4e568334[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 21:05:12 2022 -0400
+
+    fixing loading user data on login based on role
+
+[33mcommit 8fb092b687bef044debfc9620aae795d883c3132[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 20:03:31 2022 -0400
+
+    Ticket recycle bin
+
+[33mcommit 9a7c64d887ae07abeac1a3767ccb4073357251a5[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 19:51:36 2022 -0400
+
+    committing before pull
+
+[33mcommit a5f8f99d41b1f2112be2a2a8e4795f54877fc33c[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 19:47:38 2022 -0400
+
+    Ticket recycle bin function
+
+[33mcommit a7d3a00b41843a4afe38554189abd98810261843[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 26 22:31:02 2022 +0000
+
+    Create a Assign Ticket component that holds a form of emplyees
+
+[33mcommit 4ab676a1e6ff557ffd1b7c756a364bc75022e5d4[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 26 22:29:56 2022 +0000
+
+    Add a popper on click to AddPerson Icon
+
+[33mcommit d1fe6499f66a4d9316cbf17cb82abd630b5c0326[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 16:45:52 2022 -0400
+
+    clean up
+
+[33mcommit 573a907fbd664446c2aff4ec9876b2fdd931093b[m
+Merge: 85ce6fd e85d22c
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 16:30:59 2022 -0400
+
+    fix merge
+
+[33mcommit 85ce6fdeec2c26c48b7676f4a8f36f632bb7ed34[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 16:26:34 2022 -0400
+
+    Assign employees when Edit Project
+
+[33mcommit e85d22cf63266afecdc6acd875ad760178190124[m
+Merge: 60dc370 7a63633
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 26 19:44:19 2022 +0000
+
+    Merge branch 'master' into feature/edit-ticket
+
+[33mcommit 60dc3702fe3fa3f1e6c9c705e8b28baf717c7812[m[33m ([m[1;31morigin/feature/edit-ticket[m[33m)[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 26 19:42:57 2022 +0000
+
+    Add styling when drag and drop
+
+[33mcommit 7a6363349f0e5b920b2964bb2cec60c517fd1f6d[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 15:23:52 2022 -0400
+
+    fixing new project and edit project forms, removing the selectProject function from the dropdown button in dashboard
+
+[33mcommit f25b30e5ab05bd1ba34b72509285686287128d9a[m
+Merge: 6b29b15 a07df47
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 14:57:00 2022 -0400
+
+    fix merge
+
+[33mcommit 6b29b15b830e3687d02684d215d6171939e617c1[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 14:55:40 2022 -0400
+
+    Assign employee while creating project
+
+[33mcommit a07df470ee46476571a036f673f3a3947eb7270b[m
+Merge: c1ead4c 6944198
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 26 18:38:47 2022 +0000
+
+    Merge branch 'feature/edit-ticket'
+
+[33mcommit 6944198268acdada8e660631f09a0cd0c52c9e4d[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 26 18:38:03 2022 +0000
+
+    Create a fn that set a color to Chip component based on ticket priority
+
+[33mcommit c1ead4cabc45056128880d9daad7ebc8bed3af01[m
+Merge: 46e8e26 948953d
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 13:36:24 2022 -0400
+
+    Merge branch 'form-state'
+
+[33mcommit 948953df8e3aaed9946e28af595060a05defd78e[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 13:36:13 2022 -0400
+
+    fixing edit and delete project forms
+
+[33mcommit 8db382ac6ca0a9c85eca19f58782c17e4ebcf682[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 12:58:04 2022 -0400
+
+    changing styling
+
+[33mcommit 46e8e26538688442f371e45690e3cc30f7ea8405[m
+Merge: ca9f8fd d4133aa
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 26 16:44:03 2022 +0000
+
+    Merge branch 'master' into feature/edit-ticket
+
+[33mcommit ca9f8fd8757be0aab25adc499c116a6a3c33e42d[m
+Merge: 36496f4 63932ce
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 26 16:43:26 2022 +0000
+
+    fix merge
+
+[33mcommit d4133aa74aa51b5134c9b6921d20c605bf4fe615[m[33m ([m[1;31morigin/form-state[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 12:24:52 2022 -0400
+
+    fixing new project
+
+[33mcommit 63932cee1354c211aa696113129d49e372272d2b[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 11:52:58 2022 -0400
+
+    removing console logs
+
+[33mcommit 16d42c51947ac0b9ebeba193e63ab62040de90bf[m
+Merge: c765a2b e72b046
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 11:49:31 2022 -0400
+
+    Merge branch 'form-state'
+
+[33mcommit e72b046e63f971418e71dde0ede92db3c6668b1d[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 11:49:14 2022 -0400
+
+    all forms should persist in state
+
+[33mcommit c765a2bd133aa0608c07a28e8cac6827d5c2c51f[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 11:46:25 2022 -0400
+
+    Fix New Ticket button label
+
+[33mcommit b41fcb7bae416c6736fd7c912d766b31b5c41be1[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 11:45:00 2022 -0400
+
+    moving tickets fixed
+
+[33mcommit b42dfa1e4c1d64fb82b1ad58f5899a76e9883f1c[m
+Merge: 19409d5 87298a7
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 11:36:44 2022 -0400
+
+    gMerge branch 'master' into lm
+
+[33mcommit 19409d5db00e71e037269bc315b561783c5dfbe3[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 11:36:31 2022 -0400
+
+    Ticket History
+
+[33mcommit 87298a7e0af5075d47902c1847087be00b8c5f27[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 11:34:08 2022 -0400
+
+    fixing state for new ticket:
+
+[33mcommit 7ed206f041433d98a59b46af4c1f6a2765783b56[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 10:49:53 2022 -0400
+
+    fixing state for columns
+
+[33mcommit 02a1d37a1b4c98bb285c883ed79247d21f820d76[m[33m ([m[1;31morigin/new-ticket-state[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 10:01:11 2022 -0400
+
+    fixing state in newTicketForm for onAdd and onEdit
+
+[33mcommit 41849a129d5d7f8c0899217ee1f57c02fbd05c3b[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 09:19:00 2022 -0400
+
+    fixing a bug with newTicketForm
+
+[33mcommit 4d8363b8c7516663318de216fc217bde39c13753[m[33m ([m[1;31morigin/new-state-branch[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 08:22:38 2022 -0400
+
+    fixing userdata
+
+[33mcommit 05d3541bbed3e490322e36ba300eacafb3832a37[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 26 08:04:13 2022 -0400
+
+    fixing userdata in app and dashboard
+
+[33mcommit 84eb0c73818a4fbe1cfd5dfafb8c87e8978aa599[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 02:09:34 2022 -0400
+
+    fix bug from code change
+
+[33mcommit 45b956f1b77e7827ce1ff098f04cba1d92d578f5[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 26 01:28:28 2022 -0400
+
+    fix bug from code change
+
+[33mcommit 36496f480addc3964bdf855aa64488b6d609efb8[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 26 03:21:49 2022 +0000
+
+    Style ticket list item and add priority badge to it
+
+[33mcommit 333542cd3990cdc98df1ab095c1f0aec1010ec52[m
+Merge: cf206cd 0bbc3fd
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 25 22:50:39 2022 -0400
+
+    Ticket History function
+
+[33mcommit cf206cd72f81f55e1e71e38e9256405f98a7b22b[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 25 22:48:55 2022 -0400
+
+    Ticket History function
+
+[33mcommit 0bbc3fd43fdfca5e4d8e4b4e8f1256538edaea0c[m[33m ([m[1;31morigin/feature/state[m[33m)[m
+Merge: 89f74e0 e4f166d
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 20:02:26 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit e4f166d2d746f16b1b5bf57589ba54db0b951a97[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 20:01:08 2022 -0400
+
+    updating state
+
+[33mcommit 89f74e02391291135310ec7f247246db167e4461[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 25 19:31:49 2022 -0400
+
+    clean up
+
+[33mcommit 73f999baeb7aefdd44717d29dc201195cb4113af[m
+Merge: 8a90382 646ae11
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 25 17:57:08 2022 -0400
+
+    Merge branch 'master' into le
+
+[33mcommit 8a90382ecb73659bcef8ee13c5920919655f2694[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 25 17:56:45 2022 -0400
+
+    Web Socket for dragging columns
+
+[33mcommit 646ae11725d9af42ab45ddfa21a6f4b37c9dcd2e[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 16:51:47 2022 -0400
+
+    fixing dashboard state
+
+[33mcommit 2baa4b32cf8454d9038dc689156eac4ae9d9de5c[m
+Merge: 8431ca4 8ddca90
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 16:51:05 2022 -0400
+
+    Merge branch 'feature/styling'
+
+[33mcommit 8ddca90acca4d5918f773da64de4cd9cfa1cbd07[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 16:50:43 2022 -0400
+
+    fixing dashboard state
+
+[33mcommit 8431ca441b0e0e7c8ed5336d3bd0c96b4270f47b[m
+Merge: 4f1a67c 4456305
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Fri Mar 25 20:40:00 2022 +0000
+
+    fix merge conflict
+
+[33mcommit 47eee1f0fe4811cb8d1b69c09fb32c09e631b492[m
+Merge: 4028e33 4456305
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 15:56:29 2022 -0400
+
+    Merge branch 'master' into feature/styling
+
+[33mcommit 4028e332f4b1604cc7a2cebed2a2979fd63b5b72[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 15:56:04 2022 -0400
+
+    adding new styling
+
+[33mcommit 4f1a67c25c6ad4720d93c52aea1a8f4cc03259eb[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Fri Mar 25 19:33:02 2022 +0000
+
+    Change the default values of propdown to be a label if it's create new ticket
+
+[33mcommit 4309e023b4d1a0ea5ce4283c71e5ed2991fbe104[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Fri Mar 25 19:29:04 2022 +0000
+
+    Add tosend as a response updated ticket
+
+[33mcommit 4352aadf5714aed570114be7352e492ebc9e1087[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Fri Mar 25 19:28:09 2022 +0000
+
+    Combine NewTicketForm component to be used for both Add and Edit new ticket
+
+[33mcommit 44563052e08b014a7a72e92981c89967ac1829f4[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 25 15:00:39 2022 -0400
+
+    fix HR access control bug
+
+[33mcommit 8717acf88683c888edda3747420760ff6e723725[m
+Merge: a572bee b6a197c
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 14:59:48 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit a572beea7f33caf16c60ebca60c916ac8f59436e[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 14:58:42 2022 -0400
+
+    stashing theme changes
+
+[33mcommit b6a197caf3f45a9fb7f838fea910d149d61e9717[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 25 13:40:07 2022 -0400
+
+    allEmployee prop loaded
+
+[33mcommit 147bc2daed1452dab76d2a4bbe3f6c1d09b476eb[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 12:40:55 2022 -0400
+
+    fixing offset
+
+[33mcommit 135ecf84acee475bf320158b61bf2a7da27d996d[m
+Merge: 52f6e63 156781c
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 12:40:07 2022 -0400
+
+    theme changes, fixing dashboard
+
+[33mcommit 156781c36848a86733f00652504a7e9821f996f5[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 12:34:17 2022 -0400
+
+    fixing offset and some theme items
+
+[33mcommit 52f6e63ec8abf7f35d27753270c9483c77d87e3d[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 25 12:25:36 2022 -0400
+
+    fix performance bug
+
+[33mcommit a999c39cd7bbb32b0210f9dd65e8038911888dd5[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 11:01:38 2022 -0400
+
+    fixing delete columns and edit columns
+
+[33mcommit 9ac9430fd268edc379ac4ed370d3c963805d7d61[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 11:00:13 2022 -0400
+
+    fixing bug with edit column and delete columns
+
+[33mcommit e5fa45da396396681f75ad303012759cb1aff6e8[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 10:13:25 2022 -0400
+
+    fixing strange displays on About and Landing page, and pulling more things into App
+
+[33mcommit 72bb1755b4dc91c6bbe551917e91d2b3a5a5f473[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 25 09:53:20 2022 -0400
+
+    adding Drawer to dashboard, combining Header and Main into App
+
+[33mcommit b5df48ea77e6b704bb82a2602f39ebd331b31f69[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Thu Mar 24 21:44:02 2022 -0400
+
+    stashing changes
+
+[33mcommit 21770a5d358b94607cbf3f42066b8ae8a886fd6a[m
+Merge: b5c14ad 674622a
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Thu Mar 24 21:43:47 2022 -0400
+
+    stashing changes
+
+[33mcommit 674622a89343407370a505d6bebb5f6e9c359de9[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Thu Mar 24 21:26:15 2022 -0400
+
+    form changes
+
+[33mcommit b5c14ad38cab8b9b06e992cf78a69a62c4cad6f7[m
+Merge: edf20fb f87888d
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Thu Mar 24 19:26:48 2022 -0400
+
+    Merge branch 'master' into accessControl
+
+[33mcommit edf20fb530f3929ae8e22b60add208c63165e7ff[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Thu Mar 24 19:26:10 2022 -0400
+
+    clean up console.log
+
+[33mcommit f87888d0c014de559177f56be58e2f0cac00354e[m
+Merge: 95cb99b 953f1f0
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 23:24:45 2022 +0000
+
+    Merge branch 'master' into feature/edit-ticket
+
+[33mcommit 953f1f0fdc7505550344a56a2112b90e83ea5032[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Thu Mar 24 19:22:33 2022 -0400
+
+    include completedAt and updatedAt for Ticket model
+
+[33mcommit 95cb99bfcb6693c9295d70832d02f7b62d83bde0[m
+Merge: 744064b c92a62f
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 23:16:26 2022 +0000
+
+    Merge branch 'master' into feature/edit-ticket
+
+[33mcommit 744064b602af939e7fbd572d0333c20ef68032ef[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 23:15:38 2022 +0000
+
+    Install date-fns to format the date
+
+[33mcommit c92a62f1bac93b8b78249cdc1a1fb0e89267466b[m
+Merge: dae49c3 921f7da
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Thu Mar 24 18:46:10 2022 -0400
+
+    Merge branch 'master' of github.com:LHL-final-project-Shauna-Nastasi-LeMinh/final-project
+
+[33mcommit dae49c388265576ca2823f6355fa06c991a5951b[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Thu Mar 24 18:46:06 2022 -0400
+
+    access control
+
+[33mcommit 34f2b403a72b18334d7c0613320810ba4fee60ef[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Thu Mar 24 18:41:51 2022 -0400
+
+    access control
+
+[33mcommit 583c3238af2dd51a2e2085191534abe0c484d9ed[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 22:37:16 2022 +0000
+
+    Add list items to ticket details
+
+[33mcommit 921f7da70c67b2ad5ef4519d9b8b877ae397e650[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 21:44:23 2022 +0000
+
+    Add fields when add new ticket record to db
+
+[33mcommit 253f194731cbd6a8bc07f2d0c9c638d8c6fef466[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 21:38:13 2022 +0000
+
+    Add additional fields when making a post req
+
+[33mcommit c161413eda1dd94baec3a322dc3c0474a04af5fd[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 21:35:19 2022 +0000
+
+    Add dropdown menu forms to choose ticket details and populated them with data from db
+
+[33mcommit 382851d794c5f02279aeddf7cf871419cac445d2[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 21:34:19 2022 +0000
+
+    Change the label name for dropdown
+
+[33mcommit 600df0e2dd230f3426d2c9ee102071c10d5a0fd9[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Thu Mar 24 17:00:35 2022 -0400
+
+    fixing new project form
+
+[33mcommit da6ad52a22a4bcb2dedaed846f061252f289bc5f[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Thu Mar 24 16:55:16 2022 -0400
+
+    fixing state in dashboard, fixing some forms
+
+[33mcommit b63a47b71ee09eeaa02631a8f9adf88e106ad02c[m
+Merge: a81360e 77bf3ff
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 16:40:19 2022 +0000
+
+    Merge branch 'master' into feature/edit-ticket
+
+[33mcommit a81360eb91df730e8f1f9f522ef61e4b3d87d685[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 16:38:00 2022 +0000
+
+    Fix updating the ticket state when create new ticket
+
+[33mcommit ca3c41aa7c14747cf1811dc4007c52f5b6ee34fe[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 16:35:18 2022 +0000
+
+    Return newticket with a response
+
+[33mcommit 53475d04d3a9db0c7a8cad927a7bf82ac1d35cc0[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 16:34:51 2022 +0000
+
+    Pass setTickets as a prop to removeTicket component
+
+[33mcommit 5ad630dcf8d91186f538980c99cb7aaf89e977ba[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Thu Mar 24 15:14:59 2022 +0000
+
+    Fix opening of create new project form by moving conditional opening to the ProjectColumn from LandingPage and move necessary props
+
+[33mcommit 77bf3ff0105d23ed33e6c54ef9b242f5b44a8c70[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Thu Mar 24 01:13:37 2022 -0400
+
+    fix dnd bug resulted from merging
+
+[33mcommit 27c9c6f9e11b715735ba716b3ec6bcf9df81aead[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Wed Mar 23 21:33:11 2022 -0400
+
+    touch up New Column button
+
+[33mcommit 151c944987a0728e6c5b08c899cac2c79357a9a1[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Wed Mar 23 20:19:11 2022 -0400
+
+    fix bug in Search Pane
+
+[33mcommit 1666e6eb579466cac2e66a7d67d660274f8fc1e8[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 23:31:08 2022 +0000
+
+    revert change
+
+[33mcommit a27a3215d827814780bfabf7cdc16ae572aa7b16[m
+Merge: 62cb12e d9b6ac5
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Wed Mar 23 18:46:00 2022 -0400
+
+    fix merge
+
+[33mcommit 62cb12e4476e4d8e133b53a8ebddeb49376f8802[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Wed Mar 23 18:42:05 2022 -0400
+
+    Search Pane implementation
+
+[33mcommit d9b6ac5fec73b709585f9037e0b9732019ae1c57[m
+Merge: 6b550e2 3508747
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Wed Mar 23 16:34:31 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit 350874779c1c639f52a0a8bf681a508cc04afa56[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Wed Mar 23 16:32:37 2022 -0400
+
+    adding top level state
+
+[33mcommit 6b550e2d33d0af0da6cb3caaa65ebe6d67faf478[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 19:56:37 2022 +0000
+
+    Filter tickets to get specific ticket details and render details in dialog modal
+
+[33mcommit 671f50ed81faa521bdb5fdb032df7a0d117546ee[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 18:51:35 2022 +0000
+
+    Add ShowTicketDetails component to be conditionally rendered based on dialog open state and set dialog open state to ticket details on click on details btn
+
+[33mcommit f3ea838ecce31bd26c950b8c69d5857cd1f079a4[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 18:49:23 2022 +0000
+
+    Create dialog modal that shows ticket details on click on details menu item btn
+
+[33mcommit b21a36824d328d624840b3af0814a547677a904f[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 18:48:22 2022 +0000
+
+    Change modes value
+
+[33mcommit 1a54866cf77dcf0ef07d15c47c48f9bd884c61a5[m
+Merge: 35484d7 c305416
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Wed Mar 23 13:05:54 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit c3054162386f48ac7d3b09cb86e1ba378427337f[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Wed Mar 23 13:04:14 2022 -0400
+
+    stashing current changes
+
+[33mcommit ae5ac434182f3fc50f57b636fb687712c08a2893[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Wed Mar 23 13:03:54 2022 -0400
+
+    adding current changes
+
+[33mcommit 35484d70f877ad5ee42036a0fdbd22eeb0d490ff[m[33m ([m[1;31morigin/feature/remove-ticket[m[33m)[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 17:00:35 2022 +0000
+
+    fix closing of menu
+
+[33mcommit 3bc5acacfdbc1e86f14b1a7657be03935b640745[m
+Merge: 11f42a1 b248aa4
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 16:31:35 2022 +0000
+
+    fix merge
+
+[33mcommit 11f42a17af974f408501ea7191a59446050081ee[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 16:13:59 2022 +0000
+
+    Update ticket state upon deletion of ticket
+
+[33mcommit 8138637210f992964320d425a34cca077fd23632[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 16:13:37 2022 +0000
+
+    Pass tickets and setTickets as a prop down to ProjectTicket
+
+[33mcommit d4219e2e85d327b9230345f2939ef60bbae131f1[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 16:12:23 2022 +0000
+
+    Move conditional opening of remove ticket component from LandingPage to ProjectTicket
+
+[33mcommit b248aa4adb6393ba5c003c8e635854a1272cef7b[m
+Merge: aa2d5ba 66b4652
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Wed Mar 23 08:44:21 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit aa2d5baf9c78667ef39ed08b63126ca5a217141b[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Wed Mar 23 08:23:40 2022 -0400
+
+    updating styling
+
+[33mcommit 66b4652c13fdb368d9ed0ef22ef5443e807bc870[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 04:49:23 2022 +0000
+
+    Change text in dialog confirmation view
+
+[33mcommit 6271f5bb01905ca7a291508aabf4d2909b0bcf2d[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 04:40:49 2022 +0000
+
+    Make axios req to delete specific ticket from db
+
+[33mcommit ecd25457fba956cc8e036e484fa335ac4521ac8a[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 04:40:25 2022 +0000
+
+    Add condition when on click on Remove btn to open confirmation dialog and set current ticket
+
+[33mcommit e16d9effa7c29f7434be6ae5e41321576b64102f[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 04:39:00 2022 +0000
+
+    Pass current ticket state as a prop
+
+[33mcommit 568252068a24a3185ab2639d4f152d851b9d9aab[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 03:47:27 2022 +0000
+
+    Create state to keep track of current ticket, condittionally render Remove ticket mode
+
+[33mcommit e59a32efe74166979b0d37a1b5858e5d572685dd[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 03:40:24 2022 +0000
+
+    Create constant for remove ticket mode
+
+[33mcommit a058be6a93d46b2d7a15f5fd39e6ac9f3b85cb18[m
+Merge: 0b32432 ac4eca5
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 03:09:08 2022 +0000
+
+    Merge branch 'master' into feature/edit-ticket
+
+[33mcommit 0b32432e089ee83dd50695645f30115411920491[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 03:05:23 2022 +0000
+
+    fix ticket form submission
+
+[33mcommit ac4eca55a0c968a336be97f410b8c2437719c8b8[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 22:52:43 2022 -0400
+
+    fix bug in delete column
+
+[33mcommit 70035abe50b0ce6bb4f28a6307c46b4119ddb3e5[m
+Merge: 5199faf 818fb9b
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 02:38:02 2022 +0000
+
+    Merge branch 'master' into feature/edit-ticket
+
+[33mcommit 818fb9bef51f3ce9e14a1822f4e9b151c23814f5[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 22:12:45 2022 -0400
+
+    fix bug: drag drop New Column button should be disabled
+
+[33mcommit 5199fafef11593a346d77073e03d5416bac1102f[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 01:16:01 2022 +0000
+
+    Change new ticket form var name to add_ticket
+
+[33mcommit c3fb256d81a4362dc85679c5c005e28084f196eb[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 01:15:36 2022 +0000
+
+    destrcture setOpen
+
+[33mcommit 0bfadc353fdd7d8758f49c2f3d6594cf27bdd6ce[m
+Merge: 090f2c0 5e9fcc9
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 21:13:21 2022 -0400
+
+    Merge branch 'master' into lm
+
+[33mcommit 090f2c0a409abb6e54abf340d8a1cf8a9382c0d6[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 21:13:05 2022 -0400
+
+    fix bug - drag new column
+
+[33mcommit 5e9fcc990a700f2fe6d448cb971a83b9f02af70c[m
+Merge: c6fdb0d bb6ebec
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 21:09:58 2022 -0400
+
+    Merge branch 'feature/styling'
+
+[33mcommit c6fdb0d8b806e96413f20dbe5b885c7dd8f0941b[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 21:08:43 2022 -0400
+
+    adding style to RegistrationForm
+
+[33mcommit bb6ebec5a6074caffed6d13e9f99a64bc31bd1c1[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 21:05:45 2022 -0400
+
+    fix merge
+
+[33mcommit be3925cdbd38ec1b1b57e92b0812f51229078baf[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 01:01:58 2022 +0000
+
+    Pass setOpen to ColumnTickets as a prop
+
+[33mcommit 4ce8dd94a27da4ff94cf2f15394e39e0e80f0fc9[m
+Merge: 7771d49 f7804b7
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 21:00:01 2022 -0400
+
+    Merge branch 'master' of github.com:LHL-final-project-Shauna-Nastasi-LeMinh/final-project
+
+[33mcommit 7771d499390462683fdc3027b67eff78a7ede0b8[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 20:59:49 2022 -0400
+
+    persist column ordering after drag and drop
+
+[33mcommit f6506cbd35848158f6d3f2ee3af00e2b4cffdcff[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 00:56:38 2022 +0000
+
+    destructure setOpen
+
+[33mcommit 787d75486e3073f2823a5d26d60d6473913de2ce[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 00:55:45 2022 +0000
+
+    Add route to update ticket in db
+
+[33mcommit 688f98a28d006b53ffa5add57ee1d8895d635dfa[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 00:54:48 2022 +0000
+
+    Pass setOpen to ProjectTicket as a prop
+
+[33mcommit 4ce1008f16e1af2b0a5775ad1595a718ec5853d8[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 00:51:26 2022 +0000
+
+    Change to create new ticket call createNewTicket fn onclick and setOpen to add ticket
+
+[33mcommit 678a9f79a22dc0aa6aa8dd3b1491598d29b2bbf4[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 00:38:26 2022 +0000
+
+    Create a route to delete a ticket from db
+
+[33mcommit d1fb9828b9787ffd41d7c80eb02a5777fc78b962[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 00:25:15 2022 +0000
+
+    Add ids to menu item and set open state conditionally on click
+
+[33mcommit 89ccddfb3d554f05334bcf07fe10f9c1b376704a[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 00:23:00 2022 +0000
+
+    Add to render conditionally edit ticket and change the name of constant to Add ticket
+
+[33mcommit 05d81f69c4b7277fdc88155e2bce242e80bba379[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Wed Mar 23 00:17:07 2022 +0000
+
+    Create new constants
+
+[33mcommit 66f2871d1de1dfb665baccfe02595b4da5e1c3b2[m
+Merge: 4ba0bef f7804b7
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 22 22:04:37 2022 +0000
+
+    Merge branch 'master' into feature/edit-ticket
+
+[33mcommit f7804b7fc9192c970d220964542614a42618020e[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 17:09:57 2022 -0400
+
+    fixing open, setOpen modal states
+
+[33mcommit 6983ff26ef2cc83ee1bda8254c8b0f9a55a0f56b[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 16:45:03 2022 -0400
+
+    fixing more merge conflicts
+
+[33mcommit 7a7254ed7071b96dd2259e2ee185d2028363e059[m
+Merge: 962261b 55d086c
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 16:42:54 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit 55d086cc002173a68fc6c4e474b825275047af7d[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 16:40:58 2022 -0400
+
+    stashing changes before pull
+
+[33mcommit 962261bfe74af8e0a6673e5b4bebfe8725fef94c[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 15:59:53 2022 -0400
+
+    columns handling
+
+[33mcommit 7ab98772d3580cffbd6ed72d2863ad2a5c068739[m
+Merge: baaeb66 03e45f7
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 14:35:58 2022 -0400
+
+    fix merge
+
+[33mcommit baaeb6615841f38df30c40276b0d6657e5587fc8[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 13:55:12 2022 -0400
+
+    remove column
+
+[33mcommit 4ba0bef57f0dd93b57696961589812fb00787eb7[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 22 17:48:31 2022 +0000
+
+    Add modal component
+
+[33mcommit 03e45f74ab4b07815762ef09b1dda989732c9426[m[33m ([m[1;31morigin/test-branch[m[33m)[m
+Merge: 63eff1f 873ddd3
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 13:44:34 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit 63eff1fd77760f97391b5ab4fd2c03eed6e9694b[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 13:40:10 2022 -0400
+
+    fixing more merge conflicts
+
+[33mcommit 89b44886e71f5ab6afde4b3e93af3d089f9f57c1[m
+Merge: f2e7038 4130b5e
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 13:38:08 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit 4130b5e98ce5488e9a8a54ad2949dbc6fc550c5c[m[33m ([m[1;31morigin/feature/dashboard-delete[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 13:37:31 2022 -0400
+
+    adding styling
+
+[33mcommit 873ddd35de3ead57c4bb4dee75e305856184371a[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 12:48:56 2022 -0400
+
+    add new column
+
+[33mcommit 757a50e7e4ab8ea1717f643fc1e55c3e34420368[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 22 12:40:05 2022 -0400
+
+    add new column
+
+[33mcommit f2e70382a1d719e15221f9fd655acd20dfdc2e37[m
+Merge: afec1ef 618416d
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 08:09:36 2022 -0400
+
+    fixing merge conflict
+
+[33mcommit afec1ef120b27375c969cc3f04619de8d92c0adf[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Tue Mar 22 08:07:47 2022 -0400
+
+    updating themes
+
+[33mcommit 618416d88b39f2b7456ec93a60886bb274a5629e[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 22 05:28:25 2022 +0000
+
+    Add button icon to each ticket that throws a dropdown menu on click
+
+[33mcommit a450964924db179f21537b04def948d2fd39460c[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 22 05:27:26 2022 +0000
+
+    Add close btn that change view mode to prev one
+
+[33mcommit 05d7600624868ca0236b7d0a44143feee0fb29a4[m
+Merge: ab2d4f6 0ec79cc
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 22 04:24:45 2022 +0000
+
+    fix merge conflict
+
+[33mcommit ab2d4f6427a46f0978f43784e3c042f53ecd07db[m[33m ([m[1;31morigin/feature/add-new-ticket[m[33m)[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 22 04:22:30 2022 +0000
+
+    Change that title field will hold a user input while description set to default value when adding ticket to db
+
+[33mcommit f5edd33f8f341809ceb3ff98ff4ca5ec2b439c6b[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 22 04:20:57 2022 +0000
+
+    test onclick
+
+[33mcommit 941d01d4c575ff109ffd9643f77ff1945c90ee96[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 22 04:18:58 2022 +0000
+
+    Change the input value to be for title field instead of description
+
+[33mcommit e43b8e58cee5d3ac13ff6caef15b6c7aa46117b4[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 22 04:07:39 2022 +0000
+
+    Add a title field when creating new record in tickets table
+
+[33mcommit 32581039d7635ad6be8c76410f47729e320cb6e1[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Tue Mar 22 04:06:59 2022 +0000
+
+    Add a title field when creating new record in tickets table
+
+[33mcommit 0ec79ccfc4bf1687aeb7c68b3e1c9e49b0155348[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 23:21:06 2022 -0400
+
+    add .env to gitignore to avoid leaking Pusher key
+
+[33mcommit 27ab24adb83c0e16f7c5ced2addd0e0179c35e4f[m
+Author: Le Minh Nguyen <93221876+MikeNguyenTT@users.noreply.github.com>
+Date:   Mon Mar 21 23:17:51 2022 -0400
+
+    Delete .env
+
+[33mcommit f7803b37b5ff0364355f516f3fc43dde31138861[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 22:43:20 2022 -0400
+
+    add padding for dragging effect
+
+[33mcommit c41ff27afae8028b114c0c48e5cc340fbe4d01fe[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 22:19:34 2022 -0400
+
+    persist new column for ticket when dragged
+
+[33mcommit af6e7c22de866b757419ab1717d05412608a372e[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 21:35:14 2022 -0400
+
+    check in env file
+
+[33mcommit 4d3d6a165f80003fcf9e4515e7a34aa508b759ea[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 20:53:32 2022 -0400
+
+    clean up
+
+[33mcommit 68876969bb24302db2bf860412624eeb76279c8d[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 20:34:19 2022 -0400
+
+    showing ticket title instead of desc
+
+[33mcommit c58ef957917e01b3dd79f15d3c96ef0426d8a8a6[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 20:16:36 2022 -0400
+
+    fix flickering issue when dragging
+
+[33mcommit b60026e1b46bcf5161da67716316aeee288f2234[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 20:03:41 2022 -0400
+
+    fix flickering issue when dragging
+
+[33mcommit f4835427bade545d3e9491361e32c351d691b71b[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 19:45:46 2022 -0400
+
+    clean up
+
+[33mcommit b1bb4948645acbe8d139b5837c5f1f07ee8e1a72[m
+Merge: 7536425 16527b9
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 19:36:19 2022 -0400
+
+    clean up
+
+[33mcommit 7536425281b7b7ae2a4e55e7f179573ded003f91[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 19:21:05 2022 -0400
+
+    cleanup drag and drop code
+
+[33mcommit 16527b91ee451da5155874e9afd53dada31172e6[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 22:55:57 2022 +0000
+
+    Create route for adding new ticket to db
+
+[33mcommit b4b43da42c201e66af01e1a65fa6b0a1d0de018c[m
+Merge: 36fe0c5 34a0ef5
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 22:13:33 2022 +0000
+
+    Merge branch 'master' into feature/add-new-ticket
+
+[33mcommit 36fe0c542ec44d006306f668595bc24c31f6ba6b[m
+Merge: dfb9174 7b7d1de
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 22:11:32 2022 +0000
+
+    fix merge conflict
+
+[33mcommit 34a0ef5b9286ebb9edca3b7ef531af47515f4413[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 17:57:41 2022 -0400
+
+    cleanup drag and drop code
+
+[33mcommit 7b7d1de6669ee232d68eb611ef935c20acbc75e4[m
+Merge: c75ca40 2682d2c
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 17:52:10 2022 -0400
+
+    Merge branch 'master' into minh
+
+[33mcommit c75ca409153ca8946675927541c3d6aedaaf360f[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 17:51:41 2022 -0400
+
+    drag and drop columns
+
+[33mcommit dfb917424792b769064c3170d59e20cbba34ca08[m
+Merge: d062701 2682d2c
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 21:42:34 2022 +0000
+
+    Fix merge conflict
+
+[33mcommit d062701dbc8955614fcffaafc1f0d8cfdf2203bc[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 21:26:59 2022 +0000
+
+    Add handleClick fn that on click on Create New Ticket set new view mode and set the column where click was occurred
+
+[33mcommit 4a838bf92fbc916621896e4dcadd0d6d0947ae52[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 21:24:36 2022 +0000
+
+    Create state to keep track of current column state and pass it down to ProjectColumn
+
+[33mcommit 201f58181d49db3c0dca31bea732b5f4e9722c36[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 21:21:16 2022 +0000
+
+    Render conditionally NewTicketForm component
+
+[33mcommit e893d7a7ecf7a8f7010b11d1872ec13610ea4a91[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 21:19:47 2022 +0000
+
+    Create NewTicketForm component that on click add new ticket to db
+
+[33mcommit 2682d2cc69692719dc046c6a9fa677ceb26f8d17[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 21 16:38:30 2022 -0400
+
+    adding create new project functionality
+
+[33mcommit c4b047c9d3f553670d13f67fbbd1748cadde53da[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 15:47:22 2022 -0400
+
+    Drag and Drop ticket
+
+[33mcommit ef044584366f8a76f78bd9b4d981a52213230923[m
+Merge: b4a0984 7f154fa
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 14:10:53 2022 -0400
+
+    Merge branch 'master' into le
+
+[33mcommit b4a098414a8848098f07d46aa18c7a2fb615ed61[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 14:10:34 2022 -0400
+
+    Drag and Drop drafting
+
+[33mcommit 7f154fa0645929c4f79f0383bc44a2ae7ce6b1e7[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 21 14:07:05 2022 -0400
+
+    removing console logs
+
+[33mcommit b7a491184d06268e11972ec7d8ea07ed705ee28a[m
+Merge: ea74487 82e07f9
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 21 14:05:03 2022 -0400
+
+    Merge branch 'master' of github.com:LHL-final-project-Shauna-Nastasi-LeMinh/final-project into feature/dashboard-delete
+
+[33mcommit ea744876ed3e8f6de219a174a6e8c3d631e4d996[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 21 14:04:48 2022 -0400
+
+    adding delete project functionality
+
+[33mcommit 40eaaab07fda1d4e69cf2e67c909f3ff74510cb8[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 17:57:01 2022 +0000
+
+    Change the Create New Ticket to be a separate ListItem
+
+[33mcommit f2e78d9468737597281e8c112ba0006b2f5aa7a7[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 17:55:18 2022 +0000
+
+    Declare new mode to render conditionally NewTicketForm
+
+[33mcommit 82e07f9d52441d36b9d70b8e11404dc4e92f209d[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Mon Mar 21 12:57:08 2022 -0400
+
+    Drag and Drop drafting
+
+[33mcommit 3be6e257efe20ec6ab756517347c27ae708d1158[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 21 09:36:45 2022 -0400
+
+    adding mui material icons
+
+[33mcommit a020d77d2d8f01b883eea63a3cfd1d1f78272234[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Mon Mar 21 08:54:11 2022 -0400
+
+    adding columns to project creation route
+
+[33mcommit 1b532843007ed008daa660eebb8b3a31fb48af7c[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 22:36:46 2022 -0400
+
+    fix merge
+
+[33mcommit a00aab82ab6615cefe01c356765e432d9540186b[m
+Merge: 87ed993 4e2f0c4
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 22:23:01 2022 -0400
+
+    fix merge
+
+[33mcommit 87ed993341eb32726af03c26a2db93d8a1fd53bf[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 22:20:06 2022 -0400
+
+    fix warnings
+
+[33mcommit 4e2f0c4f94de9c4ca3d49c997db5df4e78e4d3fd[m[33m ([m[1;31morigin/feature/kanban-board[m[33m)[m
+Merge: 96ef5c0 8da5e53
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 20 22:13:38 2022 -0400
+
+    fixing merge conflicts
+
+[33mcommit 96ef5c0e93de403448b67b9adbc4ef5279bb9c80[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 20 22:10:43 2022 -0400
+
+    adding create new project button functionality and editing kanban view
+
+[33mcommit 8da5e53c3f9e18ea07d013e5b7bc5c2f46b2a129[m[33m ([m[1;31morigin/feature/addNewProject[m[33m)[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 01:00:02 2022 +0000
+
+    Commented form
+
+[33mcommit ea930ddfc5b3decfe092ee23ab1a50e1662b0194[m
+Merge: 28e5187 a8586ce
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 00:58:30 2022 +0000
+
+    Merge branch 'master' into feature/addNewProject
+
+[33mcommit 28e51877e77bb8b9abc3b52a970eea3cc10c2ef2[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Mon Mar 21 00:57:42 2022 +0000
+
+    add missed prop
+
+[33mcommit a8586ce0f7839af51a9eb178b166e320d2802102[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 19:59:50 2022 -0400
+
+    fix Material UI warnings
+
+[33mcommit 4f925d03874c40a4b7278c1a7a1064b076477bb8[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 20 23:32:32 2022 +0000
+
+    destucture mode with props
+
+[33mcommit 0ea64f861984abecd22c6a9de311806f0cb3819f[m
+Merge: f195237 a2e745b
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 20 23:28:24 2022 +0000
+
+    fix merge conflict
+
+[33mcommit f19523762d63412572a5eda1e08a9e28d14a4eca[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 20 23:22:28 2022 +0000
+
+    Add to render conditionally different layouts based on the current mode
+
+[33mcommit 177b76c9bd3564d9359a1c7c0bffec008e69910c[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 20 23:21:19 2022 +0000
+
+    Conditionally add to handleListemClick fn to set new mode on click on create new project button
+
+[33mcommit f935ca97e24ed7d8f6c9b07d8922e6689e8fa747[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 20 23:19:53 2022 +0000
+
+    Create NewProjectForm component to add new project onclick on btn
+
+[33mcommit ce68ef5c0e5f2abecfd2ce53951ebd86b5176732[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 20 23:07:37 2022 +0000
+
+    Declare new mode for NewProjectForm component ad pass mode to the DashboardItem
+
+[33mcommit a2e745bc48b7248218b029f14e969e0f82fdb9bf[m
+Merge: 4ebecda 6956e0f
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 18:48:20 2022 -0400
+
+    Columns and Tickets actual data
+
+[33mcommit 4ebecdaaad02368b7cd6c8f891c7ac1414dbd119[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 18:46:33 2022 -0400
+
+    Columns and Tickets actual data
+
+[33mcommit 6956e0f60381e9037bf7d58a794e2d55390164e8[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 18:40:09 2022 -0400
+
+    Columns and Tickets actual data
+
+[33mcommit e0cd29ccdfd51f78f3e829b94a31292066d10145[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 18:03:23 2022 -0400
+
+    populate Columns title with actual data
+
+[33mcommit a057e0e3621c07801c02e05301902dd80f5ad292[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 17:33:48 2022 -0400
+
+    remove userProjects state
+
+[33mcommit f8c8c6e078c868e4f8d6131cb19d4804b7523a58[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 17:26:35 2022 -0400
+
+    useRef hook for passing state in callback
+
+[33mcommit aa78b421090b7afb437e58624194ddd7298edc6a[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 16:39:35 2022 -0400
+
+    seed 1 more project, and fix bug in Dashboard
+
+[33mcommit e4eb0d91a90ee99a71ac27773cbea5ca0282c3fb[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 16:27:38 2022 -0400
+
+    Get Columns and Tickets
+
+[33mcommit ab3e0deeb39fd9392d3ab84b36252543d9df2690[m
+Merge: 99dcf72 8421829
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 15:58:07 2022 -0400
+
+    Get Columns and Tickets
+
+[33mcommit 99dcf7276304a378b301a58621a7002123f2a3bc[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 15:56:03 2022 -0400
+
+    Get Columns and Tickets
+
+[33mcommit 6a8c23eafad8e51859126d667c5d77917162abb7[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 15:54:48 2022 -0400
+
+    Get Columns and Tickets
+
+[33mcommit a2b0f2590328313ca4989469383a9a45e0d96898[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sun Mar 20 19:11:42 2022 +0000
+
+    Add rendering user email when logged in
+
+[33mcommit 8421829cbbd9033a155753989ab5c2d24aa0a2b9[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 20 14:03:05 2022 -0400
+
+    adjusting project view
+
+[33mcommit 3d14a88cff3d69107509d38ea3cf2b594f3cb0a5[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 13:46:15 2022 -0400
+
+    react cookie
+
+[33mcommit eee4f3ae2ae5fbc38899b3f994bca36370b2efdf[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 13:31:25 2022 -0400
+
+    fix merge
+
+[33mcommit d2cdbefac4939809d89a55c5015a12fa07152bf7[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 13:25:48 2022 -0400
+
+    fix merge
+
+[33mcommit 67450d53519e1c0521dfcc0245a84b1b04064b31[m
+Merge: 67867f3 60b2217
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 13:24:13 2022 -0400
+
+    cookie session
+
+[33mcommit 67867f3356f9151457e1156f302ada8d231e1843[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 13:20:50 2022 -0400
+
+    react cookie
+
+[33mcommit 60b221734b5ede4cdb3453cf4f51e649f233061b[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 20 13:06:49 2022 -0400
+
+    adding currentProject state
+
+[33mcommit 5d69011ac70d9a0ad6e7315fe426098ae85ac03a[m[33m ([m[1;31morigin/feature/dashboard[m[33m)[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sun Mar 20 11:18:15 2022 -0400
+
+    adding dashboard and kaban board view
+
+[33mcommit 14481441bcaa12755d5da1784e76ca5d6e4fcc0c[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sun Mar 20 00:05:50 2022 -0400
+
+    remove loggedIn state, changed to use user state instead
+
+[33mcommit 16e92716b9973b8663e9c9dbc94350d30a7d0b88[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 23:57:49 2022 -0400
+
+    remove loggedIn state, changed to use user state instead
+
+[33mcommit 936898b8103eb58764bbe68363ca0988cfc4f40d[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 22:16:27 2022 -0400
+
+    prepare user state object, and Modes constant file
+
+[33mcommit cfec83e845cdb4ff6bee90d985b339988250ec89[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 19 20:54:31 2022 -0400
+
+    fixing more merge conflicts
+
+[33mcommit f3e1509172cf59e311f41adc9ff683bce4a0ee7e[m
+Merge: 07906ef 6133cbf
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 19 20:52:02 2022 -0400
+
+    merge fixes
+
+[33mcommit 07906efd7c7473646dfee61ec01a9b25c6b3df69[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Sat Mar 19 20:48:54 2022 -0400
+
+    adding new components for dashboard and project view
+
+[33mcommit 6133cbfec9812fd80f9c8bc1a87abec6591e4309[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 20:35:32 2022 -0400
+
+    logout function
+
+[33mcommit 7f22d4eca8cf2787fc165f32a028239621ac2dc2[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 20:26:15 2022 -0400
+
+    logout function
+
+[33mcommit 7bd79c919bf71a0c0946a43535f3fd4f8642186b[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 20:13:51 2022 -0400
+
+    store logged email in state
+
+[33mcommit d0a0ff10b10351e6cb51857fded35e135c513187[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 19:57:47 2022 -0400
+
+    extract email after login for later state setting
+
+[33mcommit a870399913f506018297c32bb6eb0a7420d1910e[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 19:51:35 2022 -0400
+
+    masking password input
+
+[33mcommit cc994c8217ae50af76e24f04571325545e2a8d9e[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 19:46:28 2022 -0400
+
+    keep employee_id and role_id in cookie session
+
+[33mcommit b036807bc80563de1974e655dbfe92d3956ba3c7[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 19:16:44 2022 -0400
+
+    Validation for login and registration forms
+
+[33mcommit 96020f22d5ed4de68763f4353721791335b969ca[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 18:58:28 2022 -0400
+
+    mode and login state, fix bug for registration form
+
+[33mcommit c23edcc10f064bd7b9368f431878cebf4bd4c205[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 18:06:42 2022 -0400
+
+    Mode state
+
+[33mcommit 191f4bdb38af090948c01e5625c80ace35e15b0d[m[33m ([m[1;31morigin/component/header[m[33m)[m
+Merge: d5333da 1bad9ec
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 19 21:54:15 2022 +0000
+
+    Merge branch 'master' of github.com:LHL-final-project-Shauna-Nastasi-LeMinh/final-project into component/header
+
+[33mcommit 1bad9ec143cc605988cee3a9a05f273002f91675[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 17:46:13 2022 -0400
+
+    remove redundant backend version
+
+[33mcommit d5333dac2990512bddf4ea1151c8e0bd2f75cb71[m
+Merge: ea7afe7 e1e581a
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 19 21:45:26 2022 +0000
+
+    Merge branch 'master' of github.com:LHL-final-project-Shauna-Nastasi-LeMinh/final-project
+
+[33mcommit ea7afe7dc3ec4352399701406f9f33a401e138d8[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 19 21:41:55 2022 +0000
+
+    Create Header component
+
+[33mcommit e1e581a15d5f3afff982079d1188b206bc43c2d1[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 16:42:19 2022 -0400
+
+    registration form
+
+[33mcommit a363b6917a8b8d19e5cf0aec0d26de10c220f107[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 15:49:46 2022 -0400
+
+    refactor to have loggedIn state in App level
+
+[33mcommit e9423cc47f4cbb444ef1213fdfd973712253e6bc[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 15:20:40 2022 -0400
+
+    add a component only for testing
+
+[33mcommit 37e438e78f28d2d997492865abb463e753efc680[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 14:59:20 2022 -0400
+
+    login form finished without styling
+
+[33mcommit ebbdd9c78b51bf0508addd902014c0b77ea15dae[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 14:54:31 2022 -0400
+
+    first login form
+
+[33mcommit 78908e46615b57b5167da2ea7418399105587fb3[m[33m ([m[1;31morigin/component/button[m[33m)[m
+Author: Nastasi Davydov <nastasidavydov@gmail.com>
+Date:   Sat Mar 19 18:16:56 2022 +0000
+
+    Create a button component
+
+[33mcommit 8c089ebda784dd9215bb20c784d3ff0a81567880[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 14:06:44 2022 -0400
+
+    Sequelize schema update
+
+[33mcommit 0e5f1d2562956d744965296d63034a80e789a51f[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Sat Mar 19 10:35:57 2022 -0400
+
+    Sequalize schema first check in
+
+[33mcommit 711846ebd998da63cb289ab97647fe56dd19e2de[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 19:08:46 2022 -0400
+
+    Pusher refine
+
+[33mcommit 6acd0c55ba449d028efd7c0c00d50b4b10cf4bf8[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 16:29:02 2022 -0400
+
+    cleanup old socket.io
+
+[33mcommit ab1ee11b1f217619aa013dfedbf9979cb917cd95[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 16:01:52 2022 -0400
+
+    cleanup old socket.io
+
+[33mcommit 13d8cd61d0b549df5ea53b1e2070210c932cc6a5[m
+Merge: 4402405 0f0d270
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 15:41:10 2022 -0400
+
+    Merge branch 'master' of github.com:LHL-final-project-Shauna-Nastasi-LeMinh/final-project
+
+[33mcommit 4402405a98d77db151a8fa084095644fb3e934fd[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 15:40:38 2022 -0400
+
+    move to use Pusher server for WebSocket
+
+[33mcommit 0f0d270ce2e9e6b118df6d7b9385015360ba8b46[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 18 13:37:08 2022 -0400
+
+    updating DESIGN_DOC with specific components documentation
+
+[33mcommit 59078f8ec15c22ba74728efc740bd26d3d5ce839[m
+Merge: 28b90ae 9a44354
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 12:54:34 2022 -0400
+
+    Merge branch 'master' of github.com:LHL-final-project-Shauna-Nastasi-LeMinh/final-project
+
+[33mcommit 28b90aeb7443339cf486032a5eb16a985c7bf22a[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 12:54:14 2022 -0400
+
+    Load Roboto font for MUI css framework
+
+[33mcommit 9a44354a354a96f10d507ff0d44375fd0b649811[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 18 12:27:58 2022 -0400
+
+    Updating DESIGN_DOC to include further instructions from the MUI website
+
+[33mcommit 9cb58f5cb52e2f069c987394df22e12fc44e2b01[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 18 12:25:08 2022 -0400
+
+    Adding installation instructions for MUI
+
+[33mcommit 2679c980543dbaf868b89283308dcc37ad8c7a22[m
+Merge: 1951400 1146498
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 18 12:22:33 2022 -0400
+
+    Merge branch 'master' of github.com:LHL-final-project-Shauna-Nastasi-LeMinh/final-project
+
+[33mcommit 1951400e7cb364190316760cfee03ee66d1719c5[m
+Author: Shauna Empringham <shaunathedead86@gmail.com>
+Date:   Fri Mar 18 12:22:31 2022 -0400
+
+    Adding a DESIGN_DOC and updating package.json
+
+[33mcommit 114649872d8d8e8595cf6702f6e290a3dc42ab91[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 11:58:28 2022 -0400
+
+    update readme for project setup
+
+[33mcommit 228f2de8c67e844625acc8da1620fc6ff299b6c3[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 10:46:17 2022 -0400
+
+    code ready for WebSocket framework
+
+[33mcommit 98fd32c43fdb6a78f04cf33f060af12a5e3ecb86[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 00:10:09 2022 -0400
+
+    update socket io version
+
+[33mcommit 0c8b02bf53a43763b030352f46e56c864a0eeea7[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Fri Mar 18 00:06:56 2022 -0400
+
+    change socket io version
+
+[33mcommit 7d1b4b278117903886ade34076364a7923e1bd4b[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Thu Mar 17 23:15:03 2022 -0400
+
+    initial commit for WebSocket support
+
+[33mcommit 84c1db314ee5f338f1f7f47b4be177aeb5ca8927[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Wed Mar 16 11:47:21 2022 -0400
+
+    update README.ND
+
+[33mcommit 3b5454513ec0d8a2927adef0498e1b38ceda75d3[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 15 09:30:00 2022 -0400
+
+    create Sequelize seeds file
+
+[33mcommit 680c0371d53644fbe94a128bfd8856fc3f030dba[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 15 09:10:45 2022 -0400
+
+    update README.MD
+
+[33mcommit 798f2a07b10a7068501740a247f728f861ed1a30[m
+Author: MIKE LE MINH NGUYEN <minhnl@yahoo.com>
+Date:   Tue Mar 15 00:41:33 2022 -0400
+
+    initial skeleton structure
