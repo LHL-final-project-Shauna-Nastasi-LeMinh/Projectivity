@@ -20,7 +20,9 @@ export default function AssignTicket(props) {
 		tickets,
 		user,
 		title,
-		employee
+		employee,
+		ticket
+		
 	} = props;
 
 	const [employees, setEmployees] = useState({
@@ -90,6 +92,14 @@ export default function AssignTicket(props) {
 
 				setTickets([...updatedTickets, updatedTicket]);
 
+				currentProject.Columns.map((currColumn) => {
+					currColumn.Tickets.map((currTicket, index) => {
+						if (currTicket.id === ticket.id) {
+							currColumn.Tickets.splice(index, 1, updatedTicket);
+						}
+					});
+				});
+			
 				setAnchorPop(false);
 			})
 			.catch(function (error) {
