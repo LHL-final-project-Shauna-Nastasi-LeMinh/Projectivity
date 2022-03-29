@@ -78,22 +78,25 @@ export default function RemoveTicket(props) {
 			keepMounted
 			onClose={handleClose}
 			aria-describedby="alert-dialog-slide-description"
-			PaperProps = {{
-        style: {
-          backgroundColor: "#f7ede2",
-          bgColor: "#f7ede2",
-        }
-      }}
+			PaperProps={{
+				style: {
+					backgroundColor: 'primary.main'
+				}
+			}}
 		>
-			<DialogTitle>Delete</DialogTitle>
+			<DialogTitle sx={{ color: 'background.default' }}>Delete</DialogTitle>
 			<DialogContent>
-				<DialogContentText>
+				<DialogContentText sx={{ color: 'background.default' }}>
 					Are you sure you want to delete this ticket?
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={onConfirmDelete}>Delete</Button>
-				<Button onClick={handleClose}>Cancel</Button>
+				<Button onClick={onConfirmDelete} sx={{ color: 'background.default' }}>
+					Delete
+				</Button>
+				<Button onClick={handleClose} sx={{ color: 'background.default' }}>
+					Cancel
+				</Button>
 			</DialogActions>
 		</Dialog>
 	);

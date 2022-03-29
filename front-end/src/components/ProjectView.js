@@ -22,6 +22,7 @@ import { Button, Divider, Grid } from '@mui/material';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import styled from '@emotion/styled';
 import { theme } from './Theme';
+import BinDrawer from './BinDrawer';
 
 export default function ProjectView(props) {
 	const {
@@ -118,7 +119,7 @@ export default function ProjectView(props) {
 			// move to recycle bin
 			if (destination.droppableId === 'ticket_bin') {
 				setDragSource(source);
-				openModals('deleteTicketDragForm');
+				deleteTicketByDragDrop(source);
 			}
 			// moving ticket in the same column
 			else if (destination.droppableId === source.droppableId) {
@@ -276,7 +277,7 @@ export default function ProjectView(props) {
 	};
 
 	const deleteTicketByDragDrop = function (dragSource) {
-		closeModals('deleteTicketDragForm');
+		// closeModals('deleteTicketDragForm');
 		let column;
 		let columnIndex;
 		for (let i = 0; i < columns.length; i++) {
@@ -495,16 +496,26 @@ export default function ProjectView(props) {
 						</Box>
 					)}
 				</Droppable>
-				<Bin />
+				<Box
+					sx={{
+						position: 'fixed',
+						right: `-${drawerWidth - 11}rem`,
+						top: '50%',
+						transform: 'rotate(90deg)',
+						width: '20rem'
+					}}
+				>
+					<BinDrawer />
+				</Box>
 			</DragDropContext>
-			{modals.deleteTicketDragForm && (
+			{/* {modals.deleteTicketDragForm && (
 				<DeleteTicketDragForm
 					modals={modals}
 					closeModals={closeModals}
 					dragSource={dragSource}
 					deleteTicket={deleteTicketByDragDrop}
 				/>
-			)}
+			)} */}
 		</Box>
 	);
 }

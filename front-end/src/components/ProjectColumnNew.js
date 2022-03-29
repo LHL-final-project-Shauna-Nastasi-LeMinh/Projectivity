@@ -68,7 +68,7 @@ export default function ProjectColumnNew(props) {
 							left: '-425%',
 							height: '4rem',
 							width: '38rem',
-							rotate: '90deg',
+							transform: 'rotate(90deg)',
 							color: 'background.default',
 							transition: 'background-color 0.5s ease'
 						}}
