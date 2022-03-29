@@ -22,6 +22,7 @@ import { Button, Divider, Grid } from '@mui/material';
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
 import styled from '@emotion/styled';
 import { theme } from './Theme';
+import NewTicketForm from './Forms/NewTicketForm';
 
 export default function ProjectView(props) {
 	const {
@@ -48,6 +49,13 @@ export default function ProjectView(props) {
 	const [resetSearchPane, setResetSearchPane] = useState(0);
 	const [selectedColumn, setSelectedColumn] = useState();
 	const [dragSource, setDragSource] = useState();
+	const [editTicket, setEditTicket] = useState(false);
+	const [ticketData, setTicketData] = useState({
+		column: null,
+		ticket: null,
+		tickets: null,
+		ticketId: null
+	});
 
 	useEffect(() => {
 		if (currentProject && currentProject.Columns) {
@@ -55,6 +63,29 @@ export default function ProjectView(props) {
 			setResetSearchPane((prev) => prev + 1);
 		}
 	}, [currentProject]);
+
+	const openTicketModal = (edit, column, tickets, ticket, ticketId) => {
+		if (edit) {
+			console.log('clicked edit ticket', edit);
+			setEditTicket(true);
+		} else {
+			console.log('clicked new ticket', edit);
+			setEditTicket(false);
+		}
+
+		const newTicketData = {
+			column: column,
+			ticket: ticket,
+			tickets: tickets,
+			ticketId: ticketId
+		};
+
+		console.log('### TICKET DATA', newTicketData);
+
+		setTicketData(newTicketData);
+		setCurrentColumn(column.id);
+		openModals('newTicketForm');
+	};
 
 	// PLEASE DO NOT REMOVE THIS . FROM LE
 	// useEffect(() => {
@@ -386,6 +417,54 @@ export default function ProjectView(props) {
 				})
 			}}
 		>
+			{modals.newTicketForm && !editTicket && (
+				<NewTicketForm
+					user={user}
+					currentColumn={currentColumn}
+					// tickets={tickets}
+					// setTickets={setTickets}
+					// dialogOpen={dialogOpen}
+					// setDialogOpen={setDialogOpen}
+					ticketData={ticketData}
+					title="Create A New Ticket"
+					onsubmitMsg="Create Ticket"
+					currentProject={currentProject}
+					setCurrentProject={setCurrentProject}
+					userData={userData}
+					setUserData={setUserData}
+					editTicket={editTicket}
+					setColumns={setColumns}
+					modals={modals}
+					openModals={openModals}
+					closeModals={closeModals}
+					openTicketModal={openTicketModal}
+				/>
+			)}
+			{modals.newTicketForm && editTicket && (
+				<NewTicketForm
+					user={user}
+					currentColumn={currentColumn}
+					// tickets={tickets}
+					// setTickets={setTickets}
+					// dialogOpen={dialogOpen}
+					// ticketId={ticketId}
+					// setDialogOpen={setDialogOpen}
+					setColumns={setColumns}
+					ticketData={ticketData}
+					title="Edit Ticket"
+					onsubmitMsg="Edit Ticket"
+					currentTicket={currentTicket}
+					currentProject={currentProject}
+					setCurrentProject={setCurrentProject}
+					userData={userData}
+					setUserData={setUserData}
+					editTicket={editTicket}
+					modals={modals}
+					openModals={openModals}
+					closeModals={closeModals}
+					// column={column}
+				/>
+			)}
 			<Box
 				sx={{
 					maxWidth: '80rem',
@@ -456,6 +535,9 @@ export default function ProjectView(props) {
 											userData={userData}
 											setUserData={setUserData}
 											setColumns={setColumns}
+											openTicketModal={openTicketModal}
+											editTicket={editTicket}
+											setEditTicket={setEditTicket}
 										/>
 									))}
 
@@ -465,6 +547,7 @@ export default function ProjectView(props) {
 											createNewColumn={createNewColumn}
 											columnsCount={columns.length}
 											openModals={openModals}
+											openTicketModal={openTicketModal}
 										/>
 									)}
 								{provided.placeholder}

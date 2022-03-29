@@ -57,14 +57,16 @@ export default function ProjectColumn(props) {
 		currentProject,
 		userData,
 		setUserData,
-		setColumns
+		setColumns,
+		openTicketModal,
+		editTicket,
+		setEditTicket
 	} = props;
 
 	const [tickets, setTickets] = useState([]);
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [dialogContent, setDialogContent] = useState({});
 	const [newColumnName, setNewColumnName] = useState('');
-	const [editTicket, setEditTicket] = useState(false);
 
 	// handle opening and closing of MoreHorizIcon
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -126,7 +128,8 @@ export default function ProjectColumn(props) {
 		console.log('clicked create new ticket');
 		setCurrentColumn(column.id);
 		setEditTicket(false);
-		setDialogOpen(ADD_TICKET);
+		openModals('newTicketForm');
+		// setDialogOpen(ADD_TICKET);
 		console.log('ticket', dialogOpen);
 	};
 
@@ -333,6 +336,11 @@ export default function ProjectColumn(props) {
 										editTicket={editTicket}
 										setEditTicket={setEditTicket}
 										setColumns={setColumns}
+										modals={modals}
+										openModals={openModals}
+										closeModals={closeModals}
+										openTicketModal={openTicketModal}
+										column={column}
 									/>
 								</List>
 								{provided.placeholder}
@@ -349,7 +357,7 @@ export default function ProjectColumn(props) {
 								backgroundColor: 'secondary.light'
 							}
 						}}
-						onClick={() => createNewTicket()}
+						onClick={() => openTicketModal(false, column)}
 					>
 						<ListItem>
 							<ListItemButton disableRipple>
@@ -359,23 +367,6 @@ export default function ProjectColumn(props) {
 						</ListItem>
 					</Box>
 					{/* move opening of create new ticket from landing page */}
-					{dialogOpen === ADD_TICKET && (
-						<NewTicketForm
-							user={user}
-							currentColumn={currentColumn}
-							tickets={tickets}
-							setTickets={setTickets}
-							dialogOpen={dialogOpen}
-							setDialogOpen={setDialogOpen}
-							title="Create A New Ticket"
-							onsubmitMsg="Create Ticket"
-							currentProject={currentProject}
-							userData={userData}
-							setUserData={setUserData}
-							editTicket={editTicket}
-							setColumns={setColumns}
-						/>
-					)}
 				</Box>
 			)}
 		</Draggable>
@@ -399,7 +390,12 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 		setUserData,
 		editTicket,
 		setEditTicket,
-		setColumns
+		setColumns,
+		modals,
+		openModals,
+		closeModals,
+		openTicketModal,
+		column
 	} = props;
 	return tickets.map((ticket, index) => {
 		return (
@@ -448,6 +444,11 @@ const ColumnTickets = React.memo(function ColumnTickets(props) {
 							currentProject={currentProject}
 							userData={userData}
 							setColumns={setColumns}
+							modals={modals}
+							openModals={openModals}
+							closeModals={closeModals}
+							openTicketModal={openTicketModal}
+							column={column}
 						/>
 					</Box>
 				)}
