@@ -152,29 +152,6 @@ export default function ProjectColumn(props) {
 					{...provided.dragHandleProps}
 					ref={provided.innerRef}
 				>
-					{modals.newColumnForm && (
-						<NewColumnForm
-							closeModals={closeModals}
-							modals={modals}
-							createNewColumn={createNewColumn}
-						/>
-					)}
-					{modals.deleteColumnForm && (
-						<DeleteColumnForm
-							deleteColumn={deleteColumnFromProjectView}
-							modals={modals}
-							closeModals={closeModals}
-							selectedColumn={selectedColumn}
-						/>
-					)}
-					{modals.editColumnForm && (
-						<EditColumnForm
-							editColumn={changeColumnFromProjectView}
-							modals={modals}
-							closeModals={closeModals}
-							selectedColumn={selectedColumn}
-						/>
-					)}
 					<ListItem
 						sx={{
 							backgroundColor: 'primary.main',
@@ -251,7 +228,7 @@ export default function ProjectColumn(props) {
 						</ListItemButton>
 					</ListItem>
 
-					<Dialog
+					{/* <Dialog
 						open={dialogOpen}
 						TransitionComponent={Transition}
 						keepMounted
@@ -281,7 +258,7 @@ export default function ProjectColumn(props) {
 							</Button>
 							<Button onClick={closeDialog}>Cancel</Button>
 						</DialogActions>
-					</Dialog>
+					</Dialog> */}
 					<Divider />
 					<Droppable droppableId={column.name} type="ticket">
 						{(provided, snapshot) => (
@@ -291,12 +268,12 @@ export default function ProjectColumn(props) {
 									height: '75%',
 									maxHeight: '75%',
 									backgroundColor: snapshot.isDraggingOver
-										? 'rgb(249, 65, 68, 0.1)'
-										: 'rgb(41, 50, 65, 0.1)',
+										? 'rgb(249, 65, 68, 0.2)'
+										: 'rgb(41, 50, 65, 0.2)',
 									transition: 'background-color 0.5s ease',
 									overflow: 'auto',
 									'&:hover': {
-										backgroundColor: 'rgb(249, 65, 68, 0.1)'
+										backgroundColor: 'rgb(249, 65, 68, 0.2)'
 									}
 								}}
 								{...provided.droppableProps}

@@ -227,7 +227,6 @@ export default function ProjectTicket(props) {
 						}
 					}}
 					disableTouchRipple
-					disableRipple
 					onClick={handleTicketClick}
 				>
 					<div>

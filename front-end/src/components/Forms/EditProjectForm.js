@@ -40,7 +40,7 @@ export default function RegistrationForm(props) {
 	} = props;
 	const [values, setValues] = useState({
 		message: '',
-		name: (modalProject && modalProject.name) ? modalProject.name : undefined
+		name: modalProject && modalProject.name ? modalProject.name : undefined
 	});
 	const [assignees, setAssignees] = useState([]);
 
@@ -107,9 +107,9 @@ export default function RegistrationForm(props) {
 	}
 
 	function updateProjectDetails() {
-		console.log("values.name: "+ values.name);
+		console.log('values.name: ' + values.name);
 		if (typeof values.name === 'undefined' || values.name === '') {
-			console.log("COME HEE")
+			console.log('COME HEE');
 			setValues((prev) => {
 				return { ...prev, name: '' };
 			});
@@ -191,7 +191,7 @@ export default function RegistrationForm(props) {
 						required
 					/>
 				</Box>
-				<Divider />
+
 				<Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
 					<FormControl sx={{ m: 2, width: '90%' }}>
 						<InputLabel id="demo-multiple-checkbox-label">Employees</InputLabel>
@@ -239,6 +239,7 @@ export default function RegistrationForm(props) {
 						</Select>
 					</FormControl>
 				</Box>
+				<Divider />
 				<Box
 					sx={{
 						display: 'flex',

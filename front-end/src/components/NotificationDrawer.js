@@ -58,32 +58,30 @@ export default function NotificationDrawer(props) {
 			expanded={notifyOpen}
 			onChange={toggleDrawer}
 			hidden={!notifyOpen}
-			TransitionComponent={Slide}
-			TransitionProps={{
-        mountOnEnter: true,
-        unmountOnExit: true,
-        timeout: { enter: 225 },
-      }}
-      elevation={0}
+			// TransitionComponent={Slide}
+			// TransitionProps={{
+			// 	mountOnEnter: true,
+			// 	unmountOnExit: true,
+			// 	timeout: { enter: 225 }
+			// }}
+			elevation={0}
 			sx={{
 				position: 'fixed',
 				top: '4rem',
 				right: '6rem',
 				zIndex: (theme) => theme.zIndex.appBar + 1,
-				width: '25rem',
-				backgroundColor: 'transparent',
-				border: `none`,
-				color: 'primary.main'
+				width: '25rem'
 			}}
 		>
 			<AccordionDetails
 				sx={{
 					height: '1rem',
 					zIndex: 2,
-					bgcolor: '#FFFFFF',
-					borderBottom: `1px solid ${theme.palette.divider}`,
-					borderLeft: `1px solid ${theme.palette.divider}`,
-          borderRight: `1px solid ${theme.palette.divider}`,
+					bgcolor: 'primary.main',
+					border: `1px solid ${theme.palette.divider}`,
+					'&:hover': {
+						backgroundColor: 'secondary.light'
+					}
 				}}
 			>
 				<Typography
@@ -92,7 +90,9 @@ export default function NotificationDrawer(props) {
 					sx={{
 						color: 'background.paper',
 						textTransform: 'uppercase',
-						fontWeight: 'bold'
+						fontWeight: 'bold',
+						color: 'background.default',
+						textTransform: 'none'
 					}}
 				>
 					Notifications
@@ -106,23 +106,21 @@ export default function NotificationDrawer(props) {
 							sx={{
 								height: '0.5rem',
 								zIndex: 2,
-								color: notif.unread ? 'primary.main' : 'black',
-								backgroundColor: '#FFFFFF',
-								bgcolor: '#FFFFFF',
+								backgroundColor: notif.unread ? 'primary.light' : '#FFFFFF',
 								borderBottom: `1px solid ${theme.palette.divider}`,
 								'&:hover': {
 									backgroundColor: 'secondary.light'
 								},
 								borderLeft: `1px solid ${theme.palette.divider}`,
-                borderRight: `1px solid ${theme.palette.divider}`,
-								textTransform: "none",
+								borderRight: `1px solid ${theme.palette.divider}`,
+								textTransform: 'none'
 							}}
 						>
 							<Typography
-								noWrap 
+								noWrap
 								fontSize="small"
 								sx={{
-									color: notif.unread ? "red" : "black",
+									color: notif.unread ? 'background.default' : 'primary.main'
 								}}
 							>
 								{notif.message}

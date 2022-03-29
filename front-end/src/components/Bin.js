@@ -17,8 +17,8 @@ export default function Bin(props) {
 					ref={provided.innerRef}
 				>
 					<ListItem sx={{ padding: '0.1rem' }}>
-						{/* <ListItemText primary='Remove' /> */}
-						{/* <DeleteIcon fontSize='large' /> */}
+						<ListItemText primary="Remove" />
+						<DeleteIcon fontSize="large" />
 					</ListItem>
 					{provided.placeholder}
 				</Box>

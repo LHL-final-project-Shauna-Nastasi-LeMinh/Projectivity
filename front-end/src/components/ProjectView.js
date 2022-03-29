@@ -386,6 +386,29 @@ export default function ProjectView(props) {
 				})
 			}}
 		>
+			{modals.newColumnForm && (
+				<NewColumnForm
+					closeModals={closeModals}
+					modals={modals}
+					createNewColumn={createNewColumn}
+				/>
+			)}
+			{modals.deleteColumnForm && (
+				<DeleteColumnForm
+					deleteColumn={deleteColumnFromProjectView}
+					modals={modals}
+					closeModals={closeModals}
+					selectedColumn={selectedColumn}
+				/>
+			)}
+			{modals.editColumnForm && (
+				<EditColumnForm
+					editColumn={changeColumnFromProjectView}
+					modals={modals}
+					closeModals={closeModals}
+					selectedColumn={selectedColumn}
+				/>
+			)}
 			<Box
 				sx={{
 					maxWidth: '80rem',
