@@ -80,16 +80,19 @@ export default function NotificationDrawer(props) {
 				sx={{
 					height: '1rem',
 					zIndex: 2,
-					bgcolor: 'primary.main',
+					bgcolor: '#FFFFFF',
 					borderBottom: `1px solid ${theme.palette.divider}`,
+					borderLeft: `1px solid ${theme.palette.divider}`,
+          borderRight: `1px solid ${theme.palette.divider}`,
 				}}
 			>
 				<Typography
 					fontSize="medium"
 					variant="body2"
 					sx={{
-						color: 'background.default',
-						textTransform: 'uppercase'
+						color: 'background.paper',
+						textTransform: 'uppercase',
+						fontWeight: 'bold'
 					}}
 				>
 					Notifications
