@@ -142,16 +142,23 @@ export default function TicketHistory(props) {
       open={dialogOpen}
       fullWidth
       maxWidth="md"
+      PaperProps = {{
+        style: {
+          backgroundColor: "#f7ede2",
+          bgColor: "#f7ede2",
+        }
+      }}
     >
-      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+      <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} >
         {"History - "}
         {ticketDetails.title}
       </BootstrapDialogTitle>
-      <DialogContent dividers>
+      <DialogContent fullWidth>
         <List
           sx={{
             width: "100%",
-            bgcolor: "background.paper",
+            backgroundColor: "background.default",
+            color: "background.paper",
           }}
         >
           {ticketHistories}

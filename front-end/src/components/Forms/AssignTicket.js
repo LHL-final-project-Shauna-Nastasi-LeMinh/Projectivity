@@ -172,7 +172,7 @@ export default function AssignTicket(props) {
 					py: 2, }}>
 
 		<FormControl sx={{ m: 1, minWidth: 300 }}>
-				<InputLabel id="EmployeeLabel">Employees</InputLabel>
+				<InputLabel id="EmployeeLabel" >Employees</InputLabel>
 				<Select
 					labelId="EmployeeLabel"
 					label="Emloyee"
