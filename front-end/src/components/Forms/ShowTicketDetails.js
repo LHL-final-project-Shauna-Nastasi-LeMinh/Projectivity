@@ -94,6 +94,12 @@ export default function ShowTicketDetails(props) {
 			open={dialogOpen}
 			fullWidth
 			maxWidth="md"
+			PaperProps = {{
+        style: {
+          backgroundColor: "#f7ede2",
+          bgColor: "#f7ede2",
+        }
+      }}
 		>
 			<BootstrapDialogTitle
 				id="customized-dialog-title"
@@ -122,7 +128,8 @@ export default function ShowTicketDetails(props) {
 				<List
 					sx={{
 						width: '100%',
-						bgcolor: 'background.paper',
+						backgroundColor: "background.default",
+            color: "background.paper",
 						p: 0
 					}}
 				>
