@@ -42,29 +42,19 @@ export default function ProjectView(props) {
 		userData,
 		setUserData,
 		openDrawer,
-		drawerWidth,
-		columns,
-		setColumns
+		drawerWidth
 	} = props;
-
+	const [columns, setColumns] = useState([]);
 	const [resetSearchPane, setResetSearchPane] = useState(0);
 	const [selectedColumn, setSelectedColumn] = useState();
 	const [dragSource, setDragSource] = useState();
 
-	// console.log('### USER DATA IN PROJECT VIEW USER DATA', userData[1].Columns);
-	// console.log('### USER DATA IN PROJECT VIEW CURRENT PROJECT', currentProject);
-
-	// useEffect(() => {
-	// 	if (columns && currentProject) {
-	// 		console.log('### currentProject', currentProject);
-	// 		// console.log('### currentProject.Columns', currentProject.Columns);
-	// 		// console.log('### columns', columns);
-	// 		// console.log('### UPDATING COLUMNS TO CURRENT PROJECT');
-	// 		setColumns(currentProject.Columns);
-	// 		setResetSearchPane((prev) => prev + 1);
-	// 		console.log('### COLUMNS CURRENT', currentProject.Columns);
-	// 	}
-	// }, [currentProject]);
+	useEffect(() => {
+		if (currentProject && currentProject.Columns) {
+			setColumns(currentProject.Columns);
+			setResetSearchPane((prev) => prev + 1);
+		}
+	}, [currentProject]);
 
 	// PLEASE DO NOT REMOVE THIS . FROM LE
 	// useEffect(() => {
@@ -94,7 +84,7 @@ export default function ProjectView(props) {
 
 		// moving the whole column
 		if (type === 'column') {
-			const newColumns = JSON.parse(JSON.stringify(currentProject.Columns)); // deep clone
+			const newColumns = JSON.parse(JSON.stringify(columns)); // deep clone
 			const [movingColumn] = newColumns.splice(source.index, 1);
 			newColumns.splice(destination.index, 0, movingColumn);
 			setColumns(newColumns);
@@ -134,9 +124,9 @@ export default function ProjectView(props) {
 			else if (destination.droppableId === source.droppableId) {
 				let column;
 				let columnIndex;
-				for (let i = 0; i < currentProject.Columns.length; i++) {
-					if (currentProject.Columns[i].name === source.droppableId) {
-						column = currentProject.Columns[i];
+				for (let i = 0; i < columns.length; i++) {
+					if (columns[i].name === source.droppableId) {
+						column = columns[i];
 						columnIndex = i;
 					}
 				}
@@ -144,20 +134,20 @@ export default function ProjectView(props) {
 				const [movingTicket] = newTickets.splice(source.index, 1);
 				newTickets.splice(destination.index, 0, movingTicket);
 				const newColumn = { ...column, Tickets: newTickets };
-				currentProject.Columns[columnIndex] = newColumn;
+				columns[columnIndex] = newColumn;
 				// moving ticket to other column
 			} else {
 				let sourceColumn;
 				let sourceColumnIndex;
 				let destColumn;
 				let destColumnIndex;
-				for (let i = 0; i < currentProject.Columns.length; i++) {
-					if (currentProject.Columns[i].name === source.droppableId) {
-						sourceColumn = currentProject.Columns[i];
+				for (let i = 0; i < columns.length; i++) {
+					if (columns[i].name === source.droppableId) {
+						sourceColumn = columns[i];
 						sourceColumnIndex = i;
 					}
-					if (currentProject.Columns[i].name === destination.droppableId) {
-						destColumn = currentProject.Columns[i];
+					if (columns[i].name === destination.droppableId) {
+						destColumn = columns[i];
 						destColumnIndex = i;
 					}
 				}
@@ -172,8 +162,8 @@ export default function ProjectView(props) {
 				newDestTickets.splice(destination.index, 0, movingTicket);
 				const newDestColumn = { ...destColumn, Tickets: newDestTickets };
 
-				currentProject.Columns[sourceColumnIndex] = newSourceColumn;
-				currentProject.Columns[destColumnIndex] = newDestColumn;
+				columns[sourceColumnIndex] = newSourceColumn;
+				columns[destColumnIndex] = newDestColumn;
 
 				// persist new column id to the ticket details in db
 				axios
@@ -227,7 +217,7 @@ export default function ProjectView(props) {
 			.then((res) => {
 				console.log(res.data);
 				const newColumn = { ...res.data, Tickets: [] };
-				// setColumns([...columns, newColumn]);
+				setColumns([...columns, newColumn]);
 
 				currentProject.Columns.push(res.data);
 				currentProject.Columns[currentProject.Columns.length - 1].Tickets = [];
@@ -244,9 +234,7 @@ export default function ProjectView(props) {
 			.delete(process.env.REACT_APP_BACKEND_URL + `/columns/${columnId}`)
 			.then((res) => {
 				console.log(res.data);
-				const newColumns = currentProject.Columns.filter(
-					(column) => column.id !== columnId
-				);
+				const newColumns = columns.filter((column) => column.id !== columnId);
 				setColumns([...newColumns]);
 
 				currentProject.Columns.map((column, index) => {
@@ -282,31 +270,25 @@ export default function ProjectView(props) {
 				console.log(error.message);
 			});
 
-		const updatedColumn = currentProject.Columns.filter(
-			(column) => column.id === columnId
-		)[0];
+		const updatedColumn = columns.filter((column) => column.id === columnId)[0];
 		updatedColumn.name = newName;
 		setColumns([...columns]);
-		setCurrentProject({
-			...currentProject,
-			Columns: [...currentProject.Columns]
-		});
 	};
 
 	const deleteTicketByDragDrop = function (dragSource) {
 		closeModals('deleteTicketDragForm');
 		let column;
 		let columnIndex;
-		for (let i = 0; i < currentProject.Columns.length; i++) {
-			if (currentProject.Columns[i].name === dragSource.droppableId) {
-				column = currentProject.Columns[i];
+		for (let i = 0; i < columns.length; i++) {
+			if (columns[i].name === dragSource.droppableId) {
+				column = columns[i];
 				columnIndex = i;
 			}
 		}
 		const newTickets = JSON.parse(JSON.stringify(column.Tickets)); // deep clone
 		const [movingTicket] = newTickets.splice(dragSource.index, 1);
 		const newColumn = { ...column, Tickets: newTickets };
-		currentProject.Columns[columnIndex] = newColumn;
+		columns[columnIndex] = newColumn;
 		axios
 			.delete(
 				process.env.REACT_APP_BACKEND_URL + `/tickets/${movingTicket.id}`,
@@ -439,61 +421,54 @@ export default function ProjectView(props) {
 							{...provided.droppableProps}
 							ref={provided.innerRef}
 						>
-							{currentProject && (
-								<Box
-									sx={{
-										display: 'flex',
-										flexDirection: 'row',
-										margin: '1rem'
-									}}
-								>
-									{currentProject.Columns !== undefined &&
-										currentProject.Columns.map((column, colIndex) => (
-											<ProjectColumn
-												disablePadding
-												key={column.id}
-												user={user}
-												title={column.name}
-												column={column}
-												setViewMode={setViewMode}
-												currentColumn={currentColumn}
-												setCurrentColumn={setCurrentColumn}
-												currentTicket={currentTicket}
-												setCurrentTicket={setCurrentTicket}
-												colIndex={colIndex}
-												open={open}
-												setOpen={setOpen}
-												modals={modals}
-												openModals={openModals}
-												closeModals={closeModals}
-												deleteColumnFromProjectView={
-													deleteColumnFromProjectView
-												}
-												changeColumnFromProjectView={
-													changeColumnFromProjectView
-												}
-												createNewColumn={createNewColumn}
-												selectedColumn={selectedColumn}
-												setSelectedColumn={setSelectedColumn}
-												currentProject={currentProject}
-												setCurrentProject={setCurrentProject}
-												userData={userData}
-												setUserData={setUserData}
-												setColumns={setColumns}
-											/>
-										))}
+							<Box
+								sx={{
+									display: 'flex',
+									flexDirection: 'row',
+									margin: '1rem'
+								}}
+							>
+								{columns !== undefined &&
+									columns.map((column, colIndex) => (
+										<ProjectColumn
+											disablePadding
+											key={column.id}
+											user={user}
+											title={column.name}
+											column={column}
+											setViewMode={setViewMode}
+											currentColumn={currentColumn}
+											setCurrentColumn={setCurrentColumn}
+											currentTicket={currentTicket}
+											setCurrentTicket={setCurrentTicket}
+											colIndex={colIndex}
+											open={open}
+											setOpen={setOpen}
+											modals={modals}
+											openModals={openModals}
+											closeModals={closeModals}
+											deleteColumnFromProjectView={deleteColumnFromProjectView}
+											changeColumnFromProjectView={changeColumnFromProjectView}
+											createNewColumn={createNewColumn}
+											selectedColumn={selectedColumn}
+											setSelectedColumn={setSelectedColumn}
+											currentProject={currentProject}
+											userData={userData}
+											setUserData={setUserData}
+											setColumns={setColumns}
+										/>
+									))}
 
-									{user.access_level == MANAGER_LEVEL &&
-										currentProject.Columns !== undefined && (
-											<ProjectColumnNew
-												createNewColumn={createNewColumn}
-												columnsCount={currentProject.Columns.length}
-												openModals={openModals}
-											/>
-										)}
-									{provided.placeholder}
-								</Box>
-							)}
+								{user.access_level == MANAGER_LEVEL &&
+									columns !== undefined && (
+										<ProjectColumnNew
+											createNewColumn={createNewColumn}
+											columnsCount={columns.length}
+											openModals={openModals}
+										/>
+									)}
+								{provided.placeholder}
+							</Box>
 						</Box>
 					)}
 				</Droppable>

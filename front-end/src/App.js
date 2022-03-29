@@ -61,39 +61,38 @@ const App = () => {
 	const [unreadNotifLength, setUnreadNotifLength] = useState([]);
 	const [dashWidth, setDashWidth] = useState();
 	const [navHeight, setNavHeight] = useState();
-	const [columns, setColumns] = useState([]);
 
 	const drawerWidth = '20';
 
 	const toggleDrawer = () => {
-		console.log('### notifyOpen:' + notifyOpen);
-		setNotifyOpen(notifyOpen ? false : true);
-		closeDrawer();
+    console.log("### notifyOpen:" + notifyOpen);
+    setNotifyOpen(notifyOpen ? false : true);
+    closeDrawer();
 
-		// setNotifyOpen(notifyOpen ? false : true);
-	};
+    // setNotifyOpen(notifyOpen ? false : true);
+  };
 
-	const closeDrawer = function () {
-		// if notification drawer is closed, clear all Unread status and change to Read
-		if (!notifyOpen) return;
-		setNotifyOpen(false);
-		if (unreadNotifLength && unreadNotifLength > 0) {
-			axios
-				.get(
-					process.env.REACT_APP_BACKEND_URL +
-						`/notifications/${user.id}/setUnreadAll`
-				)
-				.then((res) => {
-					const newNotifs = JSON.parse(JSON.stringify(notifications));
-					newNotifs.map((notif) => (notif.unread = false));
-					setNotifications(newNotifs);
-					setUnreadNotifLength(null);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
-	};
+  const closeDrawer = function () {
+    // if notification drawer is closed, clear all Unread status and change to Read
+    if (!notifyOpen) return;
+    setNotifyOpen(false);
+    if (unreadNotifLength && unreadNotifLength > 0) {
+      axios
+        .get(
+          process.env.REACT_APP_BACKEND_URL +
+            `/notifications/${user.id}/setUnreadAll`
+        )
+        .then(res => {
+          const newNotifs = JSON.parse(JSON.stringify(notifications));
+          newNotifs.map(notif => (notif.unread = false));
+          setNotifications(newNotifs);
+          setUnreadNotifLength(null);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
 
 	useEffect(() => {
 		if (user !== null && !sentRequest) {
@@ -301,8 +300,6 @@ const App = () => {
 							setUserData={setUserData}
 							drawerWidth={drawerWidth}
 							openDrawer={openDrawer}
-							columns={columns}
-							setColumns={setColumns}
 						/>
 					)}
 			</ThemeProvider>

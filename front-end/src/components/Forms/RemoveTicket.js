@@ -25,19 +25,17 @@ export default function RemoveTicket(props) {
 		tickets,
 		setTickets,
 		currentProject,
-		setCurrentProject,
 		currentColumn,
 		setCurrentColumn,
-		userData,
-		setUserData
+		userData
 	} = props;
 
 	const onConfirmDelete = () => {
-		console.log(ticket);
+		console.log(ticket)
 		axios
-			.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticketId}`, {
-				data: {
-					owner_id: ticket.owner_id,
+			.delete(process.env.REACT_APP_BACKEND_URL + `/tickets/${ticketId}`, 
+			{ data: 
+				{ owner_id: ticket.owner_id, 
 					title: ticket.title,
 					updater_name: user.first_name + ' ' + user.last_name
 				}
@@ -46,37 +44,18 @@ export default function RemoveTicket(props) {
 				const updatedTickets = tickets.filter(
 					(ticket) => ticket.id !== ticketId
 				);
-
 				setTickets([...updatedTickets]);
-
-				console.log('### UPDATED TICKETS', updatedTickets);
 
 				// console.log('updatedTickets', updatedTickets, tickets, ticketId);
 				// console.log('updatedTickets', currentProject);
 				currentProject.Columns.map((column) => {
-					console.log('### COLUMN', column);
 					column.Tickets.map((ticket, index) => {
-						console.log('### TICKET', ticket, index);
 						if (ticket.id === ticketId) {
 							column.Tickets.splice(index, 1);
-							console.log('### AFTER', column.Tickets);
 							setCurrentColumn(column);
 						}
 					});
 				});
-
-				console.log('### AFTER FULL', currentProject);
-				setCurrentProject(currentProject);
-
-				userData.map((project, index) => {
-					if (project.id === currentProject.id) {
-						userData[index] = currentProject;
-					}
-				});
-
-				setUserData(userData);
-
-				console.log('### AFTER USERDATA', userData);
 
 				setDialogOpen(false);
 			})
