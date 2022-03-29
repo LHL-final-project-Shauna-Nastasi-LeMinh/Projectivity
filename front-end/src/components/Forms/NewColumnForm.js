@@ -68,6 +68,7 @@ export default function NewColumnForm(props) {
       onClose={() => closeModals("newColumnForm")}
       aria-labelledby="modal-login-form"
       aria-describedby="modal-modal-login-form"
+      hideBackdrop="false"
     >
       <Paper sx={style}>
         <Box

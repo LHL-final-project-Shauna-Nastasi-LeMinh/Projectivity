@@ -82,6 +82,7 @@ export default function EditColumnForm(props) {
 			onClose={() => closeModals('editColumnForm')}
 			aria-labelledby="modal-login-form"
 			aria-describedby="modal-modal-login-form"
+			hideBackdrop="false"
 		>
 			<Paper sx={style}>
 				<Box
