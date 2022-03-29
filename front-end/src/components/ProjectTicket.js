@@ -50,12 +50,7 @@ export default function ProjectTicket(props) {
 		setUserData,
 		editTicket,
 		setEditTicket,
-		setColumns,
-		modals,
-		openModals,
-		closeModals,
-		openTicketModal,
-		column
+		setColumns
 	} = props;
 
 	const [checked, setChecked] = React.useState([1]);
@@ -94,8 +89,7 @@ export default function ProjectTicket(props) {
 		if (evt.target.id === 'edit') {
 			// openModals('newTicketForm');
 			setEditTicket(true);
-			openModals('newTicketForm');
-			// setDialogOpen(EDIT_TICKET);
+			setDialogOpen(EDIT_TICKET);
 			setCurrentTicket(ticketId);
 		}
 
@@ -233,6 +227,7 @@ export default function ProjectTicket(props) {
 						}
 					}}
 					disableTouchRipple
+					disableRipple
 					onClick={handleTicketClick}
 				>
 					<div>
@@ -335,6 +330,25 @@ export default function ProjectTicket(props) {
 						/>
 					)}
 
+					{dialogOpen === EDIT_TICKET && (
+						<NewTicketForm
+							user={user}
+							currentColumn={currentColumn}
+							tickets={tickets}
+							setTickets={setTickets}
+							dialogOpen={dialogOpen}
+							ticketId={ticketId}
+							setDialogOpen={setDialogOpen}
+							title="Edit Ticket"
+							onsubmitMsg="Edit Ticket"
+							currentTicket={currentTicket}
+							currentProject={currentProject}
+							userData={userData}
+							setUserData={setUserData}
+							editTicket={editTicket}
+						/>
+					)}
+
 					{dialogOpen === TICKET_HISTORY && (
 						<TicketHistory
 							tickets={tickets}
@@ -375,10 +389,7 @@ export default function ProjectTicket(props) {
 								}
 							}}
 							id="edit"
-							onClick={() => {
-								openTicketModal(true, column, tickets, ticket, ticketId);
-								closeMenu();
-							}}
+							onClick={handleDialogOpening}
 						>
 							Edit
 						</MenuItem>

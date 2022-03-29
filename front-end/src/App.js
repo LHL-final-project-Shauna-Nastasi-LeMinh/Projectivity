@@ -65,34 +65,34 @@ const App = () => {
 	const drawerWidth = '20';
 
 	const toggleDrawer = () => {
-		console.log('### notifyOpen:' + notifyOpen);
-		setNotifyOpen(notifyOpen ? false : true);
-		closeDrawer();
+    console.log("### notifyOpen:" + notifyOpen);
+    setNotifyOpen(notifyOpen ? false : true);
+    closeDrawer();
 
-		// setNotifyOpen(notifyOpen ? false : true);
-	};
+    // setNotifyOpen(notifyOpen ? false : true);
+  };
 
-	const closeDrawer = function () {
-		// if notification drawer is closed, clear all Unread status and change to Read
-		if (!notifyOpen) return;
-		setNotifyOpen(false);
-		if (unreadNotifLength && unreadNotifLength > 0) {
-			axios
-				.get(
-					process.env.REACT_APP_BACKEND_URL +
-						`/notifications/${user.id}/setUnreadAll`
-				)
-				.then((res) => {
-					const newNotifs = JSON.parse(JSON.stringify(notifications));
-					newNotifs.map((notif) => (notif.unread = false));
-					setNotifications(newNotifs);
-					setUnreadNotifLength(null);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
-	};
+  const closeDrawer = function () {
+    // if notification drawer is closed, clear all Unread status and change to Read
+    if (!notifyOpen) return;
+    setNotifyOpen(false);
+    if (unreadNotifLength && unreadNotifLength > 0) {
+      axios
+        .get(
+          process.env.REACT_APP_BACKEND_URL +
+            `/notifications/${user.id}/setUnreadAll`
+        )
+        .then(res => {
+          const newNotifs = JSON.parse(JSON.stringify(notifications));
+          newNotifs.map(notif => (notif.unread = false));
+          setNotifications(newNotifs);
+          setUnreadNotifLength(null);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
 
 	useEffect(() => {
 		if (user !== null && !sentRequest) {
@@ -195,12 +195,12 @@ const App = () => {
 	});
 
 	function openModals(prop) {
-		console.log('open modals', prop, modals);
+		// console.log('open modals', prop, modals);
 		setModals({ ...modals, [prop]: true });
 	}
 
 	function closeModals(prop) {
-		console.log('close modals', prop, modals);
+		// console.log('close modals', prop, modals);
 		setModals({ ...modals, [prop]: false });
 	}
 
