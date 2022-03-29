@@ -189,17 +189,24 @@ export default function ProjectColumn(props) {
 							setSelectedColumn(column);
 						}}
 					>
-						<ListItemButton>
+						<ListItemButton disableRipple>
 							<ListItemText primary={column.name} />
 							{user.access_level == MANAGER_LEVEL && (
 								<IconButton
+									disableRipple
 									id="fade-button"
 									aria-controls={openIconMenu ? 'fade-menu' : undefined}
 									aria-haspopup="true"
 									aria-expanded={openIconMenu ? 'true' : undefined}
 									onClick={menuIconClick}
 								>
-									<MoreHorizIcon />
+									<MoreHorizIcon
+										disableRipple
+										sx={{
+											color: 'background.default',
+											'&:hover': { color: 'primary.main' }
+										}}
+									/>
 								</IconButton>
 							)}
 							<Menu
@@ -345,7 +352,7 @@ export default function ProjectColumn(props) {
 						onClick={() => createNewTicket()}
 					>
 						<ListItem>
-							<ListItemButton>
+							<ListItemButton disableRipple>
 								<ListItemText primary="Create New Ticket" fontSize="large" />
 								<AddIcon fontSize="large" />
 							</ListItemButton>

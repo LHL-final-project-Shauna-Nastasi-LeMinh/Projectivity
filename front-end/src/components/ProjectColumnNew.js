@@ -73,9 +73,12 @@ export default function ProjectColumnNew(props) {
 							transition: 'background-color 0.5s ease'
 						}}
 					>
-						<ListItemButton onClick={() => openModals('newColumnForm')}>
+						<ListItemButton
+							disableRipple
+							onClick={() => openModals('newColumnForm')}
+						>
 							<ListItemText primary="Create New Column" />
-							<AddIcon fontSize="large" />
+							<AddIcon disableRipple fontSize="large" />
 						</ListItemButton>
 					</ListItem>
 

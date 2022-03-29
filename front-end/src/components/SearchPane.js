@@ -186,7 +186,7 @@ export default function SearchPane(props) {
 				InputProps={{
 					startAdornment: (
 						<InputAdornment position="start">
-							<ManageSearchIcon />
+							<ManageSearchIcon disableRipple />
 						</InputAdornment>
 					)
 				}}

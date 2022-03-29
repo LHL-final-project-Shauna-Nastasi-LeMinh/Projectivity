@@ -76,74 +76,78 @@ export default function DashboardItem(props) {
 			}}
 			sx={{ px: 2 }}
 		>
-			
-			<FolderIcon sx={{ mx: 1, color: 'primary.light', px: 2 }} />
+			<FolderIcon sx={{ mx: 1, color: 'primary.light', px: 2 }} disableRipple />
 			<ListItemText key={key} primary={value} />
-			{()=>console.log(user)}
-			{user && user.access_level == MANAGER_LEVEL && 
-			<>
-				<IconButton
-					onClick={(event) => {
-						handleClick('menu', event, listIndex);
-					}}
-					id="demo-positioned-button"
-					aria-controls={open ? 'demo-positioned-menu' : undefined}
-					aria-haspopup="true"
-					aria-expanded={open ? 'true' : undefined}
-					sx={{ px: 2 }}
-				>
-					<MenuIcon fontSize="medium" sx={{ color: 'background.default' }} />
-				</IconButton>
-				<Menu
-					id="demo-positioned-menu"
-					aria-labelledby="demo-positioned-button"
-					anchorEl={anchorEl}
-					open={open}
-					onClose={handleClose}
-					color="primary"
-					sx={{ color: 'background.default' }}
-					anchorOrigin={{
-						vertical: 'bottom',
-						horizontal: 'left'
-					}}
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'left'
-					}}
-				>
-					<MenuItem
-						sx={{
-							color: 'background.default',
-							'&:hover': {
-								backgroundColor: 'secondary.light'
-							}
+			{() => console.log(user)}
+			{user && user.access_level == MANAGER_LEVEL && (
+				<>
+					<IconButton
+						disableRipple
+						onClick={(event) => {
+							handleClick('menu', event, listIndex);
 						}}
-						onClick={() => {
-							selectModal('editProjectForm', dashItemProject);
-							handleClose();
+						id="demo-positioned-button"
+						aria-controls={open ? 'demo-positioned-menu' : undefined}
+						aria-haspopup="true"
+						aria-expanded={open ? 'true' : undefined}
+						sx={{ px: 2 }}
+					>
+						<MenuIcon
+							disableRipple
+							fontSize="medium"
+							sx={{ color: 'background.default' }}
+						/>
+					</IconButton>
+					<Menu
+						id="demo-positioned-menu"
+						aria-labelledby="demo-positioned-button"
+						anchorEl={anchorEl}
+						open={open}
+						onClose={handleClose}
+						color="primary"
+						sx={{ color: 'background.default' }}
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'left'
+						}}
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'left'
 						}}
 					>
-						<EditIcon fontSize="small" />
-						Edit Project
-					</MenuItem>
-					<MenuItem
-						sx={{
-							color: 'background.default',
-							'&:hover': {
-								backgroundColor: 'secondary.light'
-							}
-						}}
-						onClick={() => {
-							selectModal('deleteProjectForm', dashItemProject);
-							handleClose();
-						}}
-					>
-					<DeleteIcon fontSize="small" />
-					Delete Project
-				</MenuItem>
-			</Menu>
-		</>
-		}
+						<MenuItem
+							sx={{
+								color: 'background.default',
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								}
+							}}
+							onClick={() => {
+								selectModal('editProjectForm', dashItemProject);
+								handleClose();
+							}}
+						>
+							<EditIcon disableRipple fontSize="small" />
+							Edit Project
+						</MenuItem>
+						<MenuItem
+							sx={{
+								color: 'background.default',
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								}
+							}}
+							onClick={() => {
+								selectModal('deleteProjectForm', dashItemProject);
+								handleClose();
+							}}
+						>
+							<DeleteIcon disableRipple fontSize="small" />
+							Delete Project
+						</MenuItem>
+					</Menu>
+				</>
+			)}
 		</ListItemButton>
 	);
 }
