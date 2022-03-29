@@ -62,7 +62,7 @@ export default function NotificationDrawer(props) {
 			TransitionProps={{
         mountOnEnter: true,
         unmountOnExit: true,
-        timeout: { enter: 500 },
+        timeout: { enter: 225 },
       }}
       elevation={0}
 			sx={{
@@ -82,9 +82,6 @@ export default function NotificationDrawer(props) {
 					zIndex: 2,
 					bgcolor: 'primary.main',
 					borderBottom: `1px solid ${theme.palette.divider}`,
-					'&:last-child': {
-						borderBottom: 'none'
-					}
 				}}
 			>
 				<Typography
@@ -119,6 +116,7 @@ export default function NotificationDrawer(props) {
 							}}
 						>
 							<Typography
+								noWrap 
 								fontSize="small"
 								sx={{
 									color: notif.unread ? "red" : "black",
