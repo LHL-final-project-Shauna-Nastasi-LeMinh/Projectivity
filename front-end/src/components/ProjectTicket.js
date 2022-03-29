@@ -280,6 +280,7 @@ export default function ProjectTicket(props) {
 								user={user}
 								title={title}
                 employee={employee}
+                ticket={ticket}
 							/>
 						</Box>
 					</Popover>
