@@ -62,7 +62,8 @@ export default function NavbarMenu(props) {
 		unreadNotifLength,
 		setUnreadNotifLength,
 		drawerWidth,
-		closeDrawer
+		closeDrawer,
+		logout
 	} = props;
 	const [email, setEmail] = useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -70,23 +71,6 @@ export default function NavbarMenu(props) {
 	const handleOpenUserMenu = (event) => {
 		setAnchorElUser(event.currentTarget);
 	};
-
-	function logout() {
-		// a axios call to clear cookie session in server side too
-		axios
-			.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
-			.then((res) => {
-				setUser(null);
-				setStartBuild(false);
-				setViewMode(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-		clearUserData();
-
-		setAnchorElUser(null);
-	}
 
 	useEffect(() => {
 		if (user) {
@@ -195,20 +179,18 @@ export default function NavbarMenu(props) {
 						{user && (
 							<ClickAwayListener onClickAway={closeDrawer}>
 								<Button onClick={() => toggleDrawer()}>
-									{unreadNotifLength <= 0 && (
-										<NotificationsIcon
-											disableRipple
-											sx={{
-												position: 'absolute',
-												zIndex: 1,
-												color: 'background.default',
-												px: '0.5rem',
-												'&:hover': {
-													color: 'secondary.light'
-												}
-											}}
-										/>
-									)}
+									<NotificationsIcon
+										disableRipple
+										sx={{
+											position: 'absolute',
+											zIndex: 1,
+											color: 'background.default',
+											px: '0.5rem',
+											'&:hover': {
+												color: 'secondary.light'
+											}
+										}}
+									/>
 									{unreadNotifLength > 0 && (
 										<Box
 											sx={{ display: 'flex' }}
@@ -327,7 +309,10 @@ export default function NavbarMenu(props) {
 										{user && (
 											<Button
 												key="logout"
-												onClick={() => logout()}
+												onClick={() => {
+													logout();
+													setAnchorElUser(null);
+												}}
 												sx={{ color: 'white', display: 'block', px: '0.5rem' }}
 											>
 												<Typography

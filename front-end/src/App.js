@@ -204,6 +204,21 @@ const App = () => {
 		setModals({ ...modals, [prop]: false });
 	}
 
+	function logout() {
+		// a axios call to clear cookie session in server side too
+		axios
+			.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
+			.then((res) => {
+				setUser(null);
+				setStartBuild(false);
+				setViewMode(false);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		clearUserData();
+	}
+
 	const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 	return (
@@ -241,6 +256,7 @@ const App = () => {
 					notifyOpen={notifyOpen}
 					setNotifyOpen={setNotifyOpen}
 					toggleDrawer={toggleDrawer}
+					logout={logout}
 					anchorOrigin={{
 						vertical: 'top',
 						horizontal: 'right'
@@ -249,8 +265,14 @@ const App = () => {
 					setUnreadNotifLength={setUnreadNotifLength}
 					closeDrawer={closeDrawer}
 				/>
+				{user === null && <AboutPage user={user} />}
+				{user !== null &&
+					user.access_level == HR_LEVEL &&
+					userData !== undefined && (
+						<HRPage openModals={openModals} logout={logout} />
+					)}
 				<Offset />
-				{user !== null && userData && (
+				{user !== null && userData && user.access_level != HR_LEVEL && (
 					<Dashboard
 						viewMode={viewMode}
 						setViewMode={setViewMode}
@@ -277,10 +299,7 @@ const App = () => {
 						drawerWidth={drawerWidth}
 					/>
 				)}
-				{user !== null &&
-					user.access_level == HR_LEVEL &&
-					userData !== undefined && <HRPage />}
-				{user === null && <AboutPage user={user} />}
+
 				{user !== null &&
 					user.access_level != HR_LEVEL &&
 					userData !== undefined &&
