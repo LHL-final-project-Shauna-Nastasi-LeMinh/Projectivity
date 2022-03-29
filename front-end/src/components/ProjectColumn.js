@@ -250,38 +250,6 @@ export default function ProjectColumn(props) {
 							</Menu>
 						</ListItemButton>
 					</ListItem>
-
-					<Dialog
-						open={dialogOpen}
-						TransitionComponent={Transition}
-						keepMounted
-						onClose={closeDialog}
-						aria-describedby="alert-dialog-slide-description"
-					>
-						<DialogTitle>{dialogContent.title}</DialogTitle>
-						<DialogContent>
-							<DialogContentText id="alert-dialog-slide-description">
-								{dialogContent.text}
-							</DialogContentText>
-							{dialogContent.confirmLabel === 'Change' && (
-								<TextField
-									autoFocus
-									margin="dense"
-									id="name"
-									label="New Column Name"
-									fullWidth
-									variant="outlined"
-									onChange={setTextValue}
-								/>
-							)}
-						</DialogContent>
-						<DialogActions>
-							<Button onClick={handleColumnActions}>
-								{dialogContent.confirmLabel}
-							</Button>
-							<Button onClick={closeDialog}>Cancel</Button>
-						</DialogActions>
-					</Dialog>
 					<Divider />
 					<Droppable droppableId={column.name} type="ticket">
 						{(provided, snapshot) => (
