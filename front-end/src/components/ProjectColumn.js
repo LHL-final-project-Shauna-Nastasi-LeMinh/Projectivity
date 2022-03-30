@@ -119,6 +119,7 @@ export default function ProjectColumn(props) {
 	};
 
 	useEffect(() => {
+		console.log('###', column.Tickets);
 		setTickets(column.Tickets);
 	}, [column]);
 

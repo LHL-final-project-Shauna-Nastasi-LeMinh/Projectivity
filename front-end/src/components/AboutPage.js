@@ -40,7 +40,7 @@ export default function AboutPage(props) {
 					justifyContent: 'center',
 					width: 'fit-content',
 					height: 'fit-content',
-					backgroundColor: 'rgb(247, 237, 226, 1)'
+					backgroundColor: '#f1f1f1'
 				}}
 			>
 				<CardContent>
