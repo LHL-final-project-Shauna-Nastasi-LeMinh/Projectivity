@@ -44,8 +44,6 @@ export default function NewProjectForm(props) {
 	});
 	const [assignees, setAssignees] = useState([]);
 
-	console.log('### assignees', assignees);
-
 	const handleChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
 	};

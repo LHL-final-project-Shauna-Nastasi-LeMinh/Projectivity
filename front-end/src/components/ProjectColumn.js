@@ -55,12 +55,16 @@ export default function ProjectColumn(props) {
 		selectedColumn,
 		setSelectedColumn,
 		currentProject,
+		setCurrentProject,
 		userData,
 		setUserData,
-		setColumns
+		columns,
+		setColumns,
+		tickets,
+		setTickets,
+		allEmployees
 	} = props;
 
-	const [tickets, setTickets] = useState([]);
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [dialogContent, setDialogContent] = useState({});
 	const [newColumnName, setNewColumnName] = useState('');
@@ -119,8 +123,8 @@ export default function ProjectColumn(props) {
 	};
 
 	useEffect(() => {
-		console.log('###', column.Tickets);
-		setTickets(column.Tickets);
+		setColumns(currentProject.Columns);
+		// setTickets(column.Tickets);
 	}, [column]);
 
 	const createNewTicket = () => {
@@ -262,24 +266,61 @@ export default function ProjectColumn(props) {
 										transition: 'background-color 0.5s ease'
 									}}
 								> */}
-									<ColumnTickets
-										tickets={tickets}
-										setViewMode={setViewMode}
-										setOpen={setOpen}
-										currentTicket={currentTicket}
-										open={open}
-										setCurrentTicket={setCurrentTicket}
-										setTickets={setTickets}
-										user={user}
-										currentColumn={currentColumn}
-										setCurrentColumn={setCurrentColumn}
-										currentProject={currentProject}
-										userData={userData}
-										setUserData={setUserData}
-										editTicket={editTicket}
-										setEditTicket={setEditTicket}
-										setColumns={setColumns}
-									/>
+									{column &&
+										column.Tickets.map((ticket, index) => (
+											<Draggable
+												key={'' + ticket.id}
+												draggableId={'ticket_' + ticket.id}
+												index={index}
+											>
+												{(provided, snapshot) => (
+													<Box
+														sx={{
+															display: 'block',
+															marginBottom: 1,
+															borderRadius: 4,
+															borderColor: 'primary.light',
+															transition: 'background-color 0.5s ease',
+															'&:hover': {
+																backgroundColor: 'secondary.light'
+															},
+															marginBottom: 1,
+															backgroundColor: snapshot.isDragging
+																? 'secondary.main'
+																: 'primary.main'
+														}}
+														{...provided.draggableProps}
+														{...provided.dragHandleProps}
+														ref={provided.innerRef}
+													>
+														<ProjectTicket
+															ticket={ticket}
+															title={ticket.title}
+															ticketId={ticket.id}
+															isDragging={snapshot.isDragging}
+															setViewMode={setViewMode}
+															open={open}
+															setOpen={setOpen}
+															currentTicket={currentTicket}
+															setCurrentTicket={setCurrentTicket}
+															tickets={tickets}
+															setTickets={setTickets}
+															user={user}
+															currentColumn={currentColumn}
+															setCurrentColumn={setCurrentColumn}
+															editTicket={editTicket}
+															setEditTicket={setEditTicket}
+															currentProject={currentProject}
+															setCurrentProject={setCurrentProject}
+															userData={userData}
+															columns={columns}
+															setColumns={setColumns}
+															allEmployees={allEmployees}
+														/>
+													</Box>
+												)}
+											</Draggable>
+										))}
 								</List>
 								{provided.placeholder}
 							</Box>
@@ -328,76 +369,31 @@ export default function ProjectColumn(props) {
 	);
 }
 
-const ColumnTickets = React.memo(function ColumnTickets(props) {
-	const {
-		tickets,
-		setViewMode,
-		setOpen,
-		currentTicket,
-		setCurrentTicket,
-		setTickets,
-		open,
-		user,
-		currentColumn,
-		setCurrentColumn,
-		currentProject,
-		userData,
-		setUserData,
-		editTicket,
-		setEditTicket,
-		setColumns
-	} = props;
-	return tickets.map((ticket, index) => {
-		return (
-			<Draggable
-				key={'' + ticket.id}
-				draggableId={'ticket_' + ticket.id}
-				index={index}
-			>
-				{(provided, snapshot) => (
-					<Box
-						sx={{
-							display: 'block',
-							marginBottom: 1,
-							borderRadius: 4,
-							borderColor: 'primary.light',
-							transition: 'background-color 0.5s ease',
-							'&:hover': {
-								backgroundColor: 'secondary.light'
-							},
-							marginBottom: 1,
-							backgroundColor: snapshot.isDragging
-								? 'secondary.main'
-								: 'primary.main'
-						}}
-						{...provided.draggableProps}
-						{...provided.dragHandleProps}
-						ref={provided.innerRef}
-					>
-						<ProjectTicket
-							ticket={ticket}
-							title={ticket.title}
-							ticketId={ticket.id}
-							isDragging={snapshot.isDragging}
-							setViewMode={setViewMode}
-							open={open}
-							setOpen={setOpen}
-							currentTicket={currentTicket}
-							setCurrentTicket={setCurrentTicket}
-							tickets={tickets}
-							setTickets={setTickets}
-							user={user}
-							currentColumn={currentColumn}
-							setCurrentColumn={setCurrentColumn}
-							editTicket={editTicket}
-							setEditTicket={setEditTicket}
-							currentProject={currentProject}
-							userData={userData}
-							setColumns={setColumns}
-						/>
-					</Box>
-				)}
-			</Draggable>
-		);
-	});
-});
+// const ColumnTickets = React.memo(function ColumnTickets(props) {
+// 	const {
+// 		tickets,
+// 		setTickets,
+// 		setViewMode,
+// 		setOpen,
+// 		currentTicket,
+// 		setCurrentTicket,
+// 		open,
+// 		user,
+// 		currentColumn,
+// 		setCurrentColumn,
+// 		currentProject,
+// 		setCurrentProject,
+// 		userData,
+// 		setUserData,
+// 		editTicket,
+// 		setEditTicket,
+// 		columns,
+// 		setColumns
+// 	} = props;
+
+// 	return tickets.map((ticket, index) => {
+// 		return (
+
+// 		);
+// 	});
+// });

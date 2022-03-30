@@ -20,6 +20,7 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function AssignTicket(props) {
 	const {
 		currentProject,
+		setCurrentProject,
 		ticketId,
 		setAnchorPop,
 		setTickets,
@@ -29,7 +30,9 @@ export default function AssignTicket(props) {
 		employee,
 		ticket,
 		dialogOpen,
-		setDialogOpen
+		setDialogOpen,
+		columns,
+		setColumns
 	} = props;
 
 	const [employees, setEmployees] = useState({
@@ -93,11 +96,15 @@ export default function AssignTicket(props) {
 			.then((res) => {
 				const updatedTicket = res.data[0];
 
-				const updatedTickets = tickets.filter(
-					(ticket) => ticket.id !== updatedTicket.id
-				);
+				// const updatedTickets = tickets.filter(
+				// 	(ticket) => ticket.id !== updatedTicket.id
+				// );
 
-				setTickets([...updatedTickets, updatedTicket]);
+				tickets.map((newTicket, index) => {
+					if (newTicket.id === ticket.id) {
+						tickets.splice(index, 1, updatedTicket);
+					}
+				});
 
 				currentProject.Columns.map((currColumn) => {
 					currColumn.Tickets.map((currTicket, index) => {
@@ -106,6 +113,12 @@ export default function AssignTicket(props) {
 						}
 					});
 				});
+
+				// setTickets(tickets);
+				setColumns(currentProject.Columns);
+				setCurrentProject(currentProject);
+
+				console.log('### FINAL', currentProject, columns, tickets);
 
 				setDialogOpen(false);
 			})

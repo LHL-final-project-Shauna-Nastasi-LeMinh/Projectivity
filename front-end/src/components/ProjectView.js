@@ -43,8 +43,11 @@ export default function ProjectView(props) {
 		userData,
 		setUserData,
 		openDrawer,
-		drawerWidth
+		drawerWidth,
+		allEmployees
 	} = props;
+
+	const [tickets, setTickets] = useState([]);
 	const [columns, setColumns] = useState([]);
 	const [resetSearchPane, setResetSearchPane] = useState(0);
 	const [selectedColumn, setSelectedColumn] = useState();
@@ -52,7 +55,9 @@ export default function ProjectView(props) {
 
 	useEffect(() => {
 		if (currentProject && currentProject.Columns) {
+			console.log(currentProject.Columns, tickets);
 			setColumns(currentProject.Columns);
+			// setTickets(currentProject.Columns);
 			setResetSearchPane((prev) => prev + 1);
 		}
 	}, [currentProject]);
@@ -236,7 +241,7 @@ export default function ProjectView(props) {
 			.then((res) => {
 				console.log(res.data);
 				const newColumns = columns.filter((column) => column.id !== columnId);
-				setColumns(prev => [...newColumns]);
+				setColumns((prev) => [...newColumns]);
 
 				currentProject.Columns.map((column, index) => {
 					if (column.id === columnId) {
@@ -455,8 +460,8 @@ export default function ProjectView(props) {
 									margin: '1rem'
 								}}
 							>
-								{columns !== undefined &&
-									columns.map((column, colIndex) => (
+								{currentProject.Columns &&
+									currentProject.Columns.map((column, colIndex) => (
 										<ProjectColumn
 											disablePadding
 											key={column.id}
@@ -480,9 +485,14 @@ export default function ProjectView(props) {
 											selectedColumn={selectedColumn}
 											setSelectedColumn={setSelectedColumn}
 											currentProject={currentProject}
+											setCurrentProject={setCurrentProject}
 											userData={userData}
 											setUserData={setUserData}
+											columns={columns}
 											setColumns={setColumns}
+											tickets={tickets}
+											setTickets={setTickets}
+											allEmployees={allEmployees}
 										/>
 									))}
 
@@ -499,18 +509,19 @@ export default function ProjectView(props) {
 						</Box>
 					)}
 				</Droppable>
-				{user && user.access_level == MANAGER_LEVEL &&
-				<Box
-					sx={{
-						position: 'fixed',
-						right: `-${drawerWidth - 11}rem`,
-						top: '50%',
-						transform: 'rotate(90deg)',
-						width: '20rem'
-					}}
-				>
-					<BinDrawer />
-				</Box>}
+				{user && user.access_level == MANAGER_LEVEL && (
+					<Box
+						sx={{
+							position: 'fixed',
+							right: `-${drawerWidth - 11}rem`,
+							top: '50%',
+							transform: 'rotate(90deg)',
+							width: '20rem'
+						}}
+					>
+						<BinDrawer />
+					</Box>
+				)}
 			</DragDropContext>
 			{/* {modals.deleteTicketDragForm && (
 				<DeleteTicketDragForm

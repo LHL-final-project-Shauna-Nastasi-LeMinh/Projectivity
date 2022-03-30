@@ -32,10 +32,12 @@ export default function NewTicketForm(props) {
 		currentTicket,
 		modals,
 		currentProject,
+		setCurrentProject,
 		userData,
 		setUserData,
 		editTicket,
-		setColumns
+		setColumns,
+		ticket
 	} = props;
 
 	console.log(currentTicket);
@@ -47,10 +49,11 @@ export default function NewTicketForm(props) {
 		milestones: []
 	});
 
-	let ticket = {};
-	if (currentTicket !== undefined) {
-		ticket = tickets.filter((t) => t.id === currentTicket)[0];
-	}
+	// let ticket = {};
+
+	// if (currentTicket !== undefined) {
+	// 	ticket = tickets.filter((t) => t.id === currentTicket)[0];
+	// }
 
 	// console.log(ticket)
 	// fetch available tikets details from db such as tickets type/priority etc.
@@ -191,7 +194,7 @@ export default function NewTicketForm(props) {
 				console.log('created new ticket', res.data);
 
 				const newTicket = { ...res.data };
-				setTickets([...tickets, newTicket]);
+				// setTickets([...tickets, newTicket]);
 				setDialogOpen(false);
 
 				currentProject.Columns.map((column) => {
@@ -199,7 +202,9 @@ export default function NewTicketForm(props) {
 						column.Tickets.push(newTicket);
 					}
 				});
+
 				setColumns(currentProject.Columns);
+				setCurrentProject(currentProject);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -250,7 +255,7 @@ export default function NewTicketForm(props) {
 					(ticket) => ticket.id !== currentTicket
 				);
 				console.log('Tickets', updatedTickets);
-				setTickets([...updatedTickets, updatedTicket]);
+				// setTickets([...updatedTickets, updatedTicket]);
 				console.log(tickets);
 				setDialogOpen(false);
 
@@ -261,6 +266,8 @@ export default function NewTicketForm(props) {
 						}
 					});
 				});
+
+				setCurrentProject(currentProject);
 			})
 			.catch(function (error) {
 				console.log(error.message);
@@ -305,7 +312,7 @@ export default function NewTicketForm(props) {
 
 				<Divider />
 
-				<Box sx={{ width: '100%', backgroundColor: 'background.default'}}>
+				<Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
 					<Box sx={{ display: 'flex' }}>
 						<TextField
 							sx={{ m: 2, minWidth: 230 }}
@@ -330,7 +337,7 @@ export default function NewTicketForm(props) {
 							required
 						/>
 					</Box>
-					<Box sx={{ display: 'flex', justifyContent: 'center'}}>
+					<Box sx={{ display: 'flex', justifyContent: 'center' }}>
 						<FormControl sx={{ m: 2, minWidth: 230 }}>
 							<InputLabel id="PriorityLabel">Priority</InputLabel>
 							<Select
@@ -344,8 +351,6 @@ export default function NewTicketForm(props) {
 								{prioritiesMenu}
 							</Select>
 						</FormControl>
-
-						
 
 						<FormControl sx={{ m: 2, minWidth: 230 }}>
 							<InputLabel id="SeverityLabel">Severity</InputLabel>
@@ -361,7 +366,7 @@ export default function NewTicketForm(props) {
 							</Select>
 						</FormControl>
 					</Box>
-						{/* <TextField
+					{/* <TextField
                 sx={{ m: 2 }}
                 id="outlined-select-severity"
                 select
@@ -374,7 +379,7 @@ export default function NewTicketForm(props) {
                 {severitiesMenu}
             </TextField> */}
 					<Box sx={{ display: 'flex', justifyContent: 'center' }}>
-						<FormControl sx={{ m: 2, minWidth: 230}}>
+						<FormControl sx={{ m: 2, minWidth: 230 }}>
 							<InputLabel id="TypeLabel">Type</InputLabel>
 							<Select
 								labelId="TypeLabel"
@@ -415,8 +420,7 @@ export default function NewTicketForm(props) {
 					</Box>
 				</Box>
 
-
-{/* BUTTTONS */}
+				{/* BUTTTONS */}
 				<Divider />
 
 				<Box
@@ -447,7 +451,6 @@ export default function NewTicketForm(props) {
 						Cancel
 					</Button>
 				</Box>
-
 			</Paper>
 		</Modal>
 	);

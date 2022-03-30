@@ -45,12 +45,15 @@ export default function ProjectTicket(props) {
 		currentColumn,
 		ticket,
 		setCurrentColumn,
-		currentProject,
 		userData,
 		setUserData,
 		editTicket,
 		setEditTicket,
-		setColumns
+		currentProject,
+		setCurrentProject,
+		columns,
+		setColumns,
+		allEmployees
 	} = props;
 
 	const [checked, setChecked] = React.useState([1]);
@@ -159,7 +162,13 @@ export default function ProjectTicket(props) {
 		}
 	};
 
-	const employee = useEmployeesData(ticket.owner_id, tickets);
+	// let employee = useEmployeesData(ticket.owner_id, tickets);
+
+	const employee = allEmployees.filter((newEmployee) => {
+		if (newEmployee.id === ticket.owner_id) {
+			return newEmployee;
+		}
+	});
 
 	const isAvatar = () => {
 		return;
@@ -180,15 +189,7 @@ export default function ProjectTicket(props) {
 					/>
 				)}
 
-				{/* {!employee.avatar.length &&
-					Object.keys(employee).length !== 0 &&
-					ticket.owner_id && (
-						<Avatar sx={{ width: 26, height: 26, borderRadius: 1 }}>
-							{`${employee.first_name[0]}${employee.last_name[0]}`}
-						</Avatar>
-					)} */}
-
-				{Object.keys(employee).length !== 0 && ticket.owner_id && (
+				{ticket && employee[0] && (
 					<Avatar
 						sx={{
 							width: 26,
@@ -198,13 +199,20 @@ export default function ProjectTicket(props) {
 							backgroundPosition: 'center'
 						}}
 						size={100}
-						alt={`${employee.first_name[0]}${employee.last_name[0]}`}
-						src={employee.avatar}
+						alt={
+							employee[0].first_name &&
+							`${employee[0].first_name}${employee[0].last_name}`
+						}
+						src={employee[0].avatar && employee[0].avatar}
 					>
 						<img
-							alt={`${employee.first_name[0]}${employee.last_name[0]}`}
+							alt={
+								employee[0].first_name &&
+								employee[0].last_name &&
+								`${employee[0].first_name[0]}${employee[0].last_name[0]}`
+							}
 							src={''}
-						></img>
+						/>
 					</Avatar>
 				)}
 			</Stack>
@@ -287,7 +295,7 @@ export default function ProjectTicket(props) {
 						<MoreVertIcon /> */}
 					</IconButton>
 
-					{dialogOpen === ASSIGN_TICKET && (
+					{dialogOpen === ASSIGN_TICKET && employee && ticket && (
 						<AssignTicket
 							currentProject={currentProject}
 							ticketId={ticketId}
@@ -296,14 +304,17 @@ export default function ProjectTicket(props) {
 							tickets={tickets}
 							user={user}
 							title={title}
-							employee={employee}
+							employee={employee[0]}
 							ticket={ticket}
 							dialogOpen={dialogOpen}
 							setDialogOpen={setDialogOpen}
+							columns={columns}
+							setColumns={setColumns}
+							setCurrentProject={setCurrentProject}
 						/>
 					)}
 
-					{dialogOpen === SHOW_TICKET_DETAILS && (
+					{dialogOpen === SHOW_TICKET_DETAILS && ticket && (
 						<ShowTicketDetails
 							tickets={tickets}
 							setTickets={setTickets}
@@ -313,7 +324,7 @@ export default function ProjectTicket(props) {
 							setDialogOpen={setDialogOpen}
 						/>
 					)}
-					{dialogOpen === REMOVE_TICKET && (
+					{dialogOpen === REMOVE_TICKET && ticket && (
 						<RemoveTicket
 							user={user}
 							ticket={ticket}
@@ -328,8 +339,7 @@ export default function ProjectTicket(props) {
 							setColumns={setColumns}
 						/>
 					)}
-
-					{dialogOpen === EDIT_TICKET && (
+					{dialogOpen === EDIT_TICKET && ticket && (
 						<NewTicketForm
 							user={user}
 							currentColumn={currentColumn}
@@ -345,10 +355,11 @@ export default function ProjectTicket(props) {
 							userData={userData}
 							setUserData={setUserData}
 							editTicket={editTicket}
+							ticket={ticket}
 						/>
 					)}
 
-					{dialogOpen === TICKET_HISTORY && (
+					{dialogOpen === TICKET_HISTORY && ticket && (
 						<TicketHistory
 							tickets={tickets}
 							setTickets={setTickets}

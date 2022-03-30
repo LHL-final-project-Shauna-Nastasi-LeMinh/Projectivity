@@ -45,7 +45,7 @@ export default function RemoveTicket(props) {
 				const updatedTickets = tickets.filter(
 					(ticket) => ticket.id !== ticketId
 				);
-				setTickets([...updatedTickets]);
+				// setTickets([...updatedTickets]);
 
 				// console.log('updatedTickets', updatedTickets, tickets, ticketId);
 				// console.log('updatedTickets', currentProject);
