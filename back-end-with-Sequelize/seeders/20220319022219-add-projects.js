@@ -24,12 +24,6 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
-      {
-        name: 'SprintWin',
-        description: 'Application to manage scrum process for RBC',
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
     ], {});
 
   },

@@ -10,7 +10,7 @@ module.exports = (sequelizeModels, pusher) => {
       const notifications = await Notification.findAll({
         where: { user_id: req.params.user_id },
         order: [["createdAt", "DESC"]],
-        limit : 10,
+        limit : 8,
       })
       return res.json( notifications );
     } catch(err) {

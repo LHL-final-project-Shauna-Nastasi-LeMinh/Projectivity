@@ -14,7 +14,7 @@ module.exports = {
      await queryInterface.bulkInsert('employees', [
       {
         first_name: 'Jane',
-        last_name: 'De',
+        last_name: 'Doe',
         email: 'managerA@gmail.com',
         password: 'password',
         phone: '9021111111',
@@ -47,7 +47,7 @@ module.exports = {
       },
       {
         first_name: 'John',
-        last_name: 'Man',
+        last_name: 'Doe',
         email: 'HR@gmail.com',
         password: 'password',
         phone: '9021111111',
@@ -57,13 +57,13 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        first_name: 'Nastasi',
-        last_name: 'Davydov',
-        email: 'ge@gmail.com',
+        first_name: 'Jenifer',
+        last_name: 'Doe',
+        email: 'dev2@gmail.com',
         password: 'password',
-        phone: '666666666',
-        avatar: 'https://ca.slack-edge.com/T2G8TE2E5-U02SX82DQR4-fed59f9b552e-512',
-        role_id: 2,
+        phone: '9021111111',
+        avatar: '',
+        role_id: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       },

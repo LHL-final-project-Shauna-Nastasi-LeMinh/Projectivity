@@ -60,30 +60,6 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
-      {
-        name: 'Open',
-        project_id: 3,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        name: 'In Progress',
-        project_id: 3,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        name: 'To Be Tested',
-        project_id: 3,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        name: 'Closed',
-        project_id: 3,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
     ], {});
   },
 
