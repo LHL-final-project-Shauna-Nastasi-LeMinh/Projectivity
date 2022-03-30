@@ -179,18 +179,20 @@ export default function NavbarMenu(props) {
 						{user && (
 							<ClickAwayListener onClickAway={closeDrawer}>
 								<Button onClick={() => toggleDrawer()}>
-									<NotificationsIcon
-										disableRipple
-										sx={{
-											position: 'absolute',
-											zIndex: 1,
-											color: 'background.default',
-											px: '0.5rem',
-											'&:hover': {
-												color: 'secondary.light'
-											}
-										}}
-									/>
+									{unreadNotifLength <= 0 && (
+										<NotificationsIcon
+											disableRipple
+											sx={{
+												position: 'absolute',
+												zIndex: 1,
+												color: 'background.default',
+												px: '0.5rem',
+												'&:hover': {
+													color: 'secondary.light'
+												}
+											}}
+										/>
+									)}
 									{unreadNotifLength > 0 && (
 										<Box
 											sx={{ display: 'flex' }}
@@ -231,15 +233,13 @@ export default function NavbarMenu(props) {
 											</Typography>
 										</Box>
 									)}
-									{unreadNotifLength > 0 && (
-										<NotificationDrawer
-											notifications={notifications}
-											setNotifications={setNotifications}
-											notifyOpen={notifyOpen}
-											setNotifyOpen={setNotifyOpen}
-											toggleDrawer={toggleDrawer}
-										/>
-									)}
+									<NotificationDrawer
+										notifications={notifications}
+										setNotifications={setNotifications}
+										notifyOpen={notifyOpen}
+										setNotifyOpen={setNotifyOpen}
+										toggleDrawer={toggleDrawer}
+									/>
 								</Button>
 							</ClickAwayListener>
 						)}
