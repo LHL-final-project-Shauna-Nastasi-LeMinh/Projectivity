@@ -76,23 +76,43 @@ export default function NavbarMenu(props) {
 		if (user) {
 			setEmail(user.email);
 			updateNotifications();
+
+			const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+				cluster: process.env.REACT_APP_PUSHER_CLUSTER
+			});
+			const channel = pusher.subscribe(NOTIF_CHANNEL);
+			channel.bind(NOTIF_NEW_EVENT, function (notif_to_id) {
+				if (!notif_to_id) return;
+				if (!user) return;
+				if (notif_to_id === user.id) return;
+				updateNotifications();
+			});
+			return () => channel.unbind(NOTIF_NEW_EVENT);
 		}
 	}, [user]);
 
 	// WebSocket code start
-	useEffect(() => {
-		const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
-			cluster: process.env.REACT_APP_PUSHER_CLUSTER
-		});
-		const channel = pusher.subscribe(NOTIF_CHANNEL);
-		channel.bind(NOTIF_NEW_EVENT, function (notif_to_id) {
-			if (!notif_to_id) return;
-			if (!user) return;
-			if (notif_to_id === user.id) return;
-			updateNotifications();
-		});
-		return () => channel.unbind(NOTIF_NEW_EVENT);
-	}, []);
+	// useEffect(() => {
+	// 	const pusher = new Pusher(process.env.REACT_APP_PUSHER_KEY, {
+	// 		cluster: process.env.REACT_APP_PUSHER_CLUSTER
+	// 	});
+	// 	const channel = pusher.subscribe(NOTIF_CHANNEL);
+	// 	channel.bind(NOTIF_NEW_EVENT, function (notif_to_id) {
+	// 		console.log("notif_to_id:")
+	// 		console.log(notif_to_id)
+	// 		console.log("user:")
+	// 		console.log(user)
+	// 		if (!notif_to_id) return;
+	// 		console.log("1111111111")
+	// 		if (!user) return;
+	// 		console.log("2222222222")
+	// 		if (notif_to_id === user.id) return;
+	// 		console.log("3333333333")
+	// 		updateNotifications();
+	// 		console.log("4444444444")
+	// 	});
+	// 	return () => channel.unbind(NOTIF_NEW_EVENT);
+	// }, []);
 
 	const updateNotifications = function () {
 		axios
