@@ -173,12 +173,16 @@ module.exports = (sequelizeModels, pusher) => {
       let notifMes;
       // if assigning to exising owner
       if (owner_id && exisiting_owner_id && owner_id === exisiting_owner_id) {
+        console.log("ISSUE: ASSIGNING TO THE SAME OWNER FROM: " + exisiting_owner_id +" TO " + owner_id)
         return res.json(updatedTicket)
       }
       // if assigning to new owner
       if (owner_id ) {
+        console.log("ADDING NOTIF RECORD")
         await addNotification(owner_id, `Ticket ${title} is assigned to you`, updater_name)
+        console.log("PUSSHING FOR NOTIF_TOI_ID: "+ owner_id)
         pusher.trigger(NOTIF_CHANNEL, NOTIF_NEW_EVENT, {notif_to_id: owner_id});
+        console.log("AFTER PUSSHING FOR NOTIF_TOI_ID: "+ owner_id)
         if (exisiting_owner_id) {
           notifMes = `Ticket ${title} is unassigned from you`;
           await addNotification(exisiting_owner_id, notifMes, updater_name)
