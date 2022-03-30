@@ -133,7 +133,7 @@ export default function ProjectTicket(props) {
 
 	const choosePriorityColor = (priority) => {
 		const color = {
-			min: '#264653',
+			min: '#277da1',
 			low: '#2A9D8F',
 			medium: '#ffba08',
 			high: '#f3722c',

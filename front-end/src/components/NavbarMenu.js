@@ -250,20 +250,6 @@ export default function NavbarMenu(props) {
 									variant="text"
 								>
 									<Button
-										key="about"
-										onClick={() => setViewMode(false)}
-										sx={{
-											color: 'white',
-											display: 'block',
-											px: '0.5rem',
-											'&:hover': {
-												color: 'secondary.light'
-											}
-										}}
-									>
-										About
-									</Button>
-									<Button
 										key="login"
 										onClick={() => openModals('loginForm')}
 										sx={{

@@ -33,7 +33,7 @@ const colors = {
 		containerBackgroundColor: '#293241'
 	},
 	divider: 'rgb(249, 65, 68,0.75)',
-	min: '#264653',
+	min: '#277da1',
 	low: '#2A9D8F',
 	medium: '#ffba08',
 	high: '#f3722c',
