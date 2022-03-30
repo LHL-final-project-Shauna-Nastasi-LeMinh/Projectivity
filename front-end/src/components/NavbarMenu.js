@@ -62,7 +62,8 @@ export default function NavbarMenu(props) {
 		unreadNotifLength,
 		setUnreadNotifLength,
 		drawerWidth,
-		closeDrawer
+		closeDrawer,
+		logout
 	} = props;
 	const [email, setEmail] = useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -70,23 +71,6 @@ export default function NavbarMenu(props) {
 	const handleOpenUserMenu = (event) => {
 		setAnchorElUser(event.currentTarget);
 	};
-
-	function logout() {
-		// a axios call to clear cookie session in server side too
-		axios
-			.get(process.env.REACT_APP_BACKEND_URL + '/accessControl/logout')
-			.then((res) => {
-				setUser(null);
-				setStartBuild(false);
-				setViewMode(false);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-		clearUserData();
-
-		setAnchorElUser(null);
-	}
 
 	useEffect(() => {
 		if (user) {
@@ -249,15 +233,13 @@ export default function NavbarMenu(props) {
 											</Typography>
 										</Box>
 									)}
-									{unreadNotifLength > 0 && (
-										<NotificationDrawer
-											notifications={notifications}
-											setNotifications={setNotifications}
-											notifyOpen={notifyOpen}
-											setNotifyOpen={setNotifyOpen}
-											toggleDrawer={toggleDrawer}
-										/>
-									)}
+									<NotificationDrawer
+										notifications={notifications}
+										setNotifications={setNotifications}
+										notifyOpen={notifyOpen}
+										setNotifyOpen={setNotifyOpen}
+										toggleDrawer={toggleDrawer}
+									/>
 								</Button>
 							</ClickAwayListener>
 						)}
@@ -327,7 +309,10 @@ export default function NavbarMenu(props) {
 										{user && (
 											<Button
 												key="logout"
-												onClick={() => logout()}
+												onClick={() => {
+													logout();
+													setAnchorElUser(null);
+												}}
 												sx={{ color: 'white', display: 'block', px: '0.5rem' }}
 											>
 												<Typography

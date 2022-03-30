@@ -51,7 +51,7 @@ export default function BinDrawer(props) {
 					fontSize="large"
 					sx={{ color: 'background.default', mx: 1 }}
 				>
-					{!openConfirmed ? 'Open Recycle Bin' : 'Close Recycle Bin'}
+					{'Recycle Bin'}
 				</Typography>
 			</AccordionSummary>
 			{openConfirmed && (
