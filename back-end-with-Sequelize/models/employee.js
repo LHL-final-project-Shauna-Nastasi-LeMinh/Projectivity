@@ -38,8 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     avatar: {
-      type: DataTypes.TEXT,
-      allowNull: false
+      type: DataTypes.TEXT
     },
     role_id: {
       type: DataTypes.INTEGER,
