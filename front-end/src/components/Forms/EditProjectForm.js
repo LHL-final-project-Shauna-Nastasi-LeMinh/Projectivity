@@ -181,7 +181,7 @@ export default function RegistrationForm(props) {
 							width: '100%',
 							m: 2
 						}}
-						label="New Project Name"
+						label="Edit Project Name"
 						value={values.name}
 						// defaultValue={}
 						type="text"
@@ -211,6 +211,9 @@ export default function RegistrationForm(props) {
 										color: 'background.default',
 										'&:hover': {
 											backgroundColor: 'secondary.light'
+										},
+										'&:selected': {
+											backgroundColor: 'secondary.main'
 										}
 									}}
 									key={employee.id}
@@ -228,6 +231,9 @@ export default function RegistrationForm(props) {
 											color: 'secondary.main',
 											'&:hover': {
 												color: 'secondary.light'
+											},
+											'&:selected': {
+												backgroundColor: 'secondary.main'
 											}
 										}}
 									/>

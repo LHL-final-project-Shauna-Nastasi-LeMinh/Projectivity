@@ -103,6 +103,12 @@ export default function SearchPane(props) {
 				color: 'background.default',
 				'&:hover': {
 					backgroundColor: 'secondary.light'
+				},
+				'&.Mui-selected': {
+					backgroundColor: 'secondary.main',
+					'&:hover': {
+						backgroundColor: 'secondary.light'
+					}
 				}
 			}}
 			key={severity.id}
@@ -117,6 +123,12 @@ export default function SearchPane(props) {
 				color: 'background.default',
 				'&:hover': {
 					backgroundColor: 'secondary.light'
+				},
+				'&.Mui-selected': {
+					backgroundColor: 'secondary.main',
+					'&:hover': {
+						backgroundColor: 'secondary.light'
+					}
 				}
 			}}
 			key={priority.id}
@@ -131,6 +143,12 @@ export default function SearchPane(props) {
 				color: 'background.default',
 				'&:hover': {
 					backgroundColor: 'secondary.light'
+				},
+				'&.Mui-selected': {
+					backgroundColor: 'secondary.main',
+					'&:hover': {
+						backgroundColor: 'secondary.light'
+					}
 				}
 			}}
 			key={type.id}
@@ -145,6 +163,12 @@ export default function SearchPane(props) {
 				color: 'background.default',
 				'&:hover': {
 					backgroundColor: 'secondary.light'
+				},
+				'&.Mui-selected': {
+					backgroundColor: 'secondary.main',
+					'&:hover': {
+						backgroundColor: 'secondary.light'
+					}
 				}
 			}}
 			key={milestone.id}
@@ -194,11 +218,13 @@ export default function SearchPane(props) {
 
 			<FormControl sx={{ m: 1, minWidth: 150 }}>
 				<InputLabel id="SeverityLabel">Severity</InputLabel>
-				<Select
+				<TextField
 					labelId="SeverityLabel"
 					label="Severity"
 					id="Severity"
 					value={criteria[SEVERITY]}
+					sx={{ color: 'primary.main' }}
+					select
 					onChange={(e) =>
 						setCriteria({ ...criteria, SEVERITY: e.target.value })
 					}
@@ -208,6 +234,12 @@ export default function SearchPane(props) {
 							color: 'background.default',
 							'&:hover': {
 								backgroundColor: 'secondary.light'
+							},
+							'&.Mui-selected': {
+								backgroundColor: 'secondary.main',
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								}
 							}
 						}}
 						value="All"
@@ -215,7 +247,7 @@ export default function SearchPane(props) {
 						<em>All Severities</em>
 					</MenuItem>
 					{severitiesMenu}
-				</Select>
+				</TextField>
 			</FormControl>
 
 			<FormControl sx={{ m: 1, minWidth: 150 }}>
@@ -234,6 +266,12 @@ export default function SearchPane(props) {
 							color: 'background.default',
 							'&:hover': {
 								backgroundColor: 'secondary.light'
+							},
+							'&.Mui-selected': {
+								backgroundColor: 'secondary.main',
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								}
 							}
 						}}
 						value="All"
@@ -258,6 +296,12 @@ export default function SearchPane(props) {
 							color: 'background.default',
 							'&:hover': {
 								backgroundColor: 'secondary.light'
+							},
+							'&.Mui-selected': {
+								backgroundColor: 'secondary.main',
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								}
 							}
 						}}
 						value="All"
@@ -284,6 +328,12 @@ export default function SearchPane(props) {
 							color: 'background.default',
 							'&:hover': {
 								backgroundColor: 'secondary.light'
+							},
+							'&.Mui-selected': {
+								backgroundColor: 'secondary.main',
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								}
 							}
 						}}
 						value="All"

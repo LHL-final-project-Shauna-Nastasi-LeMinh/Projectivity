@@ -11,7 +11,8 @@ import {
 	InputAdornment,
 	IconButton,
 	Divider,
-	Paper
+	Paper,
+	InputLabel
 } from '@mui/material';
 import { HowToReg, Visibility, VisibilityOff } from '@mui/icons-material';
 
@@ -57,6 +58,12 @@ export default function RegistrationForm(props) {
 							color: 'background.default',
 							'&:hover': {
 								backgroundColor: 'secondary.light'
+							},
+							'&.Mui-selected': {
+								backgroundColor: 'secondary.main',
+								'&:hover': {
+									backgroundColor: 'secondary.light'
+								}
 							}
 						}}
 						value={role.id}
@@ -237,9 +244,14 @@ export default function RegistrationForm(props) {
 							required
 						/>
 						<Select
-							sx={{ m: 2, flex: 1 }}
-							label="Select A Role"
+							sx={{
+								m: 2,
+								flex: 1
+							}}
 							defaultValue={values.roleInput}
+							variant="outlined"
+							color="primary"
+							label="Select A Role"
 							onChange={handleChange('roleInput')}
 							required
 							value={3}

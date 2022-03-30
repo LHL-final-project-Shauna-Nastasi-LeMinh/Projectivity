@@ -86,9 +86,13 @@ export default function NavbarMenu(props) {
 		});
 		const channel = pusher.subscribe(NOTIF_CHANNEL);
 		channel.bind(NOTIF_NEW_EVENT, function (notif_to_id) {
+			// console.log('### NOTIF', notif_to_id);
 			if (!notif_to_id) return;
+			// console.log('### USER', user);
 			if (!user) return;
+			// console.log('### NOTIF === USER', notif_to_id === user.id);
 			if (notif_to_id === user.id) return;
+			// console.log('### PASSED');
 			updateNotifications();
 		});
 		return () => channel.unbind(NOTIF_NEW_EVENT);

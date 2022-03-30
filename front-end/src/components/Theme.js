@@ -69,6 +69,23 @@ export const theme = createTheme({
 					colorSecondary: { color: colors.background.default }
 				}
 			}
+		},
+		MuiSelect: {
+			styleOverrides: {
+				'.MuiSelect-select': {
+					color: 'primary.main'
+				},
+				'.MuiSelect-outlined': {
+					color: 'primary.main'
+				}
+			}
+		},
+		MuiInputLabel: {
+			styleOverrides: {
+				root: {
+					color: 'primary.main'
+				}
+			}
 		}
 	}
 });

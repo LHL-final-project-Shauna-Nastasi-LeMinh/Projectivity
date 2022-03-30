@@ -91,6 +91,12 @@ export default function NewTicketForm(props) {
 				color: 'background.default',
 				'&:hover': {
 					backgroundColor: 'secondary.light'
+				},
+				'&.Mui-selected': {
+					backgroundColor: 'secondary.main',
+					'&:hover': {
+						backgroundColor: 'secondary.light'
+					}
 				}
 			}}
 			key={severity.id}
@@ -105,6 +111,12 @@ export default function NewTicketForm(props) {
 				color: 'background.default',
 				'&:hover': {
 					backgroundColor: 'secondary.light'
+				},
+				'&.Mui-selected': {
+					backgroundColor: 'secondary.main',
+					'&:hover': {
+						backgroundColor: 'secondary.light'
+					}
 				}
 			}}
 			key={priority.id}
@@ -119,6 +131,12 @@ export default function NewTicketForm(props) {
 				color: 'background.default',
 				'&:hover': {
 					backgroundColor: 'secondary.light'
+				},
+				'&.Mui-selected': {
+					backgroundColor: 'secondary.main',
+					'&:hover': {
+						backgroundColor: 'secondary.light'
+					}
 				}
 			}}
 			key={type.id}
@@ -133,6 +151,12 @@ export default function NewTicketForm(props) {
 				color: 'background.default',
 				'&:hover': {
 					backgroundColor: 'secondary.light'
+				},
+				'&.Mui-selected': {
+					backgroundColor: 'secondary.main',
+					'&:hover': {
+						backgroundColor: 'secondary.light'
+					}
 				}
 			}}
 			key={milestone.id}
@@ -315,7 +339,7 @@ export default function NewTicketForm(props) {
 				<Box sx={{ width: '100%', backgroundColor: 'background.default' }}>
 					<Box sx={{ display: 'flex' }}>
 						<TextField
-							sx={{ m: 2, minWidth: 230 }}
+							sx={{ m: 2, minWidth: 230, color: 'primary.main' }}
 							label="Ticket Title"
 							value={values.title}
 							type="text"
@@ -326,7 +350,7 @@ export default function NewTicketForm(props) {
 							required
 						/>
 						<TextField
-							sx={{ m: 2, minWidth: 230 }}
+							sx={{ m: 2, minWidth: 230, color: 'primary.main' }}
 							label="Ticket Details"
 							value={values.description}
 							type="text"
@@ -347,6 +371,7 @@ export default function NewTicketForm(props) {
 								value={values.priority}
 								onChange={handleChange('priority')}
 								defaultValue={editTicket ? `${ticket.priority}` : ''}
+								sx={{ color: 'primary.main' }}
 							>
 								{prioritiesMenu}
 							</Select>
@@ -361,6 +386,7 @@ export default function NewTicketForm(props) {
 								value={values.severity}
 								onChange={handleChange('severity')}
 								defaultValue={editTicket ? `${ticket.severity}` : ''}
+								sx={{ color: 'primary.main' }}
 							>
 								{severitiesMenu}
 							</Select>
