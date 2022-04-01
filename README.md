@@ -2,7 +2,7 @@
 
 ## Tech stack
 
-ReactJS with MUI for front-end. NodeJS, Express server, Sequelize ORM, PostgreSQL for back-end. Pusher dedicated WebSocket server for real-time notification
+### ReactJS with MUI for front-end. NodeJS, Express server, Sequelize ORM, PostgreSQL for back-end. Pusher dedicated WebSocket server for real-time notification
 
 ## Back-end server setup
 
