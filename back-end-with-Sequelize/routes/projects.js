@@ -1,5 +1,4 @@
 const express = require("express");
-const users = require("./users");
 const router = express.Router();
 
 module.exports = (sequelizeModels) => {
@@ -222,9 +221,15 @@ module.exports = (sequelizeModels) => {
       await Project_Assignments.bulkCreate(assignmentBulkCreateObject);
 
       // notification
-      const notificationBulkCreateObject = assignmentBulkCreateObject.map(assignment => {
-        return {user_id: assignment.employee_id, message: "You have been assigned/re-assigned to project " + name, creator: employee_id}
-      })
+      const notificationBulkCreateObject = assignmentBulkCreateObject.map(
+        (assignment) => {
+          return {
+            user_id: assignment.employee_id,
+            message: "You have been assigned/re-assigned to project " + name,
+            creator: employee_id,
+          };
+        }
+      );
       await Notification.bulkCreate(notificationBulkCreateObject);
 
       return res.json("success!");
