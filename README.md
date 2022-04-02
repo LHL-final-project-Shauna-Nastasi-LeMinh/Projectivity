@@ -12,10 +12,7 @@
 4. Install sequelize-cli globally: `npm install -g sequelize-cli`
 5. If your database in config.json has not been created yet, create one with this: `sequelize db:create`
 6. Create tables: `sequelize db:migrate`
-
-- Check the db folder to see what gets created and seeded in the SDB
-
-7. Seed the data: `sequelize db:seed:all`
+7. Seed the data if some sample data is needed: `sequelize db:seed:all`
 8. Run the server: `npm run local` or `npm start`
 9. Run React front-end or Insomnia app to test this back-end
 
